@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.NotificationMapper">
+    <!--<resultMap id="BaseResultMap" type="cn.huihongcloud.entity.notification.Notification">-->
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="title" property="title"/>-->
+        <!--<result column="content" property="content"/>-->
+        <!--<result column="target_adcode" property="targetAdcode"/>-->
+        <!--<result column="target_town" property="targetTown"/>-->
+        <!--<result column="date" property="date"/>-->
+        <!--<result column="source_username" property="sourceUsername"/>-->
+    <!--</resultMap>-->
+    <!--<select id="getNotificationByAdcodeAndTown" resultType="cn.huihongcloud.entity.notification.Notification">-->
+    <!--</select>-->
+    <!--<select id="getNotificationByUsername" resultType="cn.huihongcloud.entity.notification.Notification">-->
+        <!--select-->
+        <!--notification.id,-->
+        <!--notification.title,-->
+        <!--notification.content,-->
+        <!--notification.source_username,-->
+        <!--notification.date-->
+        <!--from notification-->
+        <!--left join notification_relation-->
+        <!--on notification.id = notification_relation.notification_id-->
+        <!--where notification_relation.username = #{username}-->
+    <!--</select>-->
+</mapper>

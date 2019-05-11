@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.MenuMapper">
+    <select id="getMenuItemById" resultType="cn.huihongcloud.entity.menu.MenuItem">
+        select * from menu where id = #{id}
+    </select>
+    <select id="getMenuRelationByRoleId" resultType="cn.huihongcloud.entity.menu.MenuRelation">
+        select menu_id menuId, role_id roleId from menu_relation left join menu on menu_id = menu.id  where role_id = #{roleId} order by `order` asc
+    </select>
+</mapper>

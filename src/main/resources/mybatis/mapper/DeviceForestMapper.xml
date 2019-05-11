@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.DeviceForestMapper">
+    <resultMap id="DeviceForest" type="cn.huihongcloud.entity.device.DeviceForest">
+        <id column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="slope_position" property="slopePosition"/>
+        <result column="slope_direction" property="slopeDirection"/>
+        <result column="forest_structure" property="forestStructure"/>
+        <result column="avg_height" property="avgHeight"/>
+        <result column="avg_dbh" property="avgDbh"/>
+        <result column="forest_structure_density" property="forestStructureDensity"/>
+        <result column="crown_density" property="crownDensity"/>
+    </resultMap>
+
+    <select id="selectByDeviceId" resultMap="DeviceForest">
+        select *
+        from device_forest_data
+        where device_id = #{deviceId}
+    </select>
+
+    <insert id="addData">
+        insert into device_forest_data
+        (device_id, slope_position, slope_direction, forest_structure, avg_height, avg_dbh, forest_structure_density,
+        crown_density)
+        values
+        (#{deviceId}, #{slopePosition}, #{slopeDirection}, #{forestStructure}, #{avgHeight}, #{avgDbh},
+         #{forestStructureDensity}, #{crownDensity})
+    </insert>
+
+    <update id="updateData">
+        update device_forest_data
+        where id = # {id}
+        <set>
+            <if test="slopePosition != null and slopePosition != ''">
+                slope_position = #{slopePosition},
+            </if>
+            <if test="slopeDirection != null and slopeDirection != ''">
+                slope_direction = #{slopeDirection},
+            </if>
+            <if test="forestStructure != null and forestStructure != ''">
+                forest_structure = #{forestStructure},
+            </if>
+            <if test="avgHeight != null and avgHeight != ''">
+                avg_height = #{avgHeight},
+            </if>
+            <if test="avgDbh != null and avgDbh != ''">
+                avg_dbh = #{avgDbh},
+            </if>
+            <if test="forestStructureDensity != null and forestStructureDensity != ''">
+                forest_structure_density = #{forestStructureDensity},
+            </if>
+            <if test="crownDensity != null and crownDensity != ''">
+                crown_density = #{crownDensity},
+            </if>
+        </set>
+    </update>
+
+    <delete id="deleteById">
+        delete from device_forest_data
+        where id = #{id}
+    </delete>
+</mapper>

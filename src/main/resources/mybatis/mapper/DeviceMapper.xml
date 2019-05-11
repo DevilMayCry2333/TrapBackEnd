@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.DeviceMapper">
+    <resultMap id="Device" type="cn.huihongcloud.entity.device.Device">
+        <id column="id" property="id"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="altitude" property="altitude"/>
+        <result column="receive_date" property="receiveDate"/>
+        <result column="check_date" property="checkDate"/>
+        <result column="adcode" property="adcode"/>
+        <result column="province" property="province"/>
+        <result column="city" property="city"/>
+        <result column="area" property="area"/>
+        <result column="town" property="town"/>
+        <result column="manager" property="manager"/>
+    </resultMap>
+    <select id="isExist" resultType="boolean">
+        select count(*) from device where id = #{id}
+    </select>
+    <update id="updateDevice">
+        update device
+        <set>
+            <if test="device.latitude != null">
+                latitude = #{device.latitude},
+            </if>
+            <if test="device.longitude != null">
+                longitude = #{device.longitude},
+            </if>
+            <if test="device.altitude != null">
+                altitude = #{device.altitude},
+            </if>
+            <if test="device.adcode != null and device.adcode != ''">
+                adcode = #{device.adcode},
+            </if>
+            <if test="device.province != null and device.province != ''">
+                province = #{device.province},
+            </if>
+            <if test="device.city != null and device.city != ''">
+                city = #{device.city},
+            </if>
+            <if test="device.area != null and device.area != ''">
+                area = #{device.area},
+            </if>
+            <if test="device.town != null and device.town != ''">
+                town = #{device.town},
+            </if>
+            <if test="device.receiveDate != null">
+                receive_date = #{device.receiveDate},
+            </if>
+        </set>
+        where id = #{device.id}
+    </update>
+    <update id="updateDevice1">
+        update device
+        <set>
+
+                latitude = #{device.latitude},
+
+
+                longitude = #{device.longitude},
+
+
+                altitude = #{device.altitude},
+
+
+            receive_date = #{device.receiveDate},
+
+        </set>
+        where device.id = #{device.id}
+    </update>
+    <insert id="addDevice">
+        insert into device (id, latitude, longitude, altitude, adcode, province, city, area, town, receive_date, towncode, qrcode, manager) values
+        (#{device.id}, #{device.latitude}, #{device.longitude}, #{device.altitude}, #{device.adcode}, #{device.province}, #{device.city},
+        #{device.area}, #{device.town}, #{device.receiveDate}, #{device.towncode}, #{device.qrcode}, #{device.manager})
+    </insert>
+    <select id="getDeviceByMap" resultMap="Device">
+        select * from device where id in (select device_id from device_map, user where user_id = username and
+         username = #{username})
+    </select>
+    <select id="getDeviceByLocation" resultMap="Device">
+        select * from device where 1 = 1
+          <if test="adcode != null and adcode != ''">
+            and adcode like '${adcode}%'
+          </if>
+          <if test="town != null and town != ''">
+            and town = #{town}
+          </if>
+
+          <if test="searchText != null and searchText != ''">
+            and (id = #{searchText} or
+              province like concat('%', #{searchText}, '%') or
+              city like concat('%', #{searchText}, '%') or
+              area like concat('%', #{searchText}, '%') or
+              town like concat('%', #{searchText}, '%'))
+          </if>
+    </select>
+    <insert id="addDeviceRelation">
+        insert into device_map (device_id, user_id) values (#{deviceId}, #{userId})
+    </insert>
+    <delete id="deleteDeviceRelation">
+        delete from device_map where device_id = #{deviceId} and user_id = #{userId}
+    </delete>
+    <delete id="clearWorkerDeviceRelation">
+        delete from device_map where user_id = #{worker}
+    </delete>
+    <select id="getDeviceNotAssociatedWithWorker" resultMap="Device">
+        select device.id, device.latitude, device.longitude, device.altitude, device.province, device.city, device.area,
+        device.town from device, user
+        where
+        (device.id like concat('%', #{searchText}, '%')
+        or device.province like concat('%', #{searchText}, '%')
+        or device.city like concat('%', #{searchText}, '%')
+        or device.area like concat('%', #{searchText}, '%')
+        or device.town like concat('%', #{searchText}, '%') )
+        and device.adcode like concat(user.adcode, '%')
+        and (user.town = null or
+        user.town = '' or
+        user.town = device.town) and user.username= #{worker} and
+        device.id not in (select device_id from device_map, user where user_id = username and username = #{worker})
+    </select>
+    <select id="getTownSpotDeviceByLocation" resultMap="Device">
+        select latitude, longitude, province, city, area, town, adcode from device where 1 = 1
+        <if test="adcode != null and adcode != ''">
+            and adcode like '${adcode}%'
+        </if>
+        <if test="town != null and town != ''">
+            and town = #{town}
+        </if>
+        and latitude is not null
+        and longitude is not null
+        group by concat(town,adcode)
+    </select>
+
+    <select id="getAreaSpotDeviceByLocation" resultMap="Device">
+        select latitude, longitude, province, city, area, adcode from device where 1 = 1
+        <if test="adcode != null and adcode != ''">
+             <!--and adcode = #{adcode}-->
+            and adcode like concat(#{adcode}, '%')
+        </if>
+        and latitude is not null
+        and longitude is not null
+        group by adcode
+    </select>
+
+    <select id="getCitySpotDeviceByLocation" resultMap="Device">
+        select latitude, longitude, province, city, adcode from device where 1 = 1
+        <if test="adcode != null and adcode != ''">
+            and adcode like '${adcode}%'
+        </if>
+        and latitude is not null
+        and longitude is not null
+        group by city
+    </select>
+
+    <select id="getProvinceSpotDeviceByLocation" resultMap="Device">
+        select latitude, longitude, province, adcode
+        from device where 1 = 1
+        <if test="adcode != null and adcode != ''">
+            and adcode like '${adcode}%'
+        </if>
+        and latitude is not null
+        and longitude is not null
+        group by province
+    </select>
+    <select id="getDeviceCountByAdcode" resultType="java.util.Map">
+        select ${key} `key`, count(*) `count`
+        from device
+        where 1 = 1
+        <if test="adcode != null">
+            and adcode like concat(#{adcode}, '%')
+        </if>
+
+        <if test="town != null">
+            and town=#{town}
+        </if>
+        group by ${key}
+    </select>
+    <select id="getDeviceById" resultMap="Device">
+        select * from device
+        where id = #{id}
+    </select>
+    <select id="getDeviceInRegion" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device
+        where adcode = #{adcode} and town = #{town}
+    </select>
+    <select id="countDeviceInRegion" resultType="java.lang.Long">
+        select count(*) from device where adcode = #{adcode} and town = #{town}
+    </select>
+    <select id="judgeDeviceRelation" resultType="java.lang.Long">
+        select count(*) from device_map where device_id = #{deviceId} and user_id = #{username}
+    </select>
+    <select id="getDeviceIdInTown" resultType="java.lang.String">
+        select id from device where townCode = #{townCode}
+    </select>
+    <select id="countDeviceInArea" resultType="java.lang.Long">
+        select count(*) from device where adcode = #{adcode}
+    </select>
+    <select id="getDeviceByManager" resultMap="Device">
+        select * from device where manager = #{manager}
+
+    </select>
+    <select id="getDeviceIdsAssociatedWithWorker" resultType="java.lang.String">
+        select device_id from device_map where user_id = #{worker}
+    </select>
+    <select id="getWorkerAssociatedWithDeviceIds" resultType="java.lang.String">
+        select user_id from device_map where device_id = #{device_id}
+    </select>
+    <select id="getDeviceIdsCanAssociateWithWorker" resultType="java.lang.String">
+        select id
+        from device
+        where adcode = #{adcode} and manager = #{manager}
+        and not exists (select 1 from device_map where device_id = device.id)
+    </select>
+    <select id="getDeviceByWorker" resultMap="Device">
+        select device.*
+        from device
+        left join device_map on device.id = device_map.device_id
+        where user_id = #{worker}
+    </select>
+    <select id="getMaxDeviceIdInArea" resultType="java.lang.String">
+        select max(id) from device where id like concat(#{adcode}, '%')
+    </select>
+
+</mapper>

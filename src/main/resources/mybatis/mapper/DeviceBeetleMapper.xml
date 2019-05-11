@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.DeviceBeetleMapper">
+    <resultMap id="DeviceBeetle" type="cn.huihongcloud.entity.device.DeviceBeetle">
+        <id column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="change_date" property="changeDate"/>
+        <result column="change_times" property="changeTimes"/>
+        <result column="beetle_num" property="beetleNum"/>
+        <result column="sample_alive" property="sampleAlive"/>
+        <result column="pine_death_num" property="pineDeathNum"/>
+        <result column="epidemic_area" property="epidemicArea"/>
+    </resultMap>
+
+    <select id="selectByDeviceId" resultMap="DeviceBeetle">
+        select *
+        from device_beetle_data
+        where device_id = #{deviceId}
+    </select>
+
+    <insert id="addData">
+        insert into device_beetle_data
+        (id, device_id, change_date, change_times, beetle_num, sample_alive, pine_death_num, epidemic_area)
+        values
+        (#{id}, #{deviceId}, #{changeDate}, #{changeTimes}, #{beetleNum}, #{sampleAlive}, #{pineDeathNum}, #{epidemicArea})
+    </insert>
+
+    <update id="updateData">
+        update table
+        where id = #{id}
+        <set>
+            <if test="deviceId != null and deviceId != ''">
+                device_id = #{deviceId},
+            </if>
+            <if test="changeDate != null and changeDate != ''">
+                change_date = #{changeDate},
+            </if>
+            <if test="changeTimes != null and changeTimes != ''">
+                change_times = #{changeTimes},
+            </if>
+            <if test="beetleNum != null and beetleNum != ''">
+                beetle_num = #{beetleNum},
+            </if>
+            <if test="sampleAlive != null and sampleAlive != ''">
+                sampleAlive = #{sampleAlive},
+            </if>
+            <if test="pineDeathNum != null and pineDeathNum != ''">
+                pineDeath_num = #{pineDeathNum},
+            </if>
+            <if test="epidemicArea != null and epidemicArea != ''">
+                epidemic_area = #{epidemicArea},
+            </if>
+        </set>
+    </update>
+    <delete id="deleteById">
+        delete from device_beetle_data
+        where id = #{id}
+    </delete>
+    <select id="getStatisticsByTown" resultMap="DeviceBeetle">
+        select sum(beetle_num) beetle_num, DATE_FORMAT(change_date, '%Y-%m-%d') change_date
+        from device_beetle_data
+        left join device on device_id=device.id
+        where adcode = #{adcode} and town = #{town}
+        group by DATE_FORMAT(change_date, '%Y-%m-%d')
+        order by change_date asc
+    </select>
+
+    <select id="getStatisticsByArea" resultMap="DeviceBeetle">
+        select sum(beetle_num) beetle_num, DATE_FORMAT(change_date, '%Y-%m-%d') change_date
+        from device_beetle_data
+        left join device on device_id=device.id
+        where adcode = #{adcode}
+        group by DATE_FORMAT(change_date, '%Y-%m-%d')
+        order by change_date asc
+    </select>
+
+    <select id="getStatisticsByLikeAdcode" resultMap="DeviceBeetle">
+        select sum(beetle_num) beetle_num, DATE_FORMAT(change_date, '%Y-%m-%d') change_date
+        from device_beetle_data
+        left join device on device_id=device.id
+        where adcode like concat(#{adcode}, '%')
+        group by DATE_FORMAT(change_date, '%Y-%m-%d')
+        order by change_date asc
+    </select>
+
+    <select id="getChangeTimesByDeviceId" resultType="int">
+        select count(*) from device_beetle_data where device_id = #{id}
+    </select>
+
+</mapper>

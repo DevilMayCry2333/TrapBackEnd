@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.UserMapper">
+    <select id="getUserByUserName" resultType="cn.huihongcloud.entity.user.User">
+        select * from user where userName = #{username}
+    </select>
+    <select id="getUserByAdcodeAndTownAndStringAndUserRole" resultType="cn.huihongcloud.entity.user.User">
+        select * from user
+        <where>
+            <if test="adcode != null and adcode != ''">
+                and adcode like '%${adcode}%'
+            </if>
+            <if test="town != null and town != ''">
+                and town like '%${town}%'
+            </if>
+            <if test="searchText != null and searchText !=''">
+                and (username like concat('%', #{searchText}, '%') or
+                name like concat('%', #{searchText}, '%') or
+                phone like concat('%', #{searchText}, '%') or
+                email like concat('%', #{searchText}, '%') or
+                province like concat('%', #{searchText}, '%') or
+                city like concat('%', #{searchText}, '%') or
+                area like concat('%', #{searchText}, '%') or
+                town like concat('%', #{searchText}, '%') )
+            </if>
+                and (role > #{userRole}
+                <!--同是管理员的情况-->
+
+                or (role = #{userRole} and (adcode != #{adcode}
+                <!--不是同县-->
+
+                  or (adcode=#{adcode} and town != #{town} and (#{town} = '' or #{town} = null))))
+                  <!--县相同，需要查询用户的镇为空也就是县级管理员-->
+                )
+
+            <if test="roleType != null and roleType != ''">
+                and role = #{roleType}
+            </if>
+            <if test="active != null">
+                and active = #{active}
+            </if>
+            <if test="condition != null and condition != ''">
+                and ${condition}
+            </if>
+                and isdelete = '0'
+        </where>
+        order by username asc
+    </select>
+
+    <select id="verifyUserByUserNameAndPassword" resultType="int">
+        select count(*) from user where username = #{username} and password = #{password} and active = 1
+    </select>
+    <insert id="registerUser">
+        insert into user (username, name, password, adcode, towncode, province, city, area, town, role, email, phone, active, parent,isdelete) values
+          (#{user.username}, #{user.name}, #{user.password}, #{user.adcode}, #{user.towncode}, #{user.province}, #{user.city},
+          #{user.area}, #{user.town}, #{user.role}, #{user.email}, #{user.phone}, #{user.active}, #{user.parent},'0')
+    </insert>
+    <select id="searchUserByString" resultType="cn.huihongcloud.entity.user.User">
+        select * from user
+                where username like concat('%', #{searchText}, '%') or
+                name like concat('%', #{searchText}, '%') or
+                phone like concat('%', #{searchText}, '%') or
+                email like concat('%', #{searchText}, '%')
+    </select>
+    <select id="listUserByArea" resultType="cn.huihongcloud.entity.user.User">
+        select * from user
+        where
+        <if test="province != null and province != ''">
+            province= #{province}
+        </if>
+        <if test="city != null and city != ''">
+            and city= #{city}
+        </if>
+        <if test="area != null and area != ''">
+            and area= #{area}
+        </if>
+
+
+    </select>
+    <select id="listWorkerInRegion" resultType="cn.huihongcloud.entity.user.User">
+        select * from user
+          where adcode = #{adcode} and town = #{town} and role = 2
+    </select>
+    <select id="getCurrentAssociatedUser" resultType="cn.huihongcloud.entity.user.User">
+        select user.* from device_map left join user on device_map.user_id = user.username where device_id = #{deviceId} and user.role = 2
+    </select>
+    <select id="getCanAssociatedUser" resultType="cn.huihongcloud.entity.user.User">
+        select user.* from device left join user on device.adcode = user.adcode and device.town = user.town where device.id = #{deviceId} and  username not in (
+        select user.username from device_map left join user on device_map.user_id = user.username where device_id = #{deviceId}) and user.role = 2
+    </select>
+    <update id="updateUser">
+        update user
+        <set>
+            <if test="user.name !=null">
+                name = #{user.name},
+            </if>
+            <if test="user.password!=null">
+                password = #{user.password},
+            </if>
+            <if test="user.adcode!=null">
+                adcode = #{user.adcode},
+            </if>
+            <if test="user.towncode!=null">
+                towncode = #{user.towncode},
+            </if>
+            <if test="user.province!=null">
+                province = #{user.province},
+            </if>
+            <if test="user.city!=null">
+                city = #{user.city},
+            </if>
+            <if test="user.area!=null">
+                area = #{user.area},
+            </if>
+            <if test="user.town!=null">
+                town = #{user.town},
+            </if>
+            <if test="user.phone!=null">
+                phone = #{user.phone},
+            </if>
+            <if test="user.email!=null">
+                email = #{user.email},
+            </if>
+            <if test="user.active!=null">
+                active = #{user.active},
+            </if>
+            <if test="user.role!=null">
+                role = #{user.role},
+            </if>
+                isdelete = '0'
+        </set>
+        where username = #{user.username}
+    </update>
+
+    <update id="forbitToUse">
+        update user
+        <set>
+                active = '0',
+                isdelete = '1'
+        </set>
+        where username = #{user.username}
+    </update>
+    <update id="nonActiveDevice">
+        update device_maintenance
+        <set>
+              isactive='1'
+        </set>
+        where username = #{username}
+    </update>
+    <update id="ActiveDevice">
+        update device_maintenance
+        <set>
+            isactive='0'
+        </set>
+        where username = #{username}
+    </update>
+    <update id="resetPassword">
+        update user
+        set password = '123'
+        where username = #{username}
+    </update>
+    <update id="changePassword">
+        update user
+        set password = #{newPassword}
+        where username = #{username}
+        and password = #{currentPassword}
+    </update>
+    <delete id="deleteUserByUsername">
+        delete from user where username = #{username}
+    </delete>
+</mapper>

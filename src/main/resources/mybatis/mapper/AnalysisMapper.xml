@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.AnalysisMapper">
+    <select id="getDistInfoByAdcode" resultType="java.util.Map">
+        select ${key}, adcode
+        from device
+        where
+        1 = 1
+        <if test="adcode != null and adcode !=''">
+            and adcode like concat(adcode, '%')
+        </if>
+        <if test="town != null and town != ''">
+            and town=#{town}
+        </if>
+    </select>
+    <select id="getYearList" resultType="java.lang.String">
+        select DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%Y')
+        from device_maintenance
+        left join device on device.id = device_maintenance.device_id
+        where
+        1 = 1
+        <if test="adcode != null and adcode !=''">
+            and adcode like concat(adcode, '%')
+        </if>
+        <if test="town != null and town != ''">
+            and town=#{town}
+        </if>
+        group by DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%Y')
+    </select>
+    <select id="getMonthlyDataByAdcodeTownAndYear" resultType="java.util.Map">
+        select DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%m') `key`, sum(num) `value`
+        from device_maintenance
+        left join device on device.id = device_maintenance.device_id
+        where DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%Y') = #{year}
+        <if test="adcode != null and adcode !=''">
+            and device.adcode like concat(#{adcode}, '%')
+        </if>
+        <if test="town != null and town != ''">
+            and device.town = #{town}
+        </if>
+        group by DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%m')
+    </select>
+</mapper>

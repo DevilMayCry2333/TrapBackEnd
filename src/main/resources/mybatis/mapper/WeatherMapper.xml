@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.WeatherMapper">
+    <resultMap id="WeatherData" type="cn.huihongcloud.entity.weather.Weather">
+        <id property="id" column="id"/>
+        <result property="tempMin" column="min"/>
+        <result property="tempMax" column="max"/>
+        <result property="tempMean" column="mean"/>
+        <result property="date" column="date"/>
+        <result property="adcode" column="adcode"/>
+    </resultMap>
+    <resultMap id="MonthlyWeatherData" type="cn.huihongcloud.entity.weather.Weather">
+        <id property="id" column="id"/>
+        <result property="tempMin" column="min"/>
+        <result property="tempMax" column="max"/>
+        <result property="tempMean" column="mean"/>
+        <result property="hum" column="hum"/>
+        <result property="year" column="year"/>
+        <result property="month" column="month"/>
+        <result property="date" column="date"/>
+    </resultMap>
+    <resultMap id="HourlyWeatherData" type="cn.huihongcloud.entity.weather.HourlyWeather">
+        <id property="id" column="id"/>
+        <result property="cloud" column="cloud"/>
+        <result property="condCode" column="cond_code"/>
+        <result property="condTxt" column="cond_txt"/>
+        <result property="fl" column="fl"/>
+        <result property="hum" column="hum"/>
+        <result property="pcpn" column="pcpn"/>
+        <result property="pres" column="pres"/>
+        <result property="tmp" column="tmp"/>
+        <result property="vis" column="vis"/>
+        <result property="windDeg" column="wind_deg"/>
+        <result property="windDir" column="wind_dir"/>
+        <result property="windSc" column="wind_sc"/>
+        <result property="windSpd" column="wind_spd"/>
+    </resultMap>
+
+    <select id="getCurrentAreas" resultType="java.lang.String">
+        select distinct adcode from device
+    </select>
+
+    <insert id="add">
+        insert into weather
+        (adcode, `min`, `max`, mean, hum, date)
+        values
+        (#{adcode}, #{tempMin}, #{tempMax}, #{tempMean}, #{hum}, #{date})
+    </insert>
+    <insert id="addHourly">
+        insert into hourly_weather
+        (cloud, cond_code, cond_txt, fl, hum, pcpn, pres, tmp, vis, wind_deg, wind_dir, wind_sc, wind_spd, adcode, `date`)
+        values
+        (#{cloud}, #{condCode}, #{condTxt}, #{fl}, #{hum}, #{pcpn}, #{pres}, #{tmp}, #{vis}, #{windDeg},
+         #{windDir}, #{windSc}, #{windSpd}, #{adcode}, #{date})
+    </insert>
+
+    <select id="getWeatherInRange" resultMap="WeatherData">
+        select * from weather
+        where adcode = #{adcode}
+        <if test="lo != null">
+            and `date` >= #{lo}
+        </if>
+        <if test="hi != null">
+            and `date` &lt;= #{hi}
+        </if>
+        order by date asc
+    </select>
+    <select id="getWeatherList" resultMap="WeatherData">
+        select min(`min`) `min`, max(`max`) `max`, avg(`mean`) `mean`,  avg(hum) hum,`date` from weather
+        where adcode = #{adcode}
+        <if test="startDate != null and startDate !=''">
+            and `date` &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and endDate !=''">
+            and `date` &lt;= #{endDate}
+        </if>
+        group by date_format(`date`, '%Y-%m-%d')
+        order by date desc
+    </select>
+    <select id="getHourlyWeatherList" resultMap="HourlyWeatherData">
+        select * from hourly_weather
+        where adcode = #{adcode}
+        <if test="startDate != null and startDate !=''">
+            and `date` &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate !=''">
+            and `date` &lt;= #{endDate}
+        </if>
+        order by date desc
+    </select>
+    <select id="getMonthlyWeatherList" resultMap="MonthlyWeatherData">
+        select min(`min`) `min`, max(`max`) `max`, avg(`mean`) `mean`,  avg(hum) hum,DATE_FORMAT(`date`, '%Y') `year`, DATE_FORMAT(`date`, '%m') `month` ,`date` from weather
+        where adcode = #{adcode}
+        and `date` is not null
+        <if test="startDate != null and startDate !=''">
+            and `date` &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and endDate !=''">
+            and `date` &lt;= #{endDate}
+        </if>
+        group by concat(year(`date`), '-', month(`date`))
+        order by date desc
+    </select>
+</mapper>

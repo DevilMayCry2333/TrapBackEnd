@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.OtherBeetleMapper">
+    <insert id="insertBeetleInfo">
+        insert into beetle_info (`name`) values(#{name})
+    </insert>
+    <insert id="insertBeetleInfoMap">
+        insert into beetle_info_map (beetle_info_id, adcode) values (#{beetleInfoId}, #{adcode})
+    </insert>
+    <update id="updateBeetleInfo">
+        update beetle_info set `name` = #{name} where id = #{id}
+    </update>
+    <delete id="deleteBeetleInfo">
+        delete from beetle_info where id = #{id}
+    </delete>
+    <delete id="deleteBeetleInfoMap">
+        delete from beetle_info_map where beetle_info_id = #{beetleInfoId} and adcode = #{adcode}
+    </delete>
+    <select id="queryBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
+        select * from beetle_info;
+    </select>
+    <select id="queryBeetleInfoForTown" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
+        select beetle_info.id, beetle_info.name
+        from beetle_info_map
+        left join beetle_info on beetle_info.id = beetle_info_map.beetle_info_id
+        where adcode = #{adcode}
+    </select>
+</mapper>
