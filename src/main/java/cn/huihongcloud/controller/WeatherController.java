@@ -57,6 +57,13 @@ public class WeatherController {
     public Object getWeatherList(String adcode, String lo, String hi, int page, int limit) throws Exception {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Page<Object> pageObject = PageHelper.startPage(page, limit);
+//        if(lo.equals("null")){
+//            lo="";
+//        }
+//        if(hi.equals("null")){
+//            hi="";
+//        }
+        System.out.println(lo);
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }
@@ -76,6 +83,7 @@ public class WeatherController {
     @GetMapping("/hourly/list")
     public Object getHourlyWeatherList(String adcode,String lo, String hi, int page, int limit) {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
+
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }
@@ -95,6 +103,7 @@ public class WeatherController {
     @GetMapping("/monthly/list")
     public Object getMonthlyWeatherList(String adcode, String lo, String hi, int page, int limit) {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
+
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }
@@ -119,6 +128,12 @@ public class WeatherController {
                 "attachment; filename=" +  "export.xls");
         String username = jwtComponent.verify(token);
         User user = userService.getUserByUserName(username);
+        if(lo.equals("null")){
+            lo=null;
+        }
+        if(hi.equals("null")){
+            hi=null;
+        }
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }
@@ -139,6 +154,12 @@ public class WeatherController {
                 "attachment; filename=" +  "export.xls");
         String username = jwtComponent.verify(token);
         User user = userService.getUserByUserName(username);
+        if(lo.equals("null")){
+            lo=null;
+        }
+        if(hi.equals("null")){
+            hi=null;
+        }
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }
@@ -157,6 +178,12 @@ public class WeatherController {
                 "attachment; filename=" +  "export.xls");
         String username = jwtComponent.verify(token);
         User user = userService.getUserByUserName(username);
+        if(lo.equals("null")){
+            lo=null;
+        }
+        if(hi.equals("null")){
+            hi=null;
+        }
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }

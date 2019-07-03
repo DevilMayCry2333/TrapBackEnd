@@ -23,14 +23,15 @@ public class DeviceMaintenanceOutput {
     @Excel(name = "雌虫数")
     private Integer femaleNum;
     */
-    @Excel(name = "其它天牛名称")
+    @Excel(name = "其它天牛类型")
     private String otherTypeString;
     @Excel(name = "其它天牛数量")
     private Integer otherNum;
     @Excel(name = "用户名")
     private String username;
 
-    @Excel(name = "时间", format = "yyyy-MM-dd HH:mm:ss")
+  //  @Excel(name = "时间", format = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "时间", format = "yyyy-MM-dd")
     private Date date;
     @Excel(name = "经度")
     private Double longitude;

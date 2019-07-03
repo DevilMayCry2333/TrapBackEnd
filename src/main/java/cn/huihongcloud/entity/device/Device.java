@@ -27,6 +27,7 @@ public class Device {
     private String town;
     private String qrcode;
     private String manager;
+    private String worker;
 
     public String getId() {
         return id;
@@ -35,6 +36,16 @@ public class Device {
     public void setId(String id) {
         this.id = id;
     }
+
+
+    public String getWorker() {
+        return worker;
+    }
+
+    public void setWorker(String worker) {
+        this.worker = worker;
+    }
+
 
     public Double getLatitude() {
         return latitude;

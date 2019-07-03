@@ -27,9 +27,11 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.poi.ss.usermodel.Workbook;
 
 /**
  * Created by 钟晖宏 on 2018/11/24
@@ -109,6 +111,35 @@ public class QRNewController {
             }
         }
         return Result.ok();
+    }
+
+    @GetMapping("/export/QRCodeList")
+    public void exportQRCodeList(HttpServletResponse response, String token,
+                              @RequestParam(required = false) String adcode) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+        String username = jwtComponent.verify(token);
+        User user = userService.getUserByUserName(username);
+        Integer role = user.getRole();
+
+        List<Device> list = new ArrayList<>();
+        if (role == 3) {
+            list = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
+            if(list.size()>0) {
+                Workbook workbook = deviceService.exportQRCodeList(list);
+                workbook.write(response.getOutputStream());
+            }
+        }
+
+        if (role == 4) {
+            list = deviceService.getDeviceandWorkerByManager(username);
+            if(list.size()>0) {
+                Workbook workbook = deviceService.exportQRCodeManagerList(list);
+                workbook.write(response.getOutputStream());
+            }
+        }
+
     }
 
     @GetMapping("/QRCode")
