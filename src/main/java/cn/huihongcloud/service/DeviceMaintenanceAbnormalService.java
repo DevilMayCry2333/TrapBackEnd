@@ -21,13 +21,12 @@ public class DeviceMaintenanceAbnormalService {
     public List<DeviceMaintenanceAbnormalData> getMaintenanceData(User user, String condition, String date, String endDate) {
         int role = user.getRole();
         if (role < 3) {
-            // 省到市级用户
+            // 省到县级用户
             boolean reported = true;
 
 
             return mDeviceMaintenanceAbnormalDataMapper.getMaintenanceDataByAdcodeAndTown(user.getAdcode(), user.getTown(), condition, date, endDate, reported);
         }else if (role == 3){
-            //县级用户
             return mDeviceMaintenanceAbnormalDataMapper.getMaintenanceDataByAdcodeAndTown(user.getAdcode(), user.getTown(), condition, date, endDate, null);
         }else if (role == 4) {
             // 管理员

@@ -20,3 +20,4 @@ public class AppController {
         return dictService.getValueByKey("app_latest_version");
     }
 }
+

@@ -7,7 +7,7 @@
         left join device on device_maintenance.device_id = device.id
         where adcode like concat(#{adcode}, '%')
             and isactive = '0'
-        and device_maintenance.isdelete is null
+        
             and device.city is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
@@ -25,7 +25,7 @@
         left join device on device_maintenance.device_id = device.id
         where adcode like concat(#{adcode}, '%')
               and isactive = '0'
-        and device_maintenance.isdelete is null
+        
               and  device.area is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
@@ -42,7 +42,7 @@
         left join device on device_maintenance.device_id = device.id
         where adcode like concat(#{adcode}, '%')
               and isactive = '0'
-        and device_maintenance.isdelete is null
+        
               and device.town is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
@@ -59,7 +59,7 @@
         left join device on device_maintenance.device_id = device.id
         where device.adcode like concat(#{adcode}, '%')
         and isactive = '0'
-        and device_maintenance.isdelete is null
+        
         and device.manager is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
@@ -76,7 +76,7 @@
         left join device on device_maintenance.device_id = device.id
         where adcode like concat(#{adcode}, '%')
               and isactive = '0'
-        and device_maintenance.isdelete is null
+        
               and username is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
@@ -94,7 +94,7 @@
         left join device on device.id = device_maintenance.device_id
         where adcode like concat(#{adcode}, '%')
               and isactive = '0'
-        and device_maintenance.isdelete is null
+        
         <if test="startDate != null and startDate !=''">
 
             and `date` &gt;= #{startDate}
@@ -111,7 +111,7 @@
         left join user on device_maintenance.username = user.username
         where parent = #{adcode}
               and isactive = '0'
-        and device_maintenance.isdelete is null
+        
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
         </if>
@@ -125,7 +125,7 @@
         left join device on device_id = device.id
         where adcode like concat(#{adcode}, '%')
               and isactive = '0'
-              and device_maintenance.isdelete is null
+              
         group by device_id
     </select>
     <select id="queryWorkerSummaryByManager" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
@@ -135,7 +135,7 @@
         left join user on device_maintenance.username = user.username
         where parent = #{manager}
               and isactive = '0'
-        and device_maintenance.isdelete is null
+        
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
         </if>

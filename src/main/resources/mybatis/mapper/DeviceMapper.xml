@@ -190,6 +190,14 @@
     <select id="judgeDeviceRelation" resultType="java.lang.Long">
         select count(*) from device_map where device_id = #{deviceId} and user_id = #{username}
     </select>
+    <select id="judgeDeviceManager" resultType="java.lang.Long">
+        select count(*) from device where device.id = #{deviceId} and manager = #{username}
+    </select>
+    <select id="judgeDeviceUser" resultType="java.lang.Long">
+        select count(*) from device
+        where id = #{deviceId} and adcode=#{adcode}
+
+    </select>
     <select id="getDeviceIdInTown" resultType="java.lang.String">
         select id from device where townCode = #{townCode}
     </select>
@@ -198,6 +206,12 @@
     </select>
     <select id="getDeviceByManager" resultMap="Device">
         select * from device where manager = #{manager}
+
+    </select>
+    <select id="getDeviceandWorkerByManager" resultMap="Device">
+        select device_map.user_id worker,device.id id,province,city,area from device
+        left join device_map on device.id = device_map.device_id
+        where manager = #{manager}
 
     </select>
     <select id="getDeviceIdsAssociatedWithWorker" resultType="java.lang.String">
@@ -211,6 +225,11 @@
         from device
         where adcode = #{adcode} and manager = #{manager}
         and not exists (select 1 from device_map where device_id = device.id)
+    </select>
+
+    <select id="queryDeviceByDeviceid" resultMap="Device">
+        select * from device
+        where device.id = #{deviceId}
     </select>
     <select id="getDeviceByWorker" resultMap="Device">
         select device.*

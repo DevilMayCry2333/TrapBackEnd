@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by 钟晖宏 on 2018/10/5
  */
+ @Repository
 public interface DeviceMaintenanceAbnormalDataMapper extends BaseMapper<DeviceMaintenanceAbnormalData> {
     List<DeviceMaintenanceAbnormalData> getMaintenanceDataByAdcodeAndTown(@Param("adcode") String adcode, @Param("town") String town,
                                                               @Param("condition") String condition, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);

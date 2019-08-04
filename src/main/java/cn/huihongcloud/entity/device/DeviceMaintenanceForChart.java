@@ -25,8 +25,9 @@ public class DeviceMaintenanceForChart {
     private int femaleNum;
     @Excel(name = "用户名")
     private String username;
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日 HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
+   // @DateTimeFormat(pattern = "yyyy年MM月dd日")
     @Excel(name = "日期")
     private Date date;
     @Excel(name = "经度")

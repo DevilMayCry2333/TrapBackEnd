@@ -11,9 +11,11 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.device.DeviceMaintenanceAbnormalData;
+import cn.huihongcloud.entity.device.DeviceMaintenanceOutput;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.service.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -67,6 +69,8 @@ public class DeviceMaintenanceController {
                                          Double longitude,
                                          Double latitude,
                                          Double altitude,
+                                         //随机数
+                                    //     int noncestr,
                                          Integer num,
                                          Integer maleNum,
                                          Integer femaleNum,
@@ -76,17 +80,21 @@ public class DeviceMaintenanceController {
                                          int otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
 
-        if(!deviceService.judgeDeviceRelation(username,deviceId)){
-            response.setStatus(401);
-            throw new Exception("设备不属于该用户");
-        }
-        if(altitude==null){
+         Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
+         if(!relation){
+             return Result.ok(deviceService.judgeDeviceRelation(username,deviceId));
+             //throw new Exception("提交失败");
+         }
+        
+//         if(altitude==null){
+//
+//             altitude=0D;
+//         }
 
-            altitude=0D;
-        }
-
-
+        //修改了一些
+        
         DeviceMaintenance deviceMaintenance = new DeviceMaintenance();
+        
         deviceMaintenance.setDeviceId(deviceId);
         deviceMaintenance.setMaleNum(maleNum);
         deviceMaintenance.setFemaleNum(femaleNum);
@@ -97,11 +105,14 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setDate(new Date());
         deviceMaintenance.setRemark(remark);
         deviceMaintenance.setDrug(drug);
-        deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
+       // deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
+        deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
         deviceMaintenance.setWorkingContent(workingContent);
         // 其他天牛数量与类型
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
+        //随机数
+       // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
 
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
@@ -174,7 +185,8 @@ public class DeviceMaintenanceController {
             deviceService.addDeviceRelation(deviceId, user.getUsername());
         }
         */
-        return null;
+        return Result.ok();
+        //return null;
     }
 
     public Integer addAbnormaltoMaintenanceData(String username,Date date,
@@ -196,7 +208,6 @@ public class DeviceMaintenanceController {
 
             altitude=0D;
         }
-        System.out.println(imageid);
         Integer normal=0;
         DeviceMaintenance deviceMaintenance = new DeviceMaintenance();
         deviceMaintenance.setDeviceId(deviceId);
@@ -209,7 +220,8 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setDate(date);
         deviceMaintenance.setRemark(remark);
         deviceMaintenance.setDrug(drug);
-        deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
+       // deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
+      deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
         deviceMaintenance.setWorkingContent(workingContent);
         // 其他天牛数量与类型
         deviceMaintenance.setOtherNum(otherNum);
@@ -250,7 +262,14 @@ public class DeviceMaintenanceController {
                 // double offset = Math.pow(longitudeOrg - longitude, 2) + Math.pow(latitudeOrg - latitude, 2);
                 double offset = algorithm(longitudeOrg,latitudeOrg,longitude,latitude);
                 if (offset > threshold) {
+                    if(!isAbnormal) {
+                        deviceMaintenance.setIsActive(0);
+                        deviceMaintenanceService.recordAbnormal(deviceMaintenance);
 
+                        throw new Exception();
+
+
+                    }
 
                 }else {
                     normal=1;
@@ -320,6 +339,13 @@ public class DeviceMaintenanceController {
                                                @RequestParam (required = false)String myusername,
                                                @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
 
+
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -339,6 +365,12 @@ public class DeviceMaintenanceController {
                                      @RequestParam(required = false) String condition,
                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         System.out.println(condition);
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -360,6 +392,12 @@ public class DeviceMaintenanceController {
                                      @RequestParam(required = false) String condition,
                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         System.out.println(condition);
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -379,17 +417,26 @@ public class DeviceMaintenanceController {
     @GetMapping("/auth_api/maintenance1")
     public Object getMaintenanceData1(@RequestAttribute("username") String username, int page, int limit,
                                      @RequestParam(required = false) String condition,
+                                      @RequestParam(required = false) String batch,@RequestParam(required = false) String town,
                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+        //System.out.println(startDate+"cc");
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
+            System.out.println(startDate+"dd");
         }
         if(endDate!="" && endDate!=null) {
             endDate = endDate + " 23:59:59";
         }
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData1(user, condition, startDate, endDate);
+
+        List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
         pageWrapper.setCurrentPage(page);
@@ -402,6 +449,12 @@ public class DeviceMaintenanceController {
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         System.out.println(condition);
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -410,7 +463,7 @@ public class DeviceMaintenanceController {
         }
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData4(user, condition, startDate, endDate);
+        List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData4(user, condition,"","", startDate, endDate);
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
         pageWrapper.setCurrentPage(page);
@@ -424,6 +477,12 @@ public class DeviceMaintenanceController {
                                              @RequestParam(required = false) String condition,
                                              @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         System.out.println(condition);
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -472,13 +531,24 @@ public class DeviceMaintenanceController {
                                         @RequestBody DeviceMaintenance deviceMaintenance) {
 
         deviceMaintenanceService.updateMaintenanceData(deviceMaintenance);
+        String deviceId=deviceMaintenance.getDeviceId();
+        System.out.println(deviceMaintenance.getBatch());
+        if(deviceMaintenance.getBatch()==1 && deviceMaintenance.getLongitude()!=null && deviceMaintenance.getLatitude()!=null ){
+            Device device=deviceService.queryDeviceByDeviceid(deviceId);
+            device.setAltitude(deviceMaintenance.getAltitude());
+            device.setLatitude(deviceMaintenance.getLatitude());
+            device.setTown(deviceMaintenance.getTown());
+            device.setLongitude(deviceMaintenance.getLongitude());
+            device.setReceiveDate(deviceMaintenance.getDate());
+            deviceService.updateDevice(device);
+        }
         return null;
     }
 
     @DeleteMapping("/auth_api/maintenance")
     public Object deleteMaintenanceData(@RequestAttribute("username") String username,
                                         int id,String deviceID) {
-        deviceMaintenanceService.deleteById(id);
+        deviceMaintenanceService.deleteByIdReally(id);
         User user = userService.getUserByUserName(username);
         List<DeviceMaintenance> dm=deviceMaintenanceService.getMaintenanceDataById(user,deviceID,null, null);
 
@@ -493,6 +563,34 @@ public class DeviceMaintenanceController {
         }
         return null;
     }
+    
+    @DeleteMapping("/auth_api/maintenance/deleteSmoe")
+    public Object deleteSomeMaintenanceData(@RequestAttribute("username") String username,@RequestBody Map<String, Object> data) {
+        System.out.println(data.size());
+        List<Integer> list = (List<Integer>) data.get("list");
+        //deviceMaintenanceService.report(list);
+        for (Integer id: list) {
+
+
+            DeviceMaintenance dm1=deviceMaintenanceService.getMaintenanceDataById2(id);
+            String deviceID = dm1.getDeviceId();
+            User user = userService.getUserByUserName(username);
+
+            deviceMaintenanceService.deleteByIdReally(id);
+            List<DeviceMaintenance> dms = deviceMaintenanceService.getMaintenanceDataById(user, deviceID, null, null);
+
+            if (dms.size() == 0) {
+                Device device = new Device();
+                device.setId(deviceID);
+                device.setLongitude(null);
+                device.setLatitude(null);
+                device.setAltitude(null);
+                device.setReceiveDate(null);
+                deviceService.updateDevice1(device);
+            }
+        }
+       return Result.ok();
+    }
 //device_maintenance.male_num,
 //        device_maintenance.female_num,
 @DeleteMapping("/auth_api/maintenance/abnormal")
@@ -506,6 +604,13 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
     public void export1(HttpServletResponse response, String token,
                        @RequestParam(required = false) String condition,
                        @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) throws IOException {
+
+        if(startDate.equals("null")){
+            startDate=null;
+        }
+        if(endDate.equals("null")){
+            endDate=null;
+        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -524,9 +629,19 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
     @GetMapping("/maintenance/export")
     public void export(HttpServletResponse response, String token,
                        @RequestParam(required = false) String condition,
+                       @RequestParam(required = false) String batch,@RequestParam(required = false) String town,
                        @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) throws IOException {
-        if(startDate!="" && startDate!=null) {
+    // System.out.println(startDate+"aa");
+
+        if(startDate.equals("null")){
+            startDate=null;
+        }
+        if(endDate.equals("null")){
+            endDate=null;
+        }
+        if(startDate!=null && startDate!="") {
             startDate = startDate + " 00:00:00";
+          //  System.out.println(startDate+"bb");
         }
         if(endDate!="" && endDate!=null) {
             endDate = endDate + " 23:59:59";
@@ -537,10 +652,59 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
         String username = jwtComponent.verify(token);
 
         User user = userService.getUserByUserName(username);
-        Workbook workbook = deviceMaintenanceService.exportExcel(user, condition, startDate, endDate);
+        Workbook workbook = deviceMaintenanceService.exportExcel(user, condition, batch,town,startDate, endDate);
         workbook.write(response.getOutputStream());
     }
+    @GetMapping("/maintenance/exportSome")
+    public void someExport(HttpServletResponse response, String token,
+                           @RequestParam(required = false) List<Integer> data) throws IOException {
+        System.out.println(data.size());
 
+
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+        String username = jwtComponent.verify(token);
+
+        User user = userService.getUserByUserName(username);
+
+        List<DeviceMaintenance> list=new ArrayList<DeviceMaintenance>();//创建集合对象；
+        List<Integer> ids = data;
+
+        for(Integer id:ids){
+            DeviceMaintenance dm=deviceMaintenanceService.getoneMaintenanceDataById(user,id,null,null);
+            list.add(dm);//在集合里存入数据
+        }
+
+        //List<DeviceMaintenance> list = (List<DeviceMaintenance>) data.get("list");
+        System.out.println(list);
+        Workbook workbook = deviceMaintenanceService.someExportExcel(list);
+        workbook.write(response.getOutputStream());
+    }
+    @ApiOperation("导入修改后的excel")
+    @PostMapping("/maintenance/import1")
+    public Object importExcel1( String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        importParams.setHeadRows(1);
+        String username = jwtComponent.verify(token);
+
+        User user = userService.getUserByUserName(username);
+
+
+        List<DeviceMaintenanceOutput> deviceMaintenanceList = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), DeviceMaintenanceOutput.class, importParams);
+        //获取其他天 牛类型编号
+        //ObjectMapper objectMapper = new ObjectMapper();
+        //String s = objectMapper.writeValueAsString(deviceMaintenanceList);
+        //System.out.println(s);
+        //deviceMaintenanceService.addList(deviceMaintenanceList);
+        deviceMaintenanceService.importExcel(user,deviceMaintenanceList);
+        return "{\n" +
+                "  \"code\": 0\n" +
+                "  ,\"msg\": \"\"\n" +
+                "}    ";
+    }
     @ApiOperation("导入excel")
     @PostMapping("/maintenance/import")
     public Object importExcel(@RequestParam("file") MultipartFile multipartFile) throws Exception {
@@ -668,8 +832,9 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
             Integer femaleNum=deviceMaintenance1.getFemaleNum();
             String drug=deviceMaintenance1.getDrug();
             String remark=deviceMaintenance1.getRemark();
-            int otherNum=deviceMaintenance1.getOtherNum();
-            int otherType=deviceMaintenance1.getOtherType();
+            int otherNum= (int) deviceMaintenance1.getOtherNum();
+            int otherType= (int) deviceMaintenance1.getOtherType();
+
             Date date=deviceMaintenance1.getDate();
             String imageid=deviceMaintenance1.getImageId();
             int workingContent=deviceMaintenance1.getWorkingContent();

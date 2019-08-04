@@ -4,6 +4,8 @@ import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceImg;
+import cn.huihongcloud.entity.device.DeviceOutput;
+import cn.huihongcloud.entity.device.DeviceOutputManager;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceImgMapper;
 import cn.huihongcloud.mapper.DeviceMapper;
@@ -17,7 +19,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
-
+import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.BeanUtils;
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 /**
  * Created by 钟晖宏 on 2018/6/28
  */
@@ -55,6 +60,7 @@ public class DeviceService {
 
     /**
      * 根据用户名获取下属的设备
+     *
      * @param username 用户名
      * @return 设备列表
      */
@@ -70,8 +76,9 @@ public class DeviceService {
 
     /**
      * 根据地区获取设备
-     * @param adcode 地区代码
-     * @param town 乡
+     *
+     * @param adcode     地区代码
+     * @param town       乡
      * @param searchText 搜索条件
      * @return 设备列表
      */
@@ -87,6 +94,7 @@ public class DeviceService {
 
     /**
      * 获取管理员下属的设备
+     *
      * @param manager 管理员用户名
      * @return 设备列表
      */
@@ -94,6 +102,16 @@ public class DeviceService {
         List<Device> deviceList = null;
         try {
             deviceList = deviceMapper.getDeviceByManager(manager);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getDeviceandWorkerByManager(String manager) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceMapper.getDeviceandWorkerByManager(manager);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -111,9 +129,9 @@ public class DeviceService {
     }
 
 
-
     /**
      * 增加设备关联
+     *
      * @param deviceId 设备ID
      * @param username 用户名
      * @return 是否关联成功
@@ -133,6 +151,7 @@ public class DeviceService {
 
     /**
      * 删除设备关联
+     *
      * @param deviceId 设备ID
      * @param username 用户名
      * @return 是否关联成功
@@ -152,7 +171,8 @@ public class DeviceService {
 
     /**
      * 获取未与当前用户关联且可关联的设备
-     * @param worker 工人用户名
+     *
+     * @param worker     工人用户名
      * @param searchText 搜索条件
      * @return 设备列表
      */
@@ -175,8 +195,9 @@ public class DeviceService {
         }
         return deviceIdList;
     }
+
     public String getWorkerAssociatedWithDeviceIds(String device_id) {
-        String a="";
+        String a = "";
         try {
             a = deviceMapper.getWorkerAssociatedWithDeviceIds(device_id);
         } catch (Exception e) {
@@ -187,6 +208,7 @@ public class DeviceService {
 
     /**
      * 判断数据库中是否存在该设备
+     *
      * @param id 设备ID
      * @return 是否存在
      */
@@ -202,6 +224,7 @@ public class DeviceService {
 
     /**
      * 更新设备
+     *
      * @param device 设备对象
      * @return 是否成功
      */
@@ -217,6 +240,7 @@ public class DeviceService {
         }
         return result;
     }
+
     public Boolean updateDevice1(Device device) {
         Boolean result = false;
         try {
@@ -232,6 +256,7 @@ public class DeviceService {
 
     /**
      * 增加设备
+     *
      * @param device
      * @return
      */
@@ -250,6 +275,7 @@ public class DeviceService {
 
     /**
      * 获取以乡为单位的聚合点
+     *
      * @param adcode
      * @param town
      * @return
@@ -266,6 +292,7 @@ public class DeviceService {
 
     /**
      * 获取以县为单位的聚合点
+     *
      * @param adcode
      * @return
      */
@@ -281,6 +308,7 @@ public class DeviceService {
 
     /**
      * 获取以市为单位的聚合点
+     *
      * @param adcode
      * @return
      */
@@ -291,8 +319,7 @@ public class DeviceService {
 //                if (adcode.)
 //                devices = deviceMapper.getCitySpotDeviceByLocation(adcode.substring(0, 4));
                 devices = deviceMapper.getCitySpotDeviceByLocation(adcode);
-            }
-            else
+            } else
                 devices = deviceMapper.getCitySpotDeviceByLocation(null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,6 +329,7 @@ public class DeviceService {
 
     /**
      * 获取以省为单位的聚合点
+     *
      * @param adcode
      * @return
      */
@@ -320,15 +348,16 @@ public class DeviceService {
 
     /**
      * 将byte转为16进制
+     *
      * @param bytes
      * @return
      */
-    private static String byte2Hex(byte[] bytes){
+    private static String byte2Hex(byte[] bytes) {
         StringBuffer stringBuffer = new StringBuffer();
         String temp = null;
-        for (int i=0;i<bytes.length;i++){
+        for (int i = 0; i < bytes.length; i++) {
             temp = Integer.toHexString(bytes[i] & 0xFF);
-            if (temp.length()==1){
+            if (temp.length() == 1) {
                 //1得到一位的进行补0操作
                 stringBuffer.append("0");
             }
@@ -339,6 +368,7 @@ public class DeviceService {
 
     /**
      * 生成设备码
+     *
      * @param username
      * @return
      */
@@ -359,6 +389,7 @@ public class DeviceService {
 
     /**
      * 保存上传的图片
+     *
      * @param multipartFile
      * @param deviceId
      * @param username
@@ -401,6 +432,7 @@ public class DeviceService {
 
     /**
      * 获取设备的图片列表
+     *
      * @param deviceId
      * @return
      */
@@ -416,6 +448,7 @@ public class DeviceService {
 
     /**
      * 检测数据库中是否存在该图片，防止恶意下载服务器上文件
+     *
      * @param imgName
      * @return
      */
@@ -480,8 +513,36 @@ public class DeviceService {
     public List<String> getDeviceIdsCanAssociateWithWorker(String adcode, String manager) {
         return deviceMapper.getDeviceIdsCanAssociateWithWorker(adcode, manager);
     }
-
+    public Device queryDeviceByDeviceid(String deviceId){
+        return deviceMapper.queryDeviceByDeviceid(deviceId);
+    }
     public Boolean clearWorkerDeviceRelation(String worker) {
         return deviceMapper.clearWorkerDeviceRelation(worker) > 0;
+    }
+
+    public Workbook exportQRCodeList(List<Device> list) {
+
+        List<DeviceOutput> QRCodeList = new ArrayList<>();
+        for (Device weather : list) {
+            DeviceOutput weatherOutput = new DeviceOutput();
+            BeanUtils.copyProperties(weather, weatherOutput);
+            QRCodeList.add(weatherOutput);
+        }
+
+        return ExcelExportUtil.exportExcel(new ExportParams( "设备id信息", "设备id信息"), DeviceOutput.class, QRCodeList);
+
+    }
+
+    public Workbook exportQRCodeManagerList(List<Device> list) {
+
+        List<DeviceOutputManager> QRCodeList = new ArrayList<>();
+        for (Device weather : list) {
+            DeviceOutputManager weatherOutput = new DeviceOutputManager();
+            BeanUtils.copyProperties(weather, weatherOutput);
+            QRCodeList.add(weatherOutput);
+        }
+
+        return ExcelExportUtil.exportExcel(new ExportParams( "设备id信息", "设备id信息"), DeviceOutputManager.class, QRCodeList);
+
     }
 }

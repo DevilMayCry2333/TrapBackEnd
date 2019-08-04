@@ -14,6 +14,7 @@ import java.util.Map;
 public interface DeviceMapper {
 
     Boolean isExist(String id);
+    Device queryDeviceByDeviceid(@Param("deviceId")String deviceId);
     int addDevice(@Param("device") Device device);
     int updateDevice(@Param("device") Device device);
     int updateDevice1(@Param("device") Device device);
@@ -23,6 +24,8 @@ public interface DeviceMapper {
     List<Device> getDeviceByManager(@Param("manager") String manager);
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
+
+    List<Device> getDeviceandWorkerByManager(@Param("manager") String manager);
 
     int addDeviceRelation(@Param("deviceId") String deviceId, @Param("userId") String username);
     int deleteDeviceRelation(@Param("deviceId") String deviceId, @Param("userId") String username);
@@ -53,7 +56,8 @@ public interface DeviceMapper {
     String getMaxDeviceIdInArea(@Param("adcode") String adcode);
 
     Long judgeDeviceRelation(@Param("username") String username, @Param("deviceId") String deviceId);
-
+    Long judgeDeviceManager(@Param("username") String username, @Param("deviceId") String deviceId);
+    Long judgeDeviceUser(@Param("adcode") String adcode, @Param("deviceId") String deviceId);
     List<String> getDeviceIdInTown(@Param("townCode") String townCode);
 
     int clearWorkerDeviceRelation(@Param("worker") String worker);

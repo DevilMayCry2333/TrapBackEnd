@@ -40,8 +40,9 @@ public class DeviceMaintenance {
     @Excel(name = "用户名")
     private String username;
     private String name;
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日 HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+   // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
+   @DateTimeFormat(pattern = "yyyy年MM月dd日")
     @Excel(name = "日期")
     private Date date;
     @DateTimeFormat(pattern = "yyyy年MM月")
@@ -59,7 +60,7 @@ public class DeviceMaintenance {
     private Double latitude;
     @Excel(name = "海拔")
     private Double altitude;
-    @TableField("img_id")
+
     private String imageId;
     @Excel(name = "药剂类型")
     private String drug;
@@ -70,8 +71,8 @@ public class DeviceMaintenance {
     private String city;
     private String area;
     private String town;
-    //private Integer workingContent;
-    private Integer working_content;
+    private Integer workingContent;
+//    private Integer working_content;
     private Integer isactive;
     private Boolean reported;
 
@@ -79,15 +80,18 @@ public class DeviceMaintenance {
     private Object otherNum;
 
     private String cityname;
-    private String imgid;
 
-    public String getImgId() {
-        return imgid;
+    //随机数
+   /* public int nonceStr;
+    public int getNonceStr(){
+        return nonceStr;
     }
 
-    public void setImgId(String imgid) {
-        this.imgid = imgid;
+    public void setNonceStr(int nonceStr){
+        this.nonceStr = nonceStr;
     }
+
+*/
 
     public int getId() {
         return id;
@@ -267,13 +271,14 @@ public class DeviceMaintenance {
         this.town = town;
     }
 
+    /*
     public Integer getWorkingContent() {
-        return working_content;
+        return workingContent;
     }
 
-    public void setWorkingContent(Integer working_content) {
-        this.working_content = working_content;
-    }
+    public void setWorkingContent(Integer workingContent) {
+        this.workingContent = workingContent;
+    }*/
 
     public Integer getIsActive() {
         return isactive;
@@ -305,5 +310,13 @@ public class DeviceMaintenance {
 
     public void setOtherNum(Object otherNum) {
         this.otherNum = otherNum;
+    }
+
+    public Integer getWorkingContent() {
+        return workingContent;
+    }
+
+    public void setWorkingContent(Integer workingContent) {
+        this.workingContent = workingContent;
     }
 }

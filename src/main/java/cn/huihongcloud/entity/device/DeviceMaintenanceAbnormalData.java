@@ -13,7 +13,7 @@ import java.util.Date;
  * Created by 钟晖宏 on 2018/10/5
  */
 @Data
-
+@TableName("device_maintenance_abnormal")
 public class DeviceMaintenanceAbnormalData {
     @Excel(name = "ID")
     private int id;
@@ -30,8 +30,9 @@ public class DeviceMaintenanceAbnormalData {
     @Excel(name = "用户名")
     private String username;
     private String name;
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日 HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    //@DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
     @Excel(name = "日期")
     private Date date;
     @Excel(name = "经度")
@@ -40,8 +41,8 @@ public class DeviceMaintenanceAbnormalData {
     private Double latitude;
     @Excel(name = "海拔")
     private Double altitude;
-    //private String imageId;
-
+    @TableField("img_id")
+    private String imageId;
     @Excel(name = "药剂类型")
     private String drug;
     @Excel(name = "备注")
@@ -56,8 +57,4 @@ public class DeviceMaintenanceAbnormalData {
     private Boolean reported;
     private Integer otherType;
     private Integer otherNum;
-    @TableField("img_id")
-    private String imageId;
-
-
 }
