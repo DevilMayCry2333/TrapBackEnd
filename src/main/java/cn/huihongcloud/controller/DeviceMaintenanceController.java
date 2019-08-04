@@ -102,6 +102,7 @@ public class DeviceMaintenanceController {
         // 其他天牛数量与类型
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
+
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
 

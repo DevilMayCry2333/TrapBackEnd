@@ -74,8 +74,10 @@ public class DeviceMaintenance {
     private Integer working_content;
     private Integer isactive;
     private Boolean reported;
-    private Integer otherType;
-    private Integer otherNum;
+
+    private Object otherType;
+    private Object otherNum;
+
     private String cityname;
     private String imgid;
 
@@ -287,5 +289,21 @@ public class DeviceMaintenance {
 
     public void setReported(Boolean reported) {
         this.reported = reported;
+    }
+
+    public Object getOtherType() {
+        return otherType;
+    }
+
+    public void setOtherType(Object otherType) {
+        this.otherType = otherType;
+    }
+
+    public Object getOtherNum() {
+        return otherNum;
+    }
+
+    public void setOtherNum(Object otherNum) {
+        this.otherNum = otherNum;
     }
 }
