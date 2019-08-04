@@ -199,9 +199,9 @@ public class DeviceMaintenanceController {
                                       Integer femaleNum,
                                       String drug,
                                       String remark,
-                                      int otherNum,
-                                      int otherType,
-                                      int workingContent,
+                                      Integer otherNum,
+                                      Integer otherType,
+                                      Integer workingContent,
                                       Boolean isAbnormal, String imageid)throws Exception {
 
         if(altitude==null){
@@ -223,9 +223,11 @@ public class DeviceMaintenanceController {
        // deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
       deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
         deviceMaintenance.setWorkingContent(workingContent);
+
         // 其他天牛数量与类型
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
+
         Device device1 = deviceService.getDeviceById(deviceId);
         if(device1 == null || device1.getReceiveDate() == null) {
             normal=1;
@@ -832,8 +834,9 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
             Integer femaleNum=deviceMaintenance1.getFemaleNum();
             String drug=deviceMaintenance1.getDrug();
             String remark=deviceMaintenance1.getRemark();
-            int otherNum= (int) deviceMaintenance1.getOtherNum();
-            int otherType= (int) deviceMaintenance1.getOtherType();
+
+            Integer otherNum= (Integer) deviceMaintenance1.getOtherNum();
+            Integer otherType= (Integer) deviceMaintenance1.getOtherType();
 
             Date date=deviceMaintenance1.getDate();
             String imageid=deviceMaintenance1.getImageId();
