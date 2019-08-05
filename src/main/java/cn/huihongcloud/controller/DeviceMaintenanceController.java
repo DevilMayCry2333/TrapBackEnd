@@ -91,8 +91,8 @@ public class DeviceMaintenanceController {
         logger.info(String.valueOf(femaleNum));
         logger.info(drug);
         logger.info(remark);
-        logger.info(String.valueOf(otherNum));
-        logger.info(String.valueOf(otherType));
+        logger.info(otherNum.toString());
+        logger.info(otherType.toString());
         logger.info(String.valueOf(workingContent));
 
          Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
