@@ -124,8 +124,10 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
         deviceMaintenance.setWorkingContent(workingContent);
         // 其他天牛数量与类型
-        deviceMaintenance.setOtherNum(otherNum);
-        deviceMaintenance.setOtherType(otherType);
+
+        deviceMaintenance.setOtherNum(Integer.valueOf(otherNum.toString()));
+        deviceMaintenance.setOtherType(Integer.valueOf(otherType.toString()));
+
         //随机数
        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
 

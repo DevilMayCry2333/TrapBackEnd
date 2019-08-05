@@ -76,8 +76,8 @@ public class DeviceMaintenance {
     private Integer isactive;
     private Boolean reported;
 
-    private Object otherType;
-    private Object otherNum;
+    private Integer otherType;
+    private Integer otherNum;
 
     private String cityname;
 
@@ -296,21 +296,6 @@ public class DeviceMaintenance {
         this.reported = reported;
     }
 
-    public Object getOtherType() {
-        return otherType;
-    }
-
-    public void setOtherType(Object otherType) {
-        this.otherType = otherType;
-    }
-
-    public Object getOtherNum() {
-        return otherNum;
-    }
-
-    public void setOtherNum(Object otherNum) {
-        this.otherNum = otherNum;
-    }
 
     public Integer getWorkingContent() {
         return workingContent;
@@ -318,5 +303,21 @@ public class DeviceMaintenance {
 
     public void setWorkingContent(Integer workingContent) {
         this.workingContent = workingContent;
+    }
+
+    public Integer getOtherType() {
+        return otherType;
+    }
+
+    public void setOtherType(Integer otherType) {
+        this.otherType = otherType;
+    }
+
+    public Integer getOtherNum() {
+        return otherNum;
+    }
+
+    public void setOtherNum(Integer otherNum) {
+        this.otherNum = otherNum;
     }
 }
