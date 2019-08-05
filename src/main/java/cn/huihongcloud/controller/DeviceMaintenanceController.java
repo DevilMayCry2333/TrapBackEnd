@@ -20,6 +20,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +39,7 @@ import java.util.Map;
  */
 @RestController
 public class DeviceMaintenanceController {
-
+    private static final Logger logger = LoggerFactory.getLogger(DeviceMaintenanceController.class);
     @Autowired
     private DeviceMaintenanceService deviceMaintenanceService;
 
@@ -76,9 +78,22 @@ public class DeviceMaintenanceController {
                                          Integer femaleNum,
                                          String drug,
                                          String remark,
-                                         int otherNum,
-                                         int otherType,
+                                         Object otherNum,
+                                         Object otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
+        logger.info(username);
+        logger.info(deviceId);
+        logger.info(String.valueOf(longitude));
+        logger.info(String.valueOf(latitude));
+        logger.info(String.valueOf(altitude));
+        logger.info(String.valueOf(num));
+        logger.info(String.valueOf(maleNum));
+        logger.info(String.valueOf(femaleNum));
+        logger.info(drug);
+        logger.info(remark);
+        logger.info(String.valueOf(otherNum));
+        logger.info(String.valueOf(otherType));
+        logger.info(String.valueOf(workingContent));
 
          Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
          if(!relation){
