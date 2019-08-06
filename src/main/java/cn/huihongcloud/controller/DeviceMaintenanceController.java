@@ -78,8 +78,8 @@ public class DeviceMaintenanceController {
                                          Integer femaleNum,
                                          String drug,
                                          String remark,
-                                         Object otherNum,
-                                         Object otherType,
+                                         Integer otherNum,
+                                         Integer otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
         logger.info(username);
         logger.info(deviceId);
@@ -91,8 +91,8 @@ public class DeviceMaintenanceController {
         logger.info(String.valueOf(femaleNum));
         logger.info(drug);
         logger.info(remark);
-        logger.info(otherNum.toString());
-        logger.info(otherType.toString());
+        logger.info(String.valueOf(otherNum));
+        logger.info(String.valueOf(otherType));
         logger.info(String.valueOf(workingContent));
 
          Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
@@ -125,8 +125,9 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setWorkingContent(workingContent);
         // 其他天牛数量与类型
 
-        deviceMaintenance.setOtherNum(Integer.valueOf(otherNum.toString()));
-        deviceMaintenance.setOtherType(Integer.valueOf(otherType.toString()));
+        deviceMaintenance.setOtherNum(otherNum);
+        deviceMaintenance.setOtherType(otherType);
+
 
         //随机数
        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
