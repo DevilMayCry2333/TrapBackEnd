@@ -81,6 +81,7 @@ public class DeviceMaintenanceController {
                                          Integer otherNum,
                                          Integer otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
+        logger.info("===开始记录数据===");
         logger.info(username);
         logger.info(deviceId);
         logger.info(String.valueOf(longitude));
