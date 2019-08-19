@@ -81,6 +81,9 @@ public class DeviceMaintenanceController {
                                          Integer otherNum,
                                          Integer otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
+
+
+
         logger.info("===开始记录数据===");
         logger.info(username);
         logger.info(deviceId);
@@ -95,6 +98,8 @@ public class DeviceMaintenanceController {
         logger.info(String.valueOf(otherNum));
         logger.info(String.valueOf(otherType));
         logger.info(String.valueOf(workingContent));
+
+
 
          Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
          if(!relation){
