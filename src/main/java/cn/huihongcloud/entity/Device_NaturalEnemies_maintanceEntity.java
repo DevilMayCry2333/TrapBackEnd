@@ -11,7 +11,7 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String region;
 
-    private Date submitDate;
+    private String submitDate;
 
     private Integer batch;
 
@@ -31,7 +31,9 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private Long scanid;
 
-    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid) {
+    private String username;
+
+    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -46,6 +48,7 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.worker = worker;
         this.remarks = remarks;
         this.scanid = scanid;
+        this.username = username;
     }
 
     public Device_NaturalEnemies_maintanceEntity() {
@@ -82,14 +85,6 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setRegion(String region) {
         this.region = region == null ? null : region.trim();
-    }
-
-    public Date getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(Date submitDate) {
-        this.submitDate = submitDate;
     }
 
     public Integer getBatch() {
@@ -162,5 +157,21 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setScanid(Long scanid) {
         this.scanid = scanid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(String submitDate) {
+        this.submitDate = submitDate;
     }
 }

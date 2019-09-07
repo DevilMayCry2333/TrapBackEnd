@@ -9,7 +9,10 @@ import java.util.List;
 @Repository
 public interface Device_DeadTrees_maintanceEntityMapper {
 
-    List<Device_DeadTrees_maintanceEntity> selectById(BigInteger id);
+    int countAll(String username);
+
+    List<Device_DeadTrees_maintanceEntity> selectAll(String username,int num1,int num2);
+
 
     int insert(Device_DeadTrees_maintanceEntity record);
 

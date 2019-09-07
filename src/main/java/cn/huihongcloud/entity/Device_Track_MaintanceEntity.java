@@ -9,9 +9,9 @@ public class Device_Track_MaintanceEntity {
 
     private String timeconsume;
 
-    private Date starttime;
+    private String starttime;
 
-    private Date endtime;
+    private String endtime;
 
     private String pointcollect;
 
@@ -39,7 +39,9 @@ public class Device_Track_MaintanceEntity {
 
     private Long deviceid;
 
-    public Device_Track_MaintanceEntity(Long id, String linename, String timeconsume, Date starttime, Date endtime, String pointcollect, String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceid) {
+    private String username;
+
+    public Device_Track_MaintanceEntity(Long id, String linename, String timeconsume, String starttime, String endtime, String pointcollect, String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceid, String username) {
         this.id = id;
         this.linename = linename;
         this.timeconsume = timeconsume;
@@ -58,6 +60,7 @@ public class Device_Track_MaintanceEntity {
         this.remarks = remarks;
         this.scanid = scanid;
         this.deviceid = deviceid;
+        this.username = username;
     }
 
     public Device_Track_MaintanceEntity() {
@@ -86,22 +89,6 @@ public class Device_Track_MaintanceEntity {
 
     public void setTimeconsume(String timeconsume) {
         this.timeconsume = timeconsume == null ? null : timeconsume.trim();
-    }
-
-    public Date getStarttime() {
-        return starttime;
-    }
-
-    public void setStarttime(Date starttime) {
-        this.starttime = starttime;
-    }
-
-    public Date getEndtime() {
-        return endtime;
-    }
-
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
     }
 
     public String getPointcollect() {
@@ -206,5 +193,29 @@ public class Device_Track_MaintanceEntity {
 
     public void setDeviceid(Long deviceid) {
         this.deviceid = deviceid;
+    }
+
+    public String getStarttime() {
+        return starttime;
+    }
+
+    public void setStarttime(String starttime) {
+        this.starttime = starttime;
+    }
+
+    public String getEndtime() {
+        return endtime;
+    }
+
+    public void setEndtime(String endtime) {
+        this.endtime = endtime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

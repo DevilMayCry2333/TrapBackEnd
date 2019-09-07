@@ -9,7 +9,7 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String serial;
 
-    private Date submitDate;
+    private String submitDate;
 
     private String batch;
 
@@ -33,7 +33,11 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String pic;
 
-    public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, Date submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic) {
+    private String username;
+
+    private String region;
+
+    public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, String submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic, String username,String region) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -49,6 +53,8 @@ public class Device_DeadTrees_maintanceEntity {
         this.remarks = remarks;
         this.scanid = scanid;
         this.pic = pic;
+        this.username = username;
+        this.region = region;
     }
 
     public Device_DeadTrees_maintanceEntity() {
@@ -77,14 +83,6 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setSerial(String serial) {
         this.serial = serial == null ? null : serial.trim();
-    }
-
-    public Date getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(Date submitDate) {
-        this.submitDate = submitDate;
     }
 
     public String getBatch() {
@@ -173,5 +171,29 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setPic(String pic) {
         this.pic = pic == null ? null : pic.trim();
+    }
+
+    public String getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(String submitDate) {
+        this.submitDate = submitDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 }

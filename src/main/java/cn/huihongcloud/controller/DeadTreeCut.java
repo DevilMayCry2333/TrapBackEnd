@@ -1,6 +1,6 @@
 package cn.huihongcloud.controller;
 
-import cn.huihongcloud.service.NaturalEnemyService;
+import cn.huihongcloud.service.DeadTreeCutService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,20 +8,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/natural")
-public class NaturalEnemy {
+@RequestMapping("/deadTree")
+public class DeadTreeCut {
     @Autowired
-    NaturalEnemyService naturalEnemyService;
+    DeadTreeCutService deadTreeCutService;
 
     JSONObject jsonObject = new JSONObject();
     @RequestMapping("/detail")
-    public Object NaturalDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
+    public Object detail(@RequestParam String username,@RequestParam int page,@RequestParam int limit){
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
-        jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,page*limit));
-        jsonObject.put("total",naturalEnemyService.countAll(username));
+
+        jsonObject.put("Data",deadTreeCutService.selectAll(username,page*limit-limit,page*limit));
+        jsonObject.put("total",deadTreeCutService.countAll(username));
         jsonObject.put("current",page);
+
         return jsonObject;
     }
 }

@@ -6,8 +6,8 @@
       <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="LineName" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="TimeConsume" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="StartTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="EndTIme" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="StartTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="EndTIme" jdbcType="TIMESTAMP" javaType="java.lang.String" />
       <arg column="PointCollect" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="StartPoint" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="EndPoint" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -21,6 +21,7 @@
       <arg column="Remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ScanId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="deviceId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
@@ -29,13 +30,13 @@
       StartPoint, EndPoint, Pic1, 
       Pic2, Pic3, Pic4, Pic5, 
       Worker, Working_Content, Remarks, 
-      ScanId, deviceId)
+      ScanId, deviceId,username)
     values (#{id,jdbcType=BIGINT}, #{linename,jdbcType=VARCHAR}, #{timeconsume,jdbcType=VARCHAR}, 
       #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{pointcollect,jdbcType=VARCHAR}, 
       #{startpoint,jdbcType=VARCHAR}, #{endpoint,jdbcType=VARCHAR}, #{pic1,jdbcType=VARCHAR}, 
       #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{pic4,jdbcType=VARCHAR}, #{pic5,jdbcType=VARCHAR}, 
       #{worker,jdbcType=VARCHAR}, #{workingContent,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{scanid,jdbcType=BIGINT}, #{deviceid,jdbcType=BIGINT})
+      #{scanid,jdbcType=BIGINT}, #{deviceid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
     insert into Device_Track_Maintance
@@ -94,6 +95,10 @@
       <if test="deviceid != null" >
         deviceId,
       </if>
+      <if test="username != null" >
+        username,
+      </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -150,6 +155,17 @@
       <if test="deviceid != null" >
         #{deviceid,jdbcType=BIGINT},
       </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+
     </trim>
   </insert>
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * FROM Device_Track_Maintance WHERE username = #{username} LIMIT #{num1},#{num2};
+  </select>
 </mapper>
