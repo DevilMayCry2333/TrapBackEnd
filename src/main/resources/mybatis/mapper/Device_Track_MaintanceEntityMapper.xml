@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.Device_Track_MaintanceEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
+    <constructor >
+      <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="LineName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TimeConsume" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="StartTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="EndTIme" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="PointCollect" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="StartPoint" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EndPoint" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic1" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic2" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic3" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic4" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic5" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Worker" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Working_Content" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ScanId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="deviceId" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
+    insert into Device_Track_Maintance (id, LineName, TimeConsume, 
+      StartTime, EndTIme, PointCollect, 
+      StartPoint, EndPoint, Pic1, 
+      Pic2, Pic3, Pic4, Pic5, 
+      Worker, Working_Content, Remarks, 
+      ScanId, deviceId)
+    values (#{id,jdbcType=BIGINT}, #{linename,jdbcType=VARCHAR}, #{timeconsume,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{pointcollect,jdbcType=VARCHAR}, 
+      #{startpoint,jdbcType=VARCHAR}, #{endpoint,jdbcType=VARCHAR}, #{pic1,jdbcType=VARCHAR}, 
+      #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{pic4,jdbcType=VARCHAR}, #{pic5,jdbcType=VARCHAR}, 
+      #{worker,jdbcType=VARCHAR}, #{workingContent,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{scanid,jdbcType=BIGINT}, #{deviceid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
+    insert into Device_Track_Maintance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="linename != null" >
+        LineName,
+      </if>
+      <if test="timeconsume != null" >
+        TimeConsume,
+      </if>
+      <if test="starttime != null" >
+        StartTime,
+      </if>
+      <if test="endtime != null" >
+        EndTIme,
+      </if>
+      <if test="pointcollect != null" >
+        PointCollect,
+      </if>
+      <if test="startpoint != null" >
+        StartPoint,
+      </if>
+      <if test="endpoint != null" >
+        EndPoint,
+      </if>
+      <if test="pic1 != null" >
+        Pic1,
+      </if>
+      <if test="pic2 != null" >
+        Pic2,
+      </if>
+      <if test="pic3 != null" >
+        Pic3,
+      </if>
+      <if test="pic4 != null" >
+        Pic4,
+      </if>
+      <if test="pic5 != null" >
+        Pic5,
+      </if>
+      <if test="worker != null" >
+        Worker,
+      </if>
+      <if test="workingContent != null" >
+        Working_Content,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="scanid != null" >
+        ScanId,
+      </if>
+      <if test="deviceid != null" >
+        deviceId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="linename != null" >
+        #{linename,jdbcType=VARCHAR},
+      </if>
+      <if test="timeconsume != null" >
+        #{timeconsume,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pointcollect != null" >
+        #{pointcollect,jdbcType=VARCHAR},
+      </if>
+      <if test="startpoint != null" >
+        #{startpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="endpoint != null" >
+        #{endpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="pic4 != null" >
+        #{pic4,jdbcType=VARCHAR},
+      </if>
+      <if test="pic5 != null" >
+        #{pic5,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null" >
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="workingContent != null" >
+        #{workingContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="scanid != null" >
+        #{scanid,jdbcType=BIGINT},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

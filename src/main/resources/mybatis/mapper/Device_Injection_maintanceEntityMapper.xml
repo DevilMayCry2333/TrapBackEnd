@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
+    <constructor >
+      <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="device_Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="serial" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="region" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="submit_date" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="batch" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="work_content" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="injection_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="WoodStatus" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Worker" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="scanId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
+    insert into Device_Injection_maintance (id, device_Id, serial, 
+      region, submit_date, batch, 
+      longitude, latitude, work_content, 
+      injection_num, WoodStatus, Pic, 
+      Worker, Remarks, scanId,username
+      )
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{workContent,jdbcType=VARCHAR}, 
+      #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
+      #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
+    insert into Device_Injection_maintance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceId != null" >
+        device_Id,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="batch != null" >
+        batch,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="workContent != null" >
+        work_content,
+      </if>
+      <if test="injectionNum != null" >
+        injection_num,
+      </if>
+      <if test="woodstatus != null" >
+        WoodStatus,
+      </if>
+      <if test="pic != null" >
+        Pic,
+      </if>
+      <if test="worker != null" >
+        Worker,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="scanid != null" >
+        scanId,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="workContent != null" >
+        #{workContent,jdbcType=VARCHAR},
+      </if>
+      <if test="injectionNum != null" >
+        #{injectionNum,jdbcType=INTEGER},
+      </if>
+      <if test="woodstatus != null" >
+        #{woodstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null" >
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="scanid != null" >
+        #{scanid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM Device_Injection_maintance WHERE id = #{id};
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+      select * from Device_Injection_maintance WHERE username = #{username} LIMIT #{page1},#{page2};
+    </select>
+
+  <select id="CountAll" resultType="java.lang.Integer">
+    select count(id) from Device_Injection_maintance WHERE username = #{username};
+  </select>
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.Device_NaturalEnemies_maintanceEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity" >
+    <constructor >
+      <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="device_Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="serial" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="region" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="submit_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="batch" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PredatorsType" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Release_Num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Worker" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="scanId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity" >
+    insert into Device_NaturalEnemies_maintance (id, device_Id, serial, 
+      region, submit_date, batch, 
+      longitude, latitude, PredatorsType, 
+      Release_Num, Pic, Worker, 
+      Remarks, scanId,username)
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{predatorstype,jdbcType=VARCHAR}, 
+      #{releaseNum,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT, #{username,jdbcType=VARCHAR},)
+  </insert>
+  <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity" >
+    insert into Device_NaturalEnemies_maintance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceId != null" >
+        device_Id,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="batch != null" >
+        batch,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="predatorstype != null" >
+        PredatorsType,
+      </if>
+      <if test="releaseNum != null" >
+        Release_Num,
+      </if>
+      <if test="pic != null" >
+        Pic,
+      </if>
+      <if test="worker != null" >
+        Worker,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="scanid != null" >
+        scanId,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=INTEGER},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="predatorstype != null" >
+        #{predatorstype,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseNum != null" >
+        #{releaseNum,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null" >
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="scanid != null" >
+        #{scanid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countAll" resultType="java.lang.Integer">
+      SELECT COUNT (id) FROM Device_NaturalEnemies_maintance WHERE username = #{username};
+    </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * FROM  Device_NaturalEnemies_maintance WHERE username = #{username} LIMIT #{num1},#{num2};
+  </select>
+</mapper>
