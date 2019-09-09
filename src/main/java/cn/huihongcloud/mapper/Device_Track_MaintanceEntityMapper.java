@@ -15,4 +15,9 @@ public interface Device_Track_MaintanceEntityMapper {
     int insert(Device_Track_MaintanceEntity record);
 
     int insertSelective(Device_Track_MaintanceEntity record);
+
+    int countAllByArea(String username);
+
+    List<Device_Track_MaintanceEntity> selectAllByArea(String username,int num1,int num2);
+
 }

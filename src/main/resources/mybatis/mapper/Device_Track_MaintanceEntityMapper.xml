@@ -168,4 +168,14 @@
   <select id="selectAll" resultMap="BaseResultMap">
     SELECT * FROM Device_Track_Maintance WHERE username = #{username} LIMIT #{num1},#{num2};
   </select>
+
+    <select id="countAllByArea" resultType="java.lang.Integer">
+      SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username like "%"#{username}"%";
+    </select>
+
+  <select id="selectAllByArea" resultMap="BaseResultMap">
+      SELECT * FROM Device_Track_Maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+  </select>
+
+
 </mapper>

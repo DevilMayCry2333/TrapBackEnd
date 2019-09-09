@@ -19,4 +19,12 @@ public class TrackService {
     public int countAll(String username){
         return deviceTrackMaintanceEntityMapper.countAll(username);
     }
+
+    public int countAllArea(String username){
+        return deviceTrackMaintanceEntityMapper.countAllByArea(username);
+    }
+
+    public List<Device_Track_MaintanceEntity> selectAllByArea(String username,int num1,int num2){
+        return deviceTrackMaintanceEntityMapper.selectAllByArea(username, num1, num2);
+    }
 }
