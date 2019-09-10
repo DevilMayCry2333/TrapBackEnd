@@ -17,4 +17,8 @@ public interface Device_DeadTrees_maintanceEntityMapper {
     int insert(Device_DeadTrees_maintanceEntity record);
 
     int insertSelective(Device_DeadTrees_maintanceEntity record);
+
+    int countAllByArea(String username);
+
+    List<Device_DeadTrees_maintanceEntity> selectAllByArea(String username,int num1,int num2);
 }

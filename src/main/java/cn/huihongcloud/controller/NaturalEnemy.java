@@ -24,4 +24,13 @@ public class NaturalEnemy {
         jsonObject.put("current",page);
         return jsonObject;
     }
+
+    @RequestMapping("/areaDetail")
+    public Object DetailByArea(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
+        jsonObject.put("Data",naturalEnemyService.selectAllByArea(username,page*limit-limit,page*limit));
+        jsonObject.put("total",naturalEnemyService.countAllByArea(username));
+        jsonObject.put("current",page);
+        jsonObject.put("Res",true);
+        return jsonObject;
+    }
 }

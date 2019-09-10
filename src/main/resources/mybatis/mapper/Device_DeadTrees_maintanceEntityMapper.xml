@@ -151,7 +151,16 @@
   <select id="selectAll" resultMap="BaseResultMap">
     SELECT * FROM Device_DeadTrees_maintance WHERE username = #{username} LIMIT #{num1},#{num2}
   </select>
+
   <select id="countAll" resultType="java.lang.Integer">
     SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username = #{username};
+  </select>
+
+    <select id="countAllByArea" resultType="java.lang.Integer">
+      SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%";
+    </select>
+
+  <select id="selectAllByArea" resultMap="BaseResultMap">
+    SELECT * FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
   </select>
 </mapper>

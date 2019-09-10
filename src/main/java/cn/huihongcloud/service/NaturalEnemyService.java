@@ -18,4 +18,12 @@ public class NaturalEnemyService {
     public int countAll(String username){
         return deviceNaturalEnemiesMaintanceEntityMapper.countAll(username);
     }
+
+    public int countAllByArea(String username){
+        return deviceNaturalEnemiesMaintanceEntityMapper.countAllByArea(username);
+    }
+
+    public List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String username,int num1,int num2){
+        return deviceNaturalEnemiesMaintanceEntityMapper.selectAllByArea(username, num1, num2);
+    }
 }

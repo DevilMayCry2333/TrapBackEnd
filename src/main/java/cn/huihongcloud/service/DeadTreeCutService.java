@@ -19,4 +19,12 @@ public class DeadTreeCutService {
     public int countAll(String username){
         return deviceDeadTreesMaintanceEntityMapper.countAll(username);
     }
+
+    public int countAllByArea(String username){
+        return deviceDeadTreesMaintanceEntityMapper.countAllByArea(username);
+    }
+
+    public List<Device_DeadTrees_maintanceEntity> selectAllByArea(String username,int num1,int num2){
+        return deviceDeadTreesMaintanceEntityMapper.selectAllByArea(username, num1, num2);
+    }
 }

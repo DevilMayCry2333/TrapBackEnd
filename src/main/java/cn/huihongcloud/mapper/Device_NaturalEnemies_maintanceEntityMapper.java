@@ -15,4 +15,8 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
     int insert(Device_NaturalEnemies_maintanceEntity record);
 
     int insertSelective(Device_NaturalEnemies_maintanceEntity record);
+
+    int countAllByArea(String username);
+
+    List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String username, int num1, int num2);
 }

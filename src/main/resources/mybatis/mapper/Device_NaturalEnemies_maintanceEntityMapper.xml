@@ -135,4 +135,10 @@
   <select id="selectAll" resultMap="BaseResultMap">
     SELECT * FROM  Device_NaturalEnemies_maintance WHERE username = #{username} LIMIT #{num1},#{num2};
   </select>
+    <select id="countAllByArea" resultType="java.lang.Integer">
+      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username like "%"#{username}"%";
+    </select>
+  <select id="selectAllByArea" resultMap="BaseResultMap">
+        SELECT * FROM Device_NaturalEnemies_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+  </select>
 </mapper>

@@ -35,7 +35,21 @@ public class Device_Injection_maintanceEntity {
 
     private String username;
 
-    public Device_Injection_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username) {
+    private String altitude;
+
+    private String dataPrecision;
+
+
+
+    private String province;
+
+    private String city;
+
+    private String area;
+
+    private String town;
+
+    public Device_Injection_maintanceEntity(String province,String city,String area,String town,String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username) {
         this.id = id;
         this.submitDate = submitDate;
         this.deviceId = deviceId;
@@ -52,6 +66,12 @@ public class Device_Injection_maintanceEntity {
         this.remarks = remarks;
         this.scanid = scanid;
         this.username = username;
+        this.altitude = altitude;
+        this.dataPrecision = dataPrecision;
+        this.province = province;
+        this.city = city;
+        this.area = area;
+        this.town = town;
     }
 
     public Device_Injection_maintanceEntity() {
@@ -184,5 +204,53 @@ public class Device_Injection_maintanceEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
+    }
+
+    public String getDataPrecision() {
+        return dataPrecision;
+    }
+
+    public void setDataPrecision(String dataPrecision) {
+        this.dataPrecision = dataPrecision;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
     }
 }
