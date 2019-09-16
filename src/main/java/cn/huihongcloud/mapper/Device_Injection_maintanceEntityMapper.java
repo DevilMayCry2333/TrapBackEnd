@@ -30,5 +30,12 @@ public interface Device_Injection_maintanceEntityMapper {
 
     List<Device_Injection_maintanceEntity> getMaintenanceDataByDeviceId(String myusername, String deviceId, @Param("startDate")String startDate, @Param("endDate")String endDate, @Param("reported")Boolean reported);
 
+    List<InjectionSummary> queryDeviceSummaryByManager(String adcode,String startDate, String endDate);
+
+    List<Device_Injection_maintanceEntity> getMaintenanceDataByAdcodeAndTown1(@Param("adcode") String adcode, @Param("town") String town,
+                                                               @Param("condition") String condition,@Param("batch") String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
+    List<Device_Injection_maintanceEntity> getMaintenanceDataByManager1(@Param("adcode") String adcode, @Param("town") String town,
+                                                         @Param("condition") String condition,@Param("batch")String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
+    int reportData(@Param("id") Integer id);
 
 }

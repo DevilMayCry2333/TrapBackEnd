@@ -45,7 +45,9 @@ public class Device_Injection_maintanceEntity {
 
     private String town;
 
-    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username,String province,String city,String area,String town) {
+    private Integer reported;
+
+    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username,String province,String city,String area,String town,Integer reported) {
         this.id = id;
         this.submitDate = submitDate;
         this.deviceId = deviceId;
@@ -68,6 +70,7 @@ public class Device_Injection_maintanceEntity {
         this.city = city;
         this.area = area;
         this.town = town;
+        this.reported = reported;
     }
 
     public Device_Injection_maintanceEntity() {
@@ -248,5 +251,13 @@ public class Device_Injection_maintanceEntity {
 
     public void setTown(String town) {
         this.town = town;
+    }
+
+    public int getReported() {
+        return reported;
+    }
+
+    public void setReported(int reported) {
+        this.reported = reported;
     }
 }
