@@ -46,4 +46,19 @@ public class DryInjectionService {
         return null;
     }
 
+    public List<Device_Injection_maintanceEntity> getMaintenanceDataByDeviceId(User user,String myusername,String deviceId, String startDate, String endDate) {
+        Integer role=user.getRole();
+        if(role<3){
+            Boolean reported = true;
+            return deviceInjectionMaintanceEntityMapper.getMaintenanceDataByDeviceId(myusername,deviceId,startDate,endDate,reported);
+        }else if(role == 3 || role ==4) {
+
+            return deviceInjectionMaintanceEntityMapper.getMaintenanceDataByDeviceId(myusername,deviceId, startDate, endDate, null);
+        }else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+
 }

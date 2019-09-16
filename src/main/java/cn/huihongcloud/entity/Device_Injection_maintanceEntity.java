@@ -1,7 +1,5 @@
 package cn.huihongcloud.entity;
 
-import java.util.Date;
-
 public class Device_Injection_maintanceEntity {
     private Long id;
 
@@ -39,8 +37,6 @@ public class Device_Injection_maintanceEntity {
 
     private String dataPrecision;
 
-
-
     private String province;
 
     private String city;
@@ -49,7 +45,7 @@ public class Device_Injection_maintanceEntity {
 
     private String town;
 
-    public Device_Injection_maintanceEntity(String province,String city,String area,String town,String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username) {
+    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username,String province,String city,String area,String town) {
         this.id = id;
         this.submitDate = submitDate;
         this.deviceId = deviceId;

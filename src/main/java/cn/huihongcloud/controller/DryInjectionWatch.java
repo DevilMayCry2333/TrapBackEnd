@@ -87,5 +87,35 @@ public class DryInjectionWatch {
         return pageWrapper;
     }
 
+    @RequestMapping("/maintenance/byDeviceId")
+    public Object getMaintenanceDataByDeviceId(@RequestAttribute("username") String username,
+                                               @RequestParam String deviceId,
+                                               @RequestParam (required = false)String myusername,
+                                               @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
+
+
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+        User user=userService.getUserByUserName(username);
+        Object maintenanceData = dryInjectionService.getMaintenanceDataByDeviceId(user,myusername,deviceId, startDate, endDate);
+        System.out.println(maintenanceData);
+
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setData(maintenanceData);
+
+        return pageWrapper;
+    }
+
+
 
 }

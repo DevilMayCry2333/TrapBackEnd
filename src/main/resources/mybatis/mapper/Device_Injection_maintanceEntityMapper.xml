@@ -32,14 +32,14 @@
       region, submit_date, batch, 
       longitude, latitude, work_content, 
       injection_num, WoodStatus, Pic, 
-      Worker, Remarks, scanId,username,altitude,dataPrecision
+      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{workContent,jdbcType=VARCHAR}, 
       #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
       #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
-      ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR})
+      ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
     insert into Device_Injection_maintance
@@ -98,6 +98,19 @@
       <if test="dataPrecision != null" >
         dataPrecision,
       </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="town != null" >
+        town
+      </if>
+
 
 
     </trim>
@@ -156,10 +169,23 @@
       <if test="dataPrecision != null" >
         #{dataPrecision,jdbcType=VARCHAR},
       </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null" >
+        #{town,jdbcType=VARCHAR},
+      </if>
 
 
     </trim>
   </insert>
+
     <select id="selectById" resultMap="BaseResultMap">
         SELECT * FROM Device_Injection_maintance WHERE id = #{id};
     </select>
@@ -306,6 +332,20 @@
 
     group by device_Id,Device_Injection_maintance.Worker
     order by submit_date desc
+  </select>
+  <select id="getMaintenanceDataByDeviceId" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+    select * from Device_Injection_maintance
+    where device_Id = #{deviceId}
+
+    <if test="myusername != null and myusername !=''">
+      and username = #{myusername}
+    </if>
+    <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !='' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
   </select>
 
 </mapper>
