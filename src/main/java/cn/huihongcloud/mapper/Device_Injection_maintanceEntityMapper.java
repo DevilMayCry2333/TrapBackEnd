@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface Device_Injection_maintanceEntityMapper {
@@ -37,5 +38,11 @@ public interface Device_Injection_maintanceEntityMapper {
     List<Device_Injection_maintanceEntity> getMaintenanceDataByManager1(@Param("adcode") String adcode, @Param("town") String town,
                                                          @Param("condition") String condition,@Param("batch")String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
     int reportData(@Param("id") Integer id);
+
+    List<InjectionSummary> queryDeviceSummaryByCity(String adcode,String startDate, String endDate);
+
+    Map<String, Long> queryDeviceSum(String adcode, String startDate, String endDate);
+    Map<String, Long> queryDeviceSum4(String adcode,String startDate,String endDate);
+
 
 }

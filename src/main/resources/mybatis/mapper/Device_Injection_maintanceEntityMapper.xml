@@ -25,6 +25,7 @@
       <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="town" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="reported" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
@@ -32,14 +33,15 @@
       region, submit_date, batch, 
       longitude, latitude, work_content, 
       injection_num, WoodStatus, Pic, 
-      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town
+      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,reported
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{workContent,jdbcType=VARCHAR}, 
       #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
       #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
-      ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR})
+      ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR}
+      ,#{reported,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
     insert into Device_Injection_maintance
@@ -110,6 +112,10 @@
       <if test="town != null" >
         town
       </if>
+      <if test="reported != null" >
+        reported
+      </if>
+
 
 
 
@@ -182,6 +188,11 @@
         #{town,jdbcType=VARCHAR},
       </if>
 
+      <if test="reported != null" >
+        #{reported,jdbcType=INTEGER}
+      </if>
+
+
 
     </trim>
   </insert>
@@ -231,6 +242,7 @@
     Device_Injection_maintance.altitude,
     Device_Injection_maintance.Pic,
     Device_Injection_maintance.Remarks,
+    Device_Injection_maintance.reported,
     device.province,
     device.city,
     device.area,
@@ -291,6 +303,7 @@
     Device_Injection_maintance.altitude,
     Device_Injection_maintance.Pic,
     Device_Injection_maintance.Remarks,
+    Device_Injection_maintance.reported,
     device.province,
     device.city,
     device.area,
@@ -504,6 +517,54 @@
     </if>
 
     order by submit_date desc
+  </select>
+  <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
+    select count(distinct device_id) deviceCount, sum(injection_num) injectNum, device.area `name`, device.adcode code
+    from Device_Injection_maintance
+    left join device on Device_Injection_maintance.device_id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and  device.area is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device.area
+  </select>
+  <select id="queryDeviceSum" resultType="java.util.Map">
+    select count(distinct device_Id) `count`, sum(injection_num) `sum`
+    from Device_Injection_maintance
+
+    left join device on device.id = Device_Injection_maintance.device_Id
+    where adcode like concat(#{adcode}, '%')
+
+    <if test="startDate != null and startDate !=''">
+
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+
+      and submit_date &lt;= #{endDate}
+    </if>
+  </select>
+
+  <select id="queryDeviceSum4" resultType="java.util.Map">
+    select count(distinct device_Id) `count`, sum(injection_num) `sum` from Device_Injection_maintance
+    left join device on device.id = Device_Injection_maintance.device_id
+    left join user on Device_Injection_maintance.username = user.username
+    where parent = #{adcode}
+
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+
   </select>
 
 </mapper>
