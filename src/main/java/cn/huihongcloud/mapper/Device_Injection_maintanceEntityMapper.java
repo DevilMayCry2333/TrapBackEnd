@@ -41,8 +41,12 @@ public interface Device_Injection_maintanceEntityMapper {
 
     List<InjectionSummary> queryDeviceSummaryByCity(String adcode,String startDate, String endDate);
 
-    Map<String, Long> queryDeviceSum(String adcode, String startDate, String endDate);
-    Map<String, Long> queryDeviceSum4(String adcode,String startDate,String endDate);
+    Map<String, Integer> queryDeviceSum(String adcode, String startDate, String endDate);
+    Map<String, Integer> queryDeviceSum4(String adcode,String startDate,String endDate);
+
+    List<InjectionSummary> queryWorkerSummaryByAdcode(String adcode,String startDate, String endDate);
+    List<InjectionSummary> queryWorkerSummaryByManager(@Param("manager") String manager,String startDate, String endDate);
+    List<InjectionSummary> queryDeviceSummaryByProvince(String adcode,String startDate, String endDate);
 
 
 }

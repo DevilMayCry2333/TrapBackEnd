@@ -9,6 +9,7 @@ import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,15 +75,67 @@ public class DryInjectionSummary {
         }
         User user = userService.getUserByUserName(username);
         if(user.getRole()<4) {
-            Map<String, Long> sum = deviceInjectionMaintanceEntityMapper.queryDeviceSum(adcode, startDate, endDate);
+            Map<String, Integer> sum = deviceInjectionMaintanceEntityMapper.queryDeviceSum(adcode, startDate, endDate);
             return Result.ok(sum);
         }
         if(user.getRole()==4){
-            Map<String, Long> sum = deviceInjectionMaintanceEntityMapper.queryDeviceSum4(adcode, startDate, endDate);
+            Map<String, Integer> sum = deviceInjectionMaintanceEntityMapper.queryDeviceSum4(adcode, startDate, endDate);
             return Result.ok(sum);
         }
         return Result.failed();
     }
+
+    @GetMapping("/worker")
+    public Object getDeviceSummaryByWorker(@RequestAttribute("username") String username,
+                                           @RequestParam(required = false) String adcode, int page, int limit,
+                                           @RequestParam(required = false) String startDate,
+                                           @RequestParam(required = false) String endDate) {
+        User user = userService.getUserByUserName(username);
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+//        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<InjectionSummary> summaryEntities = null;
+        if (user.getRole() != 4) {
+            summaryEntities = deviceInjectionMaintanceEntityMapper.queryWorkerSummaryByAdcode(adcode,startDate,endDate);
+        } else {
+            summaryEntities = deviceInjectionMaintanceEntityMapper.queryWorkerSummaryByManager(user.getUsername(),startDate,endDate);
+        }
+        PageWrapper pageWrapper = new PageWrapper();
+        //pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setTotalPage(1);
+        //pageWrapper.setCurrentPage(page);
+        pageWrapper.setCurrentPage(1);
+//        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalNum(1000);
+        pageWrapper.setData(summaryEntities);
+        return Result.ok(pageWrapper);
+    }
+
+    @GetMapping("/province")
+    public Object getDeviceSummaryByProvince(String adcode, int page, int limit,
+                                             @RequestParam(required = false) String startDate,
+                                             @RequestParam(required = false) String endDate) {
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<InjectionSummary> summaryEntities = deviceInjectionMaintanceEntityMapper.queryDeviceSummaryByProvince(adcode,startDate,endDate);
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setData(summaryEntities);
+        return Result.ok(pageWrapper);
+    }
+
+
 
 
 }

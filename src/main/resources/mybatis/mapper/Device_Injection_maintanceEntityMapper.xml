@@ -202,11 +202,12 @@
         where id = #{id}
   </update>
 
-  <select id="selectById" resultMap="BaseResultMap">
+  <select id="selectById" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
         SELECT * FROM Device_Injection_maintance WHERE id = #{id};
     </select>
-    <select id="selectAll" resultMap="BaseResultMap">
-      select * from Device_Injection_maintance WHERE username = #{username} LIMIT #{page1},#{page2};
+
+    <select id="selectAll" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+      select * from Device_Injection_maintance WHERE username like concat('%',#{username},'%') LIMIT #{page1},#{page2};
     </select>
 
   <select id="CountAll" resultType="java.lang.Integer">
@@ -219,7 +220,6 @@
       left join device on Device_Injection_maintance.device_Id = device.id
       where adcode like concat(#{adcode}, '%')
       and device.town is not null
-      and device.project = '注干剂监测'
       <if test="startDate != null and startDate !=''">
         and submit_Date &gt;= #{startDate}
       </if>
@@ -373,6 +373,8 @@
     where device.adcode like concat(#{adcode}, '%')
 
     and device.manager is not null
+    and device.project = '注干剂监测'
+
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
     </if>
@@ -534,8 +536,9 @@
     </if>
     group by device.area
   </select>
+
   <select id="queryDeviceSum" resultType="java.util.Map">
-    select count(distinct device_Id) `count`, sum(injection_num) `sum`
+    select count(distinct device_Id) `count`, sum(injection_num) injectNum
     from Device_Injection_maintance
 
     left join device on device.id = Device_Injection_maintance.device_Id
@@ -553,7 +556,7 @@
   </select>
 
   <select id="queryDeviceSum4" resultType="java.util.Map">
-    select count(distinct device_Id) `count`, sum(injection_num) `sum` from Device_Injection_maintance
+    select count(distinct device_Id) `count`, sum(injection_num) injectNum from Device_Injection_maintance
     left join device on device.id = Device_Injection_maintance.device_id
     left join user on Device_Injection_maintance.username = user.username
     where parent = #{adcode}
@@ -565,6 +568,55 @@
       and submit_date &lt;= #{endDate}
     </if>
 
+  </select>
+  <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
+    select count(distinct device_Id) deviceCount, sum(injection_num) injectNum, Worker `name`, Worker code
+    from Device_Injection_maintance
+    left join device on Device_Injection_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and username is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by username
+  </select>
+
+  <select id="queryWorkerSummaryByManager" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
+    select count(distinct device_Id) deviceCount, sum(injection_num) injectNum, Device_Injection_maintance.Worker `name`, Device_Injection_maintance.Worker code
+    from Device_Injection_maintance
+    left join device on Device_Injection_maintance.device_Id = device.id
+    left join user on Device_Injection_maintance.Worker = user.username
+    where parent = #{manager}
+
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by Device_Injection_maintance.Worker
+  </select>
+  <select id="queryDeviceSummaryByProvince" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
+    select count(distinct device_Id ) deviceCount, sum(injection_num) injectNum, device.city `name`, device.adcode code
+    from Device_Injection_maintance
+    left join device on Device_Injection_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and device.city is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+
+    group by device.city
   </select>
 
 </mapper>

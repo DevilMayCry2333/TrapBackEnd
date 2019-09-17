@@ -88,6 +88,7 @@ public class DeviceSummaryController {
         pageWrapper.setData(summaryEntities);
         return Result.ok(pageWrapper);
     }
+
     @GetMapping("/manager")
     public Object getDeviceSummaryByManager(String adcode, int page, int limit,
                                             @RequestParam(required = false) String startDate,

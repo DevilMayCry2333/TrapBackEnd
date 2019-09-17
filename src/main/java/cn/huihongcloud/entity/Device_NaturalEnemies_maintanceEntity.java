@@ -33,7 +33,9 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String username;
 
-    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username) {
+    private Integer reported;
+
+    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -49,6 +51,7 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.remarks = remarks;
         this.scanid = scanid;
         this.username = username;
+        this.reported = reported;
     }
 
     public Device_NaturalEnemies_maintanceEntity() {
@@ -173,5 +176,13 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setSubmitDate(String submitDate) {
         this.submitDate = submitDate;
+    }
+
+    public Integer getReported() {
+        return reported;
+    }
+
+    public void setReported(Integer reported) {
+        this.reported = reported;
     }
 }
