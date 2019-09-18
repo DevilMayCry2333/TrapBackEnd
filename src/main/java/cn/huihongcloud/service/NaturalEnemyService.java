@@ -1,5 +1,6 @@
 package cn.huihongcloud.service;
 
+import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.user.User;
@@ -47,5 +48,40 @@ public class NaturalEnemyService {
         }
         return null;
     }
+
+    public List<Device_NaturalEnemies_maintanceEntity> getAreaMaintanceDetail(User user, String condition, String date, String endDate) {
+        int role = user.getRole();
+        if (role < 3) {
+            // 省到县级用户
+            boolean reported = true;
+
+            return deviceNaturalEnemiesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea(user.getAdcode(), user.getTown(), condition, date, endDate, reported);
+
+        } else if (role == 3) {
+            return deviceNaturalEnemiesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea(user.getAdcode(), user.getTown(), condition, date, endDate, null);
+        } else if (role == 4) {
+            // 管理员
+            return deviceNaturalEnemiesMaintanceEntityMapper.getMaintenanceDataByManagerArea(user.getAdcode(), user.getTown(), condition, date, endDate, user.getUsername());
+        } else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+    public List<Device_NaturalEnemies_maintanceEntity> getMaintenanceDataByDeviceId(User user,String myusername,String deviceId, String startDate, String endDate) {
+        Integer role=user.getRole();
+        if(role<3){
+            Boolean reported = true;
+            return deviceNaturalEnemiesMaintanceEntityMapper.getMaintenanceDataByDeviceId(myusername,deviceId,startDate,endDate,reported);
+        }else if(role == 3 || role ==4) {
+
+            return deviceNaturalEnemiesMaintanceEntityMapper.getMaintenanceDataByDeviceId(myusername,deviceId, startDate, endDate, null);
+        }else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+
 
 }

@@ -35,7 +35,9 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private Integer reported;
 
-    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported) {
+    private String altitude;
+
+    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -52,6 +54,7 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.scanid = scanid;
         this.username = username;
         this.reported = reported;
+        this.altitude = altitude;
     }
 
     public Device_NaturalEnemies_maintanceEntity() {
@@ -184,5 +187,13 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setReported(Integer reported) {
         this.reported = reported;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
     }
 }
