@@ -138,7 +138,12 @@
 
     </trim>
   </insert>
-    <select id="countAll" resultType="java.lang.Integer">
+  <update id="reportData">
+        update Device_NaturalEnemies_maintance
+        set reported = 1
+        where id = #{id}
+  </update>
+  <select id="countAll" resultType="java.lang.Integer">
       SELECT count(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username = #{username};
     </select>
   <select id="selectAll" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
@@ -480,5 +485,209 @@
       and submit_date &lt;= #{endDate}
     </if>
 
+  </select>
+  <select id="getMaintenanceDataByAdcodeAndTown1"
+          resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+    select Device_NaturalEnemies_maintance.id,
+    Device_NaturalEnemies_maintance.device_Id,
+    Device_NaturalEnemies_maintance.batch,
+    Device_NaturalEnemies_maintance.Release_Num,
+    Device_NaturalEnemies_maintance.username,
+    user.name,
+    Device_NaturalEnemies_maintance.submit_date,
+    Device_NaturalEnemies_maintance.longitude,
+    Device_NaturalEnemies_maintance.latitude,
+    Device_NaturalEnemies_maintance.altitude,
+    Device_NaturalEnemies_maintance.Pic,
+    Device_NaturalEnemies_maintance.scanId,
+    Device_NaturalEnemies_maintance.Remarks,
+    device.province,
+    device.city,
+    device.area,
+    device.town,
+    Device_NaturalEnemies_maintance.Worker,
+    Device_NaturalEnemies_maintance.reported,
+    Device_NaturalEnemies_maintance.PredatorsType,
+    Device_NaturalEnemies_maintance.region
+    from Device_NaturalEnemies_maintance
+    left join device on device.id = Device_NaturalEnemies_maintance.device_Id
+    left join user on Device_NaturalEnemies_maintance.Worker = user.username
+    where device_Id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition !='null'">
+      and (
+      user.username like concat('%', #{condition}, '%') or
+      device.province like concat('%', #{condition}, '%') or
+      device.city like concat('%', #{condition}, '%') or
+      device.area like concat('%', #{condition}, '%') or
+      device.town like concat('%', #{condition}, '%') or
+      user.username like concat('%', #{condition}, '%') or
+      user.name like concat('%', #{condition}, '%') or
+      Device_NaturalEnemies_maintance.device_Id like concat('%', #{condition}, '%')
+
+      )
+    </if>
+    <if test="batch != null and batch != '' and batch !='null'">
+      and `batch` = #{batch}
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+    <if test="searchtown != null and searchtown != '' and searchtown !='null'">
+      and device.town like concat('%', #{searchtown}, '%')
+    </if>
+    <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="reported != null and reported != ''">
+      and reported = #{reported}
+    </if>
+
+    order by submit_date desc
+  </select>
+
+  <select id="getMaintenanceDataByManager1"
+          resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+    select Device_NaturalEnemies_maintance.id,
+    Device_NaturalEnemies_maintance.device_Id,
+    Device_NaturalEnemies_maintance.batch,
+    Device_NaturalEnemies_maintance.Release_Num,
+    Device_NaturalEnemies_maintance.PredatorsType,
+    Device_NaturalEnemies_maintance.region,
+    Device_NaturalEnemies_maintance.Worker,
+    user.name,
+    Device_NaturalEnemies_maintance.submit_date,
+    Device_NaturalEnemies_maintance.longitude,
+    Device_NaturalEnemies_maintance.latitude,
+    Device_NaturalEnemies_maintance.altitude,
+    Device_NaturalEnemies_maintance.Pic,
+    Device_NaturalEnemies_maintance.scanId,
+    Device_NaturalEnemies_maintance.Remarks,
+    device.province,
+    device.city,
+    device.area,
+    device.town,
+    Device_NaturalEnemies_maintance.reported
+    from Device_NaturalEnemies_maintance
+    left join device on device.id = Device_NaturalEnemies_maintance.device_Id
+    left join user on Device_NaturalEnemies_maintance.username = user.username
+    where device_Id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition != 'null'">
+      and (
+      user.username like concat('%', #{condition}, '%') or
+      device.province like concat('%', #{condition}, '%') or
+      device.city like concat('%', #{condition}, '%') or
+      device.area like concat('%', #{condition}, '%') or
+      device.town like concat('%', #{condition}, '%') or
+      user.username like concat('%', #{condition}, '%') or
+      user.name like concat('%', #{condition}, '%') or
+      Device_NaturalEnemies_maintance.device_Id like concat('%', #{condition}, '%')
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+    <if test="batch != null and batch != '' and batch !='null'">
+      and `batch` = #{batch}
+    </if>
+    <if test="searchtown != null and searchtown != '' and searchtown !='null'">
+      and device.town like concat('%', #{searchtown}, '%')
+    </if>
+    <if test="endDate != null and endDate != '' and endDate!= 'null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="manager != null">
+      and manager = #{manager}
+    </if>
+
+    order by submit_date desc
+  </select>
+    <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+      select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, device.area `name`, device.adcode code
+      from Device_NaturalEnemies_maintance
+      left join device on Device_NaturalEnemies_maintance.device_Id = device.id
+      where adcode like concat(#{adcode}, '%')
+
+      and  device.area is not null
+      <if test="startDate != null and startDate !=''">
+        and submit_date &gt;= #{startDate}
+      </if>
+
+      <if test="endDate != null and endDate !=''">
+        and submit_date &lt;= #{endDate}
+      </if>
+      group by device.area
+
+    </select>
+  <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Worker `name`, Worker code
+    from Device_NaturalEnemies_maintance
+    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and Woker is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by Woker
+  </select>
+  <select id="queryWorkerSummaryByManager" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.Worker `name`, Device_NaturalEnemies_maintance.Worker code
+    from Device_NaturalEnemies_maintance
+    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
+    left join user on Device_NaturalEnemies_maintance.username = user.username
+    where parent = #{manager}
+
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by Device_NaturalEnemies_maintance.Worker
+  </select>
+
+  <select id="queryDeviceSummaryByProvince" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(distinct device_Id ) deviceCount, sum(Release_Num) releaseNum, device.city `name`, device.adcode code
+    from Device_NaturalEnemies_maintance
+    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and device.city is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+
+    group by device.city
   </select>
 </mapper>

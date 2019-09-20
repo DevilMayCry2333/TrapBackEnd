@@ -83,5 +83,75 @@ public class NaturalSummary {
         return Result.failed();
     }
 
+    @GetMapping("/city")
+    public Object getDeviceSummaryByCity(String adcode, int page, int limit,
+                                         @RequestParam(required = false) String startDate,
+                                         @RequestParam(required = false) String endDate) {
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+        List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByCity(adcode,startDate,endDate);
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setData(summaryEntities);
+        return Result.ok(pageWrapper);
+    }
+
+    @GetMapping("/worker")
+    public Object getDeviceSummaryByWorker(@RequestAttribute("username") String username,
+                                           @RequestParam(required = false) String adcode, int page, int limit,
+                                           @RequestParam(required = false) String startDate,
+                                           @RequestParam(required = false) String endDate) {
+        User user = userService.getUserByUserName(username);
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+//        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = null;
+        if (user.getRole() != 4) {
+            summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryWorkerSummaryByAdcode(adcode,startDate,endDate);
+        } else {
+            summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryWorkerSummaryByManager(user.getUsername(),startDate,endDate);
+        }
+        PageWrapper pageWrapper = new PageWrapper();
+        //pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setTotalPage(1);
+        //pageWrapper.setCurrentPage(page);
+        pageWrapper.setCurrentPage(1);
+//        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalNum(1000);
+        pageWrapper.setData(summaryEntities);
+        return Result.ok(pageWrapper);
+    }
+
+    @GetMapping("/province")
+    public Object getDeviceSummaryByProvince(String adcode, int page, int limit,
+                                             @RequestParam(required = false) String startDate,
+                                             @RequestParam(required = false) String endDate) {
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByProvince(adcode,startDate,endDate);
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setData(summaryEntities);
+        return Result.ok(pageWrapper);
+    }
+
 
 }

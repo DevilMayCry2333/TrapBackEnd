@@ -1,8 +1,6 @@
 package cn.huihongcloud.controller;
 
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
-import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.component.JWTComponent;
@@ -15,7 +13,6 @@ import cn.huihongcloud.entity.device.DeviceMaintenanceOutput;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.service.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -133,7 +130,6 @@ public class DeviceMaintenanceController {
 
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
-
 
         //随机数
        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
@@ -331,6 +327,7 @@ public class DeviceMaintenanceController {
         */
         return normal;
     }
+
     public static double algorithm(double longitude1, double latitude1, double longitude2, double latitude2) {
 
              double Lat1 = rad(latitude1); // 纬度
