@@ -18,6 +18,10 @@ public class NaturalEnemyService {
         return deviceNaturalEnemiesMaintanceEntityMapper.selectAll(username,num1,num2);
     }
 
+    public List<Device_NaturalEnemies_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode){
+        return deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearch(username, startDate, endDate, colName, searchText, num1, num2,adcode);
+    }
+
     public int countAll(String username){
         return deviceNaturalEnemiesMaintanceEntityMapper.countAll(username);
     }
