@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity" >
+    <constructor >
+      <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="device_Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="serial" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="submit_date" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="batch" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="longitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="latitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="woodDiameter" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="woodHeight" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="woodVolume" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="KillMethod" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Worker" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="scanId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="Pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="region" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity" >
+    insert into Device_DeadTrees_maintance (id, device_Id, serial, 
+      submit_date, batch, longitude, 
+      latitude, woodDiameter, woodHeight, 
+      woodVolume, KillMethod, Worker, 
+      Remarks, scanId, Pic, username, region
+      )
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
+      #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{wooddiameter,jdbcType=VARCHAR}, #{woodheight,jdbcType=VARCHAR}, 
+      #{woodvolume,jdbcType=VARCHAR}, #{killmethod,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{pic,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}
+      #{region,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity" >
+    insert into Device_DeadTrees_maintance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceId != null" >
+        device_Id,
+      </if>
+      <if test="serial != null" >
+        serial,
+      </if>
+      <if test="submitDate != null" >
+        submit_date,
+      </if>
+      <if test="batch != null" >
+        batch,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="wooddiameter != null" >
+        woodDiameter,
+      </if>
+      <if test="woodheight != null" >
+        woodHeight,
+      </if>
+      <if test="woodvolume != null" >
+        woodVolume,
+      </if>
+      <if test="killmethod != null" >
+        KillMethod,
+      </if>
+      <if test="worker != null" >
+        Worker,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="scanid != null" >
+        scanId,
+      </if>
+      <if test="pic != null" >
+        Pic,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="serial != null" >
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="submitDate != null" >
+        #{submitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="batch != null" >
+        #{batch,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="wooddiameter != null" >
+        #{wooddiameter,jdbcType=VARCHAR},
+      </if>
+      <if test="woodheight != null" >
+        #{woodheight,jdbcType=VARCHAR},
+      </if>
+      <if test="woodvolume != null" >
+        #{woodvolume,jdbcType=VARCHAR},
+      </if>
+      <if test="killmethod != null" >
+        #{killmethod,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null" >
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="scanid != null" >
+        #{scanid,jdbcType=BIGINT},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * FROM Device_DeadTrees_maintance WHERE username = #{username} LIMIT #{num1},#{num2}
+  </select>
+
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username = #{username};
+  </select>
+
+    <select id="countAllByArea" resultType="java.lang.Integer">
+      SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%";
+    </select>
+
+  <select id="selectAllByArea" resultMap="BaseResultMap">
+    SELECT * FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+  </select>
+</mapper>

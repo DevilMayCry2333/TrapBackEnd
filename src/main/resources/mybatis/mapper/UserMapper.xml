@@ -4,6 +4,7 @@
     <select id="getUserByUserName" resultType="cn.huihongcloud.entity.user.User">
         select * from user where userName = #{username}
     </select>
+
     <select id="getUserByAdcodeAndTownAndStringAndUserRole" resultType="cn.huihongcloud.entity.user.User">
         select * from user
         <where>
