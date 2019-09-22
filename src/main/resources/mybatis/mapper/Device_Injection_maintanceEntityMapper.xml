@@ -29,16 +29,16 @@
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
-    insert into Device_Injection_maintance (id, device_Id, serial, 
-      region, submit_date, batch, 
-      longitude, latitude, work_content, 
-      injection_num, WoodStatus, Pic, 
+    insert into Device_Injection_maintance (id, device_Id, serial,
+      region, submit_date, batch,
+      longitude, latitude, work_content,
+      injection_num, WoodStatus, Pic,
       Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,reported
       )
-    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
-      #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
-      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{workContent,jdbcType=VARCHAR}, 
-      #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR},
+      #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER},
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{workContent,jdbcType=VARCHAR},
+      #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},
       #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
       ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR}
       ,#{reported,jdbcType=INTEGER})
@@ -208,6 +208,35 @@
 
     <select id="selectAll" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
       select * from Device_Injection_maintance WHERE username like concat('%',#{username},'%') LIMIT #{page1},#{page2};
+    </select>
+
+    <select id="selectByConditions" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+        select * from device_injection_maintance where username like concat('%',#{username},'%')
+        <if test="searchText != null and searchText != ''">
+          <choose>
+            <when test="optionIndex == 1">
+              and device_Id like concat('%',#{searchText},'%')
+            </when>
+            <when test="optionIndex == 2">
+              and region like concat('%',#{searchText},'%')
+            </when>
+            <when test="optionIndex == 3">
+              and batch like concat('%',#{searchText},'%')
+            </when>
+            <when test="optionIndex == 4">
+              and Worker like concat('%',#{searchText},'%')
+            </when>
+            <otherwise>
+              and concat(device_Id,region,batch,Worker) like concat('%',#{searchText},'%')
+            </otherwise>
+          </choose>
+        </if>
+        <if test="startDate != null and startDate != ''">
+          and submit_date &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+          and submit_date &lt;= #{endDate}
+        </if>
     </select>
 
   <select id="CountAll" resultType="java.lang.Integer">

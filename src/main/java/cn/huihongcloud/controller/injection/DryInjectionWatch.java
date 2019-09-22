@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/dryWatch")
@@ -26,18 +27,28 @@ public class DryInjectionWatch {
     @Autowired
     UserService userService;
 
-    JSONObject jsonObject = new JSONObject();
-
-    @RequestMapping("/detail")
-    public Object DataDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
-        jsonObject.put("Res",true);
-        System.out.println(page);
-        System.out.println(username);
-        jsonObject.put("Data",dryInjectionService.getDryInjectionDetail(page,limit,username));
-        jsonObject.put("total",dryInjectionService.getTotalNum(username));
-        jsonObject.put("current",page);
-
-        return jsonObject;
+    @RequestMapping("/dataDetail")
+    public Object getDataDetail(@RequestAttribute("username") String username,
+                             @RequestParam int page,
+                             @RequestParam int limit,
+                             @RequestParam Integer optionIndex,
+                             @RequestParam(required = false) String searchText,
+                             @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        User user = userService.getUserByUserName(username);
+        if (!Objects.equals(startDate, "")) {
+            startDate = startDate + " 00:00:00";
+        }
+        if (!Objects.equals(endDate, "")) {
+            endDate = endDate + " 23:59:59";
+        }
+        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user, optionIndex, searchText, startDate, endDate);
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setData(deviceInjectionMaintanceEntities);
+        return Result.ok(pageWrapper);
     }
 
     @RequestMapping("/area")
@@ -45,13 +56,13 @@ public class DryInjectionWatch {
                                          @RequestParam(required = false) String startDate,
                                          @RequestParam(required = false) String endDate) {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        if(startDate!="" && startDate!=null) {
+        if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
         }
-        if(endDate!="" && endDate!=null) {
+        if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
         }
-        List<InjectionSummary> summaryEntities = dryInjectionService.queryDeviceSummaryByArea(adcode,startDate,endDate);
+        List<InjectionSummary> summaryEntities = dryInjectionService.queryDeviceSummaryByArea(adcode, startDate, endDate);
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
@@ -71,10 +82,10 @@ public class DryInjectionWatch {
 //        if(endDate.equals("null")){
 //            endDate=null;
 //        }
-        if(startDate!="" && startDate!=null) {
+        if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
         }
-        if(endDate!="" && endDate!=null) {
+        if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
         }
         User user = userService.getUserByUserName(username);
@@ -91,7 +102,7 @@ public class DryInjectionWatch {
     @RequestMapping("/maintenance/byDeviceId")
     public Object getMaintenanceDataByDeviceId(@RequestAttribute("username") String username,
                                                @RequestParam String deviceId,
-                                               @RequestParam (required = false)String myusername,
+                                               @RequestParam(required = false) String myusername,
                                                @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
 
 
@@ -101,14 +112,14 @@ public class DryInjectionWatch {
 //        if(endDate.equals("null")){
 //            endDate=null;
 //        }
-        if(startDate!="" && startDate!=null) {
+        if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
         }
-        if(endDate!="" && endDate!=null) {
+        if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
         }
-        User user=userService.getUserByUserName(username);
-        Object maintenanceData = dryInjectionService.getMaintenanceDataByDeviceId(user,myusername,deviceId, startDate, endDate);
+        User user = userService.getUserByUserName(username);
+        Object maintenanceData = dryInjectionService.getMaintenanceDataByDeviceId(user, myusername, deviceId, startDate, endDate);
         System.out.println(maintenanceData);
 
         PageWrapper pageWrapper = new PageWrapper();
@@ -121,7 +132,7 @@ public class DryInjectionWatch {
     @GetMapping("/maintenance1")
     public Object getMaintenanceData1(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
-                                      @RequestParam(required = false) String batch,@RequestParam(required = false) String town,
+                                      @RequestParam(required = false) String batch, @RequestParam(required = false) String town,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         //System.out.println(startDate+"cc");
 //        if(startDate.equals("null")){
@@ -130,17 +141,17 @@ public class DryInjectionWatch {
 //        if(endDate.equals("null")){
 //            endDate=null;
 //        }
-        if(startDate!="" && startDate!=null) {
+        if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
-            System.out.println(startDate+"dd");
+            System.out.println(startDate + "dd");
         }
-        if(endDate!="" && endDate!=null) {
+        if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
         }
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
-        List<Device_Injection_maintanceEntity> maintenanceData = dryInjectionService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
+        List<Device_Injection_maintanceEntity> maintenanceData = dryInjectionService.getMaintenanceData1(user, condition, startDate, endDate, batch, town);
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
         pageWrapper.setCurrentPage(page);
