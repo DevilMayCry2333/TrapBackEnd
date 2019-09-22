@@ -703,7 +703,7 @@
       and t1.submit_date &lt;= #{endDate}
     </if>
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
-      and ${colName} LIKE concat(#{searchText},'%')
+      and ${colName} = #{searchText}
     </if>
 
   </select>
