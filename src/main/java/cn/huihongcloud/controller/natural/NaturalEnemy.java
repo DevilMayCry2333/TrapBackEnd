@@ -30,7 +30,7 @@ public class NaturalEnemy {
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
-        jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,page*limit));
+        jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,limit));
         jsonObject.put("total",naturalEnemyService.countAll(username));
         jsonObject.put("current",page);
         return jsonObject;
@@ -38,7 +38,7 @@ public class NaturalEnemy {
 
     @RequestMapping("/areaDetail")
     public Object DetailByArea(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
-        jsonObject.put("Data",naturalEnemyService.selectAllByArea(username,page*limit-limit,page*limit));
+        jsonObject.put("Data",naturalEnemyService.selectAllByArea(username,page*limit-limit,limit));
         jsonObject.put("total",naturalEnemyService.countAllByArea(username));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
