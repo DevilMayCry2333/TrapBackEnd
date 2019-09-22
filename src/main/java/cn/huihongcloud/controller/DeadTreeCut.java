@@ -20,7 +20,7 @@ public class DeadTreeCut {
         System.out.println(page);
         System.out.println(limit);
 
-        jsonObject.put("Data",deadTreeCutService.selectAll(username,page*limit-limit,page*limit));
+        jsonObject.put("Data",deadTreeCutService.selectAll(username,page*limit-limit,limit));
         jsonObject.put("total",deadTreeCutService.countAll(username));
         jsonObject.put("current",page);
 
@@ -29,7 +29,7 @@ public class DeadTreeCut {
 
     @RequestMapping("/areaDetail")
     public Object areaDetail(@RequestParam String username,@RequestParam int page,@RequestParam int limit){
-        jsonObject.put("Data",deadTreeCutService.selectAllByArea(username, page*limit-limit, page*limit));
+        jsonObject.put("Data",deadTreeCutService.selectAllByArea(username, page*limit-limit, limit));
         jsonObject.put("total",deadTreeCutService.countAllByArea(username));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
