@@ -50,4 +50,16 @@ public class DeadTreeCut {
 
     }
 
+    @RequestMapping("/selectAll")
+    public Object selectAll(@RequestParam String username,@RequestParam String adcode,@RequestParam int page,@RequestParam int limit){
+        jsonObject.put("Data",deadTreeCutService.selectAllByAdcode(adcode, page*limit-limit, page*limit));
+        jsonObject.put("total",deadTreeCutService.countAll(username));
+        jsonObject.put("current",page);
+        jsonObject.put("Res",true);
+        return jsonObject;
+
+    }
+
+
+
 }
