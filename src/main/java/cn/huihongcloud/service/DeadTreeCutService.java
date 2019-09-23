@@ -27,4 +27,8 @@ public class DeadTreeCutService {
     public List<Device_DeadTrees_maintanceEntity> selectAllByArea(String username,int num1,int num2){
         return deviceDeadTreesMaintanceEntityMapper.selectAllByArea(username, num1, num2);
     }
+
+    public List<Device_DeadTrees_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode){
+        return deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearch(username, startDate, endDate, colName, searchText, num1, num2,adcode);
+    }
 }

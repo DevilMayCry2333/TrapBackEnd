@@ -181,8 +181,18 @@ public class NaturalEnemy {
         System.out.println(jsonObject);
 
         return jsonObject;
-
     }
+
+//    @RequestMapping("/allDetail")
+//    public Object allDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String adcode){
+//        jsonObject.put("Res",true);
+//        System.out.println(page);
+//        System.out.println(limit);
+//        jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,limit));
+//        jsonObject.put("total",naturalEnemyService.countAll(username));
+//        jsonObject.put("current",page);
+//        return jsonObject;
+//    }
 
 
 

@@ -1,4 +1,4 @@
-package cn.huihongcloud.controller;
+package cn.huihongcloud.controller.deadtrees;
 
 import cn.huihongcloud.service.DeadTreeCutService;
 import net.sf.json.JSONObject;
@@ -35,4 +35,19 @@ public class DeadTreeCut {
         jsonObject.put("Res",true);
         return jsonObject;
     }
+
+    @RequestMapping("/searchDetail")
+    public Object searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String colName,@RequestParam String searchText,@RequestParam String adcode){
+        jsonObject.put("Res",true);
+        System.out.println(page);
+        System.out.println(limit);
+        jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
+        jsonObject.put("total",deadTreeCutService.countAll(username));
+        jsonObject.put("current",page);
+        System.out.println(jsonObject);
+
+        return jsonObject;
+
+    }
+
 }
