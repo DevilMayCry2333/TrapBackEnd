@@ -37,7 +37,16 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String altitude;
 
-    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude) {
+    private String province;
+
+    private String city;
+
+    private String area;
+
+    private String town;
+
+
+    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude,String province,String city,String area,String town) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -55,6 +64,10 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.username = username;
         this.reported = reported;
         this.altitude = altitude;
+        this.province = province;
+        this.city = city;
+        this.area = area;
+        this.town = town;
     }
 
     public Device_NaturalEnemies_maintanceEntity() {
@@ -195,5 +208,37 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setAltitude(String altitude) {
         this.altitude = altitude;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
     }
 }

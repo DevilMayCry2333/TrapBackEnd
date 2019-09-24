@@ -1,6 +1,7 @@
 package cn.huihongcloud.service;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import cn.huihongcloud.entity.user.User;
@@ -92,6 +93,39 @@ public class DryInjectionService {
         }
         return true;
     }
+
+    public List<Device> getDeviceByLocation(String adcode, String town, String searchText) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceInjectionMaintanceEntityMapper.getDeviceByLocation(adcode, town, searchText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getDeviceByManager(String manager) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceInjectionMaintanceEntityMapper.getDeviceByManager(manager);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getDeviceByWorker(String worker) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceInjectionMaintanceEntityMapper.getDeviceByWorker(worker);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+
+
 
 
 }

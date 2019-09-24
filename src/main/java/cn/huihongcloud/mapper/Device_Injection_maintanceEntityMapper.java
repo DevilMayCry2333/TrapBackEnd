@@ -1,6 +1,7 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -56,6 +57,16 @@ public interface Device_Injection_maintanceEntityMapper {
     List<InjectionSummary> queryWorkerSummaryByManager(@Param("manager") String manager, String startDate, String endDate);
 
     List<InjectionSummary> queryDeviceSummaryByProvince(String adcode, String startDate, String endDate);
+
+    List<Device> getDeviceByLocation(@Param("adcode") String adcode, @Param("town") String town,
+                                     @Param("searchText") String searchText);
+
+    List<Device> getDeviceByManager(@Param("manager") String manager);
+
+    List<Device> getDeviceByWorker(@Param("worker") String worker);
+
+
+
 
 
 }
