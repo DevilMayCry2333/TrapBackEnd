@@ -2,6 +2,7 @@ package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.summary.NaturalSummary;
 import cn.huihongcloud.entity.summary.SummaryEntity;
@@ -63,6 +64,13 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
     List<NaturalSummary> queryWorkerSummaryByManager(@Param("manager") String manager,String startDate, String endDate);
 
     List<NaturalSummary> queryDeviceSummaryByProvince(String adcode,String startDate, String endDate);
+
+    List<Device> getDeviceByLocation(@Param("adcode") String adcode, @Param("town") String town,
+                                     @Param("searchText") String searchText);
+
+    List<Device> getDeviceByManager(@Param("manager") String manager);
+
+    List<Device> getDeviceByWorker(@Param("worker") String worker);
 
 
 

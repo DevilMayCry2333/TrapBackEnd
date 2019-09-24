@@ -21,6 +21,7 @@ public interface DeviceMapper {
     List<Device> getDeviceByMap(String username);
     List<Device> getDeviceByLocation(@Param("adcode") String adcode, @Param("town") String town,
                                      @Param("searchText") String searchText);
+
     List<Device> getDeviceByManager(@Param("manager") String manager);
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);

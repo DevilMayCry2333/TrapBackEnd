@@ -707,4 +707,33 @@
     </if>
 
   </select>
+    <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
+      select * from device where 1 = 1 and project = '天敌防治'
+      <if test="adcode != null and adcode != ''">
+        and adcode like '${adcode}%'
+      </if>
+      <if test="town != null and town != ''">
+        and town = #{town}
+      </if>
+
+      <if test="searchText != null and searchText != ''">
+        and (id = #{searchText} or
+        province like concat('%', #{searchText}, '%') or
+        city like concat('%', #{searchText}, '%') or
+        area like concat('%', #{searchText}, '%') or
+        town like concat('%', #{searchText}, '%'))
+      </if>
+
+    </select>
+  <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.device.Device">
+     select * from device where manager = #{manager} AND project = '天敌防治'
+  </select>
+
+  <select id="getDeviceByWorker" resultType="cn.huihongcloud.entity.device.Device">
+        select device.*
+        from device
+        left join device_map on device.id = device_map.device_id
+        where user_id = #{worker}
+        AND project = '天敌防治'
+  </select>
 </mapper>
