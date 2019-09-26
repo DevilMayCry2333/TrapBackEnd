@@ -35,6 +35,8 @@ public class DryInjectionWatch {
                              @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         User user = userService.getUserByUserName(username);
+        System.out.println(username);
+
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }
