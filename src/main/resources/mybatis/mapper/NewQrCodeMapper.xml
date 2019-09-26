@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.huihongcloud.mapper.NewQrCodeMapper">
+    <insert id="insertDevice">
+        insert into device (id,adcode,province,city,area,project) values (#{id},#{adcode},#{proxy},#{city},#{area},#{project})
+    </insert>
 
     <select id="getProxy" resultType="cn.huihongcloud.entity.user.User">
         select * from  user where role = '7'
@@ -10,5 +13,8 @@
     </select>
     <select id="getArea" resultType="cn.huihongcloud.entity.user.User">
         select * from  user where role = '3' and adcode like concat(#{adcode},'%')
+    </select>
+    <select id="getProxyByCode" resultType="cn.huihongcloud.entity.user.User">
+         select * from  user where role = '7' and adcode like concat(#{adcode},'%')
     </select>
 </mapper>

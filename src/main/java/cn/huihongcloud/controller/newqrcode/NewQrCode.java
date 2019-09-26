@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -64,5 +65,25 @@ public class NewQrCode {
         res.put("Data",data);
         res.put("Res",true);
         return res;
+    }
+
+    @RequestMapping("/assignQRCode")
+    public JSONObject assignCode(@RequestParam String proxyCode,@RequestParam String cityCode,@RequestParam String areaCode,@RequestParam String projectCode,@RequestParam String startID,@RequestParam String endID){
+        List<User> cityUser = newQrCodeMapper.getCity(cityCode);
+        List<User> areaUser = newQrCodeMapper.getArea(areaCode);
+        List<User> proxyUser = newQrCodeMapper.getProxyByCode(proxyCode);
+        String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","轨迹追踪"};
+        int switchProject = Integer.parseInt(projectCode);
+
+
+        long startIDInt = Long.parseLong(startID);
+        long endIDInt = Long.parseLong(endID);
+        for (long i = startIDInt; i <= endIDInt; i++) {
+            newQrCodeMapper.insertDevice(String.valueOf(i),proxyUser.get(0).getProvince(),cityUser.get(0).getCity(),areaUser.get(0).getArea(),project[switchProject],areaCode);
+        }
+        res.put("Res",true);
+
+        return res;
+
     }
 }
