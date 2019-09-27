@@ -29,6 +29,9 @@ public class Device {
     private String manager;
     private String worker;
     private int isManagerAssign;
+    private String CustomTown;
+    private String CustomPrefix;
+    private String CustomSerial;
 
     public String getId() {
         return id;
@@ -158,5 +161,29 @@ public class Device {
 
     public void setIsManagerAssign(int isManagerAssign) {
         this.isManagerAssign = isManagerAssign;
+    }
+
+    public String getCustomTown() {
+        return CustomTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        CustomTown = customTown;
+    }
+
+    public String getCustomPrefix() {
+        return CustomPrefix;
+    }
+
+    public void setCustomPrefix(String customPrefix) {
+        CustomPrefix = customPrefix;
+    }
+
+    public String getCustomSerial() {
+        return CustomSerial;
+    }
+
+    public void setCustomSerial(String customSerial) {
+        CustomSerial = customSerial;
     }
 }

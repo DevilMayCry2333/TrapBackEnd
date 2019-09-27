@@ -86,4 +86,5 @@ public class NewQrCode {
         return res;
 
     }
+
 }
