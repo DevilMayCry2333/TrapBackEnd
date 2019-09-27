@@ -87,4 +87,15 @@ public class NewQrCode {
 
     }
 
+    @RequestMapping("/assignCodeByManager")
+    public JSONObject assignCodeByManager(@RequestParam String startID,@RequestParam String endID,
+                                          @RequestParam String IDNum,@RequestParam int applicationValue,
+                                          @RequestParam String customRegion,@RequestParam String prefix,
+                                          @RequestParam String serialStart,@RequestParam String serialEnd,
+                                          @RequestParam int serialNum)
+    {
+        
+        return res;
+    }
+
 }
