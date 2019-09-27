@@ -28,6 +28,7 @@ public class Device {
     private String qrcode;
     private String manager;
     private String worker;
+    private int isManagerAssign;
 
     public String getId() {
         return id;
@@ -149,5 +150,13 @@ public class Device {
 
     public void setManager(String manager) {
         this.manager = manager;
+    }
+
+    public int getIsManagerAssign() {
+        return isManagerAssign;
+    }
+
+    public void setIsManagerAssign(int isManagerAssign) {
+        this.isManagerAssign = isManagerAssign;
     }
 }
