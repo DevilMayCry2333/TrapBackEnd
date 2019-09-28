@@ -158,6 +158,12 @@ public class DryInjectionSummary {
             endDate = endDate + " 23:59:59";
         }
         List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate);
+
+        for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {
+            lim.setStartDate(startDate);
+            lim.setEndDate(endDate);
+        }
+
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
