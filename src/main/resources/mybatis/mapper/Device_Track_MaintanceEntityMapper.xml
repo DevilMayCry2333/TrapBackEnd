@@ -165,7 +165,7 @@
     SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
   </select>
 
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectAll" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
     SELECT * FROM Device_Track_Maintance WHERE username = #{username} LIMIT #{num1},#{num2};
   </select>
 

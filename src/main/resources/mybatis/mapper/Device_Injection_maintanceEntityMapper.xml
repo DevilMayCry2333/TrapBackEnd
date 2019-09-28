@@ -676,4 +676,19 @@
         AND project = '注干剂监测'
   </select>
 
+  <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+    select device.CustomTown,Device_Injection_maintance.*,sum(Device_Injection_maintance.injection_num) injectNumSum,
+    sum(Device_Injection_maintance.WoodStatus) WoodStatus,
+     count(Device_Injection_maintance.id) woodNum
+    from device left join Device_Injection_maintance on device.id = Device_Injection_maintance.device_Id
+
+    <if test="startDate != null and startDate != ''">
+      where submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device.CustomTown
+  </select>
+
 </mapper>
