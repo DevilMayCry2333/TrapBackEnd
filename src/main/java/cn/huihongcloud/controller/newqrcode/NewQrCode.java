@@ -89,12 +89,15 @@ public class NewQrCode {
 
     @RequestMapping("/assignCodeByManager")
     public JSONObject assignCodeByManager(@RequestParam String startID,@RequestParam String endID,
-                                          @RequestParam String IDNum,@RequestParam int applicationValue,
+                                          @RequestParam int IDNum,@RequestParam int applicationValue,
                                           @RequestParam String customRegion,@RequestParam String prefix,
                                           @RequestParam String serialStart,@RequestParam String serialEnd,
                                           @RequestParam int serialNum)
     {
-        
+        for (long i = Long.parseLong(startID),j=0; i <= Long.parseLong(endID); i++,j++) {
+            newQrCodeMapper.assginDeviceByManager(i,customRegion,prefix,Long.parseLong(serialStart)+j);
+        }
+        res.put("Res",true);
         return res;
     }
 

@@ -4,6 +4,9 @@
     <insert id="insertDevice">
         insert into device (id,adcode,province,city,area,project) values (#{id},#{adcode},#{proxy},#{city},#{area},#{project})
     </insert>
+    <update id="assginDeviceByManager">
+        update device set isManagerAssign = 1,CustomPrefix = #{prefix},CustomTown = #{CustomRegion}, CustomSerial = concat(#{prefix},#{serial}) where id = #{id}
+    </update>
 
     <select id="getProxy" resultType="cn.huihongcloud.entity.user.User">
         select * from  user where role = '7'
