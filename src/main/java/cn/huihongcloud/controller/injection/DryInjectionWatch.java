@@ -2,16 +2,15 @@ package cn.huihongcloud.controller.injection;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
-import cn.huihongcloud.entity.device.DeviceMaintenance;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.summary.InjectionSummary;
-import cn.huihongcloud.entity.summary.SummaryEntity;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.service.DryInjectionService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import net.sf.json.JSONObject;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +35,8 @@ public class DryInjectionWatch {
                              @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         User user = userService.getUserByUserName(username);
+        System.out.println(username);
+
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }
@@ -167,6 +168,64 @@ public class DryInjectionWatch {
         dryInjectionService.report(list);
         return Result.ok();
     }
+
+    @RequestMapping(value = "device_list", method = RequestMethod.GET)
+    @ApiOperation("获取设备列表")
+    public PageWrapper getDevices(@RequestAttribute("username") String username, @RequestParam("page") int page,
+                                  @RequestParam("limit") int limit,
+                                  @RequestParam(value = "searchText", required = false) String searchText,
+                                  @RequestParam(value = "workerName", required = false) String workerName) {
+        System.out.println(workerName);
+        User user = userService.getUserByUserName(username);
+        List<Device> list = null;
+        Page<Object> pages = null;
+        PageWrapper pageWrapper = new PageWrapper();
+        /*
+        if (user.getRole() > 1 && user.getRole() != 3) {
+            // 工人查询所管理的设备
+            pages = PageHelper.startPage(page, limit);
+            list = deviceService.getDeviceByMap(username);
+        } else if (workerName == null){
+            // 管理员未传递指定工人 查询其下属地区所有诱捕器信息
+            pages = PageHelper.startPage(page, limit);
+            list = deviceService.getDeviceByLocation(user.getAdcode(), user.getTown(), searchText.trim());
+        } else {
+            // 管理员传递工人信息
+            // todo 限制跨区域查询
+
+            list = deviceService.getDeviceByMap(workerName);
+        }
+        */
+        /*
+        县级用户看到所有下属的诱捕器
+        管理员看到关联的
+        工人看到关联的
+         */
+        pages = PageHelper.startPage(page, limit);
+        if (user.getRole() == 1) {
+            list = dryInjectionService.getDeviceByLocation(user.getAdcode(), null, null);
+        }
+        if (user.getRole() == 2) {
+            list = dryInjectionService.getDeviceByLocation(user.getAdcode(), null, null);
+        }
+        if (user.getRole() == 3) {
+            list = dryInjectionService.getDeviceByLocation(user.getAdcode(), null, null);
+        }
+
+        if (user.getRole() == 4) {
+            list = dryInjectionService.getDeviceByManager(username);
+        }
+
+        if (user.getRole() == 5) {
+            list = dryInjectionService.getDeviceByWorker(username);
+        }
+        pageWrapper.setData(list);
+        pageWrapper.setTotalPage(pages.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pages.getTotal());
+        return pageWrapper;
+    }
+
 
 
 }

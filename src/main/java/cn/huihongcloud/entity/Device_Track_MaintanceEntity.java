@@ -37,11 +37,13 @@ public class Device_Track_MaintanceEntity {
 
     private Long scanid;
 
-    private Long deviceid;
+    private Long deviceId;
 
     private String username;
 
-    public Device_Track_MaintanceEntity(Long id, String linename, String timeconsume, String starttime, String endtime, String pointcollect, String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceid, String username) {
+    private String submit_date;
+
+    public Device_Track_MaintanceEntity(Long id, String linename, String timeconsume, String starttime, String endtime, String pointcollect, String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
         this.id = id;
         this.linename = linename;
         this.timeconsume = timeconsume;
@@ -59,8 +61,9 @@ public class Device_Track_MaintanceEntity {
         this.workingContent = workingContent;
         this.remarks = remarks;
         this.scanid = scanid;
-        this.deviceid = deviceid;
+        this.deviceId = deviceId;
         this.username = username;
+        this.submit_date =submit_date;
     }
 
     public Device_Track_MaintanceEntity() {
@@ -187,14 +190,6 @@ public class Device_Track_MaintanceEntity {
         this.scanid = scanid;
     }
 
-    public Long getDeviceid() {
-        return deviceid;
-    }
-
-    public void setDeviceid(Long deviceid) {
-        this.deviceid = deviceid;
-    }
-
     public String getStarttime() {
         return starttime;
     }
@@ -217,5 +212,21 @@ public class Device_Track_MaintanceEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getSubmit_date() {
+        return submit_date;
+    }
+
+    public void setSubmit_date(String submit_date) {
+        this.submit_date = submit_date;
+    }
+
+    public Long getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
     }
 }

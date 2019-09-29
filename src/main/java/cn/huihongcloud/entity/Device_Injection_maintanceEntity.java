@@ -1,5 +1,7 @@
 package cn.huihongcloud.entity;
 
+import io.swagger.models.auth.In;
+
 public class Device_Injection_maintanceEntity {
     private Long id;
 
@@ -21,7 +23,7 @@ public class Device_Injection_maintanceEntity {
 
     private Integer injectionNum;
 
-    private String woodstatus;
+
 
     private String pic;
 
@@ -47,7 +49,21 @@ public class Device_Injection_maintanceEntity {
 
     private Integer reported;
 
-    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum, String woodstatus, String pic, String worker, String remarks, Long scanid, String username,String province,String city,String area,String town,Integer reported) {
+    private Integer WoodStatus;
+
+    private String woodNum;
+
+    private String CustomTown;
+
+    private Integer injectNumSum;
+
+    private Integer WoodStatusSum;
+
+    private String startDate;
+
+    private String endDate;
+
+    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum,String pic, String worker, String remarks, Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String CustomTown, Integer injectNumSum,Integer WoodStatus,Integer WoodStatusSum) {
         this.id = id;
         this.submitDate = submitDate;
         this.deviceId = deviceId;
@@ -58,7 +74,6 @@ public class Device_Injection_maintanceEntity {
         this.latitude = latitude;
         this.workContent = workContent;
         this.injectionNum = injectionNum;
-        this.woodstatus = woodstatus;
         this.pic = pic;
         this.worker = worker;
         this.remarks = remarks;
@@ -71,6 +86,12 @@ public class Device_Injection_maintanceEntity {
         this.area = area;
         this.town = town;
         this.reported = reported;
+        this.woodNum = woodNum;
+        this.CustomTown = CustomTown;
+        this.injectNumSum = injectNumSum;
+        this.WoodStatus = WoodStatus;
+        this.WoodStatusSum = WoodStatusSum;
+
     }
 
     public Device_Injection_maintanceEntity() {
@@ -147,14 +168,6 @@ public class Device_Injection_maintanceEntity {
 
     public void setInjectionNum(Integer injectionNum) {
         this.injectionNum = injectionNum;
-    }
-
-    public String getWoodstatus() {
-        return woodstatus;
-    }
-
-    public void setWoodstatus(String woodstatus) {
-        this.woodstatus = woodstatus == null ? null : woodstatus.trim();
     }
 
     public String getPic() {
@@ -259,5 +272,61 @@ public class Device_Injection_maintanceEntity {
 
     public void setReported(int reported) {
         this.reported = reported;
+    }
+
+    public String getWoodNum() {
+        return woodNum;
+    }
+
+    public void setWoodNum(String woodNum) {
+        this.woodNum = woodNum;
+    }
+
+    public String getCustomTown() {
+        return CustomTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        CustomTown = customTown;
+    }
+
+    public Integer getInjectNumSum() {
+        return injectNumSum;
+    }
+
+    public void setInjectNumSum(Integer injectNumSum) {
+        this.injectNumSum = injectNumSum;
+    }
+
+    public Integer getWoodStatus() {
+        return WoodStatus;
+    }
+
+    public void setWoodStatus(Integer woodStatus) {
+        WoodStatus = woodStatus;
+    }
+
+    public Integer getWoodStatusSum() {
+        return WoodStatusSum;
+    }
+
+    public void setWoodStatusSum(Integer woodStatusSum) {
+        WoodStatusSum = woodStatusSum;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

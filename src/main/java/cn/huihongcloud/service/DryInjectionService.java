@@ -1,6 +1,7 @@
 package cn.huihongcloud.service;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import cn.huihongcloud.entity.user.User;
@@ -18,7 +19,7 @@ public class DryInjectionService {
     public List<Device_Injection_maintanceEntity> getDryInjectionDetail(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
         int role = user.getRole();
 
-        if (role == 3) {
+        if (role >= 0) {
             return deviceInjectionMaintanceEntityMapper.selectByConditions(user.getUsername(), optionIndex, searchText, startDate, endDate);
         }/*else if(){
 
@@ -92,6 +93,53 @@ public class DryInjectionService {
         }
         return true;
     }
+
+    public List<Device> getDeviceByLocation(String adcode, String town, String searchText) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceInjectionMaintanceEntityMapper.getDeviceByLocation(adcode, town, searchText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getDeviceByManager(String manager) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceInjectionMaintanceEntityMapper.getDeviceByManager(manager);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+    public List<Device> getDeviceByWorker(String worker) {
+        List<Device> deviceList = null;
+        try {
+            deviceList = deviceInjectionMaintanceEntityMapper.getDeviceByWorker(worker);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deviceList;
+    }
+
+
+    public List<Device_Injection_maintanceEntity> getDryInjectionSummaryByCustomReigon(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
+        int role = user.getRole();
+
+        if (role >= 0) {
+            return deviceInjectionMaintanceEntityMapper.selectByCustomReigon(user.getUsername(), optionIndex, searchText, startDate, endDate);
+        }/*else if(){
+
+        }*/
+        return null;
+    }
+
+
+
+
+
 
 
 }
