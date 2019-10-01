@@ -3,6 +3,7 @@ package cn.huihongcloud.entity;
 public class workContent {
     private int id;
     private String name;
+    private int Fvalue;
 
     public int getId() {
         return id;
@@ -18,5 +19,13 @@ public class workContent {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getFvalue() {
+        return Fvalue;
+    }
+
+    public void setFvalue(int fvalue) {
+        Fvalue = fvalue;
     }
 }
