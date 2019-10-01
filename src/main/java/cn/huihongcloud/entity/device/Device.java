@@ -32,6 +32,7 @@ public class Device {
     private String CustomTown;
     private String CustomPrefix;
     private String CustomSerial;
+    private String CustomProject;
 
     public String getId() {
         return id;
@@ -185,5 +186,13 @@ public class Device {
 
     public void setCustomSerial(String customSerial) {
         CustomSerial = customSerial;
+    }
+
+    public String getCustomProject() {
+        return CustomProject;
+    }
+
+    public void setCustomProject(String customProject) {
+        CustomProject = customProject;
     }
 }

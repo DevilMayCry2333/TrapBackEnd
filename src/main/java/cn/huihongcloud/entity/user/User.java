@@ -135,4 +135,12 @@ public class User {
     public void setActive(Boolean active) {
         this.active = active;
     }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
 }
