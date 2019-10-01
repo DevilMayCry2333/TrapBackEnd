@@ -397,6 +397,9 @@ public class DeviceService {
      */
     public String saveImg(MultipartFile multipartFile, String deviceId, String username) {
         UUID uuid = UUID.randomUUID();
+        System.out.println("Save");
+        System.out.println(IMG_PATH);
+
         MessageDigest messageDigest;
         String encodeStr = "";
         String postFix = username + new Date().getTime();

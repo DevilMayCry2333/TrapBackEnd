@@ -96,13 +96,15 @@ public class DeviceMaintenanceController {
         logger.info(String.valueOf(otherType));
         logger.info(String.valueOf(workingContent));
 
-
+        System.out.println("image" + image);
 
          Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
-         if(!relation){
-             return Result.ok(deviceService.judgeDeviceRelation(username,deviceId));
-             //throw new Exception("提交失败");
-         }
+        //if被我注释了 2019.10.1
+
+//         if(!relation){
+//             return Result.ok(deviceService.judgeDeviceRelation(username,deviceId));
+//             //throw new Exception("提交失败");
+//         }
         
 //         if(altitude==null){
 //
@@ -131,6 +133,8 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
 
+
+
         //随机数
        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
 
@@ -138,6 +142,8 @@ public class DeviceMaintenanceController {
             String imgId = deviceService.saveImg(image, deviceId, username);
 
             deviceMaintenance.setImageId(imgId);
+            System.out.println("执行了这部");
+
         }
         if (targetUsername != null) {
             deviceMaintenanceService.addMaintenanceData(targetUsername, deviceMaintenance);
@@ -165,8 +171,8 @@ public class DeviceMaintenanceController {
 
                     deviceMaintenance.setIsActive(0);
                     deviceMaintenanceService.recordAbnormal(deviceMaintenance);
-
-                    throw new Exception("人员未到场");
+                    //这里注释了一下 2019.10.1
+//                    throw new Exception("人员未到场");
                 } else {
                     deviceMaintenanceService.addMaintenanceData(username, deviceMaintenance);
                 }
