@@ -52,9 +52,9 @@
         select count(*) from user where username = #{username} and password = #{password} and active = 1
     </select>
     <insert id="registerUser">
-        insert into user (username, name, password, adcode, towncode, province, city, area, town, role, email, phone, active, parent,isdelete) values
+        insert into user (username, name, password, adcode, towncode, province, city, area, town, role, email, phone, active, parent,isdelete,project) values
           (#{user.username}, #{user.name}, #{user.password}, #{user.adcode}, #{user.towncode}, #{user.province}, #{user.city},
-          #{user.area}, #{user.town}, #{user.role}, #{user.email}, #{user.phone}, #{user.active}, #{user.parent},'0')
+          #{user.area}, #{user.town}, #{user.role}, #{user.email}, #{user.phone}, #{user.active}, #{user.parent},'0',#{user.project})
     </insert>
     <select id="searchUserByString" resultType="cn.huihongcloud.entity.user.User">
         select * from user
@@ -62,6 +62,9 @@
                 name like concat('%', #{searchText}, '%') or
                 phone like concat('%', #{searchText}, '%') or
                 email like concat('%', #{searchText}, '%')
+    </select>
+    <select id="getProjectsByAdCode" resultType="cn.huihongcloud.entity.user.User">
+        select * from user where role = 6 and active = 1 and adcode = #{adcode} and (parent is null or parent = '')
     </select>
     <select id="listUserByArea" resultType="cn.huihongcloud.entity.user.User">
         select * from user
@@ -127,6 +130,9 @@
             </if>
             <if test="user.role!=null">
                 role = #{user.role},
+            </if>
+            <if test="user.parent!=null">
+                parent = #{user.parent},
             </if>
                 isdelete = '0'
         </set>

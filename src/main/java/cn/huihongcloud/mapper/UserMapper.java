@@ -16,6 +16,7 @@ public interface UserMapper {
     int verifyUserByUserNameAndPassword(@Param("username") String userName, @Param("password") String password);
     int registerUser(@Param("user") User user);
     List<User> searchUserByString(@Param("searchText") String searchText);
+    List<User> getProjectsByAdCode(@Param("adcode") String adcode);
     int updateUser(@Param("user") User user);
     int nonActiveDevice(@Param("username") String username);
     int ActiveDevice(@Param("username") String username);
@@ -35,6 +36,5 @@ public interface UserMapper {
     List<User> listWorkerInRegion(@Param("adcode") String adcode, @Param("town") String town);
     List<User> getCurrentAssociatedUser(@Param("deviceId") String deviceId);
     List<User> getCanAssociatedUser(@Param("deviceId") String deviceId);
-
 
 }

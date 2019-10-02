@@ -31,6 +31,7 @@ public class User {
     private Boolean active;
     // 工人的管理员
     private String parent;
+    private String project;
 
     public String getUsername() {
         return username;
