@@ -176,14 +176,24 @@ public class UserController {
         return pageWrapper;
     }
 
+    @RequestMapping(path = "auth_api/projects", method = RequestMethod.GET)
+//    @ApiOperation("获取工程项目")
+    public List<User> getProjects(@RequestParam("adcode") String adcode) {
+        List<User> projects = userService.getProjectsByAdCode(adcode);
+        /*
+         * todo
+         * */
+        return projects;
+    }
+
     @RequestMapping(path = "auth_api/user/provinceName", method = RequestMethod.GET)
     @ApiOperation("获取用户列表")
-    public Object getUserProvinceName(@RequestParam String adcode,HttpServletResponse response) {
+    public Object getUserProvinceName(@RequestParam String adcode, HttpServletResponse response) {
 
-        if(distUtil.getNames(adcode,null)==null){
+        if (distUtil.getNames(adcode, null) == null) {
             return Result.failed();
         }
-                String[] Dist = distUtil.getNames(adcode,null);
+        String[] Dist = distUtil.getNames(adcode, null);
 
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(Dist);
@@ -202,41 +212,40 @@ public class UserController {
             return new Result.PermissionDenied();
         }
 
-        if ( userToForbid.getRole() <=currentUser.getRole() ) {
-                return new Result.Failed();
-            }
+        if (userToForbid.getRole() <= currentUser.getRole()) {
+            return new Result.Failed();
+        }
 
 
+        if (currentUser.getRole() < 4) {
+            //获取同地区用户列表
+            List<User> users = userService.listUserByArea(userToForbid.getProvince(), userToForbid.getCity(), userToForbid.getArea());
+            //禁用县级用户@Param("adcode") String adcode,@Param("area") String area
+            // adcode = #{adcode} and and town = #{town}
+            //userToForbid.getAdcode(),userToForbid.getArea()
+            for (User user : users) {
+                Integer roleType = user.getRole();
+                Boolean active = user.getActive();
+                if (userToForbid.getRole() <= roleType) {
+                    if (!userService.forbitToUse(user)) {
+                        return new Result.Failed();
 
-            if(currentUser.getRole()<4) {
-                //获取同地区用户列表
-                List<User> users = userService.listUserByArea(userToForbid.getProvince(), userToForbid.getCity(), userToForbid.getArea());
-                //禁用县级用户@Param("adcode") String adcode,@Param("area") String area
-                // adcode = #{adcode} and and town = #{town}
-                //userToForbid.getAdcode(),userToForbid.getArea()
-                for (User user : users) {
-                    Integer roleType = user.getRole();
-                    Boolean active = user.getActive();
-                    if (userToForbid.getRole() <= roleType) {
-                        if (!userService.forbitToUse(user)) {
-                            return new Result.Failed();
-
-                        }
-                        if(user.getRole()==5 ) {
-                            userService.nonActiveDevice(user.getUsername());
-                        }
+                    }
+                    if (user.getRole() == 5) {
+                        userService.nonActiveDevice(user.getUsername());
                     }
                 }
-                if (!userService.forbitToUse(userToForbid)) {
-                    return new Result.Failed();
-                }
-            }else{
-                if (!userService.forbitToUse(userToForbid)) {
-                    return new Result.Failed();
-
-                }
-                userService.nonActiveDevice(userToForbid.getUsername());
             }
+            if (!userService.forbitToUse(userToForbid)) {
+                return new Result.Failed();
+            }
+        } else {
+            if (!userService.forbitToUse(userToForbid)) {
+                return new Result.Failed();
+
+            }
+            userService.nonActiveDevice(userToForbid.getUsername());
+        }
 
 
         return new Result.Ok();
@@ -246,10 +255,10 @@ public class UserController {
     @RequestMapping(path = "auth_api/user_list_active", method = RequestMethod.GET)
     @ApiOperation("获取用户列表")
     public PageWrapper getUserActive(@RequestAttribute("username") String username,
-                               @RequestParam(value = "searchText", required = false) String searchText,
-                               @RequestParam("page") int page, @RequestParam("limit") int limit,
-                               @RequestParam(required = false) Integer roleType,
-                               @RequestParam(required = false) Boolean active,HttpServletResponse response) {
+                                     @RequestParam(value = "searchText", required = false) String searchText,
+                                     @RequestParam("page") int page, @RequestParam("limit") int limit,
+                                     @RequestParam(required = false) Integer roleType,
+                                     @RequestParam(required = false) Boolean active, HttpServletResponse response) {
         User currentUser = userService.getUserByUserName(username);
         Page<Object> pageObjects = PageHelper.startPage(page, limit);
         /*
@@ -283,7 +292,7 @@ public class UserController {
     }
 
     @GetMapping("auth_api/worker_in_region")
-    public PageWrapper getUserInTown (String adcode, String town, int page, int limit) {
+    public PageWrapper getUserInTown(String adcode, String town, int page, int limit) {
         Page<Object> pageObjects = PageHelper.startPage(page, limit);
         List<User> users = userService.getWorkerInRegion(adcode, town);
         for (User user : users) {
@@ -308,7 +317,7 @@ public class UserController {
     @RequestMapping(path = "auth_api/user", method = RequestMethod.POST)
     @ApiOperation("增加用户")
     public Result addUser(@RequestAttribute("username") String username, @RequestBody User user,
-                        HttpServletResponse response) {
+                          HttpServletResponse response) {
 
         /*
         // 工人与业主只能在乡镇
@@ -342,6 +351,12 @@ public class UserController {
          */
         if (user.getRole() == 5) {
             user.setParent(username);
+        } else if (user.getRole() == 4) { //如果是项目管理员，通过parent与项目工程对应
+            User project = userService.getUserByUserName(user.getParent());
+            project.setParent(user.getUsername());
+            if (!userService.updateUser(project)) {
+                return Result.failed();
+            }
         }
 
         System.out.println(user);
@@ -350,7 +365,7 @@ public class UserController {
         }
 
         userService.registerUser(user);
-        if(user.getRole() <5) {
+        if (user.getRole() < 5) {
             List<User> users = userService.listUserByArea(user.getProvince(), user.getCity(), user.getArea());
             //禁用县级用户@Param("adcode") String adcode,@Param("area") String area
             // adcode = #{adcode} and and town = #{town}
@@ -370,7 +385,7 @@ public class UserController {
     @RequestMapping(path = "auth_api/user", method = RequestMethod.DELETE)
     @ApiOperation("删除用户")
     public Result deleteUserByUsername(@RequestAttribute("username") String currentUsername,
-                                     @RequestParam(value = "username") String username, HttpServletResponse response) {
+                                       @RequestParam(value = "username") String username, HttpServletResponse response) {
         User currentUser = userService.getUserByUserName(currentUsername);
         User userToDelete = userService.getUserByUserName(username);
         if (!userService.verifyUser(currentUser, userToDelete)) {

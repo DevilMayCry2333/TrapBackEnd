@@ -23,6 +23,7 @@ public class UserService {
 
     /**
      * 根据用户名获取用户对象
+     *
      * @param username 用户名
      * @return 用户对象
      */
@@ -36,7 +37,8 @@ public class UserService {
         }
         return user;
     }
-    public Boolean nonActiveDevice(String username){
+
+    public Boolean nonActiveDevice(String username) {
         Boolean result = false;
         try {
             if (userMapper.nonActiveDevice(username) == 1) {
@@ -47,7 +49,8 @@ public class UserService {
         }
         return result;
     }
-    public Boolean ActiveDevice(String username){
+
+    public Boolean ActiveDevice(String username) {
         Boolean result = false;
         try {
             if (userMapper.nonActiveDevice(username) == 1) {
@@ -58,8 +61,10 @@ public class UserService {
         }
         return result;
     }
+
     /**
      * 更新用户
+     *
      * @param user 用户对象
      * @return 是否更新成功
      */
@@ -79,7 +84,8 @@ public class UserService {
                                                                  Integer roleType, Boolean active, String condition) {
         return userMapper.getUserByAdcodeAndTownAndStringAndUserRole(adcode, town, searchText, role, roleType, active, condition);
     }
-    public Boolean forbitToUse(User user){
+
+    public Boolean forbitToUse(User user) {
         Boolean result = false;
         try {
             if (userMapper.forbitToUse(user) == 1) {
@@ -90,11 +96,14 @@ public class UserService {
         }
         return result;
     }
-    public List<User> listUserByArea(String province,String city,String area) {
-        return userMapper.listUserByArea(province,city,area);
+
+    public List<User> listUserByArea(String province, String city, String area) {
+        return userMapper.listUserByArea(province, city, area);
     }
+
     /**
      * 注册用户
+     *
      * @param user 用户对象
      * @return 是否注册成功
      */
@@ -112,6 +121,7 @@ public class UserService {
 
     /**
      * 删除用户
+     *
      * @param username 用户名
      * @return 是否删除成功
      */
@@ -159,5 +169,9 @@ public class UserService {
 
     public List<User> getCanAssociatedUser(String deviceId) {
         return userMapper.getCanAssociatedUser(deviceId);
+    }
+
+    public List<User> getProjectsByAdCode(String adcode) {
+        return userMapper.getProjectsByAdCode(adcode);
     }
 }
