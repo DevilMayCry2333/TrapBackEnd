@@ -68,6 +68,8 @@ public interface Device_Injection_maintanceEntityMapper {
     List<Device_Injection_maintanceEntity> selectByCustomReigon(@Param("username") String username, @Param("optionIndex") Integer optionIndex,
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
+    int addMaintanceData(Device_Injection_maintanceEntity dataEntity);
+
 
 
 
