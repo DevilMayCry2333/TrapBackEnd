@@ -1,6 +1,9 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.beetle.BeetleInfo;
 import cn.huihongcloud.entity.device.DeviceBeetle;
+import cn.huihongcloud.entity.injectInfo;
+import cn.huihongcloud.entity.workContent;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +23,10 @@ public interface DeviceBeetleMapper {
     List<DeviceBeetle> getStatisticsByArea(@Param("adcode") String adcode);
     List<DeviceBeetle> getStatisticsByLikeAdcode(@Param("adcode") String adcode);
     int getChangeTimesByDeviceId(String deviceId);
+
+    List<BeetleInfo> getBeetleInfoByArea(String adcode);
+    List<injectInfo> getInjectTypeByArea(String adcode);
+    List<workContent> getWorkContentByArea(String adcode);
+
+
 }

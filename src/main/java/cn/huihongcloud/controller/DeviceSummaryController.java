@@ -88,6 +88,7 @@ public class DeviceSummaryController {
         pageWrapper.setData(summaryEntities);
         return Result.ok(pageWrapper);
     }
+
     @GetMapping("/manager")
     public Object getDeviceSummaryByManager(String adcode, int page, int limit,
                                             @RequestParam(required = false) String startDate,
@@ -120,7 +121,7 @@ public class DeviceSummaryController {
         if(endDate!="" && endDate!=null) {
             endDate = endDate + " 23:59:59";
         }
-        Page<Object> pageObject = PageHelper.startPage(page, limit);
+//        Page<Object> pageObject = PageHelper.startPage(page, limit);
         List<SummaryEntity> summaryEntities = null;
         if (user.getRole() != 4) {
             summaryEntities = deviceSummaryMapper.queryWorkerSummaryByAdcode(adcode,startDate,endDate);
@@ -128,9 +129,12 @@ public class DeviceSummaryController {
             summaryEntities = deviceSummaryMapper.queryWorkerSummaryByManager(user.getUsername(),startDate,endDate);
         }
         PageWrapper pageWrapper = new PageWrapper();
-        pageWrapper.setTotalPage(pageObject.getPages());
-        pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(pageObject.getTotal());
+        //pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setTotalPage(1);
+        //pageWrapper.setCurrentPage(page);
+        pageWrapper.setCurrentPage(1);
+//        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalNum(1000);
         pageWrapper.setData(summaryEntities);
         return Result.ok(pageWrapper);
     }

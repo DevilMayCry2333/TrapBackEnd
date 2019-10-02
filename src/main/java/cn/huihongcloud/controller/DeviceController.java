@@ -90,7 +90,6 @@ public class DeviceController {
         if (user.getRole() == 5) {
             list = deviceService.getDeviceByWorker(username);
         }
-
         pageWrapper.setData(list);
         pageWrapper.setTotalPage(pages.getPages());
         pageWrapper.setCurrentPage(page);

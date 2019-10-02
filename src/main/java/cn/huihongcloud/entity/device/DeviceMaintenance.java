@@ -72,11 +72,13 @@ public class DeviceMaintenance {
     private String area;
     private String town;
     private Integer workingContent;
-    //private Integer working_content;
+//    private Integer working_content;
     private Integer isactive;
     private Boolean reported;
+
     private Integer otherType;
     private Integer otherNum;
+
     private String cityname;
 
     //随机数
@@ -292,5 +294,30 @@ public class DeviceMaintenance {
 
     public void setReported(Boolean reported) {
         this.reported = reported;
+    }
+
+
+    public Integer getWorkingContent() {
+        return workingContent;
+    }
+
+    public void setWorkingContent(Integer workingContent) {
+        this.workingContent = workingContent;
+    }
+
+    public Integer getOtherType() {
+        return otherType;
+    }
+
+    public void setOtherType(Integer otherType) {
+        this.otherType = otherType;
+    }
+
+    public Integer getOtherNum() {
+        return otherNum;
+    }
+
+    public void setOtherNum(Integer otherNum) {
+        this.otherNum = otherNum;
     }
 }

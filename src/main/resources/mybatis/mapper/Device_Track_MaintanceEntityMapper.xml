@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.huihongcloud.mapper.Device_Track_MaintanceEntityMapper" >
+  <resultMap id="BaseResultMap" type="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
+    <constructor >
+      <arg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="LineName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TimeConsume" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="StartTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="EndTIme" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="PointCollect" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="StartPoint" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EndPoint" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic1" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic2" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic3" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic4" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Pic5" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Worker" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Working_Content" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ScanId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="deviceId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
+    insert into Device_Track_Maintance (id, LineName, TimeConsume, 
+      StartTime, EndTIme, PointCollect, 
+      StartPoint, EndPoint, Pic1, 
+      Pic2, Pic3, Pic4, Pic5, 
+      Worker, Working_Content, Remarks, 
+      ScanId, deviceId,username)
+    values (#{id,jdbcType=BIGINT}, #{linename,jdbcType=VARCHAR}, #{timeconsume,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{pointcollect,jdbcType=VARCHAR}, 
+      #{startpoint,jdbcType=VARCHAR}, #{endpoint,jdbcType=VARCHAR}, #{pic1,jdbcType=VARCHAR}, 
+      #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{pic4,jdbcType=VARCHAR}, #{pic5,jdbcType=VARCHAR}, 
+      #{worker,jdbcType=VARCHAR}, #{workingContent,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{scanid,jdbcType=BIGINT}, #{deviceid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
+    insert into Device_Track_Maintance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="linename != null" >
+        LineName,
+      </if>
+      <if test="timeconsume != null" >
+        TimeConsume,
+      </if>
+      <if test="starttime != null" >
+        StartTime,
+      </if>
+      <if test="endtime != null" >
+        EndTIme,
+      </if>
+      <if test="pointcollect != null" >
+        PointCollect,
+      </if>
+      <if test="startpoint != null" >
+        StartPoint,
+      </if>
+      <if test="endpoint != null" >
+        EndPoint,
+      </if>
+      <if test="pic1 != null" >
+        Pic1,
+      </if>
+      <if test="pic2 != null" >
+        Pic2,
+      </if>
+      <if test="pic3 != null" >
+        Pic3,
+      </if>
+      <if test="pic4 != null" >
+        Pic4,
+      </if>
+      <if test="pic5 != null" >
+        Pic5,
+      </if>
+      <if test="worker != null" >
+        Worker,
+      </if>
+      <if test="workingContent != null" >
+        Working_Content,
+      </if>
+      <if test="remarks != null" >
+        Remarks,
+      </if>
+      <if test="scanid != null" >
+        ScanId,
+      </if>
+      <if test="deviceid != null" >
+        deviceId,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="linename != null" >
+        #{linename,jdbcType=VARCHAR},
+      </if>
+      <if test="timeconsume != null" >
+        #{timeconsume,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pointcollect != null" >
+        #{pointcollect,jdbcType=VARCHAR},
+      </if>
+      <if test="startpoint != null" >
+        #{startpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="endpoint != null" >
+        #{endpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="pic4 != null" >
+        #{pic4,jdbcType=VARCHAR},
+      </if>
+      <if test="pic5 != null" >
+        #{pic5,jdbcType=VARCHAR},
+      </if>
+      <if test="worker != null" >
+        #{worker,jdbcType=VARCHAR},
+      </if>
+      <if test="workingContent != null" >
+        #{workingContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="scanid != null" >
+        #{scanid,jdbcType=BIGINT},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
+  </select>
+
+  <select id="selectAll" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+    SELECT * FROM Device_Track_Maintance WHERE username = #{username} LIMIT #{num1},#{num2};
+  </select>
+
+    <select id="countAllByArea" resultType="java.lang.Integer">
+      SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username like "%"#{username}"%";
+    </select>
+
+  <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+      SELECT * FROM Device_Track_Maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+  </select>
+
+    <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+      SELECT * FROM  Device_Track_Maintance t1 LEFT JOIN device t2 ON t1.deviceId = t2.id
+      WHERE t2.adcode
+      LIKE concat(#{adcode}, '%')
+      <if test="startDate!=null and startDate !=''">
+        and t1.submit_date >= #{startDate}
+      </if>
+      <if test="endDate != null and endDate !=''">
+        and t1.submit_date &lt;= #{endDate}
+      </if>
+      <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+        and ${colName} = #{searchText}
+      </if>
+
+    </select>
+
+  <select id="selectAllByAdcode" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+        SELECT * FROM Device_Track_Maintance t1 LEFT JOIN  device t2 ON t1.deviceId = t2.id
+        WHERE t2.adcode LIKE concat(#{adcode},'%')
+        LIMIT #{num1},#{num2}
+
+  </select>
+    <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
+      select * from device where 1 = 1 and project = '轨迹追踪'
+      <if test="adcode != null and adcode != ''">
+        and adcode like '${adcode}%'
+      </if>
+      <if test="town != null and town != ''">
+        and town = #{town}
+      </if>
+
+      <if test="searchText != null and searchText != ''">
+        and (id = #{searchText} or
+        province like concat('%', #{searchText}, '%') or
+        city like concat('%', #{searchText}, '%') or
+        area like concat('%', #{searchText}, '%') or
+        town like concat('%', #{searchText}, '%'))
+      </if>
+    </select>
+  <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device where manager = #{manager} AND project = '轨迹追踪'
+  </select>
+  <select id="getDeviceByWorker" resultType="cn.huihongcloud.entity.device.Device">
+        select device.*
+        from device
+        left join device_map on device.id = device_map.device_id
+        where user_id = #{worker}
+        AND project = '轨迹追踪'
+
+  </select>
+
+
+</mapper>

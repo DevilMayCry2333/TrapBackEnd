@@ -1,8 +1,6 @@
 package cn.huihongcloud.controller;
 
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
-import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.component.JWTComponent;
@@ -15,11 +13,12 @@ import cn.huihongcloud.entity.device.DeviceMaintenanceOutput;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.service.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +36,7 @@ import java.util.Map;
  */
 @RestController
 public class DeviceMaintenanceController {
-
+    private static final Logger logger = LoggerFactory.getLogger(DeviceMaintenanceController.class);
     @Autowired
     private DeviceMaintenanceService deviceMaintenanceService;
 
@@ -76,15 +75,36 @@ public class DeviceMaintenanceController {
                                          Integer femaleNum,
                                          String drug,
                                          String remark,
-                                         int otherNum,
-                                         int otherType,
+                                         Integer otherNum,
+                                         Integer otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
 
+
+
+        logger.info("===开始记录数据===");
+        logger.info(username);
+        logger.info(deviceId);
+        logger.info(String.valueOf(longitude));
+        logger.info(String.valueOf(latitude));
+        logger.info(String.valueOf(altitude));
+        logger.info(String.valueOf(num));
+        logger.info(String.valueOf(maleNum));
+        logger.info(String.valueOf(femaleNum));
+        logger.info(drug);
+        logger.info(remark);
+        logger.info(String.valueOf(otherNum));
+        logger.info(String.valueOf(otherType));
+        logger.info(String.valueOf(workingContent));
+
+        System.out.println("image" + image);
+
          Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
-         if(!relation){
-             return Result.ok(deviceService.judgeDeviceRelation(username,deviceId));
-             //throw new Exception("提交失败");
-         }
+        //if被我注释了 2019.10.1
+
+//         if(!relation){
+//             return Result.ok(deviceService.judgeDeviceRelation(username,deviceId));
+//             //throw new Exception("提交失败");
+//         }
         
 //         if(altitude==null){
 //
@@ -109,8 +129,12 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
         deviceMaintenance.setWorkingContent(workingContent);
         // 其他天牛数量与类型
+
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
+
+
+
         //随机数
        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
 
@@ -118,6 +142,8 @@ public class DeviceMaintenanceController {
             String imgId = deviceService.saveImg(image, deviceId, username);
 
             deviceMaintenance.setImageId(imgId);
+            System.out.println("执行了这部");
+
         }
         if (targetUsername != null) {
             deviceMaintenanceService.addMaintenanceData(targetUsername, deviceMaintenance);
@@ -145,8 +171,8 @@ public class DeviceMaintenanceController {
 
                     deviceMaintenance.setIsActive(0);
                     deviceMaintenanceService.recordAbnormal(deviceMaintenance);
-
-                    throw new Exception("人员未到场");
+                    //这里注释了一下 2019.10.1
+//                    throw new Exception("人员未到场");
                 } else {
                     deviceMaintenanceService.addMaintenanceData(username, deviceMaintenance);
                 }
@@ -199,9 +225,9 @@ public class DeviceMaintenanceController {
                                       Integer femaleNum,
                                       String drug,
                                       String remark,
-                                      int otherNum,
-                                      int otherType,
-                                      int workingContent,
+                                      Integer otherNum,
+                                      Integer otherType,
+                                      Integer workingContent,
                                       Boolean isAbnormal, String imageid)throws Exception {
 
         if(altitude==null){
@@ -223,9 +249,11 @@ public class DeviceMaintenanceController {
        // deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
       deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
         deviceMaintenance.setWorkingContent(workingContent);
+
         // 其他天牛数量与类型
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
+
         Device device1 = deviceService.getDeviceById(deviceId);
         if(device1 == null || device1.getReceiveDate() == null) {
             normal=1;
@@ -305,6 +333,7 @@ public class DeviceMaintenanceController {
         */
         return normal;
     }
+
     public static double algorithm(double longitude1, double latitude1, double longitude2, double latitude2) {
 
              double Lat1 = rad(latitude1); // 纬度
@@ -832,8 +861,10 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
             Integer femaleNum=deviceMaintenance1.getFemaleNum();
             String drug=deviceMaintenance1.getDrug();
             String remark=deviceMaintenance1.getRemark();
-            int otherNum=deviceMaintenance1.getOtherNum();
-            int otherType=deviceMaintenance1.getOtherType();
+
+            Integer otherNum= (Integer) deviceMaintenance1.getOtherNum();
+            Integer otherType= (Integer) deviceMaintenance1.getOtherType();
+
             Date date=deviceMaintenance1.getDate();
             String imageid=deviceMaintenance1.getImageId();
             int workingContent=deviceMaintenance1.getWorkingContent();
