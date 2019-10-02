@@ -147,8 +147,8 @@ public class DryInjectionSummary {
                                 @RequestParam Integer optionIndex,
                                 @RequestParam(required = false) String searchText,
                                 @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        Page<Object> pageObject = PageHelper.startPage(page, limit);
         User user = userService.getUserByUserName(username);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
         System.out.println(username);
 
         if (!Objects.equals(startDate, "")) {
