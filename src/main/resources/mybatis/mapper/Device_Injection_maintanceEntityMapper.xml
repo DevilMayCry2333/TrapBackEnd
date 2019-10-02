@@ -196,7 +196,13 @@
 
     </trim>
   </insert>
-  <update id="reportData">
+
+    <insert id="addMaintanceData">
+        insert into Device_Injection_maintance (Worker,device_Id,longitude,latitude,altitude,dataPrecision,WoodStatus,injection_num,Remarks,work_content,Pic)
+        values (#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{WoodStatus},#{injectionNum},#{remarks},#{workContent},#{pic})
+    </insert>
+
+    <update id="reportData">
         update Device_Injection_maintance
         set reported = 1
         where id = #{id}
