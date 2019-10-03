@@ -161,7 +161,11 @@
 
     </trim>
   </insert>
-  <select id="countAll" resultType="java.lang.Integer">
+    <insert id="addMaintance">
+      insert into Device_Track_Maintance (Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
+      values (#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
+    </insert>
+    <select id="countAll" resultType="java.lang.Integer">
     SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
   </select>
 

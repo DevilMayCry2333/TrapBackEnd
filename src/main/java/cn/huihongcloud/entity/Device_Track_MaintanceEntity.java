@@ -13,7 +13,12 @@ public class Device_Track_MaintanceEntity {
 
     private String endtime;
 
-    private String pointcollect;
+    private String LatitudeCollect;
+
+    private String LongtitudeCollect;
+
+    private String AltitudeCollect;
+
 
     private String startpoint;
 
@@ -43,13 +48,12 @@ public class Device_Track_MaintanceEntity {
 
     private String submit_date;
 
-    public Device_Track_MaintanceEntity(Long id, String linename, String timeconsume, String starttime, String endtime, String pointcollect, String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
+    public Device_Track_MaintanceEntity(String LatitudeCollect,String LongtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
         this.id = id;
         this.linename = linename;
         this.timeconsume = timeconsume;
         this.starttime = starttime;
         this.endtime = endtime;
-        this.pointcollect = pointcollect;
         this.startpoint = startpoint;
         this.endpoint = endpoint;
         this.pic1 = pic1;
@@ -64,6 +68,10 @@ public class Device_Track_MaintanceEntity {
         this.deviceId = deviceId;
         this.username = username;
         this.submit_date =submit_date;
+        this.LatitudeCollect = LatitudeCollect;
+        this.LongtitudeCollect = LongtitudeCollect;
+        this.AltitudeCollect = AltitudeCollect;
+
     }
 
     public Device_Track_MaintanceEntity() {
@@ -92,14 +100,6 @@ public class Device_Track_MaintanceEntity {
 
     public void setTimeconsume(String timeconsume) {
         this.timeconsume = timeconsume == null ? null : timeconsume.trim();
-    }
-
-    public String getPointcollect() {
-        return pointcollect;
-    }
-
-    public void setPointcollect(String pointcollect) {
-        this.pointcollect = pointcollect == null ? null : pointcollect.trim();
     }
 
     public String getStartpoint() {
@@ -228,5 +228,29 @@ public class Device_Track_MaintanceEntity {
 
     public void setDeviceId(Long deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getLatitudeCollect() {
+        return LatitudeCollect;
+    }
+
+    public void setLatitudeCollect(String latitudeCollect) {
+        LatitudeCollect = latitudeCollect;
+    }
+
+    public String getLongtitudeCollect() {
+        return LongtitudeCollect;
+    }
+
+    public void setLongtitudeCollect(String longtitudeCollect) {
+        LongtitudeCollect = longtitudeCollect;
+    }
+
+    public String getAltitudeCollect() {
+        return AltitudeCollect;
+    }
+
+    public void setAltitudeCollect(String altitudeCollect) {
+        AltitudeCollect = altitudeCollect;
     }
 }

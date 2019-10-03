@@ -33,6 +33,8 @@ public interface Device_Track_MaintanceEntityMapper {
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
+    int addMaintance(Device_Track_MaintanceEntity dataentity);
+
 
 
 }
