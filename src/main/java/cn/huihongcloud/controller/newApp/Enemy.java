@@ -1,16 +1,10 @@
 package cn.huihongcloud.controller.newApp;
 
-import cn.huihongcloud.controller.DeviceMaintenanceController;
-import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
-import cn.huihongcloud.entity.bd.BDInfo;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
-import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.user.User;
-import cn.huihongcloud.mapper.DeviceBeetleMapper;
-import cn.huihongcloud.mapper.DeviceMapper;
-import cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper;
-import cn.huihongcloud.mapper.UserMapper;
+import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -20,12 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 @RestController
 @RequestMapping("/app")
-public class Inject {
-    private static final Logger logger = LoggerFactory.getLogger(Inject.class);
+public class Enemy {
+    private static final Logger logger = LoggerFactory.getLogger(Enemy.class);
 
     @Autowired
     DeviceBeetleMapper deviceBeetleMapper;
@@ -36,28 +29,18 @@ public class Inject {
     @Autowired
     DeviceService deviceService;
     @Autowired
-    Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
+    Device_NaturalEnemies_maintanceEntityMapper deviceNaturalEnemiesMaintanceEntityMapper;
 
-
-    @RequestMapping("/getWoodStatus")
-    public Object getWoodStatus(@RequestParam String worker){
+    @RequestMapping("/getEnemyType")
+    public Object getEnemyType(@RequestParam String worker){
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
-        return deviceBeetleMapper.getInjectWoodStatus(user2.getAdcode());
-    }
-
-    @RequestMapping("/getWorkingContent")
-    public Object getWorkContent(@RequestParam String worker){
-        User user = userMapper.getUserByUserName(worker);
-        User user1 = userMapper.getUserByUserName(user.getParent());
-        User user2 = userMapper.getUserByUserName(user1.getParent());
-        return deviceBeetleMapper.getInjectWorkContent(user2.getAdcode());
-
+        return deviceBeetleMapper.getEnemyType(user2.getAdcode());
     }
 
     @ApiOperation("上传维护信息")
-    @PostMapping("/AddInjectData")
+    @PostMapping("/AddEnemy")
     public Object addMaintenanceData(@RequestAttribute("username") String username,
                                      @RequestParam(required = false) MultipartFile image,
                                      @RequestParam(value = "username", required = false) String targetUsername,
@@ -67,10 +50,10 @@ public class Inject {
                                      String latitude,
                                      String altitude,
                                      String accuracy,
-                                     Integer WoodStatus,
-                                     Integer injectNum,
+                                     String predatorsTypeValue,
+                                     Integer releaseNum,
                                      String remarks,
-                                     String workingContent, HttpServletResponse response) throws Exception {
+                                     HttpServletResponse response) throws Exception {
 
 
 
@@ -81,26 +64,25 @@ public class Inject {
         logger.info(String.valueOf(latitude));
         logger.info(String.valueOf(altitude));
         logger.info(String.valueOf(accuracy));
-        logger.info(String.valueOf(WoodStatus));
-        logger.info(String.valueOf(injectNum));
+        logger.info(String.valueOf(predatorsTypeValue));
+        logger.info(String.valueOf(releaseNum));
         logger.info(remarks);
-        logger.info(workingContent);
 
         System.out.println("image" + image);
 
-        Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
+        Device_NaturalEnemies_maintanceEntity deviceNaturalEnemiesMaintanceEntity = new Device_NaturalEnemies_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 
-        deviceInjectionMaintanceEntity.setWorker(username);
-        deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceInjectionMaintanceEntity.setLongitude(longitude);
-        deviceInjectionMaintanceEntity.setLatitude(latitude);
-        deviceInjectionMaintanceEntity.setAltitude(altitude);
-        deviceInjectionMaintanceEntity.setDataPrecision(accuracy);
-        deviceInjectionMaintanceEntity.setWoodStatus(WoodStatus);
-        deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
-        deviceInjectionMaintanceEntity.setRemarks(remarks);
-        deviceInjectionMaintanceEntity.setWorkContent(workingContent);
+        deviceNaturalEnemiesMaintanceEntity.setWorker(username);
+        deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
+        deviceNaturalEnemiesMaintanceEntity.setLongitude(longitude);
+        deviceNaturalEnemiesMaintanceEntity.setLatitude(latitude);
+        deviceNaturalEnemiesMaintanceEntity.setAltitude(altitude);
+        deviceNaturalEnemiesMaintanceEntity.setPrecision(accuracy);
+        deviceNaturalEnemiesMaintanceEntity.setPredatorstype(predatorsTypeValue);
+        deviceNaturalEnemiesMaintanceEntity.setReleaseNum(releaseNum);
+        deviceNaturalEnemiesMaintanceEntity.setRemarks(remarks);
+
 
         //修改了一些
 
@@ -109,11 +91,11 @@ public class Inject {
 
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
-            deviceInjectionMaintanceEntity.setPic(imgId);
+            deviceNaturalEnemiesMaintanceEntity.setPic(imgId);
             System.out.println("执行了这部");
 
         }
-        deviceInjectionMaintanceEntityMapper.addMaintanceData(deviceInjectionMaintanceEntity);
+        deviceNaturalEnemiesMaintanceEntityMapper.addMaintance(deviceNaturalEnemiesMaintanceEntity);
         return Result.ok();
         //return null;
     }

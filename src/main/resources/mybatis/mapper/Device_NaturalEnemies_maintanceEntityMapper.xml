@@ -138,7 +138,11 @@
 
     </trim>
   </insert>
-  <update id="reportData">
+    <insert id="addMaintance">
+        insert into Device_NaturalEnemies_maintance (Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks)
+        values (#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks})
+    </insert>
+    <update id="reportData">
         update Device_NaturalEnemies_maintance
         set reported = 1
         where id = #{id}

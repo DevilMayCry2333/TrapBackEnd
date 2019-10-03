@@ -32,6 +32,7 @@ public class Device {
     private String CustomTown;
     private String CustomPrefix;
     private String CustomSerial;
+    private String scanId;
     private String CustomProject;
 
     public String getId() {
@@ -194,5 +195,13 @@ public class Device {
 
     public void setCustomProject(String customProject) {
         CustomProject = customProject;
+    }
+
+    public String getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(String scanId) {
+        this.scanId = scanId;
     }
 }

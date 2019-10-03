@@ -72,6 +72,8 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
+    int addMaintance(Device_NaturalEnemies_maintanceEntity dataEntity);
+
 
 
 }

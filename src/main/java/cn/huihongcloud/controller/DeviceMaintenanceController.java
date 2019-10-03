@@ -12,6 +12,7 @@ import cn.huihongcloud.entity.device.DeviceMaintenanceAbnormalData;
 import cn.huihongcloud.entity.device.DeviceMaintenanceOutput;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.service.*;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -58,6 +59,9 @@ public class DeviceMaintenanceController {
     @Autowired
     private BDComponent mBDComponent;
 
+    @Autowired
+    DeviceMapper deviceMapper;
+
     @ApiOperation("上传维护信息")
     @PostMapping("/auth_api/maintenance")
         public Object addMaintenanceData(@RequestAttribute("username") String username,
@@ -80,10 +84,10 @@ public class DeviceMaintenanceController {
                                          int workingContent,HttpServletResponse response) throws Exception {
 
 
-
+        Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
         logger.info("===开始记录数据===");
         logger.info(username);
-        logger.info(deviceId);
+        logger.info(realDeviceId.getId());
         logger.info(String.valueOf(longitude));
         logger.info(String.valueOf(latitude));
         logger.info(String.valueOf(altitude));
@@ -98,7 +102,7 @@ public class DeviceMaintenanceController {
 
         System.out.println("image" + image);
 
-         Boolean relation=deviceService.judgeDeviceRelation(username,deviceId);
+         Boolean relation=deviceService.judgeDeviceRelation(username,realDeviceId.getId());
         //if被我注释了 2019.10.1
 
 //         if(!relation){
@@ -114,8 +118,9 @@ public class DeviceMaintenanceController {
         //修改了一些
         
         DeviceMaintenance deviceMaintenance = new DeviceMaintenance();
-        
-        deviceMaintenance.setDeviceId(deviceId);
+
+
+        deviceMaintenance.setDeviceId(realDeviceId.getId());
         deviceMaintenance.setMaleNum(maleNum);
         deviceMaintenance.setFemaleNum(femaleNum);
         deviceMaintenance.setNum(num);
@@ -126,7 +131,7 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setRemark(remark);
         deviceMaintenance.setDrug(drug);
        // deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
-        deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(deviceId)+1);
+        deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(realDeviceId.getId())+1);
         deviceMaintenance.setWorkingContent(workingContent);
         // 其他天牛数量与类型
 
@@ -139,7 +144,7 @@ public class DeviceMaintenanceController {
        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
 
         if (image != null) {
-            String imgId = deviceService.saveImg(image, deviceId, username);
+            String imgId = deviceService.saveImg(image, realDeviceId.getId(), username);
 
             deviceMaintenance.setImageId(imgId);
             System.out.println("执行了这部");
@@ -149,7 +154,7 @@ public class DeviceMaintenanceController {
             deviceMaintenanceService.addMaintenanceData(targetUsername, deviceMaintenance);
         }
         else {
-            Device device = deviceService.getDeviceById(deviceId);
+            Device device = deviceService.getDeviceById(realDeviceId.getId());
             // 如果存在设备判断是否偏离太远
             // 因为现在生成的二维码也就是设备，当接收日期不为空时才去判断是否偏离太远，否则认为是第一次收到设备信息了
 
@@ -182,11 +187,11 @@ public class DeviceMaintenanceController {
 
         }
         //2018-12-20 改为只能更新
-        Device device1 = deviceService.getDeviceById(deviceId);
+        Device device1 = deviceService.getDeviceById(realDeviceId.getId());
         if(device1 == null || device1.getReceiveDate() == null) {
 
             Device device = new Device();
-            device.setId(deviceId);
+            device.setId(realDeviceId.getId());
             device.setLongitude(longitude);
             device.setLatitude(latitude);
             device.setAltitude(altitude);
@@ -197,7 +202,7 @@ public class DeviceMaintenanceController {
 
         // 增加or更新设备表
         /*
-        Device obj = deviceService.packDevice(latitude, longitude, deviceId);
+        Device obj = deviceService.packDevice(latitude, longitude, realDeviceId.getId());
         obj.setAltitude(altitude);
         obj.setReceiveDate(new Date());
         User user = userService.getUserByUserName(username);
@@ -208,7 +213,7 @@ public class DeviceMaintenanceController {
             deviceService.addDevice(obj);
         }
         if (user.getRole() == 2) {
-            deviceService.addDeviceRelation(deviceId, user.getUsername());
+            deviceService.addDeviceRelation(realDeviceId.getId(), user.getUsername());
         }
         */
         return Result.ok();

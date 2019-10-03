@@ -35,4 +35,6 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
+    int addMaintance(Device_DeadTrees_maintanceEntity dataEnity);
+
 }

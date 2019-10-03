@@ -175,7 +175,7 @@ public class QRNewController {
         PdfPTable pdfPTable = new PdfPTable(3);
         int size = 0;
         for (Device item: list) {
-            String deviceId = item.getId();
+            String deviceId = item.getScanId();
             BitMatrix bitMatrix = new MultiFormatWriter().encode(deviceId, BarcodeFormat.QR_CODE, 300, 300);
             BufferedImage buffImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
