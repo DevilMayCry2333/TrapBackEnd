@@ -2,6 +2,7 @@ package cn.huihongcloud.controller.newApp;
 
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
@@ -70,8 +71,10 @@ public class Enemy {
         System.out.println("image" + image);
 
         Device_NaturalEnemies_maintanceEntity deviceNaturalEnemiesMaintanceEntity = new Device_NaturalEnemies_maintanceEntity();
+        Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
+
         deviceNaturalEnemiesMaintanceEntity.setWorker(username);
-        deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
+        deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceNaturalEnemiesMaintanceEntity.setLongitude(longitude);
         deviceNaturalEnemiesMaintanceEntity.setLatitude(latitude);
         deviceNaturalEnemiesMaintanceEntity.setAltitude(altitude);

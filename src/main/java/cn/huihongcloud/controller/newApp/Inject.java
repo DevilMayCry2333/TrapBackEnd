@@ -89,8 +89,10 @@ public class Inject {
         System.out.println("image" + image);
 
         Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
+        Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
+
         deviceInjectionMaintanceEntity.setWorker(username);
-        deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
+        deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceInjectionMaintanceEntity.setLongitude(longitude);
         deviceInjectionMaintanceEntity.setLatitude(latitude);
         deviceInjectionMaintanceEntity.setAltitude(altitude);

@@ -3,6 +3,7 @@ package cn.huihongcloud.controller.newApp;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
@@ -78,8 +79,10 @@ public class DeadTrees {
         System.out.println("image" + image);
 
         Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
+        Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
+
         deviceDeadTreesMaintanceEntity.setWorker(username);
-        deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
+        deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceDeadTreesMaintanceEntity.setLongitude(longitude);
         deviceDeadTreesMaintanceEntity.setLatitude(latitude);
         deviceDeadTreesMaintanceEntity.setAltitude(altitude);
