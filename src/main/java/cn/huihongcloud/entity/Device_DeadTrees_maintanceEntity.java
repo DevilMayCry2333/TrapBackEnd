@@ -37,7 +37,11 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String region;
 
-    public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, String submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic, String username,String region) {
+    private String altitude;
+
+    private String accuracy;
+
+    public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, String submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic, String username,String region,String altitude,String accuracy) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -55,6 +59,8 @@ public class Device_DeadTrees_maintanceEntity {
         this.pic = pic;
         this.username = username;
         this.region = region;
+        this.altitude = altitude;
+        this.accuracy = accuracy;
     }
 
     public Device_DeadTrees_maintanceEntity() {
@@ -195,5 +201,21 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
+    }
+
+    public String getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(String accuracy) {
+        this.accuracy = accuracy;
     }
 }

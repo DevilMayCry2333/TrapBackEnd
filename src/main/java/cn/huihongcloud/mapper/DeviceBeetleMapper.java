@@ -1,11 +1,8 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.*;
 import cn.huihongcloud.entity.beetle.BeetleInfo;
 import cn.huihongcloud.entity.device.DeviceBeetle;
-import cn.huihongcloud.entity.injectInfo;
-import cn.huihongcloud.entity.inject_WoodStatus;
-import cn.huihongcloud.entity.inject_WorkContent;
-import cn.huihongcloud.entity.workContent;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +29,9 @@ public interface DeviceBeetleMapper {
 
     List<inject_WoodStatus> getInjectWoodStatus(String adcode);
     List<inject_WorkContent> getInjectWorkContent(String adcode);
+    List<enemy_EneType> getEnemyType(String adcode);
+    List<deadTree_KillMethods> getKillMethods(String adcode);
+
 
 
 }
