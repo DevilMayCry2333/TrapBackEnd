@@ -46,8 +46,6 @@ public class MyTrack {
                                      int current,
                                      HttpServletResponse response) throws Exception {
 
-
-
         logger.info("===开始记录数据===");
         logger.info(username);
         logger.info(String.valueOf(longtitudeData));
