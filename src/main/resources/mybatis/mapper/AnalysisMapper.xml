@@ -40,4 +40,27 @@
         </if>
         group by DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%m')
     </select>
+    <select id="getAreaStatic" resultType="cn.huihongcloud.entity.AreaStatic">
+        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,CustomTown
+        from device_maintenance t1 left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
+        and DATE(`date`) >= #{startDate} and #{endDate} >=DATE(`date`)
+        group by CustomTown;
+
+    </select>
+    <select id="getMonthStatic" resultType="cn.huihongcloud.entity.AreaStatic">
+        select sum(num) beetlesNum,sum(other_num) otherNum,MONTH(`date`) CustomTown from device_maintenance t1 left join device t2 on t1.device_id = t2.id
+        where CustomProject = #{customProject} and DATE(`date`)>= #{startDate} and #{endDate} >=DATE(`date`) group by MONTH(`date`)
+    </select>
+    <select id="getBatchStatic" resultType="cn.huihongcloud.entity.AreaStatic">
+        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,batch CustomTown
+        from device_maintenance t1 left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject} group by batch
+    </select>
+
+    <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.workerStatic">
+        select username workerName,count(device_Id) num,DATE(`date`) currentDate from device_maintenance t1
+        left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
+        and DATE(`date`)>= #{startDate} and #{endDate} >=DATE(`date`)
+         group by DATE(`date`);
+    </select>
+
 </mapper>
