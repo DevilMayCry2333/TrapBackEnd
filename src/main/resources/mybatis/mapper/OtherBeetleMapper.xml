@@ -7,14 +7,68 @@
     <insert id="insertBeetleInfoMap">
         insert into beetle_info_map (beetle_info_id, adcode) values (#{beetleInfoId}, #{adcode})
     </insert>
+    <insert id="insertWorkContent">
+        insert into workContent (`name`,Fvalue) values (#{name},#{Fvalue});
+    </insert>
+    <insert id="insertInjectInfo">
+        insert into injectInfo (`name`) values (#{name});
+    </insert>
+    <insert id="insertInject_WoodStatus">
+        insert into inject_WoodStatus (`name`) values (#{name});
+    </insert>
+    <insert id="insertInject_WorkContent">
+        insert into inject_WorkContent (`name`) values (#{name});
+    </insert>
+    <insert id="insertEnemy_Type">
+        insert into enemy_EneType (`name`) values (#{name});
+    </insert>
+    <insert id="insertDead_Kill">
+        insert into deadtree_KillMethods (`name`) values (#{name});
+    </insert>
     <update id="updateBeetleInfo">
         update beetle_info set `name` = #{name} where id = #{id}
+    </update>
+    <update id="updateWorkContent">
+        update workContent set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateInjectInfo">
+        update injectInfo set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateInject_WoodStatus">
+        update inject_WoodStatus set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateInject_WorkContent">
+        update inject_WorkContent set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateEnemy_Type">
+        update enemy_EneType set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateDead_Kill">
+        update deadtree_KillMethods set `name` = #{name} where id = #{id};
     </update>
     <delete id="deleteBeetleInfo">
         delete from beetle_info where id = #{id}
     </delete>
     <delete id="deleteBeetleInfoMap">
         delete from beetle_info_map where beetle_info_id = #{beetleInfoId} and adcode = #{adcode}
+    </delete>
+    <delete id="deleteWorkContent">
+        delete from inject_WorkContent where id = #{id};
+    </delete>
+    <delete id="deleteInjectInfo">
+        delete from injectInfo where id = #{id};
+    </delete>
+    <delete id="deleteInject_WoodStatus">
+        delete from inject_WoodStatus where id = #{id};
+    </delete>
+    <delete id="deleteInject_WorkContent">
+        delete from inject_WorkContent where id = #{id};
+    </delete>
+    <delete id="deleteEnemy_Type">
+        delete from enemy_EneType where id = #{id};
+    </delete>
+    <delete id="deleteDead_Kill">
+        delete from deadtree_KillMethods where id = #{id};
     </delete>
     <select id="queryBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
         select * from beetle_info;
@@ -24,5 +78,23 @@
         from beetle_info_map
         left join beetle_info on beetle_info.id = beetle_info_map.beetle_info_id
         where adcode = #{adcode}
+    </select>
+    <select id="getWorkContent" resultType="cn.huihongcloud.entity.workContent">
+        select * from workContent;
+    </select>
+    <select id="getInjectInfo" resultType="cn.huihongcloud.entity.injectInfo">
+        select * from injectInfo;
+    </select>
+    <select id="getInject_WoodStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">
+        select * from inject_WoodStatus;
+    </select>
+    <select id="getInject_WorkContent" resultType="cn.huihongcloud.entity.inject_WorkContent">
+        select * from  inject_WorkContent;
+    </select>
+    <select id="getEnemy_Type" resultType="cn.huihongcloud.entity.enemy_EneType">
+        select * from enemy_EneType;
+    </select>
+    <select id="getDead_Kill" resultType="cn.huihongcloud.entity.deadTree_KillMethods">
+        select * from deadtree_KillMethods;
     </select>
 </mapper>

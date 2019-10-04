@@ -2,6 +2,7 @@ package cn.huihongcloud.controller;
 
 import cn.huihongcloud.entity.region.Node;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.UserMapper;
 import cn.huihongcloud.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +41,9 @@ public class DistController {
     @Autowired @Qualifier("streets")
     private Map<String, List<Node>> streets;
 
+    @Autowired
+    UserMapper userMapper;
+
     @RequestMapping(value = "cities", method = RequestMethod.GET)
     @ApiOperation("获取城市列表")
     public List<Node> cities(@RequestParam("id") String id) {
@@ -63,6 +67,7 @@ public class DistController {
     public List<Node> streets(@RequestParam("id") String id) {
         return streets.get(id);
     }
+
 
     @GetMapping("/auth_api/dist/provinces")
     public List<Node> getProvincesByUser(@RequestAttribute String username) {

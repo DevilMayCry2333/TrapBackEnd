@@ -1,6 +1,7 @@
 package cn.huihongcloud.service;
 
 import cn.huihongcloud.entity.beetle.BeetleInfo;
+import cn.huihongcloud.entity.workContent;
 import cn.huihongcloud.mapper.OtherBeetleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class OtherBeetleService {
 
     public List<BeetleInfo> getOtherBeetleInfoList() {
         return otherBeetleMapper.queryBeetleInfo();
+    }
+    public List<workContent> getWorkContentList(){
+        return otherBeetleMapper.getWorkContent();
     }
 
     public boolean updateOtherBeetleInfo(BeetleInfo beetleInfo) {

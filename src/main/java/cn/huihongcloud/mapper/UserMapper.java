@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
+    List<User> getProxyByProvzinces (String province);
+
     User getUserByUserName(String userName);
     int verifyUserByUserNameAndPassword(@Param("username") String userName, @Param("password") String password);
     int registerUser(@Param("user") User user);

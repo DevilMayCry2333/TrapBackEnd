@@ -92,6 +92,9 @@
         select user.* from device left join user on device.adcode = user.adcode and device.town = user.town where device.id = #{deviceId} and  username not in (
         select user.username from device_map left join user on device_map.user_id = user.username where device_id = #{deviceId}) and user.role = 2
     </select>
+    <select id="getProxyByProvzinces" resultType="cn.huihongcloud.entity.user.User">
+        select * from `user` where `user`.province = #{province};
+    </select>
     <update id="updateUser">
         update user
         <set>
