@@ -25,6 +25,24 @@
     <insert id="insertDead_Kill">
         insert into deadtree_KillMethods (`name`) values (#{name});
     </insert>
+    <insert id="insertEnemy_TypeForTown">
+        insert into enemy_EneType_map values (#{id},#{adcode});
+    </insert>
+    <insert id="insertWorkContentForTOwn">
+        insert into workContent_map values (#{id},#{adcode});
+    </insert>
+    <insert id="insertInjectForTown">
+        insert into injectInfo_map values (#{id},#{adcode});
+    </insert>
+    <insert id="insertInjectWood">
+        insert into inject_WoodStatus_map values (#{id},#{adcode});
+    </insert>
+    <insert id="insertInjectWorkContentForTown">
+         insert into inject_WorkContent_map values (#{id},#{adcode});
+    </insert>
+    <insert id="insertDeadKillFOrTown">
+        insert into deadtrees_KillMethods_map values (#{id},#{adcode});
+    </insert>
     <update id="updateBeetleInfo">
         update beetle_info set `name` = #{name} where id = #{id}
     </update>
@@ -70,6 +88,24 @@
     <delete id="deleteDead_Kill">
         delete from deadtree_KillMethods where id = #{id};
     </delete>
+    <delete id="deleteEnemy_TypeForTown">
+        delete from enemy_EneType_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteWorkContentFOrTown">
+        delete from workContent_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteInjectForTown">
+        delete from injectInfo_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteInjectWood">
+        delete from inject_WoodStatus_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteInjectWorkContentForTown">
+        delete from inject_WorkContent_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteDeadKillForTOwn">
+        delete from deadtrees_KillMethods_map where id = #{id} and adcode = #{adcode};
+    </delete>
     <select id="queryBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
         select * from beetle_info;
     </select>
@@ -96,5 +132,23 @@
     </select>
     <select id="getDead_Kill" resultType="cn.huihongcloud.entity.deadTree_KillMethods">
         select * from deadtree_KillMethods;
+    </select>
+    <select id="getEnemy_TypeForTown" resultType="cn.huihongcloud.entity.enemy_EneType">
+        select * from enemy_EneType t1 left join enemy_EneType_map t2 on t1.id = t2.id where t2.adcode = #{adcode};
+    </select>
+    <select id="getWorkContentForTown" resultType="cn.huihongcloud.entity.workContent">
+        select * from workContent t1 left join workContent_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="getInjectForTown" resultType="cn.huihongcloud.entity.injectInfo">
+        select * from injectInfo t1 left join injectInfo_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="getInjectWoodForTown" resultType="cn.huihongcloud.entity.inject_WoodStatus">
+        select * from inject_WoodStatus t1 left join inject_WoodStatus_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="getInjectWorkContentForTown" resultType="cn.huihongcloud.entity.inject_WorkContent">
+        select * from inject_WorkContent t1 left join inject_WorkContent_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="getDeadKillForTown" resultType="cn.huihongcloud.entity.deadTree_KillMethods">
+        select * from deadtree_KillMethods t1 left join deadtrees_KillMethods_map t2 on t1.id = t2.id where adcode = #{adcode};
     </select>
 </mapper>

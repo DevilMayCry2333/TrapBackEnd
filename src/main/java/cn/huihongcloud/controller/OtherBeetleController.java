@@ -32,6 +32,166 @@ public class OtherBeetleController {
 
     //a5fdlQfLzKbQPLpdLEDczQ==
 
+
+    @ApiOperation("")
+    @GetMapping("/deadTrees_Kill/town")
+    public Object inject10(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getDeadKillForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/deadTrees_Kill/town")
+    public Object inject11(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertDeadKillFOrTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/deadTrees_Kill/town")
+    public Object inject12(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteDeadKillForTOwn(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+
+    @ApiOperation("")
+    @GetMapping("/inject_workContent/town")
+    public Object inject7(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getInjectWorkContentForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/inject_workContent/town")
+    public Object inject8(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertInjectWorkContentForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/inject_workContent/town")
+    public Object inject9(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteInjectWorkContentForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+
+    @ApiOperation("")
+    @GetMapping("/inject_woodstatus/town")
+    public Object inject4(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getInjectWoodForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/inject_woodstatus/town")
+    public Object inject5(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertInjectWood(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/inject_woodstatus/town")
+    public Object inject6(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteInjectWood(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+    @ApiOperation("")
+    @GetMapping("/inject/town")
+    public Object inject(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getInjectForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/inject/town")
+    public Object inject2(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertInjectForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/inject/town")
+    public Object inject3(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteInjectForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+
+    @ApiOperation("")
+    @GetMapping("/workContent/town")
+    public Object getworkContentForTown(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getWorkContentForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/workContent/town")
+    public Object addworkContentForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertWorkContentForTOwn(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/workContent/town")
+    public Object deleteworkContentForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteWorkContentFOrTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+    @ApiOperation("")
+    @GetMapping("/enemy_Type/town")
+    public Object getEnemyTypeForTown(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getEnemy_TypeForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/enemy_Type/town")
+    public Object addEnemyTypeForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertEnemy_TypeForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/enemy_Type/town")
+    public Object deleteEnemyTypeForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteEnemy_TypeForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
     @GetMapping("/deadTrees_Kill")
     public Object e() {
         return Result.ok(otherBeetleMapper.getDead_Kill());

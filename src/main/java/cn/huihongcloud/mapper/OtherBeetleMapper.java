@@ -30,6 +30,8 @@ public interface OtherBeetleMapper {
 
     List<BeetleInfo> queryBeetleInfo();
 
+    int insertInjectForTown(int id,String adcode);
+
     int updateBeetleInfo(BeetleInfo beetleInfo);
 
     int updateWorkContent(workContent workcontent);
@@ -56,15 +58,25 @@ public interface OtherBeetleMapper {
 
     int deleteDead_Kill(int id);
 
+    int deleteEnemy_TypeForTown(int id,String adcode);
+
+    int deleteInjectForTown(int id,String adcode);
+
     List<BeetleInfo> queryBeetleInfoForTown(@Param("adcode") String adcode);
 
     List<workContent> getWorkContent();
 
     int insertBeetleInfoMap(@Param("beetleInfoId") int beetleInfoId, @Param("adcode") String adcode);
 
+    int insertEnemy_TypeForTown(int id,String adcode);
+
+    int insertWorkContentForTOwn(int id,String adcode);
+
     int deleteBeetleInfoMap(@Param("beetleInfoId") int beetleInfoId, @Param("adcode") String adcode);
 
     int deleteWorkContent(int id);
+
+    int deleteWorkContentFOrTown(int id,String adcode);
 
     List<injectInfo> getInjectInfo();
 
@@ -75,5 +87,29 @@ public interface OtherBeetleMapper {
     List<enemy_EneType> getEnemy_Type();
 
     List<deadTree_KillMethods> getDead_Kill();
+
+    List<enemy_EneType> getEnemy_TypeForTown(String adcode);
+
+    List<workContent> getWorkContentForTown(String adcode);
+
+    List<injectInfo> getInjectForTown(String adcode);
+
+    List<inject_WoodStatus> getInjectWoodForTown(String adcode);
+
+    int insertInjectWood(int id,String adcode);
+
+    int deleteInjectWood(int id,String adcode);
+
+    List<inject_WorkContent> getInjectWorkContentForTown(String adcode);
+
+    int insertInjectWorkContentForTown(int id,String adcode);
+
+    int deleteInjectWorkContentForTown(int id,String adcode);
+
+    List<deadTree_KillMethods> getDeadKillForTown(String adcode);
+
+    int insertDeadKillFOrTown(int id,String adcode);
+
+    int deleteDeadKillForTOwn(int id,String adcode);
 
 }
