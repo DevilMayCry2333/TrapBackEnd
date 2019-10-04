@@ -1,9 +1,11 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.AreaStatic;
+import cn.huihongcloud.entity.workerStatic;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.awt.geom.Area;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +20,14 @@ public interface AnalysisMapper {
     List<String> getYearList(@Param("adcode") String adcode, @Param("town") String town);
     List<Map<String, Object>> getMonthlyDataByAdcodeTownAndYear(@Param("adcode") String adcode, @Param("town") String town, @Param("year") int year);
 
-    List<AreaStatic> getAreaStatic(String customProject);
+    List<AreaStatic> getAreaStatic(String customProject,String startDate,String endDate);
 
-    List<AreaStatic> getMonthStatic(String startM,String endM,String customProject);
+    List<AreaStatic> getMonthStatic(String startDate,String endDate,String customProject);
+
+    List<AreaStatic> getBatchStatic(String startDate,String endDate,String customProject);
+
+    List<workerStatic> getWorkerStatic(String startDate,String endDate,String customProject);
+
 
 
 

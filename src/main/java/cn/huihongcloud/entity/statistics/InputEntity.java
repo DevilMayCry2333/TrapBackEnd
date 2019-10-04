@@ -39,4 +39,60 @@ public class InputEntity {
         this.min = min.intValue();;
 
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
+
+    public BigDecimal getSum() {
+        return sum;
+    }
+
+    public void setSum(BigDecimal sum) {
+        this.sum = sum;
+    }
+
+    public BigDecimal getMean() {
+        return mean;
+    }
+
+    public void setMean(BigDecimal mean) {
+        this.mean = mean;
+    }
+
+    public Double getStd() {
+        return std;
+    }
+
+    public void setStd(Double std) {
+        this.std = std;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
 }

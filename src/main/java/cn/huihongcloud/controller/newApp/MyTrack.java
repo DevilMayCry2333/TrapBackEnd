@@ -58,6 +58,16 @@ public class MyTrack {
 
         System.out.println("image" + image);
         Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
+
+        String []longData = longtitudeData.split(",");
+        String []latData = latitudeData.split(",");
+        String []altData = altitudeData.split(",");
+
+        System.out.println(longData);
+        System.out.println(latData);
+        System.out.println(altData);
+
+
         deviceTrackMaintanceEntity.setLongtitudeCollect(longtitudeData);
         deviceTrackMaintanceEntity.setWorker(username);
         deviceTrackMaintanceEntity.setAltitudeCollect(altitudeData);
@@ -65,6 +75,9 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setLinename(lineName);
         deviceTrackMaintanceEntity.setWorkingContent(workContent);
         deviceTrackMaintanceEntity.setRemarks(remarks);
+
+        deviceTrackMaintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
+        deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
 
         //修改了一些
 
