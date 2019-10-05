@@ -2,6 +2,7 @@ package cn.huihongcloud.controller.newqrcode;
 
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.NewQrCodeMapper;
+import cn.huihongcloud.mapper.UserMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 public class NewQrCode {
     @Autowired
     NewQrCodeMapper newQrCodeMapper;
+    @Autowired
+    UserMapper userMapper;
 
     JSONObject res = new JSONObject();
 
@@ -92,10 +95,14 @@ public class NewQrCode {
                                           @RequestParam int IDNum,@RequestParam int applicationValue,
                                           @RequestParam String customRegion,@RequestParam String prefix,
                                           @RequestParam String serialStart,@RequestParam String serialEnd,
-                                          @RequestParam int serialNum)
+                                          @RequestParam int serialNum,
+                                          @RequestParam String username)
     {
+        System.out.println(username);
+        User user = userMapper.getUserByUserName(username);
+
         for (long i = Long.parseLong(startID),j=0; i <= Long.parseLong(endID); i++,j++) {
-            newQrCodeMapper.assginDeviceByManager(i,customRegion,prefix,Long.parseLong(serialStart)+j);
+            newQrCodeMapper.assginDeviceByManager(i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username);
         }
         res.put("Res",true);
         return res;

@@ -12,6 +12,6 @@ public interface NewQrCodeMapper {
     List<User> getArea(String adcode);
     List<User> getProxyByCode(String adcode);
     int insertDevice(String id,String proxy,String city,String area,String project,String adcode);
-    int assginDeviceByManager(long id,String CustomRegion,String prefix,long serial);
+    int assginDeviceByManager(long id,String CustomRegion,String prefix,long serial,String username,String manager);
 
 }
