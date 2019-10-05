@@ -167,8 +167,13 @@ public class UserController {
             case 4:
                 condition = " role = 5 and parent = '" + username + "'";
                 break;
-            case 7:
+            case 6:
                 users = userMapper.getProjectAdminByAdcode(currentUser.getAdcode());
+                System.out.println("6666");
+                flag = 1;
+                break;
+            case 7:
+                users = userMapper.getProjectUsersByAdcode(currentUser.getAdcode());
                 flag = 1;
                 break;
 
