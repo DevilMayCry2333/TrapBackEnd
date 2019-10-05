@@ -72,5 +72,7 @@ public interface DeviceMapper {
 
     int updateScanId(String id,String scanId);
 
+    List<Device> adminDevice();
+
 
 }

@@ -176,6 +176,8 @@ public class QRNewController {
         int size = 0;
         for (Device item: list) {
             String deviceId = item.getScanId();
+            System.out.println("deviceId");
+            
             BitMatrix bitMatrix = new MultiFormatWriter().encode(deviceId, BarcodeFormat.QR_CODE, 300, 300);
             BufferedImage buffImg = MatrixToImageWriter.toBufferedImage(bitMatrix);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

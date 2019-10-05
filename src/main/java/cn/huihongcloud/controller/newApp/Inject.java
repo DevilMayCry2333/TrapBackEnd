@@ -91,6 +91,12 @@ public class Inject {
         Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 
+        User user = userMapper.getUserByUserName(username);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        System.out.println("USername");
+
+        System.out.println(user1.getUsername());
+
         deviceInjectionMaintanceEntity.setWorker(username);
         deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceInjectionMaintanceEntity.setLongitude(longitude);
@@ -101,6 +107,7 @@ public class Inject {
         deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
         deviceInjectionMaintanceEntity.setRemarks(remarks);
         deviceInjectionMaintanceEntity.setWorkContent(workingContent);
+        deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
 
         //修改了一些
 
