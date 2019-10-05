@@ -30,7 +30,6 @@ public class OtherBeetleController {
     @Autowired
     private OtherBeetleMapper otherBeetleMapper;
 
-    //a5fdlQfLzKbQPLpdLEDczQ==
 
 
     @ApiOperation("")
