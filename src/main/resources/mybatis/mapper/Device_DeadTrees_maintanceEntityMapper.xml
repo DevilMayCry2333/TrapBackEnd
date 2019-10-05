@@ -152,7 +152,7 @@
       insert into Device_DeadTrees_maintance (username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks)
       values (#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks})
     </insert>
-    <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
     SELECT * FROM Device_DeadTrees_maintance WHERE username = #{username} LIMIT #{num1},#{num2}
   </select>
 
@@ -164,7 +164,7 @@
       SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%";
     </select>
 
-  <select id="selectAllByArea" resultMap="BaseResultMap">
+  <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
     SELECT * FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
   </select>
 
