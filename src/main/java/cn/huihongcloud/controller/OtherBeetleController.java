@@ -30,7 +30,7 @@ public class OtherBeetleController {
     @Autowired
     private OtherBeetleMapper otherBeetleMapper;
 
-
+    //其他天牛配置
 
     @ApiOperation("")
     @GetMapping("/deadTrees_Kill/town")
