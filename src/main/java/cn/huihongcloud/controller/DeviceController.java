@@ -4,6 +4,7 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.service.DeviceService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
@@ -40,14 +41,18 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
+    @Autowired
+    DeviceMapper deviceMapper;
+
     @RequestMapping(value = "auth_api/device_list", method = RequestMethod.GET)
     @ApiOperation("获取设备列表")
     public PageWrapper getDevices(@RequestAttribute("username") String username, @RequestParam("page") int page,
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName) {
-        System.out.println(workerName);
         User user = userService.getUserByUserName(username);
+
+
         List<Device> list = null;
         Page<Object> pages = null;
         PageWrapper pageWrapper = new PageWrapper();
@@ -84,11 +89,22 @@ public class DeviceController {
         }
 
         if (user.getRole() == 4) {
-            list = deviceService.getDeviceByManager(username);
+            User user1 = userService.getUserByUserName(user.getParent());
+
+//            list = deviceService.getDeviceByManager(username);
+            list = deviceMapper.getDeviceByCustomProject(user1.getUsername());
         }
 
         if (user.getRole() == 5) {
-            list = deviceService.getDeviceByWorker(username);
+//            list = deviceService.getDeviceByWorker(username);
+            //改成工程账号查询
+            System.out.println("Device");
+
+            User user1 = userService.getUserByUserName(user.getParent());
+            User user2 = userService.getUserByUserName(user1.getParent());
+            System.out.println(user2.getUsername());
+
+            list = deviceMapper.getDeviceByCustomProject(user2.getUsername());
         }
         pageWrapper.setData(list);
         pageWrapper.setTotalPage(pages.getPages());

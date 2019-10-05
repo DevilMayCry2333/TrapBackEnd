@@ -341,6 +341,11 @@ public class UserController {
             return Result.failed();
         }
         */
+
+        System.out.println("===田鸡用户==");
+
+        System.out.println(user.getAdcode());
+        System.out.println(user.getUsername());
         String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
         user.setProvince(Dist[0]);
         user.setCity(Dist[1]);

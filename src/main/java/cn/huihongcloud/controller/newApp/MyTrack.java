@@ -3,6 +3,7 @@ package cn.huihongcloud.controller.newApp;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.common.Result;
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/app")
@@ -92,6 +94,7 @@ public class MyTrack {
         }
 
         deviceTrackMaintanceEntityMapper.addMaintance(deviceTrackMaintanceEntity);
+
         return Result.ok();
         //return null;
     }

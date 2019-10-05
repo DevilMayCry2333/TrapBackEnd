@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/app")
@@ -96,6 +97,18 @@ public class Enemy {
 
         }
         deviceNaturalEnemiesMaintanceEntityMapper.addMaintance(deviceNaturalEnemiesMaintanceEntity);
+        Device device1 = deviceService.getDeviceById(realDeviceId.getId());
+        if(device1 == null || device1.getReceiveDate() == null) {
+
+            Device device = new Device();
+            device.setId(realDeviceId.getId());
+            device.setLongitude(Double.valueOf(longitude));
+            device.setLatitude(Double.valueOf(latitude));
+            device.setAltitude(Double.valueOf(altitude));
+            device.setReceiveDate(new Date());
+            deviceService.updateDevice(device);
+        }
+
         return Result.ok();
         //return null;
     }

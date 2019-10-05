@@ -26,6 +26,7 @@ public interface DeviceMapper {
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
+
     List<Device> getDeviceandWorkerByManager(@Param("manager") String manager);
 
     int addDeviceRelation(@Param("deviceId") String deviceId, @Param("userId") String username);
