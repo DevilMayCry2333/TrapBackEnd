@@ -149,8 +149,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_DeadTrees_maintance (Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks)
-      values (#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks})
+      insert into Device_DeadTrees_maintance (username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks)
+      values (#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks})
     </insert>
     <select id="selectAll" resultMap="BaseResultMap">
     SELECT * FROM Device_DeadTrees_maintance WHERE username = #{username} LIMIT #{num1},#{num2}

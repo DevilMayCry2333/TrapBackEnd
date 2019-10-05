@@ -78,6 +78,9 @@ public class DeadTrees {
         logger.info(remarks);
 
         System.out.println("image" + image);
+        User user = userMapper.getUserByUserName(username);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        System.out.println("USername");
 
         Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
@@ -93,6 +96,7 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setWoodvolume(volume);
         deviceDeadTreesMaintanceEntity.setKillmethod(killMethodsValue);
         deviceDeadTreesMaintanceEntity.setRemarks(remarks);
+        deviceDeadTreesMaintanceEntity.setUsername(user1.getUsername());
 
 
 

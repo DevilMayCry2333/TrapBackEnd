@@ -4,6 +4,7 @@ import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
@@ -68,6 +69,9 @@ public class MyTrack {
         System.out.println(longData);
         System.out.println(latData);
         System.out.println(altData);
+        User user = userMapper.getUserByUserName(username);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        System.out.println("USername");
 
 
         deviceTrackMaintanceEntity.setLongtitudeCollect(longtitudeData);
@@ -77,6 +81,8 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setLinename(lineName);
         deviceTrackMaintanceEntity.setWorkingContent(workContent);
         deviceTrackMaintanceEntity.setRemarks(remarks);
+        deviceTrackMaintanceEntity.setUsername(user1.getUsername());
+
 
         deviceTrackMaintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
         deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);

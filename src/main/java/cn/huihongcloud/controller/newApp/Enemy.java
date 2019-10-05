@@ -70,6 +70,9 @@ public class Enemy {
         logger.info(remarks);
 
         System.out.println("image" + image);
+        User user = userMapper.getUserByUserName(username);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        System.out.println("USername");
 
         Device_NaturalEnemies_maintanceEntity deviceNaturalEnemiesMaintanceEntity = new Device_NaturalEnemies_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
@@ -83,6 +86,8 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setPredatorstype(predatorsTypeValue);
         deviceNaturalEnemiesMaintanceEntity.setReleaseNum(releaseNum);
         deviceNaturalEnemiesMaintanceEntity.setRemarks(remarks);
+        deviceNaturalEnemiesMaintanceEntity.setUsername(user1.getUsername());
+
 
 
         //修改了一些
