@@ -114,6 +114,21 @@ public class Inject {
 
         }
         deviceInjectionMaintanceEntityMapper.addMaintanceData(deviceInjectionMaintanceEntity);
+        Device device1 = deviceService.getDeviceById(realDeviceId.getId());
+        if(device1 == null || device1.getReceiveDate() == null) {
+
+            Device device = new Device();
+            device.setId(realDeviceId.getId());
+            device.setLongitude(Double.valueOf(longitude));
+            device.setLatitude(Double.valueOf(latitude));
+            device.setAltitude(Double.valueOf(altitude));
+            device.setReceiveDate(new Date());
+
+            System.out.println(device.getReceiveDate());
+
+            deviceService.updateDevice(device);
+        }
+
         return Result.ok();
         //return null;
     }

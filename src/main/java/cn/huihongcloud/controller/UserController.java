@@ -31,6 +31,9 @@ public class UserController {
     @Autowired
     private DistUtil distUtil;
 
+    @Autowired
+    UserMapper userMapper;
+
     @RequestMapping(path = "auth_api/user", method = RequestMethod.PUT)
     @ApiOperation("更新用户信息")
     public Result updateUser(@RequestAttribute("username") String username, @RequestBody User user,
@@ -153,18 +156,34 @@ public class UserController {
          */
 
         String condition = null;
-
+        int flag = 0;
+        List<User> users = null;
         // 这里就暂时用拼接sql处理了
         switch (currentUser.getRole()) {
             case 3:
-                condition = " role = 4 ";
+                condition = " role = 4 or role = 6 and parent like '%" +  username +  "%'" ;
+                System.out.println(condition);
                 break;
             case 4:
                 condition = " role = 5 and parent = '" + username + "'";
+                break;
+            case 6:
+                users = userMapper.getProjectAdminByAdcode(currentUser.getAdcode());
+                System.out.println("6666");
+                flag = 1;
+                break;
+            case 7:
+                users = userMapper.getProjectUsersByAdcode(currentUser.getAdcode());
+                flag = 1;
+                break;
+
         }
 
-        List<User> users = userService.getUserByAdcodeAndTownAndStringAndUserRole(currentUser.getAdcode(), currentUser.getTown(),
-                searchText.trim(), currentUser.getRole(), roleType, active, condition);
+        if (flag == 0) {
+            users = userService.getUserByAdcodeAndTownAndStringAndUserRole(currentUser.getAdcode(), currentUser.getTown(),
+                    searchText.trim(), currentUser.getRole(), roleType, active, condition);
+        }
+
         for (User user : users) {
             user.setPassword(null);
         }
@@ -341,6 +360,11 @@ public class UserController {
             return Result.failed();
         }
         */
+
+        System.out.println("===田鸡用户==");
+
+        System.out.println(user.getAdcode());
+        System.out.println(user.getUsername());
         String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
         user.setProvince(Dist[0]);
         user.setCity(Dist[1]);

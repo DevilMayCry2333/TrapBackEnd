@@ -39,4 +39,8 @@ public interface UserMapper {
     List<User> getCurrentAssociatedUser(@Param("deviceId") String deviceId);
     List<User> getCanAssociatedUser(@Param("deviceId") String deviceId);
 
+    List<User> getProjectUsersByAdcode(String adcode);
+
+    List<User> getProjectAdminByAdcode(String adcode);
+
 }
