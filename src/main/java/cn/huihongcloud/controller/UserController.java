@@ -149,6 +149,9 @@ public class UserController {
                                @RequestParam(required = false) Boolean active) {
         User currentUser = userService.getUserByUserName(username);
         Page<Object> pageObjects = PageHelper.startPage(page, limit);
+
+        System.out.println(currentUser.getRole());
+
         /*
          1. 超级管理员可以看到所有的用户
          2. 县级用户看到管理员
@@ -173,6 +176,7 @@ public class UserController {
                 flag = 1;
                 break;
             case 7:
+                System.out.println("roleType=7");
                 users = userMapper.getProjectUsersByAdcode(currentUser.getAdcode());
                 flag = 1;
                 break;

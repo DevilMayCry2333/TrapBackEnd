@@ -99,7 +99,7 @@
          select * from `user` where adcode like concat(#{adcode}, '%') and role!=5
     </select>
     <select id="getProjectAdminByAdcode" resultType="cn.huihongcloud.entity.user.User">
-        select * from `user` where adcode like concat(#{adcode}, '%') and 4>=role
+        select * from `user` where adcode like concat(#{adcode}, '%') and 6=role
     </select>
     <update id="updateUser">
         update user

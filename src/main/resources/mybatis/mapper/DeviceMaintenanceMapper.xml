@@ -27,7 +27,7 @@
         <result column="other_num" property="otherNum"/>
     </resultMap>
 
-    <select id="getMaintenanceDataByDeviceId" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByDeviceId" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select * from device_maintenance
         where device_id = #{deviceId}
         and isactive = '0'
@@ -47,7 +47,7 @@
 
     </select>
 
-    <select id="getMaintenanceDataByAdcodeAndTown" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByAdcodeAndTown" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -112,7 +112,7 @@
         group by device_id
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByAdcodeAndTown1" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByAdcodeAndTown1" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -182,7 +182,7 @@
         
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByAdcodeAndTown2" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByAdcodeAndTown2" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -248,7 +248,7 @@
 
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByAdcodeAndTown4" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByAdcodeAndTown4" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -316,7 +316,7 @@
         
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByUsername" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByUsername" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -494,7 +494,7 @@
     </delete>
     <!--todo-->
 
-    <select id="getStatisticsByTown" resultMap="DeviceMaintenance">
+    <select id="getStatisticsByTown" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num, DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%Y-%m-%d') `date`
         from device_maintenance
         left join device on device_id=device.id
@@ -505,7 +505,7 @@
         order by `date` asc
     </select>
 
-    <select id="getMonthSummaryByCity" resultMap="DeviceMaintenance">
+    <select id="getMonthSummaryByCity" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
         left join device on device_id=device.id
@@ -528,7 +528,7 @@
 
 
     </select>
-    <select id="getMonthSummaryByArea" resultMap="DeviceMaintenance">
+    <select id="getMonthSummaryByArea" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
         left join device on device_id=device.id
@@ -551,7 +551,7 @@
 
 
     </select>
-    <select id="getMonthSummaryByTown" resultMap="DeviceMaintenance">
+    <select id="getMonthSummaryByTown" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
         left join device on device_id=device.id
@@ -573,7 +573,7 @@
 
 
     </select>
-    <select id="getMonthSummaryByWorker" resultMap="DeviceMaintenance">
+    <select id="getMonthSummaryByWorker" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
 
@@ -599,7 +599,7 @@
 
     </select>
 
-    <select id="getStatisticsByArea" resultMap="DeviceMaintenance">
+    <select id="getStatisticsByArea" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num, DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%Y-%m-%d') `date`
         from device_maintenance
         left join device on device_id=device.id
@@ -610,7 +610,7 @@
         order by `date` asc
     </select>
 
-    <select id="getStatisticsByLikeAdcode" resultMap="DeviceMaintenance">
+    <select id="getStatisticsByLikeAdcode" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num, DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%Y-%m-%d') `date`
         from device_maintenance
         left join device on device_id=device.id
@@ -628,7 +628,7 @@
         and isactive = '0'
 
     </select>
-    <select id="getoneMaintenanceDataById" resultMap="DeviceMaintenance">
+    <select id="getoneMaintenanceDataById" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.device_id,
         device_maintenance.batch,
         device_maintenance.num,
@@ -666,7 +666,7 @@
 
     </select>
 
-    <select id="getMaintenanceDataById" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataById" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select * from device_maintenance
         where device_id = #{id}
               and isactive = '0'
@@ -682,20 +682,20 @@
             and reported = #{reported}
         </if>
     </select>
-    <select id="getMaintenanceDataByIdScan" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByIdScan" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select * from device_maintenance
         where device_id = #{id}
         and isactive = '0'
         
 
     </select>
-    <select id="getMaintenanceDataById1" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataById1" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select * from device_maintenance_abnormal
         where id = #{id}
         and isactive = '0'
 
     </select>
-    <select id="getMaintenanceDataById2" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataById2" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select * from device_maintenance
         where id = #{id}
         and isactive = '0'
@@ -777,7 +777,7 @@
         group by device_id)as a
         group by username
     </select>
-    <select id="getMaintenanceDataByManager" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByManager" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -842,7 +842,7 @@
         group by device_id
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByManager2" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByManager2" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -905,7 +905,7 @@
         group by device_id,device_maintenance.username
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByManager4" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByManager4" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
@@ -975,7 +975,7 @@
  
         order by `date` desc
     </select>
-    <select id="getMaintenanceDataByManager1" resultMap="DeviceMaintenance">
+    <select id="getMaintenanceDataByManager1" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
         device_maintenance.batch,
