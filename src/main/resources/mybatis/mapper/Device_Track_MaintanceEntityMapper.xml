@@ -162,8 +162,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_Track_Maintance (username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
-      values (#{username},#{startpoint},#{endpoint},#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
+      insert into Device_Track_Maintance (StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
+      values (#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
     </insert>
     <select id="countAll" resultType="java.lang.Integer">
     SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};

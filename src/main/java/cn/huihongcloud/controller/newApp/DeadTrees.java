@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -98,6 +99,14 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setRemarks(remarks);
         deviceDeadTreesMaintanceEntity.setUsername(user1.getUsername());
 
+        Date date= new Date(System.currentTimeMillis());
+        String pattern="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf= new SimpleDateFormat(pattern);
+        String datestr=sdf.format(date);// format  为格式化方法
+        deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
+        deviceDeadTreesMaintanceEntity.setSubmitDate(datestr);
+        deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
+        deviceDeadTreesMaintanceEntity.setBatch("1");
 
 
         //修改了一些

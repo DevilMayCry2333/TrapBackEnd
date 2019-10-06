@@ -198,8 +198,8 @@
   </insert>
 
     <insert id="addMaintanceData">
-        insert into Device_Injection_maintance (Worker,device_Id,longitude,latitude,altitude,dataPrecision,WoodStatus,injection_num,Remarks,work_content,Pic,username)
-        values (#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{WoodStatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username})
+        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,WoodStatus,injection_num,Remarks,work_content,Pic,username)
+        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{WoodStatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username})
     </insert>
 
     <update id="reportData">
