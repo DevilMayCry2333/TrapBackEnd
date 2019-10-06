@@ -471,6 +471,15 @@ public class DeviceMaintenanceController {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
         List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
+        for (DeviceMaintenance d:
+             maintenanceData) {
+            System.out.println(d.getImgId());
+            System.out.println(d.getDeviceId());
+            if(d.getImgId()!=null){
+                d.setImageId(d.getImgId());
+            }
+
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
         pageWrapper.setCurrentPage(page);
