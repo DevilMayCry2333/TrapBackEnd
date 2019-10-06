@@ -1,8 +1,10 @@
 package cn.huihongcloud.controller.newqrcode;
 
+import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.NewQrCodeMapper;
 import cn.huihongcloud.mapper.UserMapper;
+import cn.huihongcloud.util.DistUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class NewQrCode {
     NewQrCodeMapper newQrCodeMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    private DistUtil distUtil;
+
 
     JSONObject res = new JSONObject();
 
@@ -70,11 +75,23 @@ public class NewQrCode {
         return res;
     }
 
+    @RequestMapping("/getMaxAvableCode")
+    public Object getgetMaxAvableCode(@RequestParam String adcode){
+        System.out.println(adcode);
+        List<Device> device = newQrCodeMapper.getMaxAvaDevice(adcode);
+        return device.get(0).getId();
+    }
+
     @RequestMapping("/assignQRCode")
     public JSONObject assignCode(@RequestParam String proxyCode,@RequestParam String cityCode,@RequestParam String areaCode,@RequestParam String projectCode,@RequestParam String startID,@RequestParam String endID){
-        List<User> cityUser = newQrCodeMapper.getCity(cityCode);
-        List<User> areaUser = newQrCodeMapper.getArea(areaCode);
-        List<User> proxyUser = newQrCodeMapper.getProxyByCode(proxyCode);
+//        List<User> cityUser = newQrCodeMapper.getCity(cityCode);
+//        List<User> areaUser = newQrCodeMapper.getArea(areaCode);
+//        List<User> proxyUser = newQrCodeMapper.getProxyByCode(proxyCode);
+        String mydist[] = distUtil.getNames(areaCode,null);
+        System.out.println(mydist[0]);
+        System.out.println(mydist[1]);
+        System.out.println(mydist[2]);
+
         String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","轨迹追踪"};
         int switchProject = Integer.parseInt(projectCode);
 
@@ -82,7 +99,7 @@ public class NewQrCode {
         long startIDInt = Long.parseLong(startID);
         long endIDInt = Long.parseLong(endID);
         for (long i = startIDInt; i <= endIDInt; i++) {
-            newQrCodeMapper.insertDevice(String.valueOf(i),proxyUser.get(0).getProvince(),cityUser.get(0).getCity(),areaUser.get(0).getArea(),project[switchProject],areaCode);
+            newQrCodeMapper.insertDevice(String.valueOf(i),mydist[0],mydist[1],mydist[2],project[switchProject-1],areaCode);
         }
         res.put("Res",true);
 
