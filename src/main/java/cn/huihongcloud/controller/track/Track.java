@@ -48,6 +48,9 @@ public class Track {
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
+        System.out.println(colName);
+        System.out.println(searchText);
+
         jsonObject.put("Data",trackService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
         jsonObject.put("total",trackService.countAll(username));
         jsonObject.put("current",page);

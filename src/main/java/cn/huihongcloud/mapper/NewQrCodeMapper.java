@@ -15,6 +15,6 @@ public interface NewQrCodeMapper {
     int insertDevice(String id,String proxy,String city,String area,String project,String adcode);
     int assginDeviceByManager(long id,String CustomRegion,String prefix,long serial,String username,String manager);
 
-    List<Device> getMaxAvaDevice(String adcode);
+    List<Device> getMaxAvaDevice(String adcode,String project);
 
 }

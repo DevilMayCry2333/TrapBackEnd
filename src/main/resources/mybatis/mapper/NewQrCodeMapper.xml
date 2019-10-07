@@ -23,6 +23,6 @@
     </select>
 
     <select id="getMaxAvaDevice" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where adcode = #{adcode} and isManagerAssign = 0 order by id;
+        select * from device where adcode = #{adcode} and project = #{project} and isManagerAssign = 0 order by id;
     </select>
 </mapper>

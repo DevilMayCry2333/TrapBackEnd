@@ -669,6 +669,7 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
         Workbook workbook = deviceMaintenanceService.exportExcel1(user, condition, startDate, endDate);
         workbook.write(response.getOutputStream());
     }
+
     @GetMapping("/maintenance/export")
     public void export(HttpServletResponse response, String token,
                        @RequestParam(required = false) String condition,
@@ -698,6 +699,7 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
         Workbook workbook = deviceMaintenanceService.exportExcel(user, condition, batch,town,startDate, endDate);
         workbook.write(response.getOutputStream());
     }
+
     @GetMapping("/maintenance/exportSome")
     public void someExport(HttpServletResponse response, String token,
                            @RequestParam(required = false) List<Integer> data) throws IOException {

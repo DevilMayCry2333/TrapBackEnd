@@ -76,10 +76,28 @@ public class NewQrCode {
     }
 
     @RequestMapping("/getMaxAvableCode")
-    public Object getgetMaxAvableCode(@RequestParam String adcode){
+    public Object getgetMaxAvableCode(@RequestParam String adcode,@RequestParam String appVal){
         System.out.println(adcode);
-        List<Device> device = newQrCodeMapper.getMaxAvaDevice(adcode);
+        System.out.println(appVal);
+        String app = "";
+        switch (Integer.parseInt(appVal)){
+            case 1:
+                app = "诱捕器管理";
+                break;
+            case 2:
+                app = "注干剂监测";
+                break;
+            case 3:
+                app = "天敌防治";
+            case 4:
+                app = "枯死树采伐";
+            case 5:
+                app = "轨迹追踪";
+        }
+        List<Device> device = newQrCodeMapper.getMaxAvaDevice(adcode,app);
+
         return device.get(0).getId();
+//        return "OK";
     }
 
     @RequestMapping("/assignQRCode")

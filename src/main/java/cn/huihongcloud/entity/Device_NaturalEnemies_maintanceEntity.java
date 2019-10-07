@@ -1,41 +1,47 @@
 package cn.huihongcloud.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import lombok.Data;
+
 import java.util.Date;
+@Data
 
 public class Device_NaturalEnemies_maintanceEntity {
+    @Excel(name = "记录ID")
     private Long id;
-
+    @Excel(name = "设备ID")
     private Long deviceId;
-
+    @Excel(name = "编号")
     private String serial;
-
+    @Excel(name = "区域")
     private String region;
-
+    @Excel(name = "提交日期")
     private String submitDate;
-
+    @Excel(name = "批次")
     private Integer batch;
-
+    @Excel(name = "经度")
     private String longitude;
-
+    @Excel(name = "纬度")
     private String latitude;
-
+    @Excel(name = "天敌类型")
     private String predatorstype;
-
+    @Excel(name = "释放数量")
     private Integer releaseNum;
-
+    @Excel(name = "照片")
     private String pic;
-
+    @Excel(name = "工人")
     private String worker;
-
+    @Excel(name = "备注")
     private String remarks;
-
+    @Excel(name = "二维码ID")
     private Long scanid;
-
+    @Excel(name = "管理员")
     private String username;
-
+    @Excel(name = "是否报告")
     private Integer reported;
-
+    @Excel(name = "海拔")
     private String altitude;
+
 
     private String province;
 
