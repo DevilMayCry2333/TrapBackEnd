@@ -165,7 +165,14 @@
       insert into Device_Track_Maintance (Pic1,StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
       values (#{pic1},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
     </insert>
-    <select id="countAll" resultType="java.lang.Integer">
+  <update id="updateRecordById">
+    update device_track_maintance set linename=#{linename},
+    starttime=#{starttime},endtime=#{endtime},
+    startpoint=#{startpoint},
+    endpoint=#{endpoint},pic1=#{pic1},worker=#{worker},
+    username=#{username} where id=#{id}
+  </update>
+  <select id="countAll" resultType="java.lang.Integer">
     SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
   </select>
 
@@ -231,6 +238,9 @@
         AND project = '轨迹追踪'
 
   </select>
+    <select id="selectById" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+      select * from device_track_maintance where id = #{id};
+    </select>
 
 
 </mapper>

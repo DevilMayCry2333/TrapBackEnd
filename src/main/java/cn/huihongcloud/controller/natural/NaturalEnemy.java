@@ -1,7 +1,9 @@
 package cn.huihongcloud.controller.natural;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.component.JWTComponent;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
@@ -11,6 +13,7 @@ import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceMaintenanceOutput;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.Device_NaturalEnemies_maintanceEntityMapper;
 import cn.huihongcloud.service.NaturalEnemyService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
@@ -20,6 +23,7 @@ import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,6 +39,9 @@ public class NaturalEnemy {
     UserService userService;
     @Autowired
     private JWTComponent jwtComponent;
+
+    @Autowired
+    Device_NaturalEnemies_maintanceEntityMapper deviceNaturalEnemiesMaintanceEntityMapper;
 
 
     JSONObject jsonObject = new JSONObject();
@@ -292,6 +299,29 @@ public class NaturalEnemy {
         workbook.write(response.getOutputStream());
 
     }
+
+    @RequestMapping("/importExcel")
+    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        importParams.setHeadRows(1);
+        List<Device_NaturalEnemies_maintanceEntity> deviceMaintenanceList = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), Device_NaturalEnemies_maintanceEntity.class, importParams);
+        for (Device_NaturalEnemies_maintanceEntity d:
+             deviceMaintenanceList) {
+            System.out.println("natural");
+            System.out.println(d.getId());
+            Device_NaturalEnemies_maintanceEntity tmp = deviceNaturalEnemiesMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
+            if(tmp!=null){
+                deviceNaturalEnemiesMaintanceEntityMapper.updateRecordById(d);
+            }else {
+                deviceNaturalEnemiesMaintanceEntityMapper.insert(d);
+            }
+        }
+        return "OK";
+    }
+
+
 
 
 }

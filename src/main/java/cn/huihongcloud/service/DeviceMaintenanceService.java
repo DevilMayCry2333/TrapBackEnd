@@ -411,7 +411,6 @@ public class DeviceMaintenanceService {
                         }
                     }
                 }
-
                     //批次为1且经纬度不为空
                     if(deviceMaintenance.getBatch()==1 && deviceMaintenance.getLongitude()!=null && deviceMaintenance.getLatitude()!=null ){
                         Device device=deviceMapper.queryDeviceByDeviceid(deviceId);

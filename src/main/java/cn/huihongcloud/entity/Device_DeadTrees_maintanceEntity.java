@@ -1,44 +1,48 @@
 package cn.huihongcloud.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import lombok.Data;
+
 import java.util.Date;
-
+@Data
 public class Device_DeadTrees_maintanceEntity {
+    @Excel(name = "记录ID")
     private Long id;
-
+    @Excel(name = "设备ID")
     private Long deviceId;
-
+    @Excel(name = "序列号")
     private String serial;
-
+    @Excel(name = "提交日期")
     private String submitDate;
-
+    @Excel(name = "批次")
     private String batch;
-
+    @Excel(name = "经度")
     private String longitude;
-
+    @Excel(name = "纬度")
     private String latitude;
-
+    @Excel(name = "树木直径")
     private String wooddiameter;
-
+    @Excel(name = "树木高度")
     private String woodheight;
-
+    @Excel(name = "树木材积")
     private String woodvolume;
-
+    @Excel(name = "除害方式")
     private String killmethod;
-
+    @Excel(name = "工人")
     private String worker;
-
+    @Excel(name = "备注")
     private String remarks;
-
+    @Excel(name = "二维码ID")
     private Long scanid;
-
+    @Excel(name = "图片")
     private String pic;
-
+    @Excel(name = "用户名")
     private String username;
-
+    @Excel(name = "区域")
     private String region;
-
+    @Excel(name = "海拔")
     private String altitude;
-
+    @Excel(name = "精度")
     private String accuracy;
 
     public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, String submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic, String username,String region,String altitude,String accuracy) {

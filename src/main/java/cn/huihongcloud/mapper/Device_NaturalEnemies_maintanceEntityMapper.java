@@ -74,6 +74,9 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     int addMaintance(Device_NaturalEnemies_maintanceEntity dataEntity);
 
+    Device_NaturalEnemies_maintanceEntity selectById(String id);
+
+    int updateRecordById(Device_NaturalEnemies_maintanceEntity dataEntity);
 
 
 }
