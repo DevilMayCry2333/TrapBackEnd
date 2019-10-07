@@ -35,6 +35,10 @@ public interface Device_Track_MaintanceEntityMapper {
 
     int addMaintance(Device_Track_MaintanceEntity dataentity);
 
+    Device_Track_MaintanceEntity selectById(String id);
+
+    int updateRecordById(Device_Track_MaintanceEntity dataentity);
+
 
 
 }

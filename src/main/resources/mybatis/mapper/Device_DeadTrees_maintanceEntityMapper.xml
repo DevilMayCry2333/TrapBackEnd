@@ -149,10 +149,16 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_DeadTrees_maintance (Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks)
-      values (#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks})
+      insert into Device_DeadTrees_maintance (Pic,serial,submit_date,batch,region,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks)
+      values (#{pic},#{serial},#{submitDate},#{batch},#{region},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks})
     </insert>
-    <select id="selectAll" resultMap="BaseResultMap">
+  <update id="updateRecordById">
+    update device_deadtrees_maintance set device_Id=#{deviceId},serial=#{serial},submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},
+    woodDiameter = #{wooddiameter},woodHeight = #{woodheight}, woodvolume = #{woodvolume},killmethod = #{killmethod},
+    worker = #{worker},remarks=#{remarks},scanid=#{scanid},pic=#{pic},username=#{username},region=#{region},
+    altitude=#{altitude},accuracy=#{accuracy} where id = #{id}
+  </update>
+  <select id="selectAll" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
     SELECT * FROM Device_DeadTrees_maintance WHERE username = #{username} LIMIT #{num1},#{num2}
   </select>
 
@@ -164,7 +170,7 @@
       SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%";
     </select>
 
-  <select id="selectAllByArea" resultMap="BaseResultMap">
+  <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
     SELECT * FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
   </select>
 
@@ -215,4 +221,7 @@
         where user_id = #{worker}
         AND project = '枯死树采伐'
   </select>
+    <select id="selectById" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+      select * from device_deadtrees_maintance where id = #{id};
+    </select>
 </mapper>

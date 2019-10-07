@@ -139,14 +139,21 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-        insert into Device_NaturalEnemies_maintance (Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks)
-        values (#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks})
+        insert into Device_NaturalEnemies_maintance (Pic,serial,submit_date,region,batch,username,Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks)
+        values (#{pic},#{serial},#{submitDate},#{region},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks})
     </insert>
     <update id="reportData">
         update Device_NaturalEnemies_maintance
         set reported = 1
         where id = #{id}
   </update>
+  <update id="updateRecordById">
+    update device_naturalenemies_maintance set device_Id = #{deviceId},serial = #{serial},region = #{region},submit_date = #{submitDate},
+    batch = #{batch}, longitude = #{longitude}, latitude = #{latitude}, PredatorsType = #{predatorstype},
+    Release_Num = #{releaseNum}, pic = #{pic}, worker = #{worker}, remarks = #{remarks}, scanid = #{scanid},
+    username = #{username},reported = #{reported}, altitude = #{altitude} where id = #{id}
+  </update>
+
   <select id="countAll" resultType="java.lang.Integer">
       SELECT count(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username = #{username};
     </select>
@@ -740,4 +747,7 @@
         where user_id = #{worker}
         AND project = '天敌防治'
   </select>
+    <select id="selectById" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+      select * from device_naturalenemies_maintance where id = #{id};
+    </select>
 </mapper>

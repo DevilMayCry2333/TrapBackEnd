@@ -1,17 +1,28 @@
 package cn.huihongcloud.controller.deadtrees;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
 import cn.huihongcloud.service.DeadTreeCutService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,6 +32,9 @@ public class DeadTreeCut {
     DeadTreeCutService deadTreeCutService;
     @Autowired
     UserService userService;
+    @Autowired
+    Device_DeadTrees_maintanceEntityMapper deviceDeadTreesMaintanceEntityMapper;
+
 
     JSONObject jsonObject = new JSONObject();
     @RequestMapping("/detail")
@@ -125,6 +139,58 @@ public class DeadTreeCut {
         pageWrapper.setTotalNum(pages.getTotal());
         return pageWrapper;
     }
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities  = deadTreeCutService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+//        for (Device_NaturalEnemies_maintanceEntity d:
+//             deviceNaturalEnemiesMaintanceEntities) {
+//            System.out.println(d.getArea());
+//
+//        }
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("枯死树", "枯死树"), Device_DeadTrees_maintanceEntity.class, deviceDeadTreesMaintanceEntities);
+        workbook.write(response.getOutputStream());
+
+    }
+
+    @RequestMapping("/importExcel")
+    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        importParams.setHeadRows(1);
+        List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), Device_DeadTrees_maintanceEntity.class, importParams);
+        for (Device_DeadTrees_maintanceEntity d:
+                deviceDeadTreesMaintanceEntities) {
+            System.out.println("natural");
+            System.out.println(d.getId());
+            Device_DeadTrees_maintanceEntity tmp = deviceDeadTreesMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
+            if(tmp!=null){
+                deviceDeadTreesMaintanceEntityMapper.updateRecordById(d);
+            }else {
+                deviceDeadTreesMaintanceEntityMapper.insert(d);
+            }
+        }
+        return "OK";
+    }
+
+
 
 
 

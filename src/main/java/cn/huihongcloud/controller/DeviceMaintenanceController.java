@@ -471,6 +471,15 @@ public class DeviceMaintenanceController {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
         List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
+        for (DeviceMaintenance d:
+             maintenanceData) {
+            System.out.println(d.getImgId());
+            System.out.println(d.getDeviceId());
+            if(d.getImgId()!=null){
+                d.setImageId(d.getImgId());
+            }
+
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
         pageWrapper.setCurrentPage(page);
@@ -660,6 +669,7 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
         Workbook workbook = deviceMaintenanceService.exportExcel1(user, condition, startDate, endDate);
         workbook.write(response.getOutputStream());
     }
+
     @GetMapping("/maintenance/export")
     public void export(HttpServletResponse response, String token,
                        @RequestParam(required = false) String condition,
@@ -689,6 +699,7 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
         Workbook workbook = deviceMaintenanceService.exportExcel(user, condition, batch,town,startDate, endDate);
         workbook.write(response.getOutputStream());
     }
+
     @GetMapping("/maintenance/exportSome")
     public void someExport(HttpServletResponse response, String token,
                            @RequestParam(required = false) List<Integer> data) throws IOException {

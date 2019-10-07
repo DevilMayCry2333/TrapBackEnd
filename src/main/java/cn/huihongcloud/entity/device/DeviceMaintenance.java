@@ -67,6 +67,8 @@ public class DeviceMaintenance {
     @Excel(name = "备注")
     private String remark;
 
+    private String imgId;
+
     private String province;
     private String city;
     private String area;
@@ -319,5 +321,13 @@ public class DeviceMaintenance {
 
     public void setOtherNum(Integer otherNum) {
         this.otherNum = otherNum;
+    }
+
+    public String getImgId() {
+        return imgId;
+    }
+
+    public void setImgId(String imgId) {
+        this.imgId = imgId;
     }
 }

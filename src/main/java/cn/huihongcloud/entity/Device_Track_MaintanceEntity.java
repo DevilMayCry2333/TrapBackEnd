@@ -1,51 +1,41 @@
 package cn.huihongcloud.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import lombok.Data;
+
 import java.util.Date;
-
+@Data
 public class Device_Track_MaintanceEntity {
+    @Excel(name = "记录ID")
     private Long id;
-
+    @Excel(name = "线路名称")
     private String linename;
-
     private String timeconsume;
-
+    @Excel(name = "开始时间")
     private String starttime;
-
+    @Excel(name = "结束时间")
     private String endtime;
-
     private String LatitudeCollect;
-
     private String LongtitudeCollect;
-
     private String AltitudeCollect;
-
-
+    @Excel(name = "开始点")
     private String startpoint;
-
+    @Excel(name = "结束点")
     private String endpoint;
-
+    @Excel(name = "照片1")
     private String pic1;
-
     private String pic2;
-
     private String pic3;
-
     private String pic4;
-
     private String pic5;
-
+    @Excel(name = "工人")
     private String worker;
-
     private String workingContent;
-
     private String remarks;
-
     private Long scanid;
-
     private Long deviceId;
-
+    @Excel(name = "用户名")
     private String username;
-
     private String submit_date;
 
     public Device_Track_MaintanceEntity(String LatitudeCollect,String LongtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {

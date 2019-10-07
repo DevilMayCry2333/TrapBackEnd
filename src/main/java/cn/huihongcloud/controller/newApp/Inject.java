@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -91,6 +92,12 @@ public class Inject {
         Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 
+        User user = userMapper.getUserByUserName(username);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        System.out.println("USername");
+
+        System.out.println(user1.getUsername());
+
         deviceInjectionMaintanceEntity.setWorker(username);
         deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceInjectionMaintanceEntity.setLongitude(longitude);
@@ -101,6 +108,20 @@ public class Inject {
         deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
         deviceInjectionMaintanceEntity.setRemarks(remarks);
         deviceInjectionMaintanceEntity.setWorkContent(workingContent);
+        deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
+        deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
+
+        System.out.println("CustomeSerial");
+        System.out.println(realDeviceId.getCustomSerial());
+
+        Date date= new Date(System.currentTimeMillis());
+        String pattern="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf= new SimpleDateFormat(pattern);
+        String datestr=sdf.format(date);// format  为格式化方法
+
+        deviceInjectionMaintanceEntity.setSubmitDate(datestr);
+        deviceInjectionMaintanceEntity.setRegion(realDeviceId.getArea());
+        deviceInjectionMaintanceEntity.setBatch(1);
 
         //修改了一些
 

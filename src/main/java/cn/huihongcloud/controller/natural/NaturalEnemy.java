@@ -1,20 +1,32 @@
 package cn.huihongcloud.controller.natural;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.component.JWTComponent;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
+import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.device.DeviceMaintenanceOutput;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.Device_NaturalEnemies_maintanceEntityMapper;
 import cn.huihongcloud.service.NaturalEnemyService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +37,12 @@ public class NaturalEnemy {
     NaturalEnemyService naturalEnemyService;
     @Autowired
     UserService userService;
+    @Autowired
+    private JWTComponent jwtComponent;
+
+    @Autowired
+    Device_NaturalEnemies_maintanceEntityMapper deviceNaturalEnemiesMaintanceEntityMapper;
+
 
     JSONObject jsonObject = new JSONObject();
     @RequestMapping("/detail")
@@ -173,7 +191,7 @@ public class NaturalEnemy {
     }
 
     @RequestMapping("/searchDetail")
-    public Object searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String colName,@RequestParam String searchText,@RequestParam String adcode){
+    public JSONObject searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String colName,@RequestParam String searchText,@RequestParam String adcode){
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
@@ -252,6 +270,58 @@ public class NaturalEnemy {
         pageWrapper.setTotalNum(pages.getTotal());
         return pageWrapper;
     }
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+                            ) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = naturalEnemyService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+//        for (Device_NaturalEnemies_maintanceEntity d:
+//             deviceNaturalEnemiesMaintanceEntities) {
+//            System.out.println(d.getArea());
+//
+//        }
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("天敌防治", "天敌防治"), Device_NaturalEnemies_maintanceEntity.class, deviceNaturalEnemiesMaintanceEntities);
+        workbook.write(response.getOutputStream());
+
+    }
+
+    @RequestMapping("/importExcel")
+    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        importParams.setHeadRows(1);
+        List<Device_NaturalEnemies_maintanceEntity> deviceMaintenanceList = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), Device_NaturalEnemies_maintanceEntity.class, importParams);
+        for (Device_NaturalEnemies_maintanceEntity d:
+             deviceMaintenanceList) {
+            System.out.println("natural");
+            System.out.println(d.getId());
+            Device_NaturalEnemies_maintanceEntity tmp = deviceNaturalEnemiesMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
+            if(tmp!=null){
+                deviceNaturalEnemiesMaintanceEntityMapper.updateRecordById(d);
+            }else {
+                deviceNaturalEnemiesMaintanceEntityMapper.insert(d);
+            }
+        }
+        return "OK";
+    }
+
+
 
 
 }
