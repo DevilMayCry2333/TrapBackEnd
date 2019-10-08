@@ -75,8 +75,22 @@ public class Enemy {
         User user1 = userMapper.getUserByUserName(user.getParent());
         System.out.println("USername");
 
+
+
+
         Device_NaturalEnemies_maintanceEntity deviceNaturalEnemiesMaintanceEntity = new Device_NaturalEnemies_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
+
+        Device_NaturalEnemies_maintanceEntity maxBatch = deviceNaturalEnemiesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+
+        int maxBatchNum = 0;
+        try {
+            System.out.println(maxBatch.getBatch());
+            maxBatchNum = maxBatch.getBatch();
+
+        }catch (Exception e){
+            maxBatchNum = 0;
+        }
 
         deviceNaturalEnemiesMaintanceEntity.setWorker(username);
         deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
@@ -96,7 +110,8 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceNaturalEnemiesMaintanceEntity.setSubmitDate(datestr);
         deviceNaturalEnemiesMaintanceEntity.setRegion(realDeviceId.getArea());
-        deviceNaturalEnemiesMaintanceEntity.setBatch(1);
+        deviceNaturalEnemiesMaintanceEntity.setBatch(maxBatchNum + 1);
+
 
 
         //修改了一些

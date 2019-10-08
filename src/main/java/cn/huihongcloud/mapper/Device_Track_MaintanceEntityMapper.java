@@ -39,6 +39,8 @@ public interface Device_Track_MaintanceEntityMapper {
 
     int updateRecordById(Device_Track_MaintanceEntity dataentity);
 
+    int getMaxBatchId(String linename);
+
 
 
 }

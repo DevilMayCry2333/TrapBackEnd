@@ -1,5 +1,6 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.NewTrapDataSummary;
 import cn.huihongcloud.entity.summary.DeviceDetail;
 import cn.huihongcloud.entity.summary.SummaryEntity;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,5 @@ public interface DeviceSummaryMapper {
     Map<String, Long> queryDeviceSum(String adcode,String startDate,String endDate);
     Map<String, Long> queryDeviceSum4(String adcode,String startDate,String endDate);
     List<DeviceDetail> queryDeviceDetail(@Param("adcode") String adcode);
+    List<NewTrapDataSummary> selectByColName(String colName,String startDate,String endDate,String searchText,String username);
 }

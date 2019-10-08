@@ -106,7 +106,16 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceDeadTreesMaintanceEntity.setSubmitDate(datestr);
         deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
-        deviceDeadTreesMaintanceEntity.setBatch("1");
+
+        Device_DeadTrees_maintanceEntity maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+        int maxIdNum = 0;
+        try {
+            maxIdNum = Integer.parseInt(maxId.getBatch());
+        }catch (Exception e){
+            maxIdNum = 0;
+        }
+
+        deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxIdNum+1));
 
 
         //修改了一些

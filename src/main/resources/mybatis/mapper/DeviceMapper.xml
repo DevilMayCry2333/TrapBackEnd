@@ -253,5 +253,8 @@
     <select id="getDeviceBySerial" resultType="cn.huihongcloud.entity.device.Device">
         select * from device where CustomSerial = #{serial};
     </select>
+    <select id="adminDevice" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device;
+    </select>
 
 </mapper>

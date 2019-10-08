@@ -56,6 +56,8 @@ public class DeviceController {
         List<Device> list = null;
         Page<Object> pages = null;
         PageWrapper pageWrapper = new PageWrapper();
+        list =  deviceMapper.adminDevice();
+
         /*
         if (user.getRole() > 1 && user.getRole() != 3) {
             // 工人查询所管理的设备
@@ -78,6 +80,7 @@ public class DeviceController {
         工人看到关联的
          */
         pages = PageHelper.startPage(page, limit);
+
         if (user.getRole() == 1) {
             list = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
         }

@@ -96,7 +96,7 @@
         select * from `user` where `user`.province = #{province};
     </select>
     <select id="getProjectUsersByAdcode" resultType="cn.huihongcloud.entity.user.User">
-         select * from `user` where adcode like concat(#{adcode}, '%') and role!=5
+         select * from `user` where adcode like concat(#{adcode}, '%') and 4=role
     </select>
     <select id="getProjectAdminByAdcode" resultType="cn.huihongcloud.entity.user.User">
         select * from `user` where adcode like concat(#{adcode}, '%') and 6=role

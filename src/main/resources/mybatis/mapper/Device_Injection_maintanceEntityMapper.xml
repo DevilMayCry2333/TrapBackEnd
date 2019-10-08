@@ -696,5 +696,8 @@
     </if>
     group by device.CustomTown
   </select>
+    <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+      select * from device_injection_maintance where device_Id = #{deviceId};
+    </select>
 
 </mapper>

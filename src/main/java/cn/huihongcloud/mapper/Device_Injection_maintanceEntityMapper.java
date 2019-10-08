@@ -70,6 +70,8 @@ public interface Device_Injection_maintanceEntityMapper {
 
     int addMaintanceData(Device_Injection_maintanceEntity dataEntity);
 
+    Device_Injection_maintanceEntity getMaxBatch(String deviceId);
+
 
 
 

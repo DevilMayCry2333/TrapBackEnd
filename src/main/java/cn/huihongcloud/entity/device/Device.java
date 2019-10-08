@@ -34,6 +34,7 @@ public class Device {
     private String CustomSerial;
     private String scanId;
     private String CustomProject;
+    private String project;
 
     public String getId() {
         return id;
@@ -203,5 +204,13 @@ public class Device {
 
     public void setScanId(String scanId) {
         this.scanId = scanId;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
     }
 }

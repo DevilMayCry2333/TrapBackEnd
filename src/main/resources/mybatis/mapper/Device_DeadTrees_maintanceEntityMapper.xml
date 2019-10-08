@@ -224,4 +224,7 @@
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
       select * from device_deadtrees_maintance where id = #{id};
     </select>
+    <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+      select * from device_deadtrees_maintance where device_Id = #{deviceId};
+    </select>
 </mapper>

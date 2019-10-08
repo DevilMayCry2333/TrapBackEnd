@@ -99,6 +99,8 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
 
 
+
+
         //修改了一些
 
         //随机数
