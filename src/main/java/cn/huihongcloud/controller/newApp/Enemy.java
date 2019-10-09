@@ -102,6 +102,7 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setReleaseNum(releaseNum);
         deviceNaturalEnemiesMaintanceEntity.setRemarks(remarks);
         deviceNaturalEnemiesMaintanceEntity.setUsername(user1.getUsername());
+        deviceNaturalEnemiesMaintanceEntity.setReported(0);
 
         Date date= new Date(System.currentTimeMillis());
         String pattern="yyyy-MM-dd HH:mm:ss";

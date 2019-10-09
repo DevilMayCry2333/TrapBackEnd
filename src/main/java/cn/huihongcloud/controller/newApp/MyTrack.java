@@ -92,6 +92,7 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setWorkingContent(workContent);
         deviceTrackMaintanceEntity.setRemarks(remarks);
         deviceTrackMaintanceEntity.setUsername(user1.getUsername());
+        deviceTrackMaintanceEntity.setAdcode(user1.getAdcode());
         deviceTrackMaintanceEntity.setStarttime(String.valueOf(jsonObject.get("startTime")));
         deviceTrackMaintanceEntity.setEndtime(String.valueOf(jsonObject.get("endTime")));
 

@@ -20,9 +20,9 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     int insertSelective(Device_DeadTrees_maintanceEntity record);
 
-    int countAllByArea(String username);
+    int countAllByArea(String adcode);
 
-    List<Device_DeadTrees_maintanceEntity> selectAllByArea(String username,int num1,int num2);
+    List<Device_DeadTrees_maintanceEntity> selectAllByArea(String adcode,int num1,int num2);
 
     List<Device_DeadTrees_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 

@@ -43,7 +43,15 @@ public class DryInjectionWatch {
         if (!Objects.equals(endDate, "")) {
             endDate = endDate + " 23:59:59";
         }
-        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user, optionIndex, searchText, startDate, endDate);
+        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user.getAdcode(), optionIndex, searchText, startDate, endDate);
+        System.out.println("+++");
+        for (Device_Injection_maintanceEntity d:
+             deviceInjectionMaintanceEntities) {
+            System.out.println("---");
+
+            System.out.println(d.getDeviceId());
+
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);

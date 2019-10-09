@@ -161,10 +161,10 @@
     SELECT * FROM  Device_NaturalEnemies_maintance WHERE username = #{username} LIMIT #{num1},#{num2};
   </select>
     <select id="countAllByArea" resultType="java.lang.Integer">
-      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username like "%"#{username}"%";
+      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance left join device on device.id = device_Id where adcode = #{adcode};
     </select>
   <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-        SELECT * FROM Device_NaturalEnemies_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+        SELECT * FROM Device_NaturalEnemies_maintance left join device on device.id = device_Id where adcode = #{adcode} LIMIT #{num1},#{num2};
   </select>
 
   <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.NaturalSummary">

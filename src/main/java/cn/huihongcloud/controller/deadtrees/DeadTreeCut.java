@@ -52,8 +52,10 @@ public class DeadTreeCut {
 
     @RequestMapping("/areaDetail")
     public Object areaDetail(@RequestParam String username,@RequestParam int page,@RequestParam int limit){
-        jsonObject.put("Data",deadTreeCutService.selectAllByArea(username, page*limit-limit, limit));
-        jsonObject.put("total",deadTreeCutService.countAllByArea(username));
+        User user = userService.getUserByUserName(username);
+
+        jsonObject.put("Data",deadTreeCutService.selectAllByArea(user.getAdcode(), page*limit-limit, limit));
+        jsonObject.put("total",deadTreeCutService.countAllByArea(user.getAdcode()));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;

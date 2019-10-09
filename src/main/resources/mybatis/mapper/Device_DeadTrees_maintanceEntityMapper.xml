@@ -167,11 +167,11 @@
   </select>
 
     <select id="countAllByArea" resultType="java.lang.Integer">
-      SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%";
+      SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance left join device on device.id = device_Id where adcode = #{adcode};
     </select>
 
   <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
-    SELECT * FROM Device_DeadTrees_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+    SELECT * FROM Device_DeadTrees_maintance left join device on device.id = device_Id where adcode = #{adcode} LIMIT #{num1},#{num2};
   </select>
 
     <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">

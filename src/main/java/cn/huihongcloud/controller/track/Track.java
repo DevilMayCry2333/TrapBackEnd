@@ -50,8 +50,10 @@ public class Track {
 
     @RequestMapping("/areaDetail")
     public Object areaDetail(@RequestParam String username,@RequestParam int page,@RequestParam int limit){
-        jsonObject.put("Data",trackService.selectAllByArea(username, page*limit-limit, page*limit));
-        jsonObject.put("total",trackService.countAllArea(username));
+        User user = userService.getUserByUserName(username);
+
+        jsonObject.put("Data",trackService.selectAllByArea(user.getAdcode(), page*limit-limit, page*limit));
+        jsonObject.put("total",trackService.countAllArea(user.getAdcode()));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
@@ -76,7 +78,9 @@ public class Track {
 
     @RequestMapping("/selectAll")
     public Object selectAll(@RequestParam String username,@RequestParam String adcode,@RequestParam int page,@RequestParam int limit){
-        jsonObject.put("Data",trackService.selectAllByAdcode(adcode, page*limit-limit, page*limit));
+        User user = userService.getUserByUserName(username);
+
+        jsonObject.put("Data",trackService.selectAllByAdcode(user.getAdcode(), page*limit-limit, page*limit));
         jsonObject.put("total",trackService.countAll(username));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);

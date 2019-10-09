@@ -36,6 +36,7 @@ public class Device_Track_MaintanceEntity {
     private Long deviceId;
     @Excel(name = "用户名")
     private String username;
+    private String adcode;
     private String submit_date;
 
     public Device_Track_MaintanceEntity(String LatitudeCollect,String LongtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
@@ -242,5 +243,13 @@ public class Device_Track_MaintanceEntity {
 
     public void setAltitudeCollect(String altitudeCollect) {
         AltitudeCollect = altitudeCollect;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
     }
 }
