@@ -82,5 +82,7 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     int deleteRecord(long id);
 
+    List<Device_NaturalEnemies_maintanceEntity> workerQueryById(String scanId);
+
 
 }

@@ -1,5 +1,6 @@
 package cn.huihongcloud.controller.newApp;
 
+import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceBeetleMapper;
 import cn.huihongcloud.mapper.DeviceMapper;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -44,6 +47,14 @@ public class Trap {
         User user2 = userMapper.getUserByUserName(user1.getParent());
         String projectName = user2.getUsername();
         return deviceMapper.getDeviceByCustomProject(projectName);
+    }
+
+    @RequestMapping("/TrapWorker")
+    public List<DeviceMaintenance> worker(@RequestParam String scanId){
+
+        return deviceBeetleMapper.getTrapById(scanId);
+
+
     }
 
 

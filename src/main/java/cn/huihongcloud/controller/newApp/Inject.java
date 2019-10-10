@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -170,6 +171,12 @@ public class Inject {
 
         return Result.ok();
         //return null;
+    }
+
+    @RequestMapping("/InjectWorker")
+    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String scanId){
+        return deviceBeetleMapper.InjectWorker(scanId);
+
     }
 
 }

@@ -7,6 +7,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -140,7 +142,14 @@ public class Enemy {
         }
 
         return Result.ok();
-        //return null;
+    }
+
+    @RequestMapping("/queryById")
+    public List<Device_NaturalEnemies_maintanceEntity> queryById(@RequestParam String scanId){
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.workerQueryById(deviceId));
+//        return jsonObject;
+        return deviceNaturalEnemiesMaintanceEntityMapper.workerQueryById(scanId);
     }
 
 }

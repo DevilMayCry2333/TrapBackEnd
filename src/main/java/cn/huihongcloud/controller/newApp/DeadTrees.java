@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -146,6 +147,14 @@ public class DeadTrees {
         return Result.ok();
         //return null;
     }
+
+    @RequestMapping("/DeadWorker")
+    public List<Device_DeadTrees_maintanceEntity> deadWorker(@RequestParam String scanId){
+        return deviceBeetleMapper.DeadWorker(scanId);
+
+    }
+
+
 
 
 }
