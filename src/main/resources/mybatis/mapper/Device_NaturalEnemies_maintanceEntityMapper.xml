@@ -153,6 +153,9 @@
     Release_Num = #{releaseNum}, pic = #{pic}, worker = #{worker}, remarks = #{remarks}, scanid = #{scanid},
     username = #{username},reported = #{reported}, altitude = #{altitude} where id = #{id}
   </update>
+  <delete id="deleteRecord">
+    delete from device_naturalenemies_maintance where id = #{id};
+  </delete>
 
   <select id="countAll" resultType="java.lang.Integer">
       SELECT count(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username = #{username};

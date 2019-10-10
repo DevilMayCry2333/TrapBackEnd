@@ -323,6 +323,14 @@ public class NaturalEnemy {
         return "OK";
     }
 
+    @RequestMapping("/deleteRecord")
+    public Object deleteRecord(@RequestParam String id){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Error",false);
+        deviceNaturalEnemiesMaintanceEntityMapper.deleteRecord(Long.parseLong(id));
+        return jsonObject;
+    }
+
 
 
 

@@ -80,5 +80,7 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     Device_NaturalEnemies_maintanceEntity getMaxBatch(String deviceId);
 
+    int deleteRecord(long id);
+
 
 }
