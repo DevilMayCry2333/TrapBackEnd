@@ -267,6 +267,17 @@ public class DryInjectionWatch {
         return jsonObject;
     }
 
+    @RequestMapping("/deleteRecord")
+    public Object deleteRecord(@RequestParam String id){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("error",false);
+
+        deviceInjectionMaintanceEntityMapper.deleteRecord(Long.parseLong(id));
+        return jsonObject;
+    }
+
+
+
 
 
 

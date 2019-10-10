@@ -74,6 +74,8 @@ public interface Device_Injection_maintanceEntityMapper {
 
     Device_Injection_maintanceEntity getMaxBatch(String deviceId);
 
+    int deleteRecord(long recordId);
+
 
 
 

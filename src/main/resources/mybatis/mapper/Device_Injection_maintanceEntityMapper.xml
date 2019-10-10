@@ -207,6 +207,9 @@
         set reported = 1
         where id = #{id}
   </update>
+  <delete id="deleteRecord">
+    delete from device_injection_maintance where id = #{id};
+  </delete>
 
   <select id="selectById" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
         SELECT * FROM Device_Injection_maintance WHERE id = #{id};
