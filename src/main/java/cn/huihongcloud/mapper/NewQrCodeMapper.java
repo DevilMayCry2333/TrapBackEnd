@@ -17,4 +17,6 @@ public interface NewQrCodeMapper {
 
     List<Device> getMaxAvaDevice(String adcode,String project);
 
+    List<Device> selectByConditions(String colName,String searchText);
+
 }

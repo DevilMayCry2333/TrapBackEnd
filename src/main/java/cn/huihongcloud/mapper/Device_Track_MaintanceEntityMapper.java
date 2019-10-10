@@ -20,7 +20,7 @@ public interface Device_Track_MaintanceEntityMapper {
 
     int countAllByArea(String username);
 
-    List<Device_Track_MaintanceEntity> selectAllByArea(String username,int num1,int num2);
+    List<Device_Track_MaintanceEntity> selectAllByArea(String adcode,int num1,int num2);
 
     List<Device_Track_MaintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 
@@ -38,6 +38,8 @@ public interface Device_Track_MaintanceEntityMapper {
     Device_Track_MaintanceEntity selectById(String id);
 
     int updateRecordById(Device_Track_MaintanceEntity dataentity);
+
+    int getMaxBatchId(String linename);
 
 
 

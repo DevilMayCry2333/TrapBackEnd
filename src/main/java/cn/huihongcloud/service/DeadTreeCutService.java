@@ -21,12 +21,12 @@ public class DeadTreeCutService {
         return deviceDeadTreesMaintanceEntityMapper.countAll(username);
     }
 
-    public int countAllByArea(String username){
-        return deviceDeadTreesMaintanceEntityMapper.countAllByArea(username);
+    public int countAllByArea(String adcode){
+        return deviceDeadTreesMaintanceEntityMapper.countAllByArea(adcode);
     }
 
-    public List<Device_DeadTrees_maintanceEntity> selectAllByArea(String username,int num1,int num2){
-        return deviceDeadTreesMaintanceEntityMapper.selectAllByArea(username, num1, num2);
+    public List<Device_DeadTrees_maintanceEntity> selectAllByArea(String adcode,int num1,int num2){
+        return deviceDeadTreesMaintanceEntityMapper.selectAllByArea(adcode, num1, num2);
     }
 
     public List<Device_DeadTrees_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode){

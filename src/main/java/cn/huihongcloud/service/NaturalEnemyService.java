@@ -27,12 +27,12 @@ public class NaturalEnemyService {
         return deviceNaturalEnemiesMaintanceEntityMapper.countAll(username);
     }
 
-    public int countAllByArea(String username){
-        return deviceNaturalEnemiesMaintanceEntityMapper.countAllByArea(username);
+    public int countAllByArea(String adcode){
+        return deviceNaturalEnemiesMaintanceEntityMapper.countAllByArea(adcode);
     }
 
-    public List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String username,int num1,int num2){
-        return deviceNaturalEnemiesMaintanceEntityMapper.selectAllByArea(username, num1, num2);
+    public List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String adcode,int num1,int num2){
+        return deviceNaturalEnemiesMaintanceEntityMapper.selectAllByArea(adcode, num1, num2);
     }
 
     public List<Device_NaturalEnemies_maintanceEntity> getMaintenanceData2(User user, String condition, String date, String endDate) {

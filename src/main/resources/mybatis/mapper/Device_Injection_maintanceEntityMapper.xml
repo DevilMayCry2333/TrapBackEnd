@@ -207,6 +207,9 @@
         set reported = 1
         where id = #{id}
   </update>
+  <delete id="deleteRecord">
+    delete from device_injection_maintance where id = #{id};
+  </delete>
 
   <select id="selectById" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
         SELECT * FROM Device_Injection_maintance WHERE id = #{id};
@@ -217,11 +220,11 @@
     </select>
 
     <select id="selectByConditions" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-        select * from device_injection_maintance where username like concat('%',#{username},'%')
+        select * from device_injection_maintance left join device on device_Id = device.id where adcode = #{adcode}
         <if test="searchText != null and searchText != ''">
           <choose>
             <when test="optionIndex == 1">
-              and device_Id like concat('%',#{searchText},'%')
+              and CustomSerial like concat('%',#{searchText},'%')
             </when>
             <when test="optionIndex == 2">
               and region like concat('%',#{searchText},'%')
@@ -696,5 +699,8 @@
     </if>
     group by device.CustomTown
   </select>
+    <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+      select * from device_injection_maintance where device_Id = #{deviceId};
+    </select>
 
 </mapper>

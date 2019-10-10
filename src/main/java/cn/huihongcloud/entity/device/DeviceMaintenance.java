@@ -83,6 +83,10 @@ public class DeviceMaintenance {
 
     private String cityname;
 
+    private String CustomTown;
+    private String CustomSerial;
+
+
     //随机数
    /* public int nonceStr;
     public int getNonceStr(){
@@ -329,5 +333,21 @@ public class DeviceMaintenance {
 
     public void setImgId(String imgId) {
         this.imgId = imgId;
+    }
+
+    public String getCustomTown() {
+        return CustomTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        CustomTown = customTown;
+    }
+
+    public String getCustomSerial() {
+        return CustomSerial;
+    }
+
+    public void setCustomSerial(String customSerial) {
+        CustomSerial = customSerial;
     }
 }

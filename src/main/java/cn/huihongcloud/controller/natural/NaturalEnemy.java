@@ -58,8 +58,10 @@ public class NaturalEnemy {
 
     @RequestMapping("/areaDetail")
     public Object DetailByArea(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
-        jsonObject.put("Data",naturalEnemyService.selectAllByArea(username,page*limit-limit,limit));
-        jsonObject.put("total",naturalEnemyService.countAllByArea(username));
+        User user = userService.getUserByUserName(username);
+
+        jsonObject.put("Data",naturalEnemyService.selectAllByArea(user.getAdcode(),page*limit-limit,limit));
+        jsonObject.put("total",naturalEnemyService.countAllByArea(user.getAdcode()));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
@@ -319,6 +321,14 @@ public class NaturalEnemy {
             }
         }
         return "OK";
+    }
+
+    @RequestMapping("/deleteRecord")
+    public Object deleteRecord(@RequestParam String id){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Error",false);
+        deviceNaturalEnemiesMaintanceEntityMapper.deleteRecord(Long.parseLong(id));
+        return jsonObject;
     }
 
 

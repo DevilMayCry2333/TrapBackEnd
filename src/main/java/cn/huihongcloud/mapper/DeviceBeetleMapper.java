@@ -3,6 +3,7 @@ package cn.huihongcloud.mapper;
 import cn.huihongcloud.entity.*;
 import cn.huihongcloud.entity.beetle.BeetleInfo;
 import cn.huihongcloud.entity.device.DeviceBeetle;
+import cn.huihongcloud.entity.device.DeviceMaintenance;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,14 @@ public interface DeviceBeetleMapper {
     List<inject_WorkContent> getInjectWorkContent(String adcode);
     List<enemy_EneType> getEnemyType(String adcode);
     List<deadTree_KillMethods> getKillMethods(String adcode);
+
+    List<Device_NaturalEnemies_maintanceEntity> getById(String deivceId);
+
+    List<DeviceMaintenance> getTrapById(String scanId);
+
+    List<Device_Injection_maintanceEntity> InjectWorker(String scanId);
+
+    List<Device_DeadTrees_maintanceEntity> DeadWorker(String scanId);
 
 
 

@@ -25,8 +25,8 @@ public class TrackService {
         return deviceTrackMaintanceEntityMapper.countAllByArea(username);
     }
 
-    public List<Device_Track_MaintanceEntity> selectAllByArea(String username,int num1,int num2){
-        return deviceTrackMaintanceEntityMapper.selectAllByArea(username, num1, num2);
+    public List<Device_Track_MaintanceEntity> selectAllByArea(String adcode,int num1,int num2){
+        return deviceTrackMaintanceEntityMapper.selectAllByArea(adcode, num1, num2);
     }
     public List<Device_Track_MaintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode){
         return deviceTrackMaintanceEntityMapper.selectByDateAndColSearch(username, startDate, endDate, colName, searchText, num1, num2,adcode);

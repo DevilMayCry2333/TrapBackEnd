@@ -1,10 +1,13 @@
 package cn.huihongcloud.controller.newqrcode;
 
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.NewQrCodeMapper;
 import cn.huihongcloud.mapper.UserMapper;
 import cn.huihongcloud.util.DistUtil;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,6 +144,20 @@ public class NewQrCode {
         }
         res.put("Res",true);
         return res;
+    }
+
+    @RequestMapping("/search")
+    public Object serach(@RequestParam String colName,@RequestParam String searchText){
+        List<Device> deviceList = newQrCodeMapper.selectByConditions(colName, searchText);
+        Page<Object> pages = null;
+        PageWrapper pageWrapper = new PageWrapper();
+        pages = PageHelper.startPage(1, 1000000);
+
+        pageWrapper.setData(deviceList);
+        pageWrapper.setTotalPage(pages.getPages());
+        pageWrapper.setCurrentPage(1);
+        pageWrapper.setTotalNum(pages.getTotal());
+        return pageWrapper;
     }
 
 }

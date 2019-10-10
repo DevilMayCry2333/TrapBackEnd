@@ -26,9 +26,9 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     int insertSelective(Device_NaturalEnemies_maintanceEntity record);
 
-    int countAllByArea(String username);
+    int countAllByArea(String adcode);
 
-    List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String username, int num1, int num2);
+    List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String adcode, int num1, int num2);
 
     List<NaturalSummary> queryDeviceSummaryByArea(String adcode, String startDate, String endDate);
 
@@ -77,6 +77,12 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
     Device_NaturalEnemies_maintanceEntity selectById(String id);
 
     int updateRecordById(Device_NaturalEnemies_maintanceEntity dataEntity);
+
+    Device_NaturalEnemies_maintanceEntity getMaxBatch(String deviceId);
+
+    int deleteRecord(long id);
+
+    List<Device_NaturalEnemies_maintanceEntity> workerQueryById(String scanId);
 
 
 }

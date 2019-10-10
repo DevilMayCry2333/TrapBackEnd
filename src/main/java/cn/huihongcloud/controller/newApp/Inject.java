@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -87,6 +88,9 @@ public class Inject {
         logger.info(remarks);
         logger.info(workingContent);
 
+
+
+
         System.out.println("image" + image);
 
         Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
@@ -95,6 +99,21 @@ public class Inject {
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
         System.out.println("USername");
+        int maxBatchNum = 0;
+
+        Device_Injection_maintanceEntity maxBatch = deviceInjectionMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+        System.out.println("批次");
+        try {
+            System.out.println(maxBatch.getDeviceId());
+
+            System.out.println(maxBatch.getBatch());
+            maxBatchNum = maxBatch.getBatch();
+
+        }catch (Exception e){
+            maxBatchNum = 0;
+        }
+
+
 
         System.out.println(user1.getUsername());
 
@@ -110,6 +129,7 @@ public class Inject {
         deviceInjectionMaintanceEntity.setWorkContent(workingContent);
         deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
         deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
+        deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
 
         System.out.println("CustomeSerial");
         System.out.println(realDeviceId.getCustomSerial());
@@ -121,7 +141,6 @@ public class Inject {
 
         deviceInjectionMaintanceEntity.setSubmitDate(datestr);
         deviceInjectionMaintanceEntity.setRegion(realDeviceId.getArea());
-        deviceInjectionMaintanceEntity.setBatch(1);
 
         //修改了一些
 
@@ -152,6 +171,12 @@ public class Inject {
 
         return Result.ok();
         //return null;
+    }
+
+    @RequestMapping("/InjectWorker")
+    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String scanId){
+        return deviceBeetleMapper.InjectWorker(scanId);
+
     }
 
 }

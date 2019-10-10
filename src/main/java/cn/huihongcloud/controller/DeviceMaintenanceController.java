@@ -133,8 +133,8 @@ public class DeviceMaintenanceController {
        // deviceMaintenance.setBatch(deviceMaintenanceService.getChangeTimesByDeviceId(deviceMaintenance.getDeviceId()) + 1);
         deviceMaintenance.setBatch(deviceMaintenanceService.getMaxBatchByDeviceid(realDeviceId.getId())+1);
         deviceMaintenance.setWorkingContent(workingContent);
+        deviceMaintenance.setReported(false);
         // 其他天牛数量与类型
-
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
 

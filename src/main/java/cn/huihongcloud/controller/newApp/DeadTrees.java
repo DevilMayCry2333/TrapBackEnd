@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -106,7 +107,16 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceDeadTreesMaintanceEntity.setSubmitDate(datestr);
         deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
-        deviceDeadTreesMaintanceEntity.setBatch("1");
+
+        Device_DeadTrees_maintanceEntity maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+        int maxIdNum = 0;
+        try {
+            maxIdNum = Integer.parseInt(maxId.getBatch());
+        }catch (Exception e){
+            maxIdNum = 0;
+        }
+
+        deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxIdNum+1));
 
 
         //修改了一些
@@ -137,6 +147,14 @@ public class DeadTrees {
         return Result.ok();
         //return null;
     }
+
+    @RequestMapping("/DeadWorker")
+    public List<Device_DeadTrees_maintanceEntity> deadWorker(@RequestParam String scanId){
+        return deviceBeetleMapper.DeadWorker(scanId);
+
+    }
+
+
 
 
 }

@@ -7,6 +7,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -75,8 +77,22 @@ public class Enemy {
         User user1 = userMapper.getUserByUserName(user.getParent());
         System.out.println("USername");
 
+
+
+
         Device_NaturalEnemies_maintanceEntity deviceNaturalEnemiesMaintanceEntity = new Device_NaturalEnemies_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
+
+        Device_NaturalEnemies_maintanceEntity maxBatch = deviceNaturalEnemiesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+
+        int maxBatchNum = 0;
+        try {
+            System.out.println(maxBatch.getBatch());
+            maxBatchNum = maxBatch.getBatch();
+
+        }catch (Exception e){
+            maxBatchNum = 0;
+        }
 
         deviceNaturalEnemiesMaintanceEntity.setWorker(username);
         deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
@@ -88,6 +104,7 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setReleaseNum(releaseNum);
         deviceNaturalEnemiesMaintanceEntity.setRemarks(remarks);
         deviceNaturalEnemiesMaintanceEntity.setUsername(user1.getUsername());
+        deviceNaturalEnemiesMaintanceEntity.setReported(0);
 
         Date date= new Date(System.currentTimeMillis());
         String pattern="yyyy-MM-dd HH:mm:ss";
@@ -96,7 +113,8 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceNaturalEnemiesMaintanceEntity.setSubmitDate(datestr);
         deviceNaturalEnemiesMaintanceEntity.setRegion(realDeviceId.getArea());
-        deviceNaturalEnemiesMaintanceEntity.setBatch(1);
+        deviceNaturalEnemiesMaintanceEntity.setBatch(maxBatchNum + 1);
+
 
 
         //修改了一些
@@ -124,7 +142,14 @@ public class Enemy {
         }
 
         return Result.ok();
-        //return null;
+    }
+
+    @RequestMapping("/queryById")
+    public List<Device_NaturalEnemies_maintanceEntity> queryById(@RequestParam String scanId){
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.workerQueryById(deviceId));
+//        return jsonObject;
+        return deviceNaturalEnemiesMaintanceEntityMapper.workerQueryById(scanId);
     }
 
 }

@@ -153,6 +153,9 @@
     Release_Num = #{releaseNum}, pic = #{pic}, worker = #{worker}, remarks = #{remarks}, scanid = #{scanid},
     username = #{username},reported = #{reported}, altitude = #{altitude} where id = #{id}
   </update>
+  <delete id="deleteRecord">
+    delete from device_naturalenemies_maintance where id = #{id};
+  </delete>
 
   <select id="countAll" resultType="java.lang.Integer">
       SELECT count(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username = #{username};
@@ -161,10 +164,10 @@
     SELECT * FROM  Device_NaturalEnemies_maintance WHERE username = #{username} LIMIT #{num1},#{num2};
   </select>
     <select id="countAllByArea" resultType="java.lang.Integer">
-      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance WHERE username like "%"#{username}"%";
+      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance left join device on device.id = device_Id where adcode = #{adcode};
     </select>
   <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-        SELECT * FROM Device_NaturalEnemies_maintance WHERE username like "%"#{username}"%" LIMIT #{num1},#{num2};
+        SELECT * FROM Device_NaturalEnemies_maintance left join device on device.id = device_Id where adcode = #{adcode} LIMIT #{num1},#{num2};
   </select>
 
   <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
@@ -750,4 +753,12 @@
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
       select * from device_naturalenemies_maintance where id = #{id};
     </select>
+
+    <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+      select * from device_naturalenemies_maintance where device_Id = #{deviceId};
+    </select>
+
+  <select id="workerQueryById" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+    select * from device_naturalenemies_maintance left join device on device_id = device.id where device.scanId = #{scanId};
+  </select>
 </mapper>

@@ -92,11 +92,14 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setWorkingContent(workContent);
         deviceTrackMaintanceEntity.setRemarks(remarks);
         deviceTrackMaintanceEntity.setUsername(user1.getUsername());
+        deviceTrackMaintanceEntity.setAdcode(user1.getAdcode());
         deviceTrackMaintanceEntity.setStarttime(String.valueOf(jsonObject.get("startTime")));
         deviceTrackMaintanceEntity.setEndtime(String.valueOf(jsonObject.get("endTime")));
 
         deviceTrackMaintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
         deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
+
+
 
 
         //修改了一些

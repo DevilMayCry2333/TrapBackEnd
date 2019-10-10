@@ -1,6 +1,7 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import org.apache.ibatis.annotations.Param;
@@ -13,11 +14,12 @@ import java.util.Map;
 @Repository
 public interface Device_Injection_maintanceEntityMapper {
 
+
     int CountAll(String username);
 
 //    List<Device_Injection_maintanceEntity> selectAll(int page1, int page2, String username);
 
-    List<Device_Injection_maintanceEntity> selectByConditions(@Param("username") String username, @Param("optionIndex") Integer optionIndex,
+    List<Device_Injection_maintanceEntity> selectByConditions(@Param("adcode") String adcode, @Param("optionIndex") Integer optionIndex,
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     List<Device_Injection_maintanceEntity> selectById(BigInteger id);
@@ -69,6 +71,12 @@ public interface Device_Injection_maintanceEntityMapper {
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     int addMaintanceData(Device_Injection_maintanceEntity dataEntity);
+
+    Device_Injection_maintanceEntity getMaxBatch(String deviceId);
+
+    int deleteRecord(long recordId);
+
+
 
 
 

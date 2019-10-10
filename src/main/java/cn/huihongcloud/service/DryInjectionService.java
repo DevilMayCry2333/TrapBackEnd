@@ -16,15 +16,9 @@ public class DryInjectionService {
     @Autowired
     private Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
 
-    public List<Device_Injection_maintanceEntity> getDryInjectionDetail(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
-        int role = user.getRole();
+    public List<Device_Injection_maintanceEntity> getDryInjectionDetail(String adcode, Integer optionIndex, String searchText, String startDate, String endDate) {
 
-        if (role >= 0) {
-            return deviceInjectionMaintanceEntityMapper.selectByConditions(user.getUsername(), optionIndex, searchText, startDate, endDate);
-        }/*else if(){
-
-        }*/
-        return null;
+            return deviceInjectionMaintanceEntityMapper.selectByConditions(adcode, optionIndex, searchText, startDate, endDate);
     }
 
     public int getTotalNum(String username) {
