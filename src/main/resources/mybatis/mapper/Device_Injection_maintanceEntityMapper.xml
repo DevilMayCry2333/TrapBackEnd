@@ -221,7 +221,7 @@
         <if test="searchText != null and searchText != ''">
           <choose>
             <when test="optionIndex == 1">
-              and device_Id like concat('%',#{searchText},'%')
+              and CustomSerial like concat('%',#{searchText},'%')
             </when>
             <when test="optionIndex == 2">
               and region like concat('%',#{searchText},'%')

@@ -1,6 +1,7 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import org.apache.ibatis.annotations.Param;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @Repository
 public interface Device_Injection_maintanceEntityMapper {
+
 
     int CountAll(String username);
 
@@ -71,6 +73,8 @@ public interface Device_Injection_maintanceEntityMapper {
     int addMaintanceData(Device_Injection_maintanceEntity dataEntity);
 
     Device_Injection_maintanceEntity getMaxBatch(String deviceId);
+
+
 
 
 

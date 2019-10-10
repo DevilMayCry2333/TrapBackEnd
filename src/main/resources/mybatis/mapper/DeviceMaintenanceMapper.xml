@@ -993,6 +993,8 @@
         device_maintenance.remark,
         device.province,
         device.city,
+        device.CustomTown,
+        device.CustomSerial,
         device.area,
         device.town,
         device_maintenance.working_content,

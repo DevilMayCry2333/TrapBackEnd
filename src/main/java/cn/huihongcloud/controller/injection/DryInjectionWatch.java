@@ -6,11 +6,13 @@ import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper;
 import cn.huihongcloud.service.DryInjectionService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,9 @@ public class DryInjectionWatch {
     DryInjectionService dryInjectionService;
     @Autowired
     UserService userService;
+    @Autowired
+    private Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
+
 
     @RequestMapping("/dataDetail")
     public Object getDataDetail(@RequestAttribute("username") String username,
@@ -33,8 +38,11 @@ public class DryInjectionWatch {
                              @RequestParam Integer optionIndex,
                              @RequestParam(required = false) String searchText,
                              @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
+
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
+        System.out.println("收到用户名:");
+
         System.out.println(username);
 
         if (!Objects.equals(startDate, "")) {
@@ -233,6 +241,32 @@ public class DryInjectionWatch {
         pageWrapper.setTotalNum(pages.getTotal());
         return pageWrapper;
     }
+
+    @RequestMapping("/searchDetail")
+    public JSONObject searchDetail(@RequestAttribute("username") String username, @RequestParam(required = false) String startDate,
+                                   @RequestParam(required = false) String endDate, @RequestParam(required = false) String optionIndex,
+                                   @RequestParam(required = false) String searchText){
+        JSONObject jsonObject = new JSONObject();
+        User user = userService.getUserByUserName(username);
+        System.out.println(user.getUsername());
+        int optVal = 0;
+
+        if(optionIndex!=null && optionIndex!=""){
+            optVal = Integer.parseInt(optionIndex);
+
+        }
+
+        jsonObject.put("Res",true);
+
+
+        jsonObject.put("Data",deviceInjectionMaintanceEntityMapper.selectByConditions(user.getAdcode(),optVal,searchText,startDate,endDate));
+        jsonObject.put("total",deviceInjectionMaintanceEntityMapper.CountAll(username));
+        jsonObject.put("current",1);
+        System.out.println(jsonObject);
+
+        return jsonObject;
+    }
+
 
 
 
