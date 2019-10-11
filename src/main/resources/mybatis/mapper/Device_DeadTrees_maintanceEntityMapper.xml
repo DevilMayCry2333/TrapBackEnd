@@ -158,7 +158,10 @@
     worker = #{worker},remarks=#{remarks},scanid=#{scanid},pic=#{pic},username=#{username},region=#{region},
     altitude=#{altitude},accuracy=#{accuracy} where id = #{id}
   </update>
-  <select id="selectAll" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    <delete id="deleteById">
+      delete from  device_deadtrees_maintance where id = #{id}
+    </delete>
+    <select id="selectAll" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
     SELECT * FROM Device_DeadTrees_maintance WHERE username = #{username} LIMIT #{num1},#{num2}
   </select>
 

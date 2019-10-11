@@ -154,6 +154,11 @@ public class DeadTrees {
 
     }
 
+    @RequestMapping("/DeleteById")
+    public Object deleteById(@RequestParam String id){
+        return deviceDeadTreesMaintanceEntityMapper.deleteById(id);
+    }
+
 
 
 

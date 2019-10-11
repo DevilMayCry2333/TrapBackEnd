@@ -162,8 +162,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_Track_Maintance (Pic1,StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
-      values (#{pic1},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
+      insert into Device_Track_Maintance (TimeConsume,Pic1,StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
+      values (#{timeconsume},#{pic1},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
     </insert>
   <update id="updateRecordById">
     update device_track_maintance set linename=#{linename},
@@ -172,7 +172,10 @@
     endpoint=#{endpoint},pic1=#{pic1},worker=#{worker},
     username=#{username} where id=#{id}
   </update>
-  <select id="countAll" resultType="java.lang.Integer">
+    <delete id="deleteById">
+      delete from device_track_maintance where id = #{id}
+    </delete>
+    <select id="countAll" resultType="java.lang.Integer">
     SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
   </select>
 

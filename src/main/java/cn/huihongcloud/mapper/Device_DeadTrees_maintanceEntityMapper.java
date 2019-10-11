@@ -43,4 +43,6 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     Device_DeadTrees_maintanceEntity getMaxBatch(String deviceId);
 
+    int deleteById(String id);
+
 }

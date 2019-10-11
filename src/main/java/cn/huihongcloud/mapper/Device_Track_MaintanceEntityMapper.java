@@ -41,6 +41,8 @@ public interface Device_Track_MaintanceEntityMapper {
 
     int getMaxBatchId(String linename);
 
+    int deleteById(String id);
+
 
 
 }
