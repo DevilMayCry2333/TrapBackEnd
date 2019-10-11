@@ -83,6 +83,8 @@ public interface Device_Injection_maintanceEntityMapper {
 
     int deleteRecord(long recordId);
 
+    int updateRecordById(Device_Injection_maintanceEntity dataEntity);
+
 
 
 

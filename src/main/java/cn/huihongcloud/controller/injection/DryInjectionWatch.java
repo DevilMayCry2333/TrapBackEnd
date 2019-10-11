@@ -318,26 +318,26 @@ public class DryInjectionWatch {
 
     //这里还没写完
 
-//    @RequestMapping("/importExcel")
-//    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
-//        ImportParams importParams = new ImportParams();
-//        importParams.setTitleRows(1);
-//        importParams.setHeadRows(1);
-//        List<Device_Injection_maintanceEntity> deviceMaintenanceList = ExcelImportUtil
-//                .importExcel(multipartFile.getInputStream(), Device_Injection_maintanceEntity.class, importParams);
-//        for (Device_Injection_maintanceEntity d:
-//                deviceMaintenanceList) {
-//            System.out.println("natural");
-//            System.out.println(d.getId());
-//            Device_Injection_maintanceEntity tmp = deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getId()));
-//            if(tmp!=null){
-//                deviceInjectionMaintanceEntityMapper.updateRecordById(d);
-//            }else {
-//                deviceInjectionMaintanceEntityMapper.insert(d);
-//            }
-//        }
-//        return "OK";
-//    }
+    @RequestMapping("/importExcel")
+    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        importParams.setHeadRows(1);
+        List<Device_Injection_maintanceEntity> deviceMaintenanceList = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), Device_Injection_maintanceEntity.class, importParams);
+        for (Device_Injection_maintanceEntity d:
+                deviceMaintenanceList) {
+            System.out.println("natural");
+            System.out.println(d.getId());
+            Device_Injection_maintanceEntity tmp = deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getId()));
+            if(tmp!=null){
+                deviceInjectionMaintanceEntityMapper.updateRecordById(d);
+            }else {
+                deviceInjectionMaintanceEntityMapper.insert(d);
+            }
+        }
+        return "OK";
+    }
 
 
 

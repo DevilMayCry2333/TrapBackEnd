@@ -207,8 +207,15 @@
         set reported = 1
         where id = #{id}
   </update>
+
+  <update id="updateRecordById">
+    update device_injection_maintance set device_Id=#{deviceId},serial=#{serial},region=#{region},
+    submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
+    injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus} where id=#{id};
+  </update>
+
   <delete id="deleteRecord">
-    delete from device_injection_maintance where id = #{id};
+    delete from device_injection_maintance where id=#{id};
   </delete>
 
   <select id="selectById" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
@@ -704,7 +711,7 @@
       select * from device_injection_maintance where device_Id = #{deviceId};
     </select>
   <select id="selectById2" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-     select * from device_injection_maintance where device_Id = #{deviceId};
+     select * from device_injection_maintance where id = #{id};
   </select>
 
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
