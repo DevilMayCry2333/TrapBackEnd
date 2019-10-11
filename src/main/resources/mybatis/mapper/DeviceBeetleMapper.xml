@@ -122,4 +122,19 @@
         select * from device_deadtrees_maintance left join device on device.id = device_Id where device.scanId = #{scanId};
     </select>
 
+    <select id="getFuckFuck" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
+        select * from device_maintenance left join device on device.id = device_id
+        where adcode = #{adcode}
+        <if test="searchText != null and searchText != ''">
+            and ${colName} = #{searchText}
+        </if>
+        <if test="submitDate != null and submitDate != ''">
+            and `date` &gt;= #{submitDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            and `date` &lt;= #{endDate}
+        </if>
+
+    </select>
+
 </mapper>
