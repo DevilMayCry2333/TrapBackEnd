@@ -156,7 +156,7 @@ public class NewQrCode {
         pageWrapper.setData(deviceList);
         pageWrapper.setTotalPage(pages.getPages());
         pageWrapper.setCurrentPage(1);
-        pageWrapper.setTotalNum(pages.getTotal());
+        pageWrapper.setTotalNum(deviceList.size());
         return pageWrapper;
     }
 

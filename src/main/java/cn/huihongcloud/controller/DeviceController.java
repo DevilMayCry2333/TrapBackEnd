@@ -112,7 +112,7 @@ public class DeviceController {
         pageWrapper.setData(list);
         pageWrapper.setTotalPage(pages.getPages());
         pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(pages.getTotal());
+        pageWrapper.setTotalNum(list.size());
         return pageWrapper;
     }
 

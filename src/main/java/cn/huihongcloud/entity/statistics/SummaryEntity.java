@@ -9,6 +9,7 @@ import java.math.BigDecimal;
  */
 @Data
 public class SummaryEntity {
+    private String customtown;
     private String name;
     private Long count;
     private BigDecimal sum;
@@ -89,5 +90,13 @@ public class SummaryEntity {
 
     public void setConfidenceHi(Double confidenceHi) {
         this.confidenceHi = confidenceHi;
+    }
+
+    public String getCustomtown() {
+        return customtown;
+    }
+
+    public void setCustomtown(String customtown) {
+        this.customtown = customtown;
     }
 }

@@ -192,6 +192,7 @@ public class StatisticsUtil {
             return num;
     }
     public static StatisticsResult getResult(List<InputEntity> list) {
+
         StatisticsResult statisticsResult = new StatisticsResult();
         OutputEntity outputEntity = calc(list);
 

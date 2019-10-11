@@ -12,6 +12,8 @@ public class InputEntity {
 
     private String name;
     private Long count;
+    private String customtown;
+
     private BigDecimal sum;
     private BigDecimal mean;
     private Double std;
@@ -19,9 +21,12 @@ public class InputEntity {
     private int min;
 
 
-    public InputEntity(String name, BigDecimal sum, BigDecimal mean, Double std, BigDecimal max, BigDecimal min, Long count) {
+    public InputEntity(String name, BigDecimal sum,String customtown,BigDecimal mean, Double std, BigDecimal max, BigDecimal min, Long count) {
+
+
         this.name = name;
         this.count = count;
+        this.customtown = customtown;
         this.sum = sum;
         /*
         BigDecimal count1=new BigDecimal(count);
@@ -37,6 +42,8 @@ public class InputEntity {
         }
         this.max = max.intValue();;
         this.min = min.intValue();;
+
+
 
     }
 
@@ -94,5 +101,13 @@ public class InputEntity {
 
     public void setMin(int min) {
         this.min = min;
+    }
+
+    public String getCustomtown() {
+        return customtown;
+    }
+
+    public void setCustomtown(String customtown) {
+        this.customtown = customtown;
     }
 }
