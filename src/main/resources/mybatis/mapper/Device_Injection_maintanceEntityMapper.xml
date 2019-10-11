@@ -436,6 +436,7 @@
       Device_Injection_maintance.latitude,
       Device_Injection_maintance.altitude,
       Device_Injection_maintance.Pic,
+      Device_Injection_maintance.WoodStatus,
       Device_Injection_maintance.scanId,
       Device_Injection_maintance.Remarks,
       device.province,

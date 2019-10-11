@@ -87,7 +87,7 @@ public class NaturalEnemyService {
         return null;
     }
 
-    public List<Device_Injection_maintanceEntity> getMaintenanceData1(User user, String condition, String date, String endDate,String batch,String searchtown) {
+    public List<Device_NaturalEnemies_maintanceEntity> getMaintenanceData1(User user, String condition, String date, String endDate,String batch,String searchtown) {
         int role = user.getRole();
         if (role <3) {
             // 省到县级用户

@@ -29,11 +29,11 @@
 
     <select id="getMaintenanceDataByDeviceId" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select * from device_maintenance
+        left join device on device.id = device_id
         where device_id = #{deviceId}
-        and isactive = '0'
         
         <if test="myusername != null and myusername !=''">
-            and username = #{myusername}
+            and device.manager = #{myusername}
         </if>
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
@@ -131,6 +131,7 @@
         device.province,
         device.city,
         device.area,
+        device.CustomSerial,
         device.town,
         device_maintenance.working_content,
         device_maintenance.reported

@@ -117,7 +117,7 @@ public class NaturalEnemy {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
-        List<Device_Injection_maintanceEntity> maintenanceData = naturalEnemyService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
+        List<Device_NaturalEnemies_maintanceEntity> maintenanceData = naturalEnemyService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
         pageWrapper.setCurrentPage(page);
