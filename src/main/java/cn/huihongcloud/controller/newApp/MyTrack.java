@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -96,6 +97,30 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setStarttime(String.valueOf(jsonObject.get("startTime")));
         deviceTrackMaintanceEntity.setEndtime(String.valueOf(jsonObject.get("endTime")));
 
+        String startTime = String.valueOf(jsonObject.get("startTime"));
+        String endTime = String.valueOf(jsonObject.get("endTime"));
+
+        System.out.println(startTime);
+        System.out.println(endTime);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos = new ParsePosition(0);
+
+        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos2 = new ParsePosition(0);
+
+        Date start = formatter.parse(startTime, pos);
+
+        Date end = formatter2.parse(endTime, pos2);
+
+        System.out.println(start.getTime());
+
+        System.out.println(end.getTime());
+
+        System.out.println(end.getTime() - start.getTime());
+
+        deviceTrackMaintanceEntity.setTimeconsume(String.valueOf( ( end.getTime() - start.getTime() ) / 1000 ) );
+
         deviceTrackMaintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
         deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
 
@@ -118,5 +143,10 @@ public class MyTrack {
 
         return Result.ok();
         //return null;
+    }
+
+    @RequestMapping("/deleteTrackById")
+    public Object deleteTrackById(@RequestParam String id){
+        return deviceTrackMaintanceEntityMapper.deleteById(id);
     }
 }
