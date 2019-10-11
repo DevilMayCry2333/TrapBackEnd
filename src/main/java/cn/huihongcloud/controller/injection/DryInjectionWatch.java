@@ -1,6 +1,11 @@
 package cn.huihongcloud.controller.injection;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
@@ -13,9 +18,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -275,6 +285,60 @@ public class DryInjectionWatch {
         deviceInjectionMaintanceEntityMapper.deleteRecord(Long.parseLong(id));
         return jsonObject;
     }
+
+
+    @RequestMapping("/exportExcel")
+    public void exportExcel(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+//        for (Device_NaturalEnemies_maintanceEntity d:
+//             deviceNaturalEnemiesMaintanceEntities) {
+//            System.out.println(d.getArea());
+//
+//        }
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("注干剂监测", "注干剂监测"), Device_Injection_maintanceEntity.class, deviceNaturalEnemiesMaintanceEntities);
+        workbook.write(response.getOutputStream());
+
+    }
+
+    //这里还没写完
+
+//    @RequestMapping("/importExcel")
+//    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+//        ImportParams importParams = new ImportParams();
+//        importParams.setTitleRows(1);
+//        importParams.setHeadRows(1);
+//        List<Device_Injection_maintanceEntity> deviceMaintenanceList = ExcelImportUtil
+//                .importExcel(multipartFile.getInputStream(), Device_Injection_maintanceEntity.class, importParams);
+//        for (Device_Injection_maintanceEntity d:
+//                deviceMaintenanceList) {
+//            System.out.println("natural");
+//            System.out.println(d.getId());
+//            Device_Injection_maintanceEntity tmp = deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getId()));
+//            if(tmp!=null){
+//                deviceInjectionMaintanceEntityMapper.updateRecordById(d);
+//            }else {
+//                deviceInjectionMaintanceEntityMapper.insert(d);
+//            }
+//        }
+//        return "OK";
+//    }
+
 
 
 
