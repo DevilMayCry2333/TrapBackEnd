@@ -196,10 +196,10 @@
       WHERE t2.adcode
       LIKE concat(#{adcode}, '%')
       <if test="startDate!=null and startDate !=''">
-        and t1.submit_date >= #{startDate}
+        and t1.StartTime >= #{startDate}
       </if>
       <if test="endDate != null and endDate !=''">
-        and t1.submit_date &lt;= #{endDate}
+        and t1.StartTime &lt;= #{endDate}
       </if>
       <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
         and ${colName} like concat(#{searchText}, '%')
