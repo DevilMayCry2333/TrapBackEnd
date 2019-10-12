@@ -176,11 +176,21 @@
       delete from device_track_maintance where id = #{id}
     </delete>
     <select id="countAll" resultType="java.lang.Integer">
-    SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username};
+    SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance WHERE username = #{username}
+      <if test="startDate!=null and startDate !=''">
+        and StartTime >= #{startDate}
+      </if>
+      <if test="endDate != null and endDate !=''">
+        and StartTime &lt;= #{endDate}
+      </if>
+      <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+        and ${colName} like concat(#{searchText}, '%')
+      </if>
+
   </select>
 
   <select id="selectAll" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
-    SELECT * FROM Device_Track_Maintance WHERE username = #{username} LIMIT #{num1},#{num2};
+    SELECT * FROM Device_Track_Maintance WHERE username = #{username} LIMIT #{num1},#{num2}
   </select>
 
     <select id="countAllByArea" resultType="java.lang.Integer">
@@ -196,10 +206,10 @@
       WHERE t2.adcode
       LIKE concat(#{adcode}, '%')
       <if test="startDate!=null and startDate !=''">
-        and t1.StartTime >= #{startDate}
+        and StartTime >= #{startDate}
       </if>
       <if test="endDate != null and endDate !=''">
-        and t1.StartTime &lt;= #{endDate}
+        and StartTime &lt;= #{endDate}
       </if>
       <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
         and ${colName} like concat(#{searchText}, '%')

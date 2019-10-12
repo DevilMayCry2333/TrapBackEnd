@@ -50,7 +50,7 @@ public class Track {
 
         }
         jsonObject.put("Data",deviceTrackMaintanceEntities);
-        jsonObject.put("total",trackService.countAll(username));
+        jsonObject.put("total",trackService.countAll(username,null,null,null,null));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
@@ -76,7 +76,7 @@ public class Track {
         System.out.println(searchText);
 
         jsonObject.put("Data",trackService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
-        jsonObject.put("total",trackService.countAll(username));
+        jsonObject.put("total",trackService.countAll(username,startDate,endDate,colName,searchText));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 
@@ -89,7 +89,7 @@ public class Track {
         User user = userService.getUserByUserName(username);
 
         jsonObject.put("Data",trackService.selectAllByAdcode(user.getAdcode(), page*limit-limit, page*limit));
-        jsonObject.put("total",trackService.countAll(username));
+        jsonObject.put("total",trackService.countAll(username,null,null,null,null));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
