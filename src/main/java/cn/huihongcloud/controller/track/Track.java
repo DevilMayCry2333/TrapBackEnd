@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.entity.DeviceTrackMap;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,9 +98,12 @@ public class Track {
                                   @RequestParam(value = "workerName", required = false) String workerName) {
         System.out.println(workerName);
         User user = userService.getUserByUserName(username);
+
         List<Device> list = null;
         Page<Object> pages = null;
         PageWrapper pageWrapper = new PageWrapper();
+
+        List<DeviceTrackMap> deviceTrackMaps = null;
         /*
         if (user.getRole() > 1 && user.getRole() != 3) {
             // 工人查询所管理的设备
@@ -121,24 +126,30 @@ public class Track {
         工人看到关联的
          */
         pages = PageHelper.startPage(page, limit);
+
         if (user.getRole() == 1) {
-            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
+//            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
+            deviceTrackMaps = trackService.getDeviceByManager(username);
         }
         if (user.getRole() == 2) {
-            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
+//            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
+            deviceTrackMaps = trackService.getDeviceByManager(username);
         }
         if (user.getRole() == 3) {
-            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
+//            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
+            deviceTrackMaps = trackService.getDeviceByManager(username);
         }
 
         if (user.getRole() == 4) {
-            list = trackService.getDeviceByManager(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username);
         }
 
         if (user.getRole() == 5) {
-            list = trackService.getDeviceByWorker(username);
+//            list = trackService.getDeviceByWorker(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username);
         }
-        pageWrapper.setData(list);
+
+        pageWrapper.setData(deviceTrackMaps);
         pageWrapper.setTotalPage(pages.getPages());
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pages.getTotal());

@@ -148,6 +148,7 @@ public class StatisticsUtil {
         List<Double> scheffeConfidenceLo = new ArrayList<>();
         List<Double> scheffeConfidenceHi = new ArrayList<>();
         List<Double> standardError = new ArrayList<>();
+
         for (int i = 0; i < list.size(); ++i) {
             for (int j = i + 1; j < list.size(); ++j) {
                 labelAs.add(list.get(i).getCustomtown());

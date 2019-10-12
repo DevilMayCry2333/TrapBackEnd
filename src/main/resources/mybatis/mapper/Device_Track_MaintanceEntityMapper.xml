@@ -230,8 +230,8 @@
         town like concat('%', #{searchText}, '%'))
       </if>
     </select>
-  <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where manager = #{manager} AND project = '轨迹追踪'
+  <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+        select * from device_track_maintance where username = #{manager}
   </select>
   <select id="getDeviceByWorker" resultType="cn.huihongcloud.entity.device.Device">
         select device.*

@@ -1,11 +1,13 @@
 package cn.huihongcloud.service;
 
+import cn.huihongcloud.entity.DeviceTrackMap;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.mapper.Device_Track_MaintanceEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,14 +62,29 @@ public class TrackService {
      * @param manager 管理员用户名
      * @return 设备列表
      */
-    public List<Device> getDeviceByManager(String manager) {
-        List<Device> deviceList = null;
+    public List<DeviceTrackMap> getDeviceByManager(String manager) {
+        List<Device_Track_MaintanceEntity> deviceList = null;
+        List<DeviceTrackMap> realData = new ArrayList<>();
+
         try {
             deviceList = deviceTrackMaintanceEntityMapper.getDeviceByManager(manager);
+            for (Device_Track_MaintanceEntity d:
+                 deviceList) {
+                String latspilt[] = d.getLatitudeCollect().split(",");
+                String longspilt[] = d.getLongtitudeCollect().split(",");
+
+                for (int i = 0; i < latspilt.length; i++) {
+                    DeviceTrackMap deviceTrackMap = new DeviceTrackMap();
+                    deviceTrackMap.setLongitude(Double.valueOf(longspilt[i]));
+                    deviceTrackMap.setLatitude(Double.valueOf(latspilt[i]));
+                    deviceTrackMap.setLinename(d.getLinename());
+                    realData.add(deviceTrackMap);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return deviceList;
+        return realData;
     }
 
     public List<Device> getDeviceByWorker(String worker) {

@@ -29,7 +29,7 @@ public interface Device_Track_MaintanceEntityMapper {
     List<Device> getDeviceByLocation(@Param("adcode") String adcode, @Param("town") String town,
                                      @Param("searchText") String searchText);
 
-    List<Device> getDeviceByManager(@Param("manager") String manager);
+    List<Device_Track_MaintanceEntity> getDeviceByManager(@Param("manager") String manager);
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
