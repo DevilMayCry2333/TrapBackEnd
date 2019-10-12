@@ -12,7 +12,7 @@ public interface Device_Track_MaintanceEntityMapper {
 
     List<Device_Track_MaintanceEntity> selectAll(String username,int num1,int num2);
 
-    int countAll(String username);
+    int countAll(String username,String startDate,String endDate,String colName,String searchText);
 
     int insert(Device_Track_MaintanceEntity record);
 

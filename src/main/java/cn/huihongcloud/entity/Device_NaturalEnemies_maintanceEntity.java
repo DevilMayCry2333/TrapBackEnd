@@ -53,6 +53,9 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String precision;
 
+    private String CustomTown;
+
+
 
     public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude,String province,String city,String area,String town,String precision) {
         this.id = id;
@@ -257,5 +260,13 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setPrecision(String precision) {
         this.precision = precision;
+    }
+
+    public String getCustomTown() {
+        return CustomTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        CustomTown = customTown;
     }
 }

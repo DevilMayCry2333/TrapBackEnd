@@ -166,7 +166,18 @@
   </select>
 
   <select id="countAll" resultType="java.lang.Integer">
-    SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance WHERE username = #{username};
+    SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance
+    left join device on device.id = Device_DeadTrees_maintance.device_Id WHERE username = #{username}
+    <if test="startDate!=null and startDate !=''">
+      and t1.submit_date >= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and t1.submit_date &lt;= #{endDate}
+    </if>
+    <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+      and ${colName} = #{searchText}
+    </if>
+
   </select>
 
     <select id="countAllByArea" resultType="java.lang.Integer">
@@ -190,6 +201,7 @@
       <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
         and ${colName} = #{searchText}
       </if>
+      LIMIT #{num1},#{num2}
 
     </select>
     <select id="selectAllByAdcode" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">

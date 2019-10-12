@@ -23,8 +23,8 @@ public class NaturalEnemyService {
         return deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearch(username, startDate, endDate, colName, searchText, num1, num2,adcode);
     }
 
-    public int countAll(String username){
-        return deviceNaturalEnemiesMaintanceEntityMapper.countAll(username);
+    public int countAll(String username,String startDate,String endDate,String colName,String searchText,String adcode){
+        return deviceNaturalEnemiesMaintanceEntityMapper.countAll(username,startDate,endDate,colName,searchText,adcode);
     }
 
     public int countAllByArea(String adcode){

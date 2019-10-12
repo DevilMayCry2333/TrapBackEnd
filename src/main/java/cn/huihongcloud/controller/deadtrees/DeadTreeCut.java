@@ -44,7 +44,7 @@ public class DeadTreeCut {
         System.out.println(limit);
 
         jsonObject.put("Data",deadTreeCutService.selectAll(username,page*limit-limit,limit));
-        jsonObject.put("total",deadTreeCutService.countAll(username));
+        jsonObject.put("total",deadTreeCutService.countAll(username,null,null,null,null));
         jsonObject.put("current",page);
 
         return jsonObject;
@@ -67,7 +67,7 @@ public class DeadTreeCut {
         System.out.println(page);
         System.out.println(limit);
         jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
-        jsonObject.put("total",deadTreeCutService.countAll(username));
+        jsonObject.put("total",deadTreeCutService.countAll(username,startDate,endDate,colName,searchText));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 
@@ -78,7 +78,7 @@ public class DeadTreeCut {
     @RequestMapping("/selectAll")
     public Object selectAll(@RequestParam String username,@RequestParam String adcode,@RequestParam int page,@RequestParam int limit){
         jsonObject.put("Data",deadTreeCutService.selectAllByAdcode(adcode, page*limit-limit, page*limit));
-        jsonObject.put("total",deadTreeCutService.countAll(username));
+        jsonObject.put("total",deadTreeCutService.countAll(username,null,null,null,null));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;

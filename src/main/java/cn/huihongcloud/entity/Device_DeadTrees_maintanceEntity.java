@@ -45,6 +45,9 @@ public class Device_DeadTrees_maintanceEntity {
     @Excel(name = "精度")
     private String accuracy;
 
+    private String customTown;
+
+
     public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, String submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic, String username,String region,String altitude,String accuracy) {
         this.id = id;
         this.deviceId = deviceId;
@@ -221,5 +224,13 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setAccuracy(String accuracy) {
         this.accuracy = accuracy;
+    }
+
+    public String getCustomTown() {
+        return customTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        this.customTown = customTown;
     }
 }

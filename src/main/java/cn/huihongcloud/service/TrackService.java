@@ -19,8 +19,8 @@ public class TrackService {
         return deviceTrackMaintanceEntityMapper.selectAll(username, num1, num2);
     }
 
-    public int countAll(String username){
-        return deviceTrackMaintanceEntityMapper.countAll(username);
+    public int countAll(String username,String startDate,String endDate,String colName,String searchText){
+        return deviceTrackMaintanceEntityMapper.countAll(username,startDate,endDate,colName,searchText);
     }
 
     public int countAllArea(String username){

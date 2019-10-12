@@ -387,7 +387,7 @@ public class DeviceMaintenanceController {
             endDate = endDate + " 23:59:59";
         }
         User user=userService.getUserByUserName(username);
-        Object maintenanceData = deviceMaintenanceService.getMaintenanceDataByDeviceId(user,myusername,deviceId, startDate, endDate);
+        Object maintenanceData = deviceMaintenanceService.getMaintenanceDataByDeviceId(user,user.getParent(),deviceId, startDate, endDate);
 
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);

@@ -234,7 +234,7 @@
               and CustomSerial like concat('%',#{searchText},'%')
             </when>
             <when test="optionIndex == 2">
-              and region like concat('%',#{searchText},'%')
+              and CustomTown like concat('%',#{searchText},'%')
             </when>
             <when test="optionIndex == 3">
               and batch like concat('%',#{searchText},'%')
@@ -243,7 +243,7 @@
               and Worker like concat('%',#{searchText},'%')
             </when>
             <otherwise>
-              and concat(device_Id,region,batch,Worker) like concat('%',#{searchText},'%')
+              and concat(device_Id,CustomTown,batch,Worker) like concat('%',#{searchText},'%')
             </otherwise>
           </choose>
         </if>
