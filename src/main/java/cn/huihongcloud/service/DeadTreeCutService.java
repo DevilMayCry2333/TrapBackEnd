@@ -17,8 +17,8 @@ public class DeadTreeCutService {
         return deviceDeadTreesMaintanceEntityMapper.selectAll(username, num1, num2);
     }
 
-    public int countAll(String username){
-        return deviceDeadTreesMaintanceEntityMapper.countAll(username);
+    public int countAll(String username,String startDate,String endDate,String colName,String searchText){
+        return deviceDeadTreesMaintanceEntityMapper.countAll(username,startDate,endDate,colName,searchText);
     }
 
     public int countAllByArea(String adcode){

@@ -20,7 +20,7 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     List<Device_NaturalEnemies_maintanceEntity> selectAll(String username,int num1,int num2);
 
-    int countAll(String username);
+    int countAll(String username,String startDate,String endDate,String colName,String searchText,String adcode);
 
     int insert(Device_NaturalEnemies_maintanceEntity record);
 

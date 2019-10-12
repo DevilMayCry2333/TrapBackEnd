@@ -39,6 +39,9 @@ public class Device_Track_MaintanceEntity {
     private String adcode;
     private String submit_date;
 
+    private Boolean checked;
+
+
     public Device_Track_MaintanceEntity(String LatitudeCollect,String LongtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
         this.id = id;
         this.linename = linename;
@@ -251,5 +254,13 @@ public class Device_Track_MaintanceEntity {
 
     public void setAdcode(String adcode) {
         this.adcode = adcode;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

@@ -43,7 +43,13 @@ public class Track {
 
     @RequestMapping("/detail")
     public Object detail(@RequestParam String username,@RequestParam int page,@RequestParam int limit){
-        jsonObject.put("Data",trackService.selectAll(username, page*limit-limit, page*limit));
+        List<Device_Track_MaintanceEntity> deviceTrackMaintanceEntities = trackService.selectAll(username, page*limit-limit, page*limit);
+
+        for (int i = 0; i < deviceTrackMaintanceEntities.size(); i++) {
+            deviceTrackMaintanceEntities.get(i).setChecked(false);
+
+        }
+        jsonObject.put("Data",deviceTrackMaintanceEntities);
         jsonObject.put("total",trackService.countAll(username));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);

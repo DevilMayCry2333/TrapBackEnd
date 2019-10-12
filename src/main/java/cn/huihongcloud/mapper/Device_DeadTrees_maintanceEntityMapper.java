@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface Device_DeadTrees_maintanceEntityMapper {
 
-    int countAll(String username);
+    int countAll(String username,String startDate,String endDate,String colName,String searchText);
 
     List<Device_DeadTrees_maintanceEntity> selectAll(String username,int num1,int num2);
 

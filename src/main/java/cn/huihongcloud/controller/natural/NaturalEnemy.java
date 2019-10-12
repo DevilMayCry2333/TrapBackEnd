@@ -51,7 +51,7 @@ public class NaturalEnemy {
         System.out.println(page);
         System.out.println(limit);
         jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,limit));
-        jsonObject.put("total",naturalEnemyService.countAll(username));
+        jsonObject.put("total",naturalEnemyService.countAll(username,null,null,null,null, null));
         jsonObject.put("current",page);
         return jsonObject;
     }
@@ -198,7 +198,7 @@ public class NaturalEnemy {
         System.out.println(page);
         System.out.println(limit);
         jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
-        jsonObject.put("total",naturalEnemyService.countAll(username));
+        jsonObject.put("total",naturalEnemyService.countAll(username,startDate,endDate,colName,searchText,adcode));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 
