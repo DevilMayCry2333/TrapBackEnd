@@ -1,5 +1,8 @@
 package cn.huihongcloud.controller.newApp;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
@@ -8,11 +11,14 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.UserMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -79,6 +85,36 @@ public class Trap {
         return pageWrapper;
 
     }
+
+    @RequestMapping("/exportExcelTrap")
+    public void exportExcel(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        List<DeviceMaintenance> deviceNaturalEnemiesMaintanceEntities  = deviceBeetleMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+//        for (Device_NaturalEnemies_maintanceEntity d:
+//             deviceNaturalEnemiesMaintanceEntities) {
+//            System.out.println(d.getArea());
+//
+//        }
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("诱捕器管理", "诱捕器管理"), DeviceMaintenance.class, deviceNaturalEnemiesMaintanceEntities);
+        workbook.write(response.getOutputStream());
+
+    }
+
 
 
 
