@@ -1,40 +1,46 @@
 package cn.huihongcloud.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import io.swagger.models.auth.In;
+import lombok.Data;
 
+@Data
 public class Device_Injection_maintanceEntity {
+    @Excel(name = "记录ID")
     private Long id;
-
+    @Excel(name = "设备ID")
     private Long deviceId;
-
+    @Excel(name = "编号")
     private String serial;
-
+    @Excel(name = "区域")
     private String region;
-
+    @Excel(name = "提交日期")
     private String submitDate;
-
+    @Excel(name = "批次")
     private Integer batch;
-
+    @Excel(name = "经度")
     private String longitude;
-
+    @Excel(name = "纬度")
     private String latitude;
-
+    @Excel(name = "工作内容")
     private String workContent;
-
+    @Excel(name = "注剂数量")
     private Integer injectionNum;
 
 
 
     private String pic;
 
+    @Excel(name = "工作人员")
     private String worker;
 
+    @Excel(name = "备注")
     private String remarks;
 
     private Long scanid;
 
     private String username;
-
+    @Excel(name = "海拔")
     private String altitude;
 
     private String dataPrecision;
@@ -47,10 +53,13 @@ public class Device_Injection_maintanceEntity {
 
     private String town;
 
+    @Excel(name = "是否报告")
     private Integer reported;
 
-    private Integer WoodStatus;
+    @Excel(name = "树木状态")
+    private Integer woodstatus;
 
+//    @Excel(name = "树木数量")
     private String woodNum;
 
     private String CustomTown;
@@ -63,7 +72,10 @@ public class Device_Injection_maintanceEntity {
 
     private String endDate;
 
-    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum,String pic, String worker, String remarks, Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String CustomTown, Integer injectNumSum,Integer WoodStatus,Integer WoodStatusSum) {
+    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum,String pic, String worker, String remarks, Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String CustomTown, Integer injectNumSum,Integer woodstatus,Integer WoodStatusSum) {
+
+        this.woodstatus = woodstatus;
+
         this.id = id;
         this.submitDate = submitDate;
         this.deviceId = deviceId;
@@ -89,7 +101,6 @@ public class Device_Injection_maintanceEntity {
         this.woodNum = woodNum;
         this.CustomTown = CustomTown;
         this.injectNumSum = injectNumSum;
-        this.WoodStatus = WoodStatus;
         this.WoodStatusSum = WoodStatusSum;
 
     }
@@ -298,13 +309,6 @@ public class Device_Injection_maintanceEntity {
         this.injectNumSum = injectNumSum;
     }
 
-    public Integer getWoodStatus() {
-        return WoodStatus;
-    }
-
-    public void setWoodStatus(Integer woodStatus) {
-        WoodStatus = woodStatus;
-    }
 
     public Integer getWoodStatusSum() {
         return WoodStatusSum;
@@ -328,5 +332,13 @@ public class Device_Injection_maintanceEntity {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getWoodstatus() {
+        return woodstatus;
+    }
+
+    public void setWoodstatus(Integer woodstatus) {
+        this.woodstatus = woodstatus;
     }
 }

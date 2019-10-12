@@ -123,7 +123,7 @@ public class Inject {
         deviceInjectionMaintanceEntity.setLatitude(latitude);
         deviceInjectionMaintanceEntity.setAltitude(altitude);
         deviceInjectionMaintanceEntity.setDataPrecision(accuracy);
-        deviceInjectionMaintanceEntity.setWoodStatus(WoodStatus);
+        deviceInjectionMaintanceEntity.setWoodstatus(WoodStatus);
         deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
         deviceInjectionMaintanceEntity.setRemarks(remarks);
         deviceInjectionMaintanceEntity.setWorkContent(workingContent);

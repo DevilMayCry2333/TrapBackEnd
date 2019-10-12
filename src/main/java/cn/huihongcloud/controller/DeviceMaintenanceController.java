@@ -448,6 +448,7 @@ public class DeviceMaintenanceController {
         pageWrapper.setTotalPage(pageObject.getPages());
         return pageWrapper;
     }
+
     @GetMapping("/auth_api/maintenance1")
     public Object getMaintenanceData1(@RequestAttribute("username") String username, int page, int limit,
                                      @RequestParam(required = false) String condition,

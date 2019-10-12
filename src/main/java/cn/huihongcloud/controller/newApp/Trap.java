@@ -1,10 +1,13 @@
 package cn.huihongcloud.controller.newApp;
 
 import cn.huihongcloud.entity.device.DeviceMaintenance;
+import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceBeetleMapper;
 import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.UserMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +57,26 @@ public class Trap {
 
         return deviceBeetleMapper.getTrapById(scanId);
 
+
+    }
+
+    @RequestMapping("/Fuck")
+    public Object Fuck(@RequestParam(required = false) String colName,
+                                        @RequestParam int page,
+                                        @RequestParam int limit,
+                                        @RequestParam(required = false) String searchText,
+                                        @RequestParam String username,
+                        @RequestParam(required = false) String startDate,
+                       @RequestParam(required = false) String endDate){
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        User user = userMapper.getUserByUserName(username);
+        PageWrapper pageWrapper = new PageWrapper();
+        List<DeviceMaintenance> deviceMaintenanceList = deviceBeetleMapper.getFuckFuck(colName,searchText,user.getAdcode(),startDate,endDate);
+        pageWrapper.setData(deviceMaintenanceList);
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalPage(pageObject.getPages());
+        return pageWrapper;
 
     }
 

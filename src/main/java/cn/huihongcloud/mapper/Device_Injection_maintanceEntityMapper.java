@@ -14,6 +14,10 @@ import java.util.Map;
 @Repository
 public interface Device_Injection_maintanceEntityMapper {
 
+    List<Device_Injection_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,String adcode);
+
+
+
 
     int CountAll(String username);
 
@@ -23,6 +27,9 @@ public interface Device_Injection_maintanceEntityMapper {
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     List<Device_Injection_maintanceEntity> selectById(BigInteger id);
+
+    Device_Injection_maintanceEntity selectById2(BigInteger id);
+
 
     int insert(Device_Injection_maintanceEntity record);
 
@@ -75,6 +82,8 @@ public interface Device_Injection_maintanceEntityMapper {
     Device_Injection_maintanceEntity getMaxBatch(String deviceId);
 
     int deleteRecord(long recordId);
+
+    int updateRecordById(Device_Injection_maintanceEntity dataEntity);
 
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
@@ -143,15 +144,36 @@ public class newStatic {
     }
 
     @RequestMapping("/Desc")
-    public Object getDes(@RequestAttribute("username") String user, String startDate, String endDate,
+    public Object getDes(@RequestAttribute("username") String user, @RequestParam  String startDate, @RequestParam String endDate,
                          String manager){
         User user1 = userService.getUserByUserName(manager);
         System.out.println(manager);
         User user2 = userService.getUserByUserName(user1.getParent());
         System.out.println(user2.getUsername());
 
-        List<InputEntity> inputEntityForWorker =  newStaticMapper.getInputEntityForWorker(user2.getUsername(),startDate,endDate);
+        System.out.println(startDate);
+        System.out.println(endDate);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+        Date currentTime_2 = formatter.parse(endDate, pos);
+
+        currentTime_2.setTime(currentTime_2.getTime() + 24*3600*1000);
+
+        System.out.println(currentTime_2.getDate());
+
+        String dateString = formatter.format(currentTime_2);
+
+        System.out.println(dateString);
+
+
+        List<InputEntity> inputEntityForWorker =  newStaticMapper.getInputEntityForWorker(user2.getUsername(),startDate,dateString);
+
         System.out.println(inputEntityForWorker.size());
+        for (InputEntity e:
+             inputEntityForWorker) {
+            System.out.println(e.getCustomtown());
+
+        }
         if (inputEntityForWorker.isEmpty() || inputEntityForWorker.size()<2){
             return Result.failed();
         }

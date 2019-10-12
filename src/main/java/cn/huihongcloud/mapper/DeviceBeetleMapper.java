@@ -41,6 +41,9 @@ public interface DeviceBeetleMapper {
 
     List<Device_DeadTrees_maintanceEntity> DeadWorker(String scanId);
 
+    List<DeviceMaintenance> getFuckFuck(String colName,String searchText,String adcode,String submitDate,String endDate);
+
+
 
 
 }
