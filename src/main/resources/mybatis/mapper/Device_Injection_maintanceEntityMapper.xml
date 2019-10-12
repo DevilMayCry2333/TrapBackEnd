@@ -213,6 +213,49 @@
     submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
     injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus} where id=#{id};
   </update>
+  <update id="updateRecordByFront">
+    update device_injection_maintance t1 left join device t2 on t2.id = t1.device_Id
+    <set>
+      <if test="altitude != null and altitude != ''">
+        t1.altitude = #{altitude},
+      </if>
+      <if test="batch != null and batch != ''">
+        batch = #{batch},
+      </if>
+      <if test="deviceId != null and deviceId != ''">
+        device_Id = #{deviceId},
+      </if>
+      <if test="injectionNum != null and injectionNum != ''">
+        injection_num = #{injectionNum},
+      </if>
+      <if test="latitude != null">
+        t1.latitude = #{latitude},
+      </if>
+      <if test="longitude != null and longitude != ''">
+        t1.longitude = #{longitude},
+      </if>
+      <if test="region != null and region != ''">
+        region = #{region},
+      </if>
+      <if test="serial != null and serial != ''">
+        serial = #{serial},
+      </if>
+      <if test="submitDate != null and submitDate != ''">
+        submit_date = #{submitDate},
+      </if>
+      <if test="woodstatus != null and woodstatus != ''">
+        woodstatus = #{woodstatus},
+      </if>
+      <if test="workContent != null and workContent != ''">
+        work_content = #{workContent},
+      </if>
+      <if test="customTown != null and customTown != ''">
+        t2.CustomTown = #{customTown},
+      </if>
+    </set>
+    where t1.id = #{id}
+
+  </update>
 
   <delete id="deleteRecord">
     delete from device_injection_maintance where id=#{id};

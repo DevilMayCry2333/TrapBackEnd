@@ -192,6 +192,15 @@ public class DeadTreeCut {
         return "OK";
     }
 
+    @RequestMapping("/updateRec")
+    public Object updateRec(@RequestBody Device_DeadTrees_maintanceEntity d){
+        deviceDeadTreesMaintanceEntityMapper.updateRecordByFront(d);
+        return "OK";
+
+    }
+
+
+
 
 
 

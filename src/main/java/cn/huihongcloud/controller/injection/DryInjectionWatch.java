@@ -339,6 +339,14 @@ public class DryInjectionWatch {
         return "OK";
     }
 
+    @RequestMapping("/updateRec")
+    public Object updateRec(@RequestBody Device_Injection_maintanceEntity d){
+        deviceInjectionMaintanceEntityMapper.updateRecordByFront(d);
+
+        return "OK";
+
+    }
+
 
 
 

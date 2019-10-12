@@ -6,6 +6,7 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.entity.DeviceTrackMap;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
+import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
@@ -212,6 +213,15 @@ public class Track {
         }
         return "OK";
     }
+
+    @RequestMapping("/updateRec")
+    public Object updateRec(@RequestBody Device_Track_MaintanceEntity d){
+        deviceTrackMaintanceEntityMapper.updateRecordByFront(d);
+
+        return "OK";
+
+    }
+
 
 
     

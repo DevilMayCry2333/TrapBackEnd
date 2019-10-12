@@ -1,6 +1,7 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -44,5 +45,8 @@ public interface Device_DeadTrees_maintanceEntityMapper {
     Device_DeadTrees_maintanceEntity getMaxBatch(String deviceId);
 
     int deleteById(String id);
+
+    int updateRecordByFront(Device_DeadTrees_maintanceEntity dataEntity);
+
 
 }

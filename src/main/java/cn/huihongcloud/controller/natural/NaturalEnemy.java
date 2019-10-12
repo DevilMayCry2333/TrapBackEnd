@@ -331,6 +331,14 @@ public class NaturalEnemy {
         return jsonObject;
     }
 
+    @RequestMapping("/updateRec")
+    public Object updateRec(@RequestBody Device_NaturalEnemies_maintanceEntity d){
+        deviceNaturalEnemiesMaintanceEntityMapper.updateRecordByFront(d);
+        return "OK";
+
+    }
+
+
 
 
 
