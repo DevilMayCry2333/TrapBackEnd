@@ -44,6 +44,10 @@ public interface DeviceBeetleMapper {
     List<DeviceMaintenance> getFuckFuck(String colName,String searchText,String adcode,String submitDate,String endDate);
 
 
+    List<DeviceMaintenance> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,String adcode);
+
+
+
 
 
 }

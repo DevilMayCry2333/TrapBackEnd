@@ -92,10 +92,13 @@ public class NewQrCode {
                 break;
             case 3:
                 app = "天敌防治";
+                break;
             case 4:
                 app = "枯死树采伐";
+                break;
             case 5:
                 app = "轨迹追踪";
+                break;
         }
         List<Device> device = newQrCodeMapper.getMaxAvaDevice(adcode,app);
 
