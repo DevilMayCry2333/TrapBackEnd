@@ -46,6 +46,12 @@ public interface Device_Track_MaintanceEntityMapper {
 
     int updateRecordByFront(Device_Track_MaintanceEntity dataEntity);
 
+    List<Device_Track_MaintanceEntity> selectByLineName(String linename);
+
+    int updatePic(String linename,String colName,String text);
+
+    int updateMaintance(Device_Track_MaintanceEntity dataentity);
+
 
 
 

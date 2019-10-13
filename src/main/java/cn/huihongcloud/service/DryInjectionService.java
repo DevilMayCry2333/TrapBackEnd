@@ -119,11 +119,11 @@ public class DryInjectionService {
     }
 
 
-    public List<Device_Injection_maintanceEntity> getDryInjectionSummaryByCustomReigon(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
+    public List<Device_Injection_maintanceEntity> getDryInjectionSummaryByCustomReigon(User user, Integer optionIndex, String searchText, String startDate, String endDate,int deadId) {
         int role = user.getRole();
 
         if (role >= 0) {
-            return deviceInjectionMaintanceEntityMapper.selectByCustomReigon(user.getUsername(), optionIndex, searchText, startDate, endDate);
+            return deviceInjectionMaintanceEntityMapper.selectByCustomReigon(user.getUsername(), optionIndex, searchText, startDate, endDate,deadId);
         }/*else if(){
 
         }*/

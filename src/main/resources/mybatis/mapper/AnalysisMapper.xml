@@ -57,7 +57,7 @@
     </select>
 
     <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.workerStatic">
-        select username workerName,count(device_Id) num,DATE(`date`) currentDate from device_maintenance t1
+        select username workerName,count(distinct device_Id) num,DATE(`date`) currentDate from device_maintenance t1
         left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
         and DATE(`date`)>= #{startDate} and #{endDate} >=DATE(`date`)
          group by workerName,DATE(`date`)

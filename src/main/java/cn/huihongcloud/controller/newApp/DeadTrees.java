@@ -108,10 +108,10 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setSubmitDate(datestr);
         deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
 
-        Device_DeadTrees_maintanceEntity maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+        List<Device_DeadTrees_maintanceEntity> maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
         int maxIdNum = 0;
         try {
-            maxIdNum = Integer.parseInt(maxId.getBatch());
+            maxIdNum = Integer.parseInt(maxId.get(0).getBatch());
         }catch (Exception e){
             maxIdNum = 0;
         }

@@ -736,12 +736,12 @@
         AND project = '注干剂监测'
   </select>
 
+  
   <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
     select device.CustomTown,Device_Injection_maintance.*,sum(Device_Injection_maintance.injection_num) injectNumSum,
-    sum(Device_Injection_maintance.WoodStatus) WoodStatusSum,
+    sum(if(Device_Injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
      count(Device_Injection_maintance.id) woodNum
     from device left join Device_Injection_maintance on device.id = Device_Injection_maintance.device_Id
-
     <if test="startDate != null and startDate != ''">
       where submit_date &gt;= #{startDate}
     </if>
@@ -751,7 +751,7 @@
     group by device.CustomTown
   </select>
     <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-      select * from device_injection_maintance where device_Id = #{deviceId};
+      select * from device_injection_maintance where device_Id = #{deviceId} order by batch desc;
     </select>
   <select id="selectById2" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
      select * from device_injection_maintance where id = #{id};
@@ -771,6 +771,10 @@
       and ${colName} = #{searchText}
     </if>
 
+  </select>
+
+  <select id="getDeadStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">
+    select * from inject_woodstatus where inject_woodstatus.`name`='枯死'
   </select>
 
 </mapper>

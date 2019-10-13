@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/app")
@@ -38,6 +39,42 @@ public class MyTrack {
     DeviceService deviceService;
     @Autowired
     Device_Track_MaintanceEntityMapper deviceTrackMaintanceEntityMapper;
+
+
+    @RequestMapping("/AddPhoto")
+    public Object addPhoto(@RequestAttribute("username") String username,
+                           @RequestParam(required = false) MultipartFile image,
+                           String lineName,
+                           int current
+                           ){
+
+        System.out.println(username);
+        System.out.println(image);
+        System.out.println(lineName);
+        System.out.println(current);
+
+        if (image!=null) {
+            String imgId = deviceService.saveImg(image, lineName, username);
+            if(current==1) {
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic1",imgId);
+            }else if(current==2){
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic2",imgId);
+
+            }else if(current==3){
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic3",imgId);
+
+            }else if(current==4){
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic4",imgId);
+            }else if(current==5){
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic5",imgId);
+            }
+        }
+
+
+        return "OK";
+
+    }
+
 
     @ApiOperation("上传维护信息")
     @PostMapping("/AddTrack")
@@ -67,8 +104,6 @@ public class MyTrack {
         logger.info(remarks);
         logger.info(recordTime);
         org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
-
-
 
         System.out.println("image" + image);
         Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
@@ -124,22 +159,7 @@ public class MyTrack {
         deviceTrackMaintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
         deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
 
-
-
-
-        //修改了一些
-
-        //随机数
-        // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
-
-        if (image!=null) {
-            String imgId = deviceService.saveImg(image, lineName, username);
-            deviceTrackMaintanceEntity.setPic1(imgId);
-            System.out.println("执行了这部");
-
-        }
-
-        deviceTrackMaintanceEntityMapper.addMaintance(deviceTrackMaintanceEntity);
+        deviceTrackMaintanceEntityMapper.updateMaintance(deviceTrackMaintanceEntity);
 
         return Result.ok();
         //return null;
@@ -149,4 +169,28 @@ public class MyTrack {
     public Object deleteTrackById(@RequestParam String id){
         return deviceTrackMaintanceEntityMapper.deleteById(id);
     }
+
+    @RequestMapping("/TestReadBase64")
+    public Object TestReadBase64(@RequestParam String[] base64){
+        for (int i = 0; i < base64.length; i++) {
+            System.out.println(base64[i]);
+        }
+        return "OK";
+    }
+
+    @RequestMapping("/addLineName")
+    public Object addLineName(@RequestAttribute("username") String username,@RequestParam String linename){
+
+
+        System.out.println(username);
+        System.out.println(linename);
+        Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
+        deviceTrackMaintanceEntity.setLinename(linename);
+        deviceTrackMaintanceEntityMapper.addMaintance(deviceTrackMaintanceEntity);
+
+        return "OK";
+    }
+
+
+
 }

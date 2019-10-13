@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -74,10 +77,37 @@ public class Trap {
                                         @RequestParam String username,
                         @RequestParam(required = false) String startDate,
                        @RequestParam(required = false) String endDate){
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+
+        String dateString = null;
+
+
+        if(endDate!=null) {
+            try {
+                Date currentTime_2 = formatter.parse(endDate, pos);
+
+                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
+
+                System.out.println(currentTime_2.getDate());
+
+                dateString = formatter.format(currentTime_2);
+
+                System.out.println(dateString);
+            }catch (Exception e){
+                dateString = null;
+            }
+
+        }
+
+
+
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         User user = userMapper.getUserByUserName(username);
         PageWrapper pageWrapper = new PageWrapper();
-        List<DeviceMaintenance> deviceMaintenanceList = deviceBeetleMapper.getFuckFuck(colName,searchText,user.getAdcode(),startDate,endDate);
+        List<DeviceMaintenance> deviceMaintenanceList = deviceBeetleMapper.getFuckFuck(colName,searchText,user.getAdcode(),startDate,dateString);
         pageWrapper.setData(deviceMaintenanceList);
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());

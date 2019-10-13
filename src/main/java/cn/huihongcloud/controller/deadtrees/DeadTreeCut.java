@@ -23,6 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,11 +66,35 @@ public class DeadTreeCut {
 
     @RequestMapping("/searchDetail")
     public Object searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String colName,@RequestParam String searchText,@RequestParam String adcode){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+
+        String dateString = null;
+
+        if(endDate!=null) {
+            try {
+                Date currentTime_2 = formatter.parse(endDate, pos);
+
+                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
+
+                System.out.println(currentTime_2.getDate());
+
+                dateString = formatter.format(currentTime_2);
+
+                System.out.println(dateString);
+            }catch (Exception e){
+                dateString = null;
+            }
+
+        }
+
+
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
-        jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
-        jsonObject.put("total",deadTreeCutService.countAll(username,startDate,endDate,colName,searchText));
+        jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+        jsonObject.put("total",deadTreeCutService.countAll(username,startDate,dateString,colName,searchText));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 
@@ -91,6 +118,8 @@ public class DeadTreeCut {
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName) {
+
+
         System.out.println(workerName);
         User user = userService.getUserByUserName(username);
         List<Device> list = null;

@@ -86,6 +86,9 @@ public class DeviceMaintenance {
     private String CustomTown;
     private String CustomSerial;
 
+    private String workcontentfront;
+
+
 
     //随机数
    /* public int nonceStr;
@@ -349,5 +352,13 @@ public class DeviceMaintenance {
 
     public void setCustomSerial(String customSerial) {
         CustomSerial = customSerial;
+    }
+
+    public String getWorkcontentfront() {
+        return workcontentfront;
+    }
+
+    public void setWorkcontentfront(String workcontentfront) {
+        this.workcontentfront = workcontentfront;
     }
 }

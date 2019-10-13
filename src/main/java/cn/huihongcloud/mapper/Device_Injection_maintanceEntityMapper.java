@@ -3,6 +3,7 @@ package cn.huihongcloud.mapper;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.inject_WoodStatus;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -75,11 +76,12 @@ public interface Device_Injection_maintanceEntityMapper {
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
     List<Device_Injection_maintanceEntity> selectByCustomReigon(@Param("username") String username, @Param("optionIndex") Integer optionIndex,
-                                                              @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
+                                                              @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate,
+                                                                int deadId);
 
     int addMaintanceData(Device_Injection_maintanceEntity dataEntity);
 
-    Device_Injection_maintanceEntity getMaxBatch(String deviceId);
+    List<Device_Injection_maintanceEntity> getMaxBatch(String deviceId);
 
     int deleteRecord(long recordId);
 
@@ -87,6 +89,9 @@ public interface Device_Injection_maintanceEntityMapper {
 
 
     int updateRecordByFront(Device_Injection_maintanceEntity dataEntity);
+
+
+    List<inject_WoodStatus> getDeadStatus();
 
 
 

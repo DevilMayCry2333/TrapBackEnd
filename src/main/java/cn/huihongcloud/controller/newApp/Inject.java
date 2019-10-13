@@ -101,13 +101,13 @@ public class Inject {
         System.out.println("USername");
         int maxBatchNum = 0;
 
-        Device_Injection_maintanceEntity maxBatch = deviceInjectionMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+        List<Device_Injection_maintanceEntity> maxBatch = deviceInjectionMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
         System.out.println("批次");
         try {
-            System.out.println(maxBatch.getDeviceId());
+            System.out.println(maxBatch.get(0).getDeviceId());
 
-            System.out.println(maxBatch.getBatch());
-            maxBatchNum = maxBatch.getBatch();
+            System.out.println(maxBatch.get(0).getBatch());
+            maxBatchNum = maxBatch.get(0).getBatch();
 
         }catch (Exception e){
             maxBatchNum = 0;

@@ -703,9 +703,9 @@
 
     </select>
     <select id="getInputEntityForTown" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select town name, sum(num1) `sum`, avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select town name, sum(num1) `sum`, CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
         from (
-        select town,sum(num) num1,device_id
+        select CustomTown,town,sum(num) num1,device_id
         from device_maintenance
         left join device on device_id = device.id
         where adcode = #{adcode}
@@ -719,7 +719,7 @@
             and `date` &lt;= #{endDate}
         </if>
         group by device_id)as a
-        group by town
+        group by CustomTown
     </select>
     <select id="getInputEntityForArea" resultType="cn.huihongcloud.entity.statistics.InputEntity">
         select area name, sum(num1) `sum` , avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
@@ -760,9 +760,9 @@
         group by city
     </select>
     <select id="getInputEntityForWorker" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select username name, sum(num1) `sum` ,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select username name, sum(num1) `sum` ,CustomTown ,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
         from (
-        select device_maintenance.username username,sum(num) num1,device_id
+        select device_maintenance.username username,sum(num) num1,CustomTown,device_id
         from device_maintenance
         left join device on  device.id= device_maintenance.device_id
         where device.manager = #{manager}
@@ -776,7 +776,7 @@
             and `date` &lt;= #{endDate}
         </if>
         group by device_id)as a
-        group by username
+        group by CustomTown
     </select>
     <select id="getMaintenanceDataByManager" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
@@ -998,11 +998,15 @@
         device.CustomSerial,
         device.area,
         device.town,
+        workcontent.name workcontentfront,
         device_maintenance.working_content,
         device_maintenance.reported
         from device_maintenance
         left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username
+        left join workcontent on working_content = workcontent.Fvalue
+
+
         where device_id in
         (select id from device where
         1 = 1

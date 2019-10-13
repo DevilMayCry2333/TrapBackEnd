@@ -90,7 +90,6 @@ public class DeviceController {
         if (user.getRole() == 3) {
             list = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
         }
-
         if (user.getRole() == 4) {
             User user1 = userService.getUserByUserName(user.getParent());
 

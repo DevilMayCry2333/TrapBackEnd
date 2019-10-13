@@ -26,6 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -266,10 +269,24 @@ public class DryInjectionWatch {
 
         }
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+        Date currentTime_2 = formatter.parse(endDate, pos);
+
+        currentTime_2.setTime(currentTime_2.getTime() + 24*3600*1000);
+
+        System.out.println(currentTime_2.getDate());
+
+        String dateString = formatter.format(currentTime_2);
+
+        System.out.println(dateString);
+
+
+
         jsonObject.put("Res",true);
 
 
-        jsonObject.put("Data",deviceInjectionMaintanceEntityMapper.selectByConditions(user.getAdcode(),optVal,searchText,startDate,endDate));
+        jsonObject.put("Data",deviceInjectionMaintanceEntityMapper.selectByConditions(user.getAdcode(),optVal,searchText,startDate,dateString));
         jsonObject.put("total",deviceInjectionMaintanceEntityMapper.CountAll(username));
         jsonObject.put("current",1);
         System.out.println(jsonObject);
