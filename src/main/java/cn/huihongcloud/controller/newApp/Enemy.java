@@ -83,12 +83,12 @@ public class Enemy {
         Device_NaturalEnemies_maintanceEntity deviceNaturalEnemiesMaintanceEntity = new Device_NaturalEnemies_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 
-        Device_NaturalEnemies_maintanceEntity maxBatch = deviceNaturalEnemiesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+        List<Device_NaturalEnemies_maintanceEntity> maxBatch = deviceNaturalEnemiesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
 
         int maxBatchNum = 0;
         try {
-            System.out.println(maxBatch.getBatch());
-            maxBatchNum = maxBatch.getBatch();
+            System.out.println(maxBatch.get(0).getBatch());
+            maxBatchNum = maxBatch.get(0).getBatch();
 
         }catch (Exception e){
             maxBatchNum = 0;

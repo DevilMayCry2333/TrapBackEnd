@@ -78,7 +78,7 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     int updateRecordById(Device_NaturalEnemies_maintanceEntity dataEntity);
 
-    Device_NaturalEnemies_maintanceEntity getMaxBatch(String deviceId);
+    List<Device_NaturalEnemies_maintanceEntity> getMaxBatch(String deviceId);
 
     int deleteRecord(long id);
 

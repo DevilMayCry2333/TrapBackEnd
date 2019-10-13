@@ -42,7 +42,7 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     int updateRecordById(Device_DeadTrees_maintanceEntity dataEnity);
 
-    Device_DeadTrees_maintanceEntity getMaxBatch(String deviceId);
+    List<Device_DeadTrees_maintanceEntity> getMaxBatch(String deviceId);
 
     int deleteById(String id);
 
