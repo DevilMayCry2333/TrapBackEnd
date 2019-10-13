@@ -158,6 +158,50 @@
     worker = #{worker},remarks=#{remarks},scanid=#{scanid},pic=#{pic},username=#{username},region=#{region},
     altitude=#{altitude},accuracy=#{accuracy} where id = #{id}
   </update>
+    <update id="updateRecordByFront">
+      update device_deadtrees_maintance t1 left join device t2 on t2.id = t1.device_Id
+      <set>
+        <if test="batch != null and batch != ''">
+          t1.batch = #{batch},
+        </if>
+        <if test="killmethod != null and killmethod != ''">
+          killmethod = #{killmethod},
+        </if>
+        <if test="latitude != null and latitude != ''">
+          t1.latitude = #{latitude},
+        </if>
+        <if test="longitude != null and longitude != ''">
+          t1.longitude = #{longitude},
+        </if>
+        <if test="region != null and region != ''">
+          t1.region = #{region},
+        </if>
+        <if test="serial != null and serial != ''">
+          t1.serial = #{serial},
+        </if>
+        <if test="wooddiameter != null and wooddiameter != ''">
+          wooddiameter = #{wooddiameter},
+        </if>
+        <if test="submitDate != null and submitDate != ''">
+          submit_date = #{submitDate},
+        </if>
+        <if test="woodheight != null and woodheight != ''">
+          woodheight = #{woodheight},
+        </if>
+        <if test="woodvolume != null and woodvolume != ''">
+          t1.woodvolume = #{woodvolume},
+        </if>
+        <if test="customTown != null and customTown != ''">
+          t2.CustomTown = #{customTown},
+        </if>
+        <if test="worker != null and worker != ''">
+          t1.worker = #{worker},
+        </if>
+
+      </set>
+      where t1.id = #{id}
+
+    </update>
     <delete id="deleteById">
       delete from  device_deadtrees_maintance where id = #{id}
     </delete>

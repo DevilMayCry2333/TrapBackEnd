@@ -1,5 +1,6 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import org.apache.ibatis.annotations.Param;
@@ -42,6 +43,9 @@ public interface Device_Track_MaintanceEntityMapper {
     int getMaxBatchId(String linename);
 
     int deleteById(String id);
+
+    int updateRecordByFront(Device_Track_MaintanceEntity dataEntity);
+
 
 
 

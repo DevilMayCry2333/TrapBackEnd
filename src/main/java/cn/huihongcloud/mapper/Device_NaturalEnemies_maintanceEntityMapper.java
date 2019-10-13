@@ -84,5 +84,9 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     List<Device_NaturalEnemies_maintanceEntity> workerQueryById(String scanId);
 
+    int updateRecordByFront(Device_NaturalEnemies_maintanceEntity dataEntity);
+
+
+
 
 }

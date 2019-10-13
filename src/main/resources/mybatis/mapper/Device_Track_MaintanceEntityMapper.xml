@@ -172,7 +172,33 @@
     endpoint=#{endpoint},pic1=#{pic1},worker=#{worker},
     username=#{username} where id=#{id}
   </update>
-    <delete id="deleteById">
+  <update id="updateRecordByFront">
+    update device_track_maintance t1
+    <set>
+      <if test="endpoint != null and endpoint != ''">
+        endpoint = #{endpoint},
+      </if>
+      <if test="linename != null and linename != ''">
+        linename = #{linename},
+      </if>
+      <if test="remarks != null and remarks != ''">
+        remarks = #{remarks},
+      </if>
+      <if test="startpoint != null and startpoint != ''">
+        startpoint = #{startpoint},
+      </if>
+      <if test="worker != null and worker != ''">
+        worker = #{worker},
+      </if>
+      <if test="workingContent != null and workingContent != ''">
+        Working_Content = #{workingContent},
+      </if>
+
+    </set>
+    where id = #{id}
+
+  </update>
+  <delete id="deleteById">
       delete from device_track_maintance where id = #{id}
     </delete>
     <select id="countAll" resultType="java.lang.Integer">
