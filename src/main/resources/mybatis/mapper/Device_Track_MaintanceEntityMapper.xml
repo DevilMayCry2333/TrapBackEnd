@@ -198,6 +198,25 @@
     where id = #{id}
 
   </update>
+  <update id="updatePic">
+    update device_track_maintance set ${colName} = #{text} where LineName = #{linename}
+  </update>
+
+  <update id="updateMaintance">
+    update device_track_maintance set
+    starttime=#{starttime},endtime=#{endtime},
+    startpoint=#{startpoint},
+    TimeConsume = #{timeconsume},
+    LongtitudeCollect = #{LongtitudeCollect},
+    LatitudeCollect = #{LatitudeCollect},
+    AltitudeCollect = #{AltitudeCollect},
+    Working_Content = #{workingContent},
+    adcode = #{adcode},
+    endpoint=#{endpoint},worker=#{worker},
+    username=#{username} where linename=#{linename}
+  </update>
+
+
   <delete id="deleteById">
       delete from device_track_maintance where id = #{id}
     </delete>
@@ -282,6 +301,10 @@
     </select>
   <select id="getMaxBatchId" resultType="java.lang.Integer">
     select max(batch) from device_track_maintance where LineName = #{linename};
+  </select>
+
+  <select id="selectByLineName" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+    select * from device_track_maintance where LineName = #{linename}
   </select>
 
 
