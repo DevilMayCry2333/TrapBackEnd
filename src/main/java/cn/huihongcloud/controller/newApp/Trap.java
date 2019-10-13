@@ -78,17 +78,31 @@ public class Trap {
                         @RequestParam(required = false) String startDate,
                        @RequestParam(required = false) String endDate){
 
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         ParsePosition pos = new ParsePosition(0);
-        Date currentTime_2 = formatter.parse(endDate, pos);
 
-        currentTime_2.setTime(currentTime_2.getTime() + 24*3600*1000);
+        String dateString = null;
 
-        System.out.println(currentTime_2.getDate());
 
-        String dateString = formatter.format(currentTime_2);
+        if(endDate!=null) {
+            try {
+                Date currentTime_2 = formatter.parse(endDate, pos);
 
-        System.out.println(dateString);
+                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
+
+                System.out.println(currentTime_2.getDate());
+
+                dateString = formatter.format(currentTime_2);
+
+                System.out.println(dateString);
+            }catch (Exception e){
+                dateString = null;
+            }
+
+        }
+
+
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         User user = userMapper.getUserByUserName(username);

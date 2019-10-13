@@ -83,8 +83,22 @@ public class newStatic {
         int tian = 1;
         int cnt = 0;
 
+        int Num = 0;
+
         for (workerStatic ws: workerStaticList) {
+
+
+            System.out.println("工人名字");
             System.out.println(ws.getWorkerName());
+            System.out.println("工人数量");
+            System.out.println(ws.getNum());
+            System.out.println("工人日期");
+
+            System.out.println(ws.getCurrentDate());
+
+            JSONObject jsonObject = new JSONObject();
+
+
 
             if(ws.getWorkerName().equals(name)){
                 tian++;
@@ -97,19 +111,57 @@ public class newStatic {
                     max = simpleDateFormat.parse(ws.getCurrentDate());
                 }
 
+                Num = ws.getNum();
+
+
             }else {
-                JSONObject jsonObject = new JSONObject();
+
+
+
+
                 System.out.println("2:" + tian);
                 tian--;
-                jsonObject.put("day",tian);
-                jsonObject.put("Worker",name);
-                jsonObject.put("Num",ws.getNum());
-                long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
-                if(daySub<=1)
-                    daySub = 1;
 
-                System.out.println(daySub);
-                jsonObject.put("Avg",ws.getNum()/daySub);
+
+                System.out.println("=====天=====");
+                System.out.println(tian);
+
+                jsonObject.put("day",tian);
+
+
+                System.out.println("====工人====");
+                System.out.println(name);
+
+                jsonObject.put("Worker",name);
+
+                System.out.println("====数量====");
+
+
+                if(Num>=0){
+                    System.out.println(Num);
+                    jsonObject.put("Num", Num);
+                    long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
+
+                    if(daySub<=1)
+                        daySub = 1;
+
+                    System.out.println(daySub);
+
+                    jsonObject.put("Avg",Num/daySub);
+
+                }else {
+                    System.out.println(ws.getNum());
+                    jsonObject.put("Num",ws.getNum());
+
+                    long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
+                    if(daySub<=1)
+                        daySub = 1;
+
+                    System.out.println(daySub);
+                    jsonObject.put("Avg",ws.getNum()/daySub);
+
+
+                }
 
                 jsonArray.add(jsonObject);
                 tian = 1;
@@ -119,9 +171,18 @@ public class newStatic {
 
             }
             if(cnt == workerStaticList.size()-1){
-                JSONObject jsonObject = new JSONObject();
+
+                System.out.println("===天====");
+                System.out.println(tian);
+
                 jsonObject.put("day",tian);
+
+                System.out.println("===工人====");
+                System.out.println(name);
+
+
                 jsonObject.put("Worker",name);
+
                 jsonObject.put("Num",ws.getNum());
 
                 long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
