@@ -33,9 +33,9 @@ public class DeviceMaintenance {
     private int batch;
     @Excel(name = "虫子数")
     private Integer num;
-    @Excel(name = "雄虫数")
+//    @Excel(name = "雄虫数")
     private Integer maleNum;
-    @Excel(name = "雌虫数")
+//    @Excel(name = "雌虫数")
     private Integer femaleNum;
     @Excel(name = "用户名")
     private String username;
@@ -43,16 +43,19 @@ public class DeviceMaintenance {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
    // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
    @DateTimeFormat(pattern = "yyyy年MM月dd日")
-    @Excel(name = "日期")
+
     private Date date;
+
+    @Excel(name = "日期")
+    private String realdate;
     @DateTimeFormat(pattern = "yyyy年MM月")
-    @Excel(name = "年月")
+//    @Excel(name = "年月")
     private YearMonth yesrmonth;
     @DateTimeFormat(pattern = "yyyy年")
-    @Excel(name = "年份")
+//    @Excel(name = "年份")
     private Integer year;
     @DateTimeFormat(pattern = "MM月")
-    @Excel(name = "月")
+//    @Excel(name = "月")
     private Integer month;
     @Excel(name = "经度")
     private Double longitude;
@@ -83,8 +86,11 @@ public class DeviceMaintenance {
 
     private String cityname;
 
-    private String CustomTown;
-    private String CustomSerial;
+    @Excel(name = "区域")
+    private String customtown;
+    @Excel(name = "编号")
+    private String customserial;
+
 
     private String workcontentfront;
 
@@ -192,13 +198,13 @@ public class DeviceMaintenance {
         this.name = name;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+//    public Date getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
 
     public Double getLongitude() {
         return longitude;
@@ -338,27 +344,43 @@ public class DeviceMaintenance {
         this.imgId = imgId;
     }
 
-    public String getCustomTown() {
-        return CustomTown;
-    }
-
-    public void setCustomTown(String customTown) {
-        CustomTown = customTown;
-    }
-
-    public String getCustomSerial() {
-        return CustomSerial;
-    }
-
-    public void setCustomSerial(String customSerial) {
-        CustomSerial = customSerial;
-    }
-
     public String getWorkcontentfront() {
         return workcontentfront;
     }
 
     public void setWorkcontentfront(String workcontentfront) {
         this.workcontentfront = workcontentfront;
+    }
+
+    public String getCustomtown() {
+        return customtown;
+    }
+
+    public void setCustomtown(String customtown) {
+        this.customtown = customtown;
+    }
+
+    public String getCustomserial() {
+        return customserial;
+    }
+
+    public void setCustomserial(String customserial) {
+        this.customserial = customserial;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getRealdate() {
+        return realdate;
+    }
+
+    public void setRealdate(String realdate) {
+        this.realdate = realdate;
     }
 }

@@ -58,6 +58,7 @@ public class DryInjectionWatch {
 
         System.out.println(username);
 
+
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }

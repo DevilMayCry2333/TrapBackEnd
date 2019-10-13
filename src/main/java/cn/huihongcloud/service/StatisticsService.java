@@ -26,8 +26,10 @@ public class StatisticsService {
     private DeviceMaintenanceService deviceMaintenanceService;
 
     public Workbook exportStatisticsData(String adcode, String manager, String startDate, String endDate, Integer type) {
+
         List<InputEntity> inputs = null;
         Map<String, Object> map = new HashMap<String, Object>();
+
         switch (type) {
             case 0: inputs = deviceMaintenanceService.getInputEntityForCity(adcode, startDate, endDate); map.put("type", "市");break;
             case 1: inputs = deviceMaintenanceService.getInputEntityForArea(adcode, startDate, endDate); map.put("type", "县");break;

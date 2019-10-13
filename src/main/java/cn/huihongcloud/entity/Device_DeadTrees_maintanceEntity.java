@@ -32,19 +32,20 @@ public class Device_DeadTrees_maintanceEntity {
     private String worker;
     @Excel(name = "备注")
     private String remarks;
-    @Excel(name = "二维码ID")
+//    @Excel(name = "二维码ID")
     private Long scanid;
     @Excel(name = "图片")
     private String pic;
     @Excel(name = "用户名")
     private String username;
-    @Excel(name = "区域")
+
     private String region;
     @Excel(name = "海拔")
     private String altitude;
     @Excel(name = "精度")
     private String accuracy;
 
+    @Excel(name = "区域")
     private String customTown;
 
 

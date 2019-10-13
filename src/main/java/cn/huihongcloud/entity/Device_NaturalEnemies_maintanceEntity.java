@@ -13,7 +13,7 @@ public class Device_NaturalEnemies_maintanceEntity {
     private Long deviceId;
     @Excel(name = "编号")
     private String serial;
-    @Excel(name = "区域")
+
     private String region;
     @Excel(name = "提交日期")
     private String submitDate;
@@ -33,7 +33,8 @@ public class Device_NaturalEnemies_maintanceEntity {
     private String worker;
     @Excel(name = "备注")
     private String remarks;
-    @Excel(name = "二维码ID")
+
+//    @Excel(name = "二维码ID")
     private Long scanid;
     @Excel(name = "管理员")
     private String username;
@@ -53,11 +54,12 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String precision;
 
-    private String CustomTown;
+    @Excel(name = "区域")
+    private String customtown;
 
 
 
-    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude,String province,String city,String area,String town,String precision) {
+    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude,String province,String city,String area,String town,String precision,String customtown) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -80,6 +82,7 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.area = area;
         this.town = town;
         this.precision = precision;
+        this.customtown = customtown;
     }
 
     public Device_NaturalEnemies_maintanceEntity() {
@@ -260,13 +263,5 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setPrecision(String precision) {
         this.precision = precision;
-    }
-
-    public String getCustomTown() {
-        return CustomTown;
-    }
-
-    public void setCustomTown(String customTown) {
-        CustomTown = customTown;
     }
 }

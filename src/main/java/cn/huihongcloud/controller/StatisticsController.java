@@ -211,6 +211,7 @@ public class StatisticsController {
         response.setContentType("application/excel");
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
+
         String username = jwtComponent.verify(token);
         Workbook workbook = statisticsService.exportStatisticsData(adcode, manager, startDate, endDate, type);
         if(workbook!=null) {

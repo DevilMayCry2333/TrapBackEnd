@@ -145,8 +145,9 @@
         </if>
         group by device_maintenance.username
     </select>
+
     <select id="selectByColName" resultType="cn.huihongcloud.entity.NewTrapDataSummary">
-        select count(device_id) deviceNum,sum(num) beetleNum,sum(other_num) otherNum,remark from device_maintenance
+        select count(distinct device_id) deviceNum,sum(num) beetleNum,sum(other_num) otherNum,remark from device_maintenance
         left join device on device.id = device_id where manager like concat('%',#{username},'%')
         <if test="colName != null and searchText != ''">
         and ${colName} = #{searchText}

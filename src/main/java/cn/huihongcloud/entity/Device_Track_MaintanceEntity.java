@@ -15,14 +15,22 @@ public class Device_Track_MaintanceEntity {
     private String starttime;
     @Excel(name = "结束时间")
     private String endtime;
-    private String LatitudeCollect;
-    private String LongtitudeCollect;
+
+    @Excel(name = "纬度集合")
+    private String latitudeCollect;
+
+    @Excel(name = "经度集合")
+    private String longtitudeCollect;
+
     private String AltitudeCollect;
+
+
     @Excel(name = "开始点")
     private String startpoint;
     @Excel(name = "结束点")
     private String endpoint;
-    @Excel(name = "照片1")
+//    @Excel(name = "照片1")
+
     private String pic1;
     private String pic2;
     private String pic3;
@@ -42,7 +50,7 @@ public class Device_Track_MaintanceEntity {
     private Boolean checked;
 
 
-    public Device_Track_MaintanceEntity(String LatitudeCollect,String LongtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
+    public Device_Track_MaintanceEntity(String latitudeCollect,String longtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
         this.id = id;
         this.linename = linename;
         this.timeconsume = timeconsume;
@@ -59,11 +67,11 @@ public class Device_Track_MaintanceEntity {
         this.workingContent = workingContent;
         this.remarks = remarks;
         this.scanid = scanid;
+        this.latitudeCollect = latitudeCollect;
+        this.longtitudeCollect = longtitudeCollect;
         this.deviceId = deviceId;
         this.username = username;
         this.submit_date =submit_date;
-        this.LatitudeCollect = LatitudeCollect;
-        this.LongtitudeCollect = LongtitudeCollect;
         this.AltitudeCollect = AltitudeCollect;
 
     }
@@ -224,22 +232,6 @@ public class Device_Track_MaintanceEntity {
         this.deviceId = deviceId;
     }
 
-    public String getLatitudeCollect() {
-        return LatitudeCollect;
-    }
-
-    public void setLatitudeCollect(String latitudeCollect) {
-        LatitudeCollect = latitudeCollect;
-    }
-
-    public String getLongtitudeCollect() {
-        return LongtitudeCollect;
-    }
-
-    public void setLongtitudeCollect(String longtitudeCollect) {
-        LongtitudeCollect = longtitudeCollect;
-    }
-
     public String getAltitudeCollect() {
         return AltitudeCollect;
     }
@@ -262,5 +254,21 @@ public class Device_Track_MaintanceEntity {
 
     public void setChecked(Boolean checked) {
         this.checked = checked;
+    }
+
+    public String getLatitudeCollect() {
+        return latitudeCollect;
+    }
+
+    public void setLatitudeCollect(String latitudeCollect) {
+        this.latitudeCollect = latitudeCollect;
+    }
+
+    public String getLongtitudeCollect() {
+        return longtitudeCollect;
+    }
+
+    public void setLongtitudeCollect(String longtitudeCollect) {
+        this.longtitudeCollect = longtitudeCollect;
     }
 }

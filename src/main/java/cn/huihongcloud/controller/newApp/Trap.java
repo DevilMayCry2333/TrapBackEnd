@@ -135,11 +135,17 @@ public class Trap {
         System.out.println(colName);
         System.out.println(searchText);
         List<DeviceMaintenance> deviceNaturalEnemiesMaintanceEntities  = deviceBeetleMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
-//        for (Device_NaturalEnemies_maintanceEntity d:
-//             deviceNaturalEnemiesMaintanceEntities) {
-//            System.out.println(d.getArea());
-//
-//        }
+        for (DeviceMaintenance d:
+             deviceNaturalEnemiesMaintanceEntities) {
+
+            String pattern="yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat sdf= new SimpleDateFormat(pattern);
+            String datestr=sdf.format(d.getDate());// format  为格式化方法
+            d.setRealdate(datestr);
+
+
+
+        }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("诱捕器管理", "诱捕器管理"), DeviceMaintenance.class, deviceNaturalEnemiesMaintanceEntities);
         workbook.write(response.getOutputStream());
 

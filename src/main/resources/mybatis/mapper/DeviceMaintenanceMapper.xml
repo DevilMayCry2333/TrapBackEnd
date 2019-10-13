@@ -760,7 +760,7 @@
         group by city
     </select>
     <select id="getInputEntityForWorker" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select username name, sum(num1) `sum` ,CustomTown ,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select CustomTown name, sum(num1) `sum` ,CustomTown ,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
         from (
         select device_maintenance.username username,sum(num) num1,CustomTown,device_id
         from device_maintenance

@@ -31,7 +31,13 @@ public class NewTrapDataSummary {
                                  @RequestParam int page,
                                  @RequestParam int limit){
         List<cn.huihongcloud.entity.NewTrapDataSummary> newTrapDataSummaries = deviceSummaryMapper.selectByColName(colName,startDate,endDate,searchText,manager);
+
         for (int i = 0 ;i  < newTrapDataSummaries.size(); i++){
+
+            System.out.println("=======总数=====");
+            System.out.println(newTrapDataSummaries.get(i).getTotalNum());
+
+
             newTrapDataSummaries.get(i).setRecordByCol(searchText);
             newTrapDataSummaries.get(i).setColName(colName);
             newTrapDataSummaries.get(i).setStartDate(startDate);
