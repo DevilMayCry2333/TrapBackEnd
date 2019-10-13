@@ -27,6 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -194,11 +197,35 @@ public class NaturalEnemy {
 
     @RequestMapping("/searchDetail")
     public JSONObject searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam String startDate,@RequestParam String endDate,@RequestParam String colName,@RequestParam String searchText,@RequestParam String adcode){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+
+        String dateString = null;
+
+
+        if(endDate!=null) {
+            try {
+                Date currentTime_2 = formatter.parse(endDate, pos);
+
+                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
+
+                System.out.println(currentTime_2.getDate());
+
+                dateString = formatter.format(currentTime_2);
+
+                System.out.println(dateString);
+            }catch (Exception e){
+                dateString = null;
+            }
+
+        }
+
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
-        jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode));
-        jsonObject.put("total",naturalEnemyService.countAll(username,startDate,endDate,colName,searchText,adcode));
+
+        jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+        jsonObject.put("total",naturalEnemyService.countAll(username,startDate,dateString,colName,searchText,adcode));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 

@@ -2,6 +2,7 @@ package cn.huihongcloud.controller.injection;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
+import cn.huihongcloud.entity.inject_WoodStatus;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import cn.huihongcloud.entity.user.User;
@@ -157,7 +158,15 @@ public class DryInjectionSummary {
         if (!Objects.equals(endDate, "")) {
             endDate = endDate + " 23:59:59";
         }
-        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate);
+
+
+
+        List<inject_WoodStatus> injectWoodStatuses = deviceInjectionMaintanceEntityMapper.getDeadStatus();
+
+        int deadId = injectWoodStatuses.get(0).getId();
+
+
+        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate,deadId);
 
         for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {
             lim.setStartDate(startDate);

@@ -210,8 +210,8 @@
   </select>
 
   <select id="countAll" resultType="java.lang.Integer">
-    SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance
-    left join device on device.id = Device_DeadTrees_maintance.device_Id WHERE username = #{username}
+    SELECT COUNT(t1.id) FROM Device_DeadTrees_maintance t1
+    left join device on device.id = t1.device_Id WHERE username = #{username}
     <if test="startDate!=null and startDate !=''">
       and t1.submit_date >= #{startDate}
     </if>
