@@ -249,8 +249,8 @@
       <if test="workContent != null and workContent != ''">
         work_content = #{workContent},
       </if>
-      <if test="customTown != null and customTown != ''">
-        t2.CustomTown = #{customTown},
+      <if test="customtown != null and customtown != ''">
+        t2.CustomTown = #{customtown},
       </if>
     </set>
     where t1.id = #{id}

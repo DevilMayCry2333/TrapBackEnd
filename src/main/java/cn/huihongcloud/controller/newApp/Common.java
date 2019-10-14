@@ -14,6 +14,9 @@ public class Common {
     DeviceMapper deviceMapper;
     @RequestMapping("/bindId")
     public Object BindId(@RequestParam String scanId,@RequestParam String serial){
+        System.out.println(scanId);
+        System.out.println(serial);
+
         Device toBeUpdated = deviceMapper.getDeviceBySerial(serial);
         return deviceMapper.updateScanId(toBeUpdated.getId(),scanId);
     }

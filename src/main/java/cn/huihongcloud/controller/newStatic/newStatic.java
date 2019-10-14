@@ -113,19 +113,19 @@ public class newStatic {
 //                    tian--;
                 JSONObject jsonObject = new JSONObject();
 
-                System.out.println("====开始记录2====");
-                System.out.println(myName);
-                System.out.println(myNum);
-                System.out.println(tian);
-                System.out.println(ws.getNum()/tian);
+//                System.out.println("====开始记录2====");
+//                System.out.println(myName);
+//                System.out.println(myNum);
+//                System.out.println(tian);
+//                System.out.println(ws.getNum()/tian);
 
 
                 jsonObject.put("Worker",myName);
                 jsonObject.put("Num", myNum);
                 jsonObject.put("day",tian);
-                jsonObject.put("Avg",ws.getNum()/tian);
+                jsonObject.put("Avg",myNum/tian);
 
-                System.out.println("******结束记录2*****");
+//                System.out.println("******结束记录2*****");
 
 //                tmp = ws.getWorkerName();
                 tian = 1;
@@ -146,12 +146,12 @@ public class newStatic {
                 else
                     tian++;
 
-                System.out.println("===当前天数====");
-                System.out.println(myName);
-                System.out.println(myNum);
-                System.out.println(tian);
-                System.out.println(ws.getCurrentDate());
-                System.out.println("*****当前天数结束*****");
+//                System.out.println("===当前天数====");
+//                System.out.println(myName);
+//                System.out.println(myNum);
+//                System.out.println(tian);
+//                System.out.println(ws.getCurrentDate());
+//                System.out.println("*****当前天数结束*****");
                 flag = 1;
 
 
@@ -160,16 +160,16 @@ public class newStatic {
 //                    tian--;
 
                 JSONObject jsonObject = new JSONObject();
-                System.out.println("=====开始记录===");
-                System.out.println(myName);
-                System.out.println(myNum);
-                System.out.println(tian);
-                System.out.println(ws.getNum()/tian);
+//                System.out.println("=====开始记录===");
+//                System.out.println(myName);
+//                System.out.println(myNum);
+//                System.out.println(tian);
+//                System.out.println(ws.getNum()/tian);
 
                     jsonObject.put("Worker",myName);
                     jsonObject.put("Num", myNum);
                     jsonObject.put("day",tian);
-                    jsonObject.put("Avg",ws.getNum()/tian);
+                    jsonObject.put("Avg",myNum/tian);
 
 
                 System.out.println("******结束记录*****");

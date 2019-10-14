@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,7 +33,26 @@ public class NewTrapDataSummary {
                                  @RequestParam(required = false) String searchText,
                                  @RequestParam int page,
                                  @RequestParam int limit){
-        List<cn.huihongcloud.entity.NewTrapDataSummary> newTrapDataSummaries = deviceSummaryMapper.selectByColName(colName,startDate,endDate,searchText,manager);
+
+        String dateString = "";
+
+        if(endDate!=null && endDate!=""){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            ParsePosition pos = new ParsePosition(0);
+            Date currentTime_2 = formatter.parse(endDate, pos);
+
+            currentTime_2.setTime(currentTime_2.getTime() + 24*3600*1000);
+
+            System.out.println(currentTime_2.getDate());
+
+            dateString = formatter.format(currentTime_2);
+
+            System.out.println(dateString);
+
+        }
+
+
+        List<cn.huihongcloud.entity.NewTrapDataSummary> newTrapDataSummaries = deviceSummaryMapper.selectByColName(colName,startDate,dateString,searchText,manager);
 
         for (int i = 0 ;i  < newTrapDataSummaries.size(); i++){
 

@@ -163,7 +163,7 @@
   </insert>
     <insert id="addMaintance">
       insert into Device_Track_Maintance (adcode,TimeConsume,Pic1,StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
-      values (#{adcode},#{timeconsume},#{pic1},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{LongtitudeCollect},#{LatitudeCollect},#{AltitudeCollect},#{linename},#{workingContent},#{remarks})
+      values (#{adcode},#{timeconsume},#{pic1},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{longtitudeCollect},#{latitudeCollect},#{altitudeCollect},#{linename},#{workingContent},#{remarks})
     </insert>
   <update id="updateRecordById">
     update device_track_maintance set linename=#{linename},
@@ -207,9 +207,9 @@
     starttime=#{starttime},endtime=#{endtime},
     startpoint=#{startpoint},
     TimeConsume = #{timeconsume},
-    LongtitudeCollect = #{LongtitudeCollect},
-    LatitudeCollect = #{LatitudeCollect},
-    AltitudeCollect = #{AltitudeCollect},
+    LongtitudeCollect = #{longtitudeCollect},
+    LatitudeCollect = #{latitudeCollect},
+    AltitudeCollect = #{altitudeCollect},
     Working_Content = #{workingContent},
     adcode = #{adcode},
     endpoint=#{endpoint},worker=#{worker},

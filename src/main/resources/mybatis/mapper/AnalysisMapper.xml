@@ -95,7 +95,7 @@
             and DATE(`date`) &lt;= #{endDate}
         </if>
 
-         group by workerName
+         group by workerName,DATE(`date`)
     </select>
 
 </mapper>
