@@ -49,8 +49,12 @@ public class DeviceController {
     public PageWrapper getDevices(@RequestAttribute("username") String username, @RequestParam("page") int page,
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
-                                  @RequestParam(value = "workerName", required = false) String workerName) {
+                                  @RequestParam(value = "workerName", required = false) String workerName,
+                                  @RequestParam("isMap") boolean isMap) {
         User user = userService.getUserByUserName(username);
+        System.out.println("=====地图传入====");
+
+        System.out.println(isMap);
 
 
         List<Device> list = null;
@@ -94,7 +98,14 @@ public class DeviceController {
             User user1 = userService.getUserByUserName(user.getParent());
 
 //            list = deviceService.getDeviceByManager(username);
-            list = deviceMapper.getDeviceByCustomProject(user1.getUsername());
+            if(isMap==true){
+                list = deviceMapper.getDeviceByCustomProjectAndTrap(user1.getUsername());
+
+            }else {
+                list = deviceMapper.getDeviceByCustomProject(user1.getUsername());
+            }
+
+
         }
 
         if (user.getRole() == 5) {

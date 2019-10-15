@@ -91,6 +91,8 @@ public class DeviceMaintenance {
     @Excel(name = "编号")
     private String customserial;
 
+    private String customProject;
+
 
     private String workcontentfront;
 
@@ -382,5 +384,13 @@ public class DeviceMaintenance {
 
     public void setRealdate(String realdate) {
         this.realdate = realdate;
+    }
+
+    public String getCustomProject() {
+        return customProject;
+    }
+
+    public void setCustomProject(String customProject) {
+        this.customProject = customProject;
     }
 }

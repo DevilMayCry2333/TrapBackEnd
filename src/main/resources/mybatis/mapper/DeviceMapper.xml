@@ -256,5 +256,8 @@
     <select id="adminDevice" resultType="cn.huihongcloud.entity.device.Device">
         select * from device;
     </select>
+    <select id="getDeviceByCustomProjectAndTrap" resultType="cn.huihongcloud.entity.device.Device">
+         select * from device where CustomProject = #{projectUserName} and project = '诱捕器管理'
+    </select>
 
 </mapper>

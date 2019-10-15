@@ -25,6 +25,10 @@ public interface Device_Track_MaintanceEntityMapper {
 
     List<Device_Track_MaintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 
+
+    List<Device_Track_MaintanceEntity> selectByDateAndColSearchAdcode(String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
+
+
     List<Device_Track_MaintanceEntity> selectAllByAdcode(String adcode,int num1,int num2);
 
     List<Device> getDeviceByLocation(@Param("adcode") String adcode, @Param("town") String town,

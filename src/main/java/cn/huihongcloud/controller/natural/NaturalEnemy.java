@@ -202,6 +202,9 @@ public class NaturalEnemy {
 
         String dateString = null;
 
+        User user = userService.getUserByUserName(username);
+
+
 
         if(endDate!=null) {
             try {
@@ -223,8 +226,12 @@ public class NaturalEnemy {
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
+        if(user.getRole()==4){
+            jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+        }else if(user.getRole()<=3){
+            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+        }
 
-        jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
         jsonObject.put("total",naturalEnemyService.countAll(username,startDate,dateString,colName,searchText,adcode));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
@@ -314,11 +321,21 @@ public class NaturalEnemy {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
+        User user = userService.getUserByUserName(username);
+
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
-        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = naturalEnemyService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
+
+        if(user.getRole()==4){
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        }else {
+            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+        }
+
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
 //            System.out.println(d.getArea());

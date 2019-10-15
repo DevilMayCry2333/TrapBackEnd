@@ -66,6 +66,9 @@ public interface DeviceMapper {
 
     List<Device> getDeviceByCustomProject(String projectUserName);
 
+    List<Device> getDeviceByCustomProjectAndTrap(String projectUserName);
+
+
     Device getDeviceByScanId(String scanId);
 
     Device getDeviceBySerial(String serial);

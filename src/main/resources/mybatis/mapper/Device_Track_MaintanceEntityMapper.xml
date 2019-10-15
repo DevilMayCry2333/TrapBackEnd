@@ -248,8 +248,7 @@
 
     <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
       SELECT * FROM  Device_Track_Maintance t1 LEFT JOIN user t2 ON t1.Worker = t2.username
-      WHERE t2.adcode
-      LIKE concat(#{adcode}, '%')
+      WHERE t1.username = #{username}
       <if test="startDate!=null and startDate !=''">
         and StartTime >= #{startDate}
       </if>
@@ -305,6 +304,20 @@
 
   <select id="selectByLineName" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
     select * from device_track_maintance where LineName = #{linename}
+  </select>
+  <select id="selectByDateAndColSearchAdcode" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+    SELECT * FROM  Device_Track_Maintance t1 LEFT JOIN user t2 ON t1.Worker = t2.username
+    WHERE t2.adcode like concat('%' , #{adcode}, '%')
+    <if test="startDate!=null and startDate !=''">
+      and StartTime >= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and StartTime &lt;= #{endDate}
+    </if>
+    <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+      and ${colName} like concat(#{searchText}, '%')
+    </if>
+
   </select>
 
 

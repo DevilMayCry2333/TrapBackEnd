@@ -274,16 +274,16 @@
         <if test="searchText != null and searchText != ''">
           <choose>
             <when test="optionIndex == 1">
-              and CustomSerial like concat('%',#{searchText},'%')
+              and device.CustomSerial = #{searchText}
             </when>
             <when test="optionIndex == 2">
-              and CustomTown like concat('%',#{searchText},'%')
+              and device.CustomTown = #{searchText}
             </when>
             <when test="optionIndex == 3">
-              and batch like concat('%',#{searchText},'%')
+              and batch = #{searchText}
             </when>
             <when test="optionIndex == 4">
-              and Worker like concat('%',#{searchText},'%')
+              and Worker #{searchText}
             </when>
             <otherwise>
               and concat(device_Id,CustomTown,batch,Worker) like concat('%',#{searchText},'%')
@@ -775,6 +775,35 @@
 
   <select id="getDeadStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">
     select * from inject_woodstatus where inject_woodstatus.`name`='枯死'
+  </select>
+  <select id="selectByConditionsAdcode" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+    select * from device_injection_maintance left join device on device_Id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    <if test="searchText != null and searchText != ''">
+      <choose>
+        <when test="optionIndex == 1">
+          and device.CustomSerial = #{searchText}
+        </when>
+        <when test="optionIndex == 2">
+          and device.CustomTown = #{searchText}
+        </when>
+        <when test="optionIndex == 3">
+          and batch = #{searchText}
+        </when>
+        <when test="optionIndex == 4">
+          and Worker #{searchText}
+        </when>
+        <otherwise>
+          and concat(device_Id,CustomTown,batch,Worker) like concat('%',#{searchText},'%')
+        </otherwise>
+      </choose>
+    </if>
+    <if test="startDate != null and startDate != ''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and submit_date &lt;= #{endDate}
+    </if>
+
   </select>
 
 </mapper>

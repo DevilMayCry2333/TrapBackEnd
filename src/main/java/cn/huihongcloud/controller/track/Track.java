@@ -77,6 +77,10 @@ public class Track {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         ParsePosition pos = new ParsePosition(0);
 
+        User user = userService.getUserByUserName(username);
+
+        System.out.println("=====用户名====");
+        System.out.println(username);
         String dateString = null;
 
         if(endDate!=null) {
@@ -102,8 +106,13 @@ public class Track {
         System.out.println(limit);
         System.out.println(colName);
         System.out.println(searchText);
+        if(user.getRole()==4){
+            jsonObject.put("Data",trackService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+        }else {
+            jsonObject.put("Data",deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+        }
 
-        jsonObject.put("Data",trackService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+
         jsonObject.put("total",trackService.countAll(username,startDate,dateString,colName,searchText));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
@@ -204,11 +213,20 @@ public class Track {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
+        User user = userService.getUserByUserName(username);
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
-        List<Device_Track_MaintanceEntity> deviceTrackMaintanceEntities  = trackService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        List<Device_Track_MaintanceEntity> deviceTrackMaintanceEntities = null;
+
+        if(user.getRole()==4){
+            deviceTrackMaintanceEntities  = trackService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        }else {
+            deviceTrackMaintanceEntities  = deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+        }
+
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
 //            System.out.println(d.getArea());
