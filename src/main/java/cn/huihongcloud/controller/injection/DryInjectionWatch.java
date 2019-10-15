@@ -65,7 +65,7 @@ public class DryInjectionWatch {
         if (!Objects.equals(endDate, "")) {
             endDate = endDate + " 23:59:59";
         }
-        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user.getAdcode(), optionIndex, searchText, startDate, endDate);
+        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user.getParent(), optionIndex, searchText, startDate, endDate);
         System.out.println("+++");
         for (Device_Injection_maintanceEntity d:
              deviceInjectionMaintanceEntities) {
