@@ -16,9 +16,9 @@ public class DryInjectionService {
     @Autowired
     private Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
 
-    public List<Device_Injection_maintanceEntity> getDryInjectionDetail(String adcode, Integer optionIndex, String searchText, String startDate, String endDate) {
+    public List<Device_Injection_maintanceEntity> getDryInjectionDetail(String customProject, Integer optionIndex, String searchText, String startDate, String endDate) {
 
-            return deviceInjectionMaintanceEntityMapper.selectByConditions(adcode, optionIndex, searchText, startDate, endDate);
+            return deviceInjectionMaintanceEntityMapper.selectByConditions(customProject, optionIndex, searchText, startDate, endDate);
     }
 
     public int getTotalNum(String username) {

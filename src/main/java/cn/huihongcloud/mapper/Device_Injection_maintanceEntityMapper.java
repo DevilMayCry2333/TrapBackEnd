@@ -24,7 +24,7 @@ public interface Device_Injection_maintanceEntityMapper {
 
 //    List<Device_Injection_maintanceEntity> selectAll(int page1, int page2, String username);
 
-    List<Device_Injection_maintanceEntity> selectByConditions(@Param("adcode") String adcode, @Param("optionIndex") Integer optionIndex,
+    List<Device_Injection_maintanceEntity> selectByConditions(@Param("customProject") String customProject, @Param("optionIndex") Integer optionIndex,
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     List<Device_Injection_maintanceEntity> selectById(BigInteger id);
