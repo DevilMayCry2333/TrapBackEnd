@@ -58,6 +58,7 @@ public class DryInjectionWatch {
 
         System.out.println(username);
 
+
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }
@@ -269,17 +270,23 @@ public class DryInjectionWatch {
 
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        ParsePosition pos = new ParsePosition(0);
-        Date currentTime_2 = formatter.parse(endDate, pos);
+        String dateString = "";
+        System.out.println(endDate);
 
-        currentTime_2.setTime(currentTime_2.getTime() + 24*3600*1000);
+        if(endDate!=null && endDate!="") {
 
-        System.out.println(currentTime_2.getDate());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            ParsePosition pos = new ParsePosition(0);
+            Date currentTime_2 = formatter.parse(endDate, pos);
 
-        String dateString = formatter.format(currentTime_2);
+            currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
 
-        System.out.println(dateString);
+            System.out.println(currentTime_2.getDate());
+
+            dateString = formatter.format(currentTime_2);
+
+            System.out.println(dateString);
+        }
 
 
 
@@ -322,6 +329,19 @@ public class DryInjectionWatch {
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
+
         List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {

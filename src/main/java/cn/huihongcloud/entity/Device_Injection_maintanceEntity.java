@@ -12,7 +12,8 @@ public class Device_Injection_maintanceEntity {
     private Long deviceId;
     @Excel(name = "编号")
     private String serial;
-    @Excel(name = "区域")
+
+
     private String region;
     @Excel(name = "提交日期")
     private String submitDate;
@@ -62,7 +63,8 @@ public class Device_Injection_maintanceEntity {
 //    @Excel(name = "树木数量")
     private String woodNum;
 
-    private String CustomTown;
+    @Excel(name = "区域")
+    private String customtown;
 
     private Integer injectNumSum;
 
@@ -72,7 +74,7 @@ public class Device_Injection_maintanceEntity {
 
     private String endDate;
 
-    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum,String pic, String worker, String remarks, Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String CustomTown, Integer injectNumSum,Integer woodstatus,Integer WoodStatusSum) {
+    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum,String pic, String worker, String remarks, Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String customtown, Integer injectNumSum,Integer woodstatus,Integer WoodStatusSum) {
 
         this.woodstatus = woodstatus;
 
@@ -99,7 +101,7 @@ public class Device_Injection_maintanceEntity {
         this.town = town;
         this.reported = reported;
         this.woodNum = woodNum;
-        this.CustomTown = CustomTown;
+        this.customtown = customtown;
         this.injectNumSum = injectNumSum;
         this.WoodStatusSum = WoodStatusSum;
 
@@ -293,14 +295,6 @@ public class Device_Injection_maintanceEntity {
         this.woodNum = woodNum;
     }
 
-    public String getCustomTown() {
-        return CustomTown;
-    }
-
-    public void setCustomTown(String customTown) {
-        CustomTown = customTown;
-    }
-
     public Integer getInjectNumSum() {
         return injectNumSum;
     }
@@ -340,5 +334,13 @@ public class Device_Injection_maintanceEntity {
 
     public void setWoodstatus(Integer woodstatus) {
         this.woodstatus = woodstatus;
+    }
+
+    public String getCustomtown() {
+        return customtown;
+    }
+
+    public void setCustomtown(String customtown) {
+        this.customtown = customtown;
     }
 }

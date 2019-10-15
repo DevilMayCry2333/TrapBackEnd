@@ -197,7 +197,9 @@
         <if test="worker != null and worker != ''">
           t1.worker = #{worker},
         </if>
-
+        <if test="remarks != null and remarks != ''">
+          t1.Remarks = #{remarks},
+        </if>
       </set>
       where t1.id = #{id}
 

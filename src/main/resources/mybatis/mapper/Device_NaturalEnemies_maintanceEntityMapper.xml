@@ -184,8 +184,8 @@
         <if test="worker != null and worker != ''">
           worker = #{worker},
         </if>
-        <if test="customTown != null and customTown != ''">
-          t2.CustomTown = #{customTown},
+        <if test="customtown != null and customtown != ''">
+          t2.CustomTown = #{customtown},
         </if>
         <if test="releaseNum != null and releaseNum != ''">
           t1.Release_Num = #{releaseNum},
