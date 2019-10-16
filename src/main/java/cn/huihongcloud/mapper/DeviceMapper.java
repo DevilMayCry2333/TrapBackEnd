@@ -77,5 +77,7 @@ public interface DeviceMapper {
 
     List<Device> adminDevice();
 
+    int countDevice();
+
 
 }

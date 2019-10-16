@@ -46,21 +46,29 @@ public class DeviceController {
 
     @RequestMapping(value = "auth_api/device_list", method = RequestMethod.GET)
     @ApiOperation("获取设备列表")
-    public PageWrapper getDevices(@RequestAttribute("username") String username, @RequestParam("page") int page,
-                                  @RequestParam("limit") int limit,
+    public Object getDevices(@RequestAttribute("username") String username,int page,
+                                int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName,
                                   @RequestParam("isMap") boolean isMap) {
         User user = userService.getUserByUserName(username);
+
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
         System.out.println("=====地图传入====");
 
         System.out.println(isMap);
 
 
-        List<Device> list = null;
-        Page<Object> pages = null;
-        PageWrapper pageWrapper = new PageWrapper();
-        list =  deviceMapper.adminDevice();
+        List<Device> deviceList = null;
+
+
+
+
+
+
+
+
 
         /*
         if (user.getRole() > 1 && user.getRole() != 3) {
@@ -83,26 +91,32 @@ public class DeviceController {
         管理员看到关联的
         工人看到关联的
          */
-        pages = PageHelper.startPage(page, limit);
 
+
+        if(user.getRole()<1){
+            deviceList =  deviceMapper.adminDevice();
+        }
         if (user.getRole() == 1) {
-            list = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
+            deviceList = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
         }
         if (user.getRole() == 2) {
-            list = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
+            deviceList = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
         }
         if (user.getRole() == 3) {
-            list = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
+            deviceList = deviceService.getDeviceByLocation(user.getAdcode(), null, null);
         }
         if (user.getRole() == 4) {
-            User user1 = userService.getUserByUserName(user.getParent());
+
 
 //            list = deviceService.getDeviceByManager(username);
             if(isMap==true){
-                list = deviceMapper.getDeviceByCustomProjectAndTrap(user1.getUsername());
+                deviceList = deviceMapper.getDeviceByCustomProjectAndTrap(user.getParent());
 
             }else {
-                list = deviceMapper.getDeviceByCustomProject(user1.getUsername());
+                deviceList = deviceMapper.getDeviceByCustomProject(user.getParent());
+                System.out.println("执行这句了");
+                System.out.println(deviceList.size());
+
             }
 
 
@@ -117,12 +131,26 @@ public class DeviceController {
             User user2 = userService.getUserByUserName(user1.getParent());
             System.out.println(user2.getUsername());
 
-            list = deviceMapper.getDeviceByCustomProject(user2.getUsername());
+            deviceList = deviceMapper.getDeviceByCustomProject(user2.getUsername());
         }
-        pageWrapper.setData(list);
-        pageWrapper.setTotalPage(pages.getPages());
+
+
+
+        //这个分页插件有bug.....
+
+        PageWrapper pageWrapper = new PageWrapper();
+
+        pageWrapper.setData(deviceList);
+
+        System.out.println(pageObject.getPages());
+        System.out.println(page);
+        System.out.println(pageObject.getTotal());
+
         pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(list.size());
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalPage(pageObject.getPages());
+
+
         return pageWrapper;
     }
 
