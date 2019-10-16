@@ -65,7 +65,14 @@ public class DryInjectionWatch {
         if (!Objects.equals(endDate, "")) {
             endDate = endDate + " 23:59:59";
         }
-        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user.getParent(), optionIndex, searchText, startDate, endDate);
+        List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = null;
+
+        if(user.getRole()==4){
+            deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionDetail(user.getParent(), optionIndex, searchText, startDate, endDate);
+        }else if(user.getRole()<=3){
+            deviceInjectionMaintanceEntities = deviceInjectionMaintanceEntityMapper.selectByConditionsAdcode(user.getAdcode(), optionIndex, searchText, startDate, endDate);
+        }
+
         System.out.println("+++");
         for (Device_Injection_maintanceEntity d:
              deviceInjectionMaintanceEntities) {
@@ -292,8 +299,15 @@ public class DryInjectionWatch {
 
         jsonObject.put("Res",true);
 
+        System.out.println(optVal);
+        System.out.println(searchText);
 
-        jsonObject.put("Data",deviceInjectionMaintanceEntityMapper.selectByConditions(user.getAdcode(),optVal,searchText,startDate,dateString));
+        if(user.getRole()==4){
+            jsonObject.put("Data",deviceInjectionMaintanceEntityMapper.selectByConditions(user.getParent(),optVal,searchText,startDate,dateString));
+        }
+
+
+
         jsonObject.put("total",deviceInjectionMaintanceEntityMapper.CountAll(username));
         jsonObject.put("current",1);
         System.out.println(jsonObject);

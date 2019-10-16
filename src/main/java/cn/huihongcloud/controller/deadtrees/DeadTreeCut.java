@@ -69,6 +69,8 @@ public class DeadTreeCut {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         ParsePosition pos = new ParsePosition(0);
+        User user = userService.getUserByUserName(username);
+
 
         String dateString = null;
 
@@ -93,7 +95,13 @@ public class DeadTreeCut {
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
-        jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+
+        if(user.getRole()==4){
+            jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+        }else if(user.getRole()<=3){
+            jsonObject.put("Data",deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+        }
+
         jsonObject.put("total",deadTreeCutService.countAll(username,startDate,dateString,colName,searchText));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
@@ -185,11 +193,20 @@ public class DeadTreeCut {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
+        User user = userService.getUserByUserName(username);
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
-        List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities  = deadTreeCutService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = null;
+        if(user.getRole()==4){
+            deviceDeadTreesMaintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        }else {
+            deviceDeadTreesMaintanceEntities = deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+
+        }
+
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
 //            System.out.println(d.getArea());

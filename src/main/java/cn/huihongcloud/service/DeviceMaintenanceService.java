@@ -92,7 +92,7 @@ public class DeviceMaintenanceService {
             return deviceMaintenanceMapper.getMaintenanceDataByAdcodeAndTown1(user.getAdcode(), user.getTown(), condition, batch,searchtown,date, endDate,null);
         }else if (role == 4) {
             // 管理员
-            return deviceMaintenanceMapper.getMaintenanceDataByManager1(user.getAdcode(), user.getTown(), condition, batch,searchtown,date,endDate, user.getUsername());
+            return deviceMaintenanceMapper.getMaintenanceDataByManager1(user.getParent(), user.getTown(), condition, batch,searchtown,date,endDate, user.getUsername());
         } else if (role == 5) {
             return null;
         }

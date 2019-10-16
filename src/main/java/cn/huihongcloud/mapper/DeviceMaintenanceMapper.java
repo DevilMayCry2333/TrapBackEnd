@@ -17,7 +17,7 @@ public interface DeviceMaintenanceMapper {
     List<DeviceMaintenance> getMaintenanceDataByDeviceId(String myusername,String deviceId, @Param("startDate")String startDate, @Param("endDate")String endDate, @Param("reported")Boolean reported);
     List<DeviceMaintenance> getMaintenanceDataByAdcodeAndTown(@Param("adcode") String adcode, @Param("town") String town,
                                                               @Param("condition") String condition, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
-    List<DeviceMaintenance> getMaintenanceDataByManager1(@Param("adcode") String adcode, @Param("town") String town,
+    List<DeviceMaintenance> getMaintenanceDataByManager1(@Param("customProject") String customProject, @Param("town") String town,
                                                               @Param("condition") String condition,@Param("batch")String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
     List<DeviceMaintenance> getMaintenanceDataByAdcodeAndTown1(@Param("adcode") String adcode, @Param("town") String town,
                                                               @Param("condition") String condition,@Param("batch") String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
