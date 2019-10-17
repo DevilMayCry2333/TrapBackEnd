@@ -471,6 +471,8 @@ public class DeviceMaintenanceController {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
+
+
         List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData1(user, condition, startDate, endDate,batch,town);
         for (DeviceMaintenance d:
              maintenanceData) {
@@ -483,6 +485,12 @@ public class DeviceMaintenanceController {
         }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
+        System.out.println("====page=====");
+        System.out.println(page);
+        System.out.println(pageObject.getTotal());
+        System.out.println(pageObject.getPages());
+        System.out.println("*********");
+
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());
         pageWrapper.setTotalPage(pageObject.getPages());

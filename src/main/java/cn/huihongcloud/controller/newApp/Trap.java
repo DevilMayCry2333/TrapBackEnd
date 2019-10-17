@@ -85,7 +85,8 @@ public class Trap {
         String dateString = null;
 
 
-        if(endDate!=null) {
+
+        if(endDate!=null && endDate!="") {
             try {
                 Date currentTime_2 = formatter.parse(endDate, pos);
 
@@ -106,8 +107,16 @@ public class Trap {
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         User user = userMapper.getUserByUserName(username);
+        List<DeviceMaintenance> deviceMaintenanceList = null;
         PageWrapper pageWrapper = new PageWrapper();
-        List<DeviceMaintenance> deviceMaintenanceList = deviceBeetleMapper.getFuckFuck(colName,searchText,user.getAdcode(),startDate,dateString);
+        System.out.println(startDate);
+
+        if(user.getRole()==4){
+            deviceMaintenanceList = deviceBeetleMapper.getFuckFuckByCustomProject(colName,searchText,user.getParent(),startDate,dateString);
+        }else {
+            deviceMaintenanceList = deviceBeetleMapper.getFuckFuck(colName,searchText,user.getAdcode(),startDate,dateString);
+        }
+
         pageWrapper.setData(deviceMaintenanceList);
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());
