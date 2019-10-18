@@ -227,13 +227,14 @@ public class NaturalEnemy {
         System.out.println(page);
         System.out.println(limit);
         if(user.getRole()==4){
-            jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+            jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,limit,adcode));
+            jsonObject.put("DeviceNum",deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,1,100000,adcode));
         }else if(user.getRole()<=3){
-            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode()));
         }
 
         jsonObject.put("total",naturalEnemyService.countAll(username,startDate,dateString,colName,searchText,adcode));
-        jsonObject.put("current",page);
+        jsonObject.put("current",1);
         System.out.println(jsonObject);
 
         return jsonObject;

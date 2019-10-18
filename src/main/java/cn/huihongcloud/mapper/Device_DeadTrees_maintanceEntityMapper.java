@@ -27,6 +27,9 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     List<Device_DeadTrees_maintanceEntity> selectByDateAndColSearch(String customProject,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 
+    int selectWorkDayByDateAndColSearch(String customProject,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
+
+
     List<Device_DeadTrees_maintanceEntity> selectByDateAndColSearchAdcode(String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 
 

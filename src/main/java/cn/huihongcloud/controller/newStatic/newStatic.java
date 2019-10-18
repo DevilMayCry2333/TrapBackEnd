@@ -105,27 +105,27 @@ public class newStatic {
 
         //这里不知道为啥不行
 
-        for (int i = 0 ; i < workerStaticList.size();i++){
-            for (int j = i + 1 ; j < workerStaticList.size();j++){
-                if(workerStaticList.get(i).getWorkerName().equals(workerStaticList.get(j).getWorkerName())){
-                    System.out.println("进入IF");
-                    workDay++;
-                    workerStaticList.get(i).setNum(workerStaticList.get(i).getNum() + workerStaticList.get(j).getNum());
-                }else {
-                    System.out.println("进入ELSE");
-                    JSONObject jsonObject = new JSONObject();
-                    System.out.println("数据传输");
-                    System.out.println(workerStaticList.get(i).getWorkerName());
-
-                    jsonObject.put("Worker",workerStaticList.get(i).getWorkerName());
-                    jsonObject.put("Num",workerStaticList.get(i).getNum());
-                    jsonObject.put("day",workDay);
-                    jsonObject.put("Avg",workerStaticList.get(i).getNum()*1.0/workDay);
-                    workDay = 1;
-                    jsonArray.add(jsonObject);
-                }
-            }
-        }
+//        for (int i = 0 ; i < workerStaticList.size();i++){
+//            for (int j = i + 1 ; j < workerStaticList.size();j++){
+//                if(workerStaticList.get(i).getWorkerName().equals(workerStaticList.get(j).getWorkerName())){
+//                    System.out.println("进入IF");
+//                    workDay++;
+//                    workerStaticList.get(i).setNum(workerStaticList.get(i).getNum() + workerStaticList.get(j).getNum());
+//                }else {
+//                    System.out.println("进入ELSE");
+//                    JSONObject jsonObject = new JSONObject();
+//                    System.out.println("数据传输");
+//                    System.out.println(workerStaticList.get(i).getWorkerName());
+//
+//                    jsonObject.put("Worker",workerStaticList.get(i).getWorkerName());
+//                    jsonObject.put("Num",workerStaticList.get(i).getNum());
+//                    jsonObject.put("day",workDay);
+//                    jsonObject.put("Avg",workerStaticList.get(i).getNum()*1.0/workDay);
+//                    workDay = 1;
+//                    jsonArray.add(jsonObject);
+//                }
+//            }
+//        }
 
         return jsonArray;
 
