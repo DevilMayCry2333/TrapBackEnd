@@ -104,8 +104,8 @@ public class newStatic {
         JSONArray jsonArray = new JSONArray();
 
         //这里不知道为啥不行
-        
-        for (int i = 0 ; i < workerStaticList.size();){
+
+        for (int i = 0 ; i < workerStaticList.size();i++){
             for (int j = i + 1 ; j < workerStaticList.size();j++){
                 if(workerStaticList.get(i).getWorkerName().equals(workerStaticList.get(j).getWorkerName())){
                     System.out.println("进入IF");
@@ -117,15 +117,12 @@ public class newStatic {
                     System.out.println("数据传输");
                     System.out.println(workerStaticList.get(i).getWorkerName());
 
-
                     jsonObject.put("Worker",workerStaticList.get(i).getWorkerName());
                     jsonObject.put("Num",workerStaticList.get(i).getNum());
                     jsonObject.put("day",workDay);
                     jsonObject.put("Avg",workerStaticList.get(i).getNum()*1.0/workDay);
                     workDay = 1;
                     jsonArray.add(jsonObject);
-                    i = j;
-//                    break;
                 }
             }
         }
