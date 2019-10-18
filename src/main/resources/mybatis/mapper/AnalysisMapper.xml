@@ -84,7 +84,7 @@
          group by batch
     </select>
 
-    <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.workerStatic">
+    <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.WorkerStatic">
         select username workerName,count(t1.username) num,DATE(`date`) currentDate from device_maintenance t1
         left join device t2 on t2.id = t1.device_id where CustomProject = #{customProject}
 

@@ -1,7 +1,7 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.AreaStatic;
-import cn.huihongcloud.entity.workerStatic;
+import cn.huihongcloud.entity.WorkerStatic;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -26,7 +26,7 @@ public interface AnalysisMapper {
 
     List<AreaStatic> getBatchStatic(String startDate,String endDate,String customProject);
 
-    List<workerStatic> getWorkerStatic(String startDate,String endDate,String customProject);
+    List<WorkerStatic> getWorkerStatic(String startDate, String endDate, String customProject);
 
 
 
