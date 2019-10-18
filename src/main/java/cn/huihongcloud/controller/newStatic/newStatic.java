@@ -68,7 +68,7 @@ public class newStatic {
 
         List<workerStatic> workerStaticList = analysisMapper.getWorkerStatic(startM,endM,user1.getUsername());
         Collections.sort(workerStaticList);
-        JSONArray jsonArray = new JSONArray();
+
 
         String name = workerStaticList.get(0).getWorkerName();
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
@@ -85,249 +85,47 @@ public class newStatic {
         //必须捕获异常
 
 
-
-        int tian = -1;
-        int cnt = 0;
-
-        int Num = 0;
-
-        String tmp = workerStaticList.get(0).getWorkerName();
-
-        int myNum = workerStaticList.get(0).getNum();
-        String myDate = workerStaticList.get(0).getCurrentDate();
-        String myName = workerStaticList.get(0).getWorkerName();
-
-        int flag = 0;
-
-
-        for (workerStatic ws:workerStaticList){
-
-
+        for (int i = 0; i < workerStaticList.size();i++){
+            System.out.println("数据出来");
+            workerStatic ws = workerStaticList.get(i);
             System.out.println(ws.getNum());
             System.out.println(ws.getCurrentDate());
             System.out.println(ws.getWorkerName());
-
-
-            if(cnt == workerStaticList.size()-1){
-//                if(tian>1)
-//                    tian--;
-                JSONObject jsonObject = new JSONObject();
-
-//                System.out.println("====开始记录2====");
-//                System.out.println(myName);
-//                System.out.println(myNum);
-//                System.out.println(tian);
-//                System.out.println(ws.getNum()/tian);
-
-
-                jsonObject.put("Worker",myName);
-                jsonObject.put("Num", myNum);
-                jsonObject.put("day",tian);
-                jsonObject.put("Avg",myNum/tian);
-
-//                System.out.println("******结束记录2*****");
-
-//                tmp = ws.getWorkerName();
-                tian = 1;
-                jsonArray.add(jsonObject);
-
-                myNum = ws.getNum();
-                myDate = ws.getCurrentDate();
-                myName = ws.getWorkerName();
-                flag = 0;
-
-
-            }
-
-
-            if(tmp.equals(ws.getWorkerName())){
-                if(tian==-1)
-                    tian = 1;
-                else
-                    tian++;
-
-//                System.out.println("===当前天数====");
-//                System.out.println(myName);
-//                System.out.println(myNum);
-//                System.out.println(tian);
-//                System.out.println(ws.getCurrentDate());
-//                System.out.println("*****当前天数结束*****");
-                flag = 1;
-
-
-            }else{
-//                if(tian>1)
-//                    tian--;
-
-                JSONObject jsonObject = new JSONObject();
-//                System.out.println("=====开始记录===");
-//                System.out.println(myName);
-//                System.out.println(myNum);
-//                System.out.println(tian);
-//                System.out.println(ws.getNum()/tian);
-
-                    jsonObject.put("Worker",myName);
-                    jsonObject.put("Num", myNum);
-                    jsonObject.put("day",tian);
-                    jsonObject.put("Avg",myNum/tian);
-
-
-                System.out.println("******结束记录*****");
-
-                tmp = ws.getWorkerName();
-                tian = 1;
-                jsonArray.add(jsonObject);
-
-                myNum = ws.getNum();
-                myDate = ws.getCurrentDate();
-                myName = ws.getWorkerName();
-
-                flag = 0;
-
-
-            }
-
-            cnt++;
-
+            System.out.println("数据结束");
         }
-//
-//        for (workerStatic ws: workerStaticList) {
-//
-//            System.out.println("工人名字");
-//            System.out.println(ws.getWorkerName());
-//            System.out.println("工人数量");
-//            System.out.println(ws.getNum());
-//            System.out.println("工人日期");
-//
-//            System.out.println(ws.getCurrentDate());
-//
-//            JSONObject jsonObject = new JSONObject();
-//
-//
-//
-//            if(ws.getWorkerName().equals(name)){
-//                tian++;
-//                System.out.println("1:" + tian);
-//                if(simpleDateFormat.parse(ws.getCurrentDate()).getTime() < min.getTime()){
-//                    min = simpleDateFormat.parse(ws.getCurrentDate());
-//
-//                }
-//                if(simpleDateFormat.parse(ws.getCurrentDate()).getTime() > max.getTime()){
-//                    max = simpleDateFormat.parse(ws.getCurrentDate());
-//                }
-//
-//                Num = ws.getNum();
-//
-//
-//            }else {
-//
-//                System.out.println("2:" + tian);
-//
-//
-//                System.out.println("=====天=====");
-//                System.out.println(tian);
-//
-//                jsonObject.put("day",tian);
-//
-//                tian--;
-//
-//                System.out.println("====工人====");
-//                System.out.println(name);
-//
-//                jsonObject.put("Worker",name);
-//
-//                System.out.println("====数量====");
-//
-//
-//                if(Num>0){
-//                    System.out.println(Num);
-//                    jsonObject.put("Num", Num);
-//                    long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
-//
-//                    if(daySub<=1)
-//                        daySub = 1;
-//
-//                    System.out.println(daySub);
-//
-//                    jsonObject.put("Avg",Num/daySub);
-//
-////                    Num = 0;
-//
-//                }else {
-//                    System.out.println(ws.getNum());
-//                    jsonObject.put("Num",ws.getNum());
-//
-//                    long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
-//                    if(daySub<=1)
-//                        daySub = 1;
-//
-//                    System.out.println(daySub);
-//                    jsonObject.put("Avg",ws.getNum()/daySub);
-//
-//
-//                }
-//
-//                jsonArray.add(jsonObject);
-//                tian = 1;
-//                name = ws.getWorkerName();
-//                min = simpleDateFormat.parse(ws.getCurrentDate());
-//                max = simpleDateFormat.parse(ws.getCurrentDate());
-//
-//            }
-//            if(cnt == workerStaticList.size()-1){
-//
-//
-//                if(Num>0){
-//                    System.out.println("===天====");
-//                    System.out.println(tian);
-//
-//                    jsonObject.put("day",tian);
-//
-//                    System.out.println("===工人====");
-//                    System.out.println(name);
-//
-//
-//                    jsonObject.put("Worker",name);
-//
-//                    jsonObject.put("Num",Num);
-//
-//                    long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
-//                    if(daySub<=1)
-//                        daySub = 1;
-//                    System.out.println(daySub);
-//                    jsonObject.put("Avg",Num/daySub);
-////                    Num = 0;
-//
-//                }else {
-//                    System.out.println("===天====");
-//                    System.out.println(tian);
-//
-//                    jsonObject.put("day",tian);
-//
-//                    System.out.println("===工人====");
-//                    System.out.println(name);
-//
-//
-//                    jsonObject.put("Worker",name);
-//
-//                    jsonObject.put("Num",ws.getNum());
-//
-//                    long daySub = (max.getTime()-min.getTime())/1000/60/60/24;
-//                    if(daySub<=1)
-//                        daySub = 1;
-//                    System.out.println(daySub);
-//                    jsonObject.put("Avg",ws.getNum()/daySub);
-//                }
-//
-//
-//                jsonArray.add(jsonObject);
-//                tian = 1;
-//                name = ws.getWorkerName();
-//                min = simpleDateFormat.parse(ws.getCurrentDate());
-//                max = simpleDateFormat.parse(ws.getCurrentDate());
-//            }
-//            cnt++;
-//        }
+
+        workerStatic lastWs = null;
+        workerStatic ws = null;
+
+        lastWs = workerStaticList.get(0);
+        ws=workerStaticList.get(1);
+        int workDay = 1;
+
+        JSONArray jsonArray = new JSONArray();
+
+        //这里不知道为啥不行
+
+        for (int i = 0 ; i < workerStaticList.size();i++){
+            for (int j = i + 1 ; j < workerStaticList.size();j++){
+                if(workerStaticList.get(i).getWorkerName().equals(workerStaticList.get(j).getWorkerName())){
+                    System.out.println("进入IF");
+                    workDay++;
+                    workerStaticList.get(i).setNum(workerStaticList.get(i).getNum() + workerStaticList.get(j).getNum());
+                }else {
+                    System.out.println("进入ELSE");
+                    JSONObject jsonObject = new JSONObject();
+                    System.out.println("数据传输");
+                    System.out.println(workerStaticList.get(i).getWorkerName());
+
+                    jsonObject.put("Worker",workerStaticList.get(i).getWorkerName());
+                    jsonObject.put("Num",workerStaticList.get(i).getNum());
+                    jsonObject.put("day",workDay);
+                    jsonObject.put("Avg",workerStaticList.get(i).getNum()*1.0/workDay);
+                    workDay = 1;
+                    jsonArray.add(jsonObject);
+                }
+            }
+        }
 
         return jsonArray;
 

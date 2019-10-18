@@ -283,7 +283,7 @@
               and batch = #{searchText}
             </when>
             <when test="optionIndex == 4">
-              and Worker #{searchText}
+              and Worker = #{searchText}
             </when>
             <otherwise>
               and concat(device_Id,CustomTown,batch,Worker) like concat('%',#{searchText},'%')
@@ -803,6 +803,22 @@
     <if test="endDate != null and endDate != ''">
       and submit_date &lt;= #{endDate}
     </if>
+
+  </select>
+  <select id="selectByCustomReigonCustomProject"
+          resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
+    select device.CustomTown,Device_Injection_maintance.*,sum(Device_Injection_maintance.injection_num) injectNumSum,
+    sum(if(Device_Injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
+    count(Device_Injection_maintance.id) woodNum
+    from device left join Device_Injection_maintance on device.id = Device_Injection_maintance.device_Id
+    where CustomProject = #{customProject}
+    <if test="startDate != null and startDate != ''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device.CustomTown
 
   </select>
 

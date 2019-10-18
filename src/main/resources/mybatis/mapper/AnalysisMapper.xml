@@ -86,7 +86,7 @@
 
     <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.workerStatic">
         select username workerName,count(t1.username) num,DATE(`date`) currentDate from device_maintenance t1
-        left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
+        left join device t2 on t2.id = t1.device_id where CustomProject = #{customProject}
 
         <if test="startDate != null and startDate != ''">
             and DATE(`date`) &gt;= #{startDate}

@@ -84,6 +84,12 @@ public interface Device_Injection_maintanceEntityMapper {
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate,
                                                                 int deadId);
 
+    List<Device_Injection_maintanceEntity> selectByCustomReigonCustomProject(@Param("customProject") String customProject, @Param("optionIndex") Integer optionIndex,
+                                                                @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate,
+                                                                int deadId);
+
+
+
     int addMaintanceData(Device_Injection_maintanceEntity dataEntity);
 
     List<Device_Injection_maintanceEntity> getMaxBatch(String deviceId);
