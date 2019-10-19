@@ -1,6 +1,6 @@
 package cn.huihongcloud.entity;
 
-public class workerStatic implements Comparable<workerStatic> {
+public class WorkerStatic implements Comparable<WorkerStatic> {
     private String workerName;
     private int num;
     private String currentDate;
@@ -30,7 +30,7 @@ public class workerStatic implements Comparable<workerStatic> {
     }
 
     @Override
-    public int compareTo(workerStatic user) {
+    public int compareTo(WorkerStatic user) {
         return this.workerName.compareTo(user.workerName);
     }
 
