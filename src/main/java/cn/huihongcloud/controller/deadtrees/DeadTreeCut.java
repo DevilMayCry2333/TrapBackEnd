@@ -98,6 +98,7 @@ public class DeadTreeCut {
 
         if(user.getRole()==4){
             jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+            jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
         }else if(user.getRole()<=3){
             jsonObject.put("Data",deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
         }
