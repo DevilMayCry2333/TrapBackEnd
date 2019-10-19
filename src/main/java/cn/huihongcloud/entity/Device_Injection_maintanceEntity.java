@@ -74,7 +74,16 @@ public class Device_Injection_maintanceEntity {
 
     private String endDate;
 
-    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String workContent, Integer injectionNum,String pic, String worker, String remarks, Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String customtown, Integer injectNumSum,Integer woodstatus,Integer WoodStatusSum) {
+    private Integer totalInjectSum;
+
+    private Integer totalWoodSum;
+
+    private Integer totalDeadSum;
+
+    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude,
+                                            String workContent, Integer injectionNum,String pic, String worker, String remarks,
+                                            Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String customtown, Integer injectNumSum,
+                                            Integer woodstatus,Integer WoodStatusSum,Integer totalInjectSum,Integer totalWoodSum,Integer totalDeadSum) {
 
         this.woodstatus = woodstatus;
 
@@ -104,6 +113,10 @@ public class Device_Injection_maintanceEntity {
         this.customtown = customtown;
         this.injectNumSum = injectNumSum;
         this.WoodStatusSum = WoodStatusSum;
+        this.totalInjectSum = totalInjectSum;
+        this.totalWoodSum = totalWoodSum;
+        this.totalDeadSum = totalDeadSum;
+
 
     }
 
@@ -342,5 +355,29 @@ public class Device_Injection_maintanceEntity {
 
     public void setCustomtown(String customtown) {
         this.customtown = customtown;
+    }
+
+    public Integer getTotalInjectSum() {
+        return totalInjectSum;
+    }
+
+    public void setTotalInjectSum(Integer totalInjectSum) {
+        this.totalInjectSum = totalInjectSum;
+    }
+
+    public Integer getTotalWoodSum() {
+        return totalWoodSum;
+    }
+
+    public void setTotalWoodSum(Integer totalWoodSum) {
+        this.totalWoodSum = totalWoodSum;
+    }
+
+    public Integer getTotalDeadSum() {
+        return totalDeadSum;
+    }
+
+    public void setTotalDeadSum(Integer totalDeadSum) {
+        this.totalDeadSum = totalDeadSum;
     }
 }

@@ -134,10 +134,12 @@
         device.CustomSerial,
         device.town,
         device_maintenance.working_content,
-        device_maintenance.reported
+        device_maintenance.reported,
+        workcontent.name workcontentfront
         from device_maintenance
         left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username
+        left join workcontent on working_content = workcontent.Fvalue
         where device_id in
         (select id from device where
         1 = 1

@@ -54,6 +54,10 @@ public class NaturalSummary {
             endDate = endDate + " 23:59:59";
         }
         List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
+        for (cn.huihongcloud.entity.summary.NaturalSummary ns:summaryEntities) {
+            User user = userService.getUserByUserName(ns.getName());
+            ns.setName(user.getParent());
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);

@@ -96,9 +96,22 @@ public class DeadTreeCut {
         System.out.println(page);
         System.out.println(limit);
 
+        double woodVolume = 0;
+
+        int woodNum = 0;
+
         if(user.getRole()==4){
+            List<Device_DeadTrees_maintanceEntity> dataEntity = deviceDeadTreesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode);
+            for (Device_DeadTrees_maintanceEntity data:dataEntity) {
+                woodVolume += Double.parseDouble(data.getWoodvolume());
+            }
+            woodNum = dataEntity.size();
+
             jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
             jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+            jsonObject.put("woodVolume",woodVolume);
+            jsonObject.put("woodNum",woodNum);
+
         }else if(user.getRole()<=3){
             jsonObject.put("Data",deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
         }
