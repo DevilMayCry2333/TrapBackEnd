@@ -49,8 +49,16 @@ public class Device_Track_MaintanceEntity {
 
     private Boolean checked;
 
+    private int reported;
 
-    public Device_Track_MaintanceEntity(String latitudeCollect,String longtitudeCollect,String AltitudeCollect,Long id, String linename, String timeconsume, String starttime, String endtime,String startpoint, String endpoint, String pic1, String pic2, String pic3, String pic4, String pic5, String worker, String workingContent, String remarks, Long scanid, Long deviceId, String username,String submit_date) {
+
+
+    public Device_Track_MaintanceEntity(String latitudeCollect,String longtitudeCollect,String AltitudeCollect,
+                                        Long id, String linename, String timeconsume, String starttime,
+                                        String endtime,String startpoint, String endpoint, String pic1,
+                                        String pic2, String pic3, String pic4, String pic5, String worker,
+                                        String workingContent, String remarks, Long scanid, Long deviceId,
+                                        String username,String submit_date,int reported) {
         this.id = id;
         this.linename = linename;
         this.timeconsume = timeconsume;
@@ -73,6 +81,7 @@ public class Device_Track_MaintanceEntity {
         this.username = username;
         this.submit_date =submit_date;
         this.AltitudeCollect = AltitudeCollect;
+        this.reported = reported;
 
     }
 
@@ -270,5 +279,13 @@ public class Device_Track_MaintanceEntity {
 
     public void setLongtitudeCollect(String longtitudeCollect) {
         this.longtitudeCollect = longtitudeCollect;
+    }
+
+    public int getReported() {
+        return reported;
+    }
+
+    public void setReported(int reported) {
+        this.reported = reported;
     }
 }

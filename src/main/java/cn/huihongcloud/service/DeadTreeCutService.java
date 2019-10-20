@@ -1,7 +1,9 @@
 package cn.huihongcloud.service;
 
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 public class DeadTreeCutService {
     @Autowired
     Device_DeadTrees_maintanceEntityMapper deviceDeadTreesMaintanceEntityMapper;
+    @Autowired
+    UserService userService;
 
     public List<Device_DeadTrees_maintanceEntity> selectAll(String username,int num1,int num2){
         return deviceDeadTreesMaintanceEntityMapper.selectAll(username, num1, num2);
@@ -80,5 +84,78 @@ public class DeadTreeCutService {
         }
         return deviceList;
     }
+
+
+    public List<Device_DeadTrees_maintanceEntity> getAreaMaintanceDetail(User user, String condition, String date, String endDate) {
+        int role = user.getRole();
+        if (role < 3) {
+            // 省到县级用户
+            boolean reported = true;
+
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea(user.getAdcode(), user.getTown(), condition, date, endDate, reported);
+
+        } else if (role == 3) {
+//            User user1 = userService.getUserByUserName(user.getParent());
+            System.out.println("=====");
+            System.out.println(user.getUsername());
+
+
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea(user.getAdcode(), user.getTown(), condition, date, endDate, null);
+        } else if (role == 4) {
+            // 管理员
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByManagerArea(user.getAdcode(), user.getTown(), condition, date, endDate, user.getUsername());
+        } else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+    public List<Device_DeadTrees_maintanceEntity> getMaintenanceDataByDeviceId(User user,String myusername,String deviceId, String startDate, String endDate) {
+        Integer role=user.getRole();
+        if(role<3){
+            Boolean reported = true;
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByDeviceId(myusername,deviceId,startDate,endDate,reported);
+        }else if(role == 3 || role ==4) {
+
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByDeviceId(myusername,deviceId, startDate, endDate, null);
+        }else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+    public List<Device_DeadTrees_maintanceEntity> getMaintenanceData1(User user, String condition, String date, String endDate,String batch,String searchtown) {
+        int role = user.getRole();
+        if (role <3) {
+            // 省到县级用户
+            boolean reported = true;
+
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTown1(user.getAdcode(), user.getTown(), condition,batch, searchtown,date, endDate,reported);
+        } else if (role == 3) {
+
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTown1(user.getAdcode(), user.getTown(), condition, batch,searchtown,date, endDate,null);
+        }else if (role == 4) {
+            // 管理员
+            return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByManager1(user.getAdcode(), user.getTown(), condition, batch,searchtown,date,endDate, user.getUsername());
+        } else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+    public boolean report(List<Integer> ids) {
+        for (Integer id: ids) {
+            deviceDeadTreesMaintanceEntityMapper.reportData(id);
+        }
+        return true;
+    }
+
+
+
+
+
+
+
+
 
 }

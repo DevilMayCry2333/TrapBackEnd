@@ -1,7 +1,9 @@
 package cn.huihongcloud.controller.newApp;
 
+import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
+import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.user.User;
@@ -34,7 +36,8 @@ public class DeadTrees {
     DeviceService deviceService;
     @Autowired
     Device_DeadTrees_maintanceEntityMapper deviceDeadTreesMaintanceEntityMapper;
-
+    @Autowired
+    private BDComponent mBDComponent;
 
 
     @RequestMapping("/getKillMethods")
@@ -107,6 +110,11 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceDeadTreesMaintanceEntity.setSubmitDate(datestr);
         deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
+
+        BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+
+        deviceDeadTreesMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
+
 
         List<Device_DeadTrees_maintanceEntity> maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
         int maxIdNum = 0;

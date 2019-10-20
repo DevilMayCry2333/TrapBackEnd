@@ -149,8 +149,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_DeadTrees_maintance (Pic,serial,submit_date,batch,region,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks)
-      values (#{pic},#{serial},#{submitDate},#{batch},#{region},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks})
+      insert into Device_DeadTrees_maintance (Pic,serial,submit_date,batch,region,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town)
+      values (#{pic},#{serial},#{submitDate},#{batch},#{region},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town})
     </insert>
   <update id="updateRecordById">
     update device_deadtrees_maintance set device_Id=#{deviceId},serial=#{serial},submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},
@@ -204,7 +204,13 @@
       where t1.id = #{id}
 
     </update>
-    <delete id="deleteById">
+  <update id="reportData">
+        update Device_DeadTrees_maintance
+        set reported = 1
+        where id = #{id}
+
+  </update>
+  <delete id="deleteById">
       delete from  device_deadtrees_maintance where id = #{id}
     </delete>
     <select id="selectAll" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
@@ -331,5 +337,350 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
+  </select>
+  <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
+    select count(distinct device_Id) woodNum, sum(woodVolume) woodVolume, Device_DeadTrees_maintance.town `name`, device.adcode code
+    from Device_DeadTrees_maintance
+    left join device on Device_DeadTrees_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and Device_DeadTrees_maintance.town is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by Device_DeadTrees_maintance.town
+  </select>
+  <select id="queryDeviceSummaryByManager" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
+    select count(distinct device_Id) woodNum, sum(Device_DeadTrees_maintance.woodVolume) woodVolume, device.manager `name`, device.adcode code
+    from Device_DeadTrees_maintance
+    left join device on Device_DeadTrees_maintance.device_Id = device.id
+    where device.adcode like concat(#{adcode}, '%')
+
+    and device.manager is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device.manager
+  </select>
+  <select id="queryDeviceSum" resultType="java.util.Map">
+    select count(distinct device_Id) `count`, sum(woodVolume) `sum`
+    from Device_DeadTrees_maintance
+
+    left join device on device.id = Device_DeadTrees_maintance.device_Id
+    where adcode like concat(#{adcode}, '%')
+
+    <if test="startDate != null and startDate !=''">
+
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+
+      and submit_date &lt;= #{endDate}
+    </if>
+
+  </select>
+  <select id="queryDeviceSum4" resultType="java.util.Map">
+    select count(distinct device_Id) `count`, sum(woodVolume) `sum` from Device_DeadTrees_maintance
+    left join device on device.id = Device_DeadTrees_maintance.device_Id
+    left join user on Device_DeadTrees_maintance.username = user.username
+    where parent = #{adcode}
+
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+
+  </select>
+  <select id="getMaintenanceDataByAdcodeAndTownArea"
+          resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    select Device_DeadTrees_maintance.id,
+    Device_DeadTrees_maintance.device_Id,
+    Device_DeadTrees_maintance.batch,
+    sum(Device_DeadTrees_maintance.woodVolume) woodVolume,
+    Device_DeadTrees_maintance.Worker,
+    user.name,
+    Device_DeadTrees_maintance.submit_date,
+    Device_DeadTrees_maintance.longitude,
+    Device_DeadTrees_maintance.latitude,
+    Device_DeadTrees_maintance.altitude,
+    Device_DeadTrees_maintance.Pic,
+    Device_DeadTrees_maintance.Remarks,
+    Device_DeadTrees_maintance.reported,
+    device.province,
+    device.city,
+    device.area,
+    Device_DeadTrees_maintance.town,
+    Device_DeadTrees_maintance.scanId,
+    Device_DeadTrees_maintance.username,
+    Device_DeadTrees_maintance.KillMethod,
+    Device_DeadTrees_maintance.region
+    from Device_DeadTrees_maintance
+    left join device on device.id = Device_DeadTrees_maintance.device_Id
+    left join user on Device_DeadTrees_maintance.Worker = user.username
+    where device_Id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      Device_DeadTrees_maintance.town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition !='null'">
+      and (
+      user.username = #{condition} or
+      device.province = #{condition} or
+      device.city = #{condition} or
+      device.area =  #{condition} or
+      Device_DeadTrees_maintance.town = #{condition} or
+      Device_DeadTrees_maintance.device_Id = #{condition} or
+      device.manager=#{condition} or
+      device.CustomProject = #{condition}
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+
+    <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device_Id,Device_DeadTrees_maintance.Worker
+
+    order by submit_date desc
+
+  </select>
+  <select id="getMaintenanceDataByManagerArea"
+          resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    select Device_DeadTrees_maintance.id,
+    Device_DeadTrees_maintance.device_Id,
+    Device_DeadTrees_maintance.batch,
+    sum(Device_DeadTrees_maintance.woodVolume) woodVolume,
+    Device_DeadTrees_maintance.Worker,
+    user.name,
+    Device_DeadTrees_maintance.submit_date,
+    Device_DeadTrees_maintance.longitude,
+    Device_DeadTrees_maintance.latitude,
+    Device_DeadTrees_maintance.altitude,
+    Device_DeadTrees_maintance.Pic,
+    Device_DeadTrees_maintance.Remarks,
+    Device_DeadTrees_maintance.reported,
+    device.province,
+    device.city,
+    device.area,
+    device.town,
+    Device_DeadTrees_maintance.region,
+    Device_DeadTrees_maintance.KillMethod,
+    Device_DeadTrees_maintance.username
+    from Device_DeadTrees_maintance
+    left join device on device.id = Device_DeadTrees_maintance.device_Id
+    left join user on Device_DeadTrees_maintance.Worker = user.username
+    where device_Id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      Device_DeadTrees_maintance.town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition != 'null'">
+      and (
+      user.username =#{condition} or
+      device.province =#{condition} or
+      device.city = #{condition} or
+      device.area =#{condition} or
+      Device_DeadTrees_maintance.town = #{condition} or
+      Device_DeadTrees_maintance.device_Id = #{condition} or
+      device.CustomProject = #{condition}
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+
+    <if test="endDate != null and endDate != '' and endDate!= 'null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="manager != null">
+      and manager = #{manager}
+    </if>
+
+    group by device_Id,Device_DeadTrees_maintance.Worker
+    order by submit_date desc
+
+  </select>
+  <select id="getMaintenanceDataByDeviceId"
+          resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    select * from Device_DeadTrees_maintance
+    where device_Id = #{deviceId}
+
+    <if test="myusername != null and myusername !=''">
+      and username = #{myusername}
+    </if>
+    <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !='' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+
+  </select>
+  <select id="getMaintenanceDataByAdcodeAndTown1"
+          resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    select Device_DeadTrees_maintance.id,
+    Device_DeadTrees_maintance.device_Id,
+    Device_DeadTrees_maintance.batch,
+    Device_DeadTrees_maintance.woodVolume,
+    Device_DeadTrees_maintance.username,
+    user.name,
+    Device_DeadTrees_maintance.submit_date,
+    Device_DeadTrees_maintance.longitude,
+    Device_DeadTrees_maintance.latitude,
+    Device_DeadTrees_maintance.altitude,
+    Device_DeadTrees_maintance.Pic,
+    Device_DeadTrees_maintance.scanId,
+    Device_DeadTrees_maintance.Remarks,
+    device.province,
+    device.city,
+    device.area,
+    Device_DeadTrees_maintance.town,
+    Device_DeadTrees_maintance.Worker,
+    Device_DeadTrees_maintance.reported,
+    Device_DeadTrees_maintance.KillMethod,
+    Device_DeadTrees_maintance.region
+    from Device_DeadTrees_maintance
+    left join device on device.id = Device_DeadTrees_maintance.device_Id
+    left join user on Device_DeadTrees_maintance.Worker = user.username
+    where device_Id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      Device_DeadTrees_maintance.town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition !='null'">
+      and (
+      user.username like concat('%', #{condition}, '%') or
+      device.province like concat('%', #{condition}, '%') or
+      device.city like concat('%', #{condition}, '%') or
+      device.area like concat('%', #{condition}, '%') or
+      Device_DeadTrees_maintance.town like concat('%', #{condition}, '%') or
+      user.username like concat('%', #{condition}, '%') or
+      user.name like concat('%', #{condition}, '%') or
+      Device_DeadTrees_maintance.device_Id like concat('%', #{condition}, '%')
+
+      )
+    </if>
+    <if test="batch != null and batch != '' and batch !='null'">
+      and `batch` = #{batch}
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+    <if test="searchtown != null and searchtown != '' and searchtown !='null'">
+      and Device_DeadTrees_maintance.town like concat('%', #{searchtown}, '%')
+    </if>
+    <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="reported != null and reported != ''">
+      and reported = #{reported}
+    </if>
+
+    order by submit_date desc
+
+  </select>
+
+  <select id="getMaintenanceDataByManager1"
+          resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    select Device_DeadTrees_maintance.id,
+    Device_DeadTrees_maintance.device_Id,
+    Device_DeadTrees_maintance.batch,
+    Device_DeadTrees_maintance.woodVolume,
+    Device_DeadTrees_maintance.KillMethod,
+    Device_DeadTrees_maintance.region,
+    Device_DeadTrees_maintance.Worker,
+    user.name,
+    Device_DeadTrees_maintance.submit_date,
+    Device_DeadTrees_maintance.longitude,
+    Device_DeadTrees_maintance.latitude,
+    Device_DeadTrees_maintance.altitude,
+    Device_DeadTrees_maintance.Pic,
+    Device_DeadTrees_maintance.scanId,
+    Device_DeadTrees_maintance.Remarks,
+    device.province,
+    device.city,
+    device.area,
+    Device_DeadTrees_maintance.town,
+    Device_DeadTrees_maintance.reported
+    from Device_DeadTrees_maintance
+    left join device on device.id = Device_DeadTrees_maintance.device_Id
+    left join user on Device_DeadTrees_maintance.username = user.username
+    where device_Id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and Device_DeadTrees_maintance.town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition != 'null'">
+      and (
+      user.username like concat('%', #{condition}, '%') or
+      device.province like concat('%', #{condition}, '%') or
+      device.city like concat('%', #{condition}, '%') or
+      device.area like concat('%', #{condition}, '%') or
+      Device_DeadTrees_maintance.town like concat('%', #{condition}, '%') or
+      user.username like concat('%', #{condition}, '%') or
+      user.name like concat('%', #{condition}, '%') or
+      Device_DeadTrees_maintance.device_Id like concat('%', #{condition}, '%')
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+    <if test="batch != null and batch != '' and batch !='null'">
+      and `batch` = #{batch}
+    </if>
+    <if test="searchtown != null and searchtown != '' and searchtown !='null'">
+      and Device_DeadTrees_maintance.town like concat('%', #{searchtown}, '%')
+    </if>
+    <if test="endDate != null and endDate != '' and endDate!= 'null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="manager != null">
+      and manager = #{manager}
+    </if>
+
+    order by submit_date desc
+
   </select>
 </mapper>

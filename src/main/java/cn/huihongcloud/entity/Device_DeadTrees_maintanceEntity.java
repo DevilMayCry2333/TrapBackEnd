@@ -48,8 +48,23 @@ public class Device_DeadTrees_maintanceEntity {
     @Excel(name = "区域")
     private String customTown;
 
+    private String town;
 
-    public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial, String submitDate, String batch, String longitude, String latitude, String wooddiameter, String woodheight, String woodvolume, String killmethod, String worker, String remarks, Long scanid, String pic, String username,String region,String altitude,String accuracy) {
+    private int reported;
+
+    private String province;
+
+    private String city;
+
+    private String area;
+
+
+    public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial,
+                                            String submitDate, String batch, String longitude,
+                                            String latitude, String wooddiameter, String woodheight,
+                                            String woodvolume, String killmethod, String worker, String remarks,
+                                            Long scanid, String pic, String username,String region,
+                                            String altitude,String accuracy,String town,int reported) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -69,6 +84,8 @@ public class Device_DeadTrees_maintanceEntity {
         this.region = region;
         this.altitude = altitude;
         this.accuracy = accuracy;
+        this.town = town;
+        this.reported = reported;
     }
 
     public Device_DeadTrees_maintanceEntity() {
@@ -233,5 +250,45 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setCustomTown(String customTown) {
         this.customTown = customTown;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public int getReported() {
+        return reported;
+    }
+
+    public void setReported(int reported) {
+        this.reported = reported;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

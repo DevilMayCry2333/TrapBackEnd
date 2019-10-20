@@ -43,4 +43,16 @@ public interface UserMapper {
 
     List<User> getProjectAdminByAdcode(String adcode);
 
+    int reportTrap(String customProject);
+
+    int reportInject(String customProject);
+
+    int reportEnemy(String customProject);
+
+    int reportDead(String customProject);
+
+    int reportTrack(String projectAdmin);
+
+
+
 }
