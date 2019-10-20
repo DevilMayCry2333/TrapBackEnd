@@ -226,9 +226,26 @@ public class NaturalEnemy {
         jsonObject.put("Res",true);
         System.out.println(page);
         System.out.println(limit);
+        int luanKaNum = 0;
+        int releasNum = 0;
+
+        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,limit,adcode);
+
+
         if(user.getRole()==4){
-            jsonObject.put("Data",naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,limit,adcode));
+            List<Device_NaturalEnemies_maintanceEntity> allEntity = deviceNaturalEnemiesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,limit,adcode);
+
+            for (Device_NaturalEnemies_maintanceEntity dataEntity: allEntity) {
+                if(dataEntity.getPredatorstype().equals("卵卡")){
+                    luanKaNum++;
+                }
+                releasNum += dataEntity.getReleaseNum();
+            }
+            
+            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntities);
             jsonObject.put("DeviceNum",deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,1,100000,adcode));
+            jsonObject.put("LuanKaNum",luanKaNum);
+            jsonObject.put("releaseNum",releasNum);
         }else if(user.getRole()<=3){
             jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode()));
         }

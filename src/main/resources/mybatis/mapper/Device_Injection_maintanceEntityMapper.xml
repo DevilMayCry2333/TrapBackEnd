@@ -198,8 +198,8 @@
   </insert>
 
     <insert id="addMaintanceData">
-        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,woodstatus,injection_num,Remarks,work_content,Pic,username)
-        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodstatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username})
+        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,woodstatus,injection_num,Remarks,work_content,Pic,username,town)
+        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodstatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username},#{town})
     </insert>
 
     <update id="reportData">
@@ -303,18 +303,18 @@
   </select>
 
     <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
-      select count(distinct device_id) deviceCount, sum(injection_num) injectNum, device.town `name`, device.adcode code
+      select count(distinct device_id) deviceCount, sum(injection_num) injectNum, Device_Injection_maintance.town `name`, device.adcode code
       from Device_Injection_maintance
       left join device on Device_Injection_maintance.device_Id = device.id
       where adcode like concat(#{adcode}, '%')
-      and device.town is not null
+      and Device_Injection_maintance.town is not null
       <if test="startDate != null and startDate !=''">
         and submit_Date &gt;= #{startDate}
       </if>
       <if test="endDate != null and endDate !=''">
         and submit_Date &lt;= #{endDate}
       </if>
-      group by device.town
+      group by Device_Injection_maintance.town
     </select>
 
   <select id="getMaintenanceDataByAdcodeAndTownArea" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
@@ -334,7 +334,7 @@
     device.province,
     device.city,
     device.area,
-    device.town,
+    Device_Injection_maintance.town,
     Device_Injection_maintance.work_content,
     Device_Injection_maintance.username,
     Device_Injection_maintance.WoodStatus
@@ -351,7 +351,7 @@
 
     <if test="town != null and town != ''">
       and
-      town = #{town}
+      Device_Injection_maintance.town = #{town}
     </if>
     )
     <if test="condition != null and condition != '' and condition !='null'">
@@ -360,9 +360,10 @@
       device.province = #{condition} or
       device.city = #{condition} or
       device.area =  #{condition} or
-      device.town = #{condition} or
+      Device_Injection_maintance.town = #{condition} or
       Device_Injection_maintance.device_Id = #{condition} or
-      device.manager=#{condition}
+      device.manager=#{condition} or
+      device.CustomProject = #{condition}
       )
     </if>
     <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -422,7 +423,8 @@
       device.city = #{condition} or
       device.area =#{condition} or
       device.town = #{condition} or
-      Device_Injection_maintance.device_Id = #{condition}
+      Device_Injection_maintance.device_Id = #{condition} or
+      device.CustomProject = #{condition}
       )
     </if>
     <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -492,7 +494,7 @@
       device.province,
       device.city,
       device.area,
-      device.town,
+      Device_Injection_maintance.town,
       Device_Injection_maintance.work_content,
       Device_Injection_maintance.reported
       from Device_Injection_maintance

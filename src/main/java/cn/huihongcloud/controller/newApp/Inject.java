@@ -1,5 +1,6 @@
 package cn.huihongcloud.controller.newApp;
 
+import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.controller.DeviceMaintenanceController;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
@@ -39,6 +40,10 @@ public class Inject {
     DeviceService deviceService;
     @Autowired
     Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
+
+    @Autowired
+    private BDComponent mBDComponent;
+
 
 
     @RequestMapping("/getWoodStatus")
@@ -132,7 +137,14 @@ public class Inject {
         deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
 
+
+        BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+
+        deviceInjectionMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
+
+
         System.out.println("CustomeSerial");
+        
         System.out.println(realDeviceId.getCustomSerial());
 
         Date date= new Date(System.currentTimeMillis());

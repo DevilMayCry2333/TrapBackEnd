@@ -62,28 +62,35 @@ public class TrackService {
      * @param manager 管理员用户名
      * @return 设备列表
      */
-    public List<DeviceTrackMap> getDeviceByManager(String manager) {
+    public List<DeviceTrackMap> getDeviceByManager(String manager,boolean isUseAdcode,String adcode) {
         List<Device_Track_MaintanceEntity> deviceList = null;
         List<DeviceTrackMap> realData = new ArrayList<>();
 
-        try {
-            deviceList = deviceTrackMaintanceEntityMapper.getDeviceByManager(manager);
+            if(isUseAdcode){
+                deviceList = deviceTrackMaintanceEntityMapper.getDeviceByAdcode(adcode);
+            }else{
+                deviceList = deviceTrackMaintanceEntityMapper.getDeviceByManager(manager);
+            }
+
             for (Device_Track_MaintanceEntity d:
                  deviceList) {
                 String latspilt[] = d.getLatitudeCollect().split(",");
                 String longspilt[] = d.getLongtitudeCollect().split(",");
 
                 for (int i = 0; i < latspilt.length; i++) {
-                    DeviceTrackMap deviceTrackMap = new DeviceTrackMap();
-                    deviceTrackMap.setLongitude(Double.valueOf(longspilt[i]));
-                    deviceTrackMap.setLatitude(Double.valueOf(latspilt[i]));
-                    deviceTrackMap.setLinename(d.getLinename());
-                    realData.add(deviceTrackMap);
+                    System.out.println(longspilt[i]);
+                    System.out.println(latspilt[i]);
+                    try {
+                        DeviceTrackMap deviceTrackMap = new DeviceTrackMap();
+                        deviceTrackMap.setLongitude(Double.valueOf(longspilt[i]));
+                        deviceTrackMap.setLatitude(Double.valueOf(latspilt[i]));
+                        deviceTrackMap.setLinename(d.getLinename());
+                        realData.add(deviceTrackMap);
+                    }catch (Exception e){
+
+                    }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return realData;
     }
 

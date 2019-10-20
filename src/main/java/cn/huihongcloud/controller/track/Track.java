@@ -172,24 +172,24 @@ public class Track {
 
         if (user.getRole() == 1) {
 //            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
-            deviceTrackMaps = trackService.getDeviceByManager(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode());
         }
         if (user.getRole() == 2) {
 //            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
-            deviceTrackMaps = trackService.getDeviceByManager(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode());
         }
         if (user.getRole() == 3) {
 //            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
-            deviceTrackMaps = trackService.getDeviceByManager(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode());
         }
 
         if (user.getRole() == 4) {
-            deviceTrackMaps = trackService.getDeviceByManager(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username,false,null);
         }
 
         if (user.getRole() == 5) {
 //            list = trackService.getDeviceByWorker(username);
-            deviceTrackMaps = trackService.getDeviceByManager(username);
+            deviceTrackMaps = trackService.getDeviceByManager(username,false,null);
         }
 
         pageWrapper.setData(deviceTrackMaps);

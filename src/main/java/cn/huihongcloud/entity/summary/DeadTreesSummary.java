@@ -3,26 +3,26 @@ package cn.huihongcloud.entity.summary;
 import lombok.Data;
 
 @Data
-public class NaturalSummary {
-    private Long deviceCount;
-    private Long releaseNum;
+public class DeadTreesSummary {
+    private String woodVolume;
+    private String woodNum;
     private String name;
     private String code;
 
-    public Long getDeviceCount() {
-        return deviceCount;
+    public String getWoodVolume() {
+        return woodVolume;
     }
 
-    public void setDeviceCount(Long deviceCount) {
-        this.deviceCount = deviceCount;
+    public void setWoodVolume(String woodVolume) {
+        this.woodVolume = woodVolume;
     }
 
-    public Long getReleaseNum() {
-        return releaseNum;
+    public String getWoodNum() {
+        return woodNum;
     }
 
-    public void setReleaseNum(Long releaseNum) {
-        this.releaseNum = releaseNum;
+    public void setWoodNum(String woodNum) {
+        this.woodNum = woodNum;
     }
 
     public String getName() {

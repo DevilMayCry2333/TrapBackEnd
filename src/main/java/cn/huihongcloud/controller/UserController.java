@@ -485,4 +485,32 @@ public class UserController {
         return Result.ok(managers);
     }
 
+    @RequestMapping("system/getCustomProject")
+    public Object getCustomProject(@RequestAttribute("username") String username, String adcode){
+        List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
+        return Result.ok(userList);
+    }
+
+    @RequestMapping("system/dataReport")
+    public Object dataReport(@RequestParam String project,@RequestParam String customProject){
+        if(project.equals("诱捕器管理")){
+            userMapper.reportTrap(customProject);
+        }else if(project.equals("注干剂监测")){
+            userMapper.reportInject(customProject);
+        }else if(project.equals("天敌防治")){
+            userMapper.reportEnemy(customProject);
+        }else if(project.equals("枯死树采伐")){
+            userMapper.reportDead(customProject);
+        }else if(project.equals("轨迹追踪")){
+            User user = userMapper.getUserByUserName(customProject);
+            System.out.println(user.getParent());
+
+            userMapper.reportTrack(user.getParent());
+
+
+
+        }
+        return "OK";
+    }
+
 }

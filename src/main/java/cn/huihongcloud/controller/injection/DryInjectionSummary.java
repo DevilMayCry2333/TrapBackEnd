@@ -42,6 +42,10 @@ public class DryInjectionSummary {
             endDate = endDate + " 23:59:59";
         }
         List<InjectionSummary> summaryEntities = deviceInjectionMaintanceEntityMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
+        for (InjectionSummary is: summaryEntities) {
+            User user = userService.getUserByUserName(is.getName());
+            is.setName(user.getParent());
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
@@ -168,16 +172,30 @@ public class DryInjectionSummary {
 
         List<Device_Injection_maintanceEntity> deviceInjectionMaintanceEntities = dryInjectionService.getDryInjectionSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate,deadId);
 
+        int totalInjectNum = 0;
+        int totalDeadNum = 0;
+        int totalWoodNum = 0;
         for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
+            totalDeadNum += lim.getWoodStatusSum();
+            totalInjectNum += lim.getInjectNumSum();
+            totalWoodNum += Integer.parseInt(lim.getWoodNum());
         }
 
+        for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {
+            lim.setTotalInjectSum(totalInjectNum);
+            lim.setTotalDeadSum(totalDeadNum);
+            lim.setTotalWoodSum(totalWoodNum);
+        }
+
+
         PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setData(deviceInjectionMaintanceEntities);
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());
-        pageWrapper.setData(deviceInjectionMaintanceEntities);
+
         return Result.ok(pageWrapper);
     }
 

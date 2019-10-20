@@ -1,6 +1,8 @@
 package cn.huihongcloud.controller.newApp;
 
+import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
+import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.user.User;
@@ -34,6 +36,10 @@ public class Enemy {
     DeviceService deviceService;
     @Autowired
     Device_NaturalEnemies_maintanceEntityMapper deviceNaturalEnemiesMaintanceEntityMapper;
+
+    @Autowired
+    private BDComponent mBDComponent;
+
 
     @RequestMapping("/getEnemyType")
     public Object getEnemyType(@RequestParam String worker){
@@ -114,6 +120,10 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setSubmitDate(datestr);
         deviceNaturalEnemiesMaintanceEntity.setRegion(realDeviceId.getArea());
         deviceNaturalEnemiesMaintanceEntity.setBatch(maxBatchNum + 1);
+
+        BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+
+        deviceNaturalEnemiesMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
 
 

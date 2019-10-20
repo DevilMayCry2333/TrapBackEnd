@@ -319,6 +319,9 @@
     </if>
 
   </select>
+  <select id="getDeviceByAdcode" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+    select * from device_track_maintance where adcode like concat('%', #{adcode}, '%')
+  </select>
 
 
 </mapper>

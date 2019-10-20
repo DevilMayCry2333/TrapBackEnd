@@ -36,6 +36,10 @@ public interface Device_Track_MaintanceEntityMapper {
 
     List<Device_Track_MaintanceEntity> getDeviceByManager(@Param("manager") String manager);
 
+    List<Device_Track_MaintanceEntity> getDeviceByAdcode(@Param("adcode") String adcode);
+
+
+
     List<Device> getDeviceByWorker(@Param("worker") String worker);
 
     int addMaintance(Device_Track_MaintanceEntity dataentity);
