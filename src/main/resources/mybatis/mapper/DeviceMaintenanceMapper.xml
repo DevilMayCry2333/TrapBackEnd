@@ -724,9 +724,9 @@
         group by CustomTown
     </select>
     <select id="getInputEntityForArea" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select area name, sum(num1) `sum` , avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select area name, sum(num1) `sum` ,CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
          from (
-            select area,sum(num) num1,device_id,adcode
+            select area,sum(num) num1,CustomTown,device_id,adcode
             from device_maintenance
             left join device on device_id = device.id
             where adcode like concat(#{code}, '%')
@@ -739,13 +739,12 @@
             and `date` &lt;= #{endDate}
         </if>
         group by device_id)as a
-
         group by area
     </select>
     <select id="getInputEntityForCity" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select city name,  sum(num1) `sum` , avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select city name,  sum(num1) `sum` ,CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
         from (
-        select city,sum(num) num1,device_id
+        select city,sum(num) num1,CustomTown,device_id
          from device_maintenance
         left join device on device_id = device.id
         where adcode like concat(#{code}, '%')
