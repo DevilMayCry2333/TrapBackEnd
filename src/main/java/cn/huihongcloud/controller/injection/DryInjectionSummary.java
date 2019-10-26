@@ -24,7 +24,6 @@ import java.util.Objects;
 public class DryInjectionSummary {
     @Autowired
     Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
-
     @Autowired
     UserService userService;
     @Autowired
