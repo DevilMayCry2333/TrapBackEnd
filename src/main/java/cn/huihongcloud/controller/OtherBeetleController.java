@@ -242,6 +242,29 @@ public class OtherBeetleController {
 
 
     @GetMapping("/inject_workContent")
+    public Object getMedicineWork() {
+        return Result.ok(otherBeetleMapper.getInject_WorkContent());
+    }
+
+    @PostMapping("/inject_workContent")
+    public Object addMedicineWork(String name) {
+        otherBeetleMapper.insertInject_WorkContent(name);
+        return Result.ok();
+    }
+
+
+    @PutMapping("/inject_workContent")
+    public Object updateMedicineWork(inject_WorkContent injectWorkContent) {
+        otherBeetleMapper.updateInject_WorkContent(injectWorkContent);
+        return Result.ok();
+    }
+
+    @DeleteMapping("/inject_workContent")
+    public Object deleteMedicineWork(int id) {
+        otherBeetleMapper.deleteWorkContent(id);
+        return Result.ok();
+    }
+    @GetMapping("/inject_workContent")
     public Object getinjectWork() {
         return Result.ok(otherBeetleMapper.getInject_WorkContent());
     }

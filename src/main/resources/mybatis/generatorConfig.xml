@@ -12,9 +12,9 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/trapSystem"
+                        connectionURL="jdbc:mysql://localhost:3306/trapSystem?serverTimezone=GMT%2B8"
                         userId="root"
-                        password="YKY12345..">
+                        password="root">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -38,6 +38,6 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- tableName是数据库的表名，domainObjectName是生成的实体类名称 -->
-        <table tableName="Device_Track_Maintance" domainObjectName="Device_Track_MaintanceEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="device_medicine_maintance" domainObjectName="Device_Medicine_MaintanceEntity" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>
