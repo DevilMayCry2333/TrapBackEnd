@@ -792,7 +792,7 @@
           and batch = #{searchText}
         </when>
         <when test="optionIndex == 4">
-          and Worker #{searchText}
+          and Worker = #{searchText}
         </when>
         <otherwise>
           and concat(device_Id,CustomTown,batch,Worker) like concat('%',#{searchText},'%')
