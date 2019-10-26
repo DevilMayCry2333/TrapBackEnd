@@ -26,7 +26,13 @@ public class InputEntity {
 
         this.name = name;
         this.count = count;
-        this.customtown = customtown;
+
+        if(customtown==null){
+            this.customtown = "";
+        }else {
+            this.customtown = customtown;
+        }
+
         this.sum = sum;
         /*
         BigDecimal count1=new BigDecimal(count);

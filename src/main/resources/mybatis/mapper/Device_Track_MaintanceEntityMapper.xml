@@ -306,8 +306,27 @@
     select * from device_track_maintance where LineName = #{linename}
   </select>
   <select id="selectByDateAndColSearchAdcode" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
-    SELECT * FROM  Device_Track_Maintance t1 LEFT JOIN user t2 ON t1.Worker = t2.username
-    WHERE t2.adcode like concat('%' , #{adcode}, '%')
+    SELECT * FROM  Device_Track_Maintance
+    WHERE adcode like concat('%' , #{adcode}, '%')
+    <if test="startDate!=null and startDate !=''">
+      and StartTime >= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and StartTime &lt;= #{endDate}
+    </if>
+    <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+      and ${colName} like concat(#{searchText}, '%')
+    </if>
+    LIMIT #{num1},#{num2}
+
+  </select>
+  <select id="getDeviceByAdcode" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+    select * from device_track_maintance where adcode like concat('%', #{adcode}, '%')
+  </select>
+  <select id="countAllByAdcode" resultType="java.lang.Integer">
+    SELECT COUNT(Device_Track_Maintance.id) FROM Device_Track_Maintance
+    where adcode like (concat('%' , #{adcode}, '%'))
+
     <if test="startDate!=null and startDate !=''">
       and StartTime >= #{startDate}
     </if>
@@ -318,9 +337,6 @@
       and ${colName} like concat(#{searchText}, '%')
     </if>
 
-  </select>
-  <select id="getDeviceByAdcode" resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
-    select * from device_track_maintance where adcode like concat('%', #{adcode}, '%')
   </select>
 
 
