@@ -15,6 +15,9 @@ public interface Device_Track_MaintanceEntityMapper {
 
     int countAll(String username,String startDate,String endDate,String colName,String searchText);
 
+    int countAllByAdcode(String adcode,String startDate,String endDate,String colName,String searchText);
+
+
     int insert(Device_Track_MaintanceEntity record);
 
     int insertSelective(Device_Track_MaintanceEntity record);
