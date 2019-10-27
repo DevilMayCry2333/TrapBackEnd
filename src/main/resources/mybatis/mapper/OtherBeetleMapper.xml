@@ -43,6 +43,9 @@
     <insert id="insertDeadKillFOrTown">
         insert into deadtrees_KillMethods_map values (#{id},#{adcode});
     </insert>
+    <insert id="insertMedicine_WorkContent">
+        insert into medicine_workcontent(`name`) values (#{name})
+    </insert>
     <update id="updateBeetleInfo">
         update beetle_info set `name` = #{name} where id = #{id}
     </update>
@@ -63,6 +66,9 @@
     </update>
     <update id="updateDead_Kill">
         update deadtree_KillMethods set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateMedicine_WorkContent" parameterType="cn.huihongcloud.entity.Medicine_WorkContentEntity">
+        update medicine_workcontent set `name` = #{name} where id = #{id}
     </update>
     <delete id="deleteBeetleInfo">
         delete from beetle_info where id = #{id}
@@ -105,6 +111,9 @@
     </delete>
     <delete id="deleteDeadKillForTOwn">
         delete from deadtrees_KillMethods_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteWorkContent1">
+        delete from medicine_workcontent where id = #{id}
     </delete>
     <select id="queryBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
         select * from beetle_info;

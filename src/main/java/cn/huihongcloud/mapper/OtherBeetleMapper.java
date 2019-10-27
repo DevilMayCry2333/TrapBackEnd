@@ -24,6 +24,8 @@ public interface OtherBeetleMapper {
 
     int insertInject_WorkContent(String name);
 
+    int insertMedicine_WorkContent(String name);
+
     int insertEnemy_Type(String name);
 
     int insertDead_Kill(String name);
@@ -41,6 +43,8 @@ public interface OtherBeetleMapper {
     int updateInject_WoodStatus(inject_WoodStatus injectWoodStatus);
 
     int updateInject_WorkContent(inject_WorkContent injectWorkContent);
+
+    int updateMedicine_WorkContent(Medicine_WorkContentEntity medicine_workContentEntity);
 
     int updateEnemy_Type(enemy_EneType enemyEneType);
 
@@ -75,6 +79,8 @@ public interface OtherBeetleMapper {
     int deleteBeetleInfoMap(@Param("beetleInfoId") int beetleInfoId, @Param("adcode") String adcode);
 
     int deleteWorkContent(int id);
+
+    int deleteWorkContent1(int id);
 
     int deleteWorkContentFOrTown(int id,String adcode);
 
