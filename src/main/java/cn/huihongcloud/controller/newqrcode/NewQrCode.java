@@ -150,16 +150,25 @@ public class NewQrCode {
     }
 
     @RequestMapping("/search")
-    public Object serach(@RequestParam String colName,@RequestParam String searchText){
-        List<Device> deviceList = newQrCodeMapper.selectByConditions(colName, searchText);
-        Page<Object> pages = null;
+    public Object serach(@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,int page,int limit){
+        List<Device> deviceList = newQrCodeMapper.selectByConditions(colName, searchText,page*limit-limit,limit);
+
+        int allNum = newQrCodeMapper.countByCond(colName, searchText);
+
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
         PageWrapper pageWrapper = new PageWrapper();
-        pages = PageHelper.startPage(1, 1000000);
 
         pageWrapper.setData(deviceList);
-        pageWrapper.setTotalPage(pages.getPages());
-        pageWrapper.setCurrentPage(1);
-        pageWrapper.setTotalNum(deviceList.size());
+        System.out.println(pageObject.getPages());
+        System.out.println(pageObject.getTotal());
+
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(allNum);
+        pageWrapper.setTotalPage(allNum/limit);
+
+
+
         return pageWrapper;
     }
 

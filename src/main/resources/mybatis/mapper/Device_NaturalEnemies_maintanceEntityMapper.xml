@@ -722,7 +722,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by Woker
+    group by Worker
   </select>
   <select id="queryWorkerSummaryByManager" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.Worker `name`, Device_NaturalEnemies_maintance.Worker code

@@ -17,6 +17,7 @@ import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -108,12 +110,14 @@ public class Track {
         System.out.println(searchText);
         if(user.getRole()==4){
             jsonObject.put("Data",trackService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+            jsonObject.put("total",trackService.countAll(username,startDate,dateString,colName,searchText));
         }else {
-            jsonObject.put("Data",deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+            jsonObject.put("Data",deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode()));
+            jsonObject.put("total",deviceTrackMaintanceEntityMapper.countAllByAdcode(user.getAdcode(),startDate,dateString,colName,searchText));
         }
 
 
-        jsonObject.put("total",trackService.countAll(username,startDate,dateString,colName,searchText));
+
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 
@@ -192,7 +196,19 @@ public class Track {
             deviceTrackMaps = trackService.getDeviceByManager(username,false,null);
         }
 
-        pageWrapper.setData(deviceTrackMaps);
+
+        JSONArray totalData = new JSONArray();
+
+        deviceTrackMaps.stream().collect(Collectors.groupingBy(DeviceTrackMap::getLinename)).forEach((track,MyList) -> {
+            JSONObject dataByGroup = new JSONObject();
+            System.out.println(track);
+            dataByGroup.put("trackGroup",MyList);
+            dataByGroup.put("area",user.getArea());
+            dataByGroup.put("city",user.getCity());
+            dataByGroup.put("province",user.getProvince());
+            totalData.add(dataByGroup);
+        });
+        pageWrapper.setData(totalData);
         pageWrapper.setTotalPage(pages.getPages());
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pages.getTotal());

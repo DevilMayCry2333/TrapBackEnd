@@ -31,7 +31,7 @@ public class DeviceMaintenance {
     private String deviceId;
     @Excel(name = "批次")
     private int batch;
-    @Excel(name = "虫子数")
+    @Excel(name = "天牛数量")
     private Integer num;
 //    @Excel(name = "雄虫数")
     private Integer maleNum;
@@ -86,9 +86,9 @@ public class DeviceMaintenance {
 
     private String cityname;
 
-    @Excel(name = "区域")
+//    @Excel(name = "区域")
     private String customtown;
-    @Excel(name = "编号")
+//    @Excel(name = "编号")
     private String customserial;
 
     private String customProject;

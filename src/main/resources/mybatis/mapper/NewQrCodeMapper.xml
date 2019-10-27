@@ -26,6 +26,16 @@
         select * from device where adcode = #{adcode} and project = #{project} and isManagerAssign = 0 order by id;
     </select>
     <select id="selectByConditions" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where ${colName}=#{searchText}
+        select * from device
+        <if test="searchText!=null and searchText!=''">
+            where ${colName}=#{searchText}
+        </if>
+    </select>
+
+    <select id="countByCond" resultType="java.lang.Integer">
+        select count(id) from device
+        <if test="searchText!=null and searchText!=''">
+            where ${colName}=#{searchText}
+        </if>
     </select>
 </mapper>
