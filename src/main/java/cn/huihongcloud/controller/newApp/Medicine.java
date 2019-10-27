@@ -1,17 +1,13 @@
 package cn.huihongcloud.controller.newApp;
 
 import cn.huihongcloud.component.BDComponent;
-import cn.huihongcloud.controller.DeviceMaintenanceController;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
-import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.user.User;
-import cn.huihongcloud.mapper.DeviceBeetleMapper;
-import cn.huihongcloud.mapper.DeviceMapper;
-import cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper;
-import cn.huihongcloud.mapper.UserMapper;
+import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -27,11 +23,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/app")
-public class Inject {
-    private static final Logger logger = LoggerFactory.getLogger(Inject.class);
+public class Medicine {
+    private static final Logger logger = LoggerFactory.getLogger(Medicine.class);
 
     @Autowired
     DeviceBeetleMapper deviceBeetleMapper;
+
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -39,31 +36,35 @@ public class Inject {
     @Autowired
     DeviceService deviceService;
     @Autowired
-    Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
+    Device_Medicine_MaintanceEntityMapper deviceMedicineMaintanceEntityMapper;
 
     @Autowired
     private BDComponent mBDComponent;
 
 
 
-    @RequestMapping("/getWoodStatus")
-    public Object getWoodStatus(@RequestParam String worker){
+    @RequestMapping("/getMedicinename")
+    public Object getmedicineName(@RequestParam String worker){         //
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
-        return deviceBeetleMapper.getInjectWoodStatus(user2.getAdcode());
+        System.out.println(user2.getUsername());
+
+        return deviceBeetleMapper.getMedicineName(user2.getAdcode());        //
     }
 
-    @RequestMapping("/getWorkingContent")
-    public Object getWorkContent(@RequestParam String worker){
+
+    @RequestMapping("/getMedicineWorkContent")
+    public Object getWorkContent(@RequestParam String worker){           //
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
-        return deviceBeetleMapper.getInjectWorkContent(user2.getAdcode());
+        return deviceBeetleMapper.getMedicinetWorkContent(user2.getAdcode());             //
+
     }
 
     @ApiOperation("上传维护信息")
-    @PostMapping("/AddInjectData")
+    @PostMapping("/AddMedicineData")
     public Object addMaintenanceData(@RequestAttribute("username") String username,
                                      @RequestParam(required = false) MultipartFile image,
                                      @RequestParam(value = "username", required = false) String targetUsername,
@@ -73,31 +74,36 @@ public class Inject {
                                      String latitude,
                                      String altitude,
                                      String accuracy,
-                                     Integer WoodStatus,
-                                     Integer injectNum,
+                                     String medicinename,          //要和前端名称一致
+                                     String workContentValue,
+                                     Double medicinenumber,           //
+                                     Double controlarea,
                                      String remarks,
-                                     String workingContent, HttpServletResponse response) throws Exception {
+                                     HttpServletResponse response) throws Exception {
 
 
 
-        logger.info("===开始记录数据===");
-        logger.info(username);
-        logger.info(deviceId);
-        logger.info(String.valueOf(longitude));
-        logger.info(String.valueOf(latitude));
-        logger.info(String.valueOf(altitude));
-        logger.info(String.valueOf(accuracy));
-        logger.info(String.valueOf(WoodStatus));
-        logger.info(String.valueOf(injectNum));
-        logger.info(remarks);
-        logger.info(workingContent);
+//        logger.info("===开始记录数据===");
+//        logger.info(username);
+//        logger.info(deviceId);
+//        logger.info(String.valueOf(longitude));
+//        logger.info(String.valueOf(latitude));
+//        logger.info(String.valueOf(altitude));
+//        logger.info(String.valueOf(accuracy));
+//        logger.info(String.valueOf(WoodStatus));   //
+//        //
+//        logger.info(String.valueOf(injectNum));   //
+//        logger.info(remarks);
+//        logger.info(workingContent);            //
 
 
 
 
         System.out.println("image" + image);
 
-        Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
+//        Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
+        Device_Medicine_MaintanceEntity deviceMedicineMaintanceEntity = new Device_Medicine_MaintanceEntity();
+
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 
         User user = userMapper.getUserByUserName(username);
@@ -107,7 +113,7 @@ public class Inject {
 
 
         try {
-            List<Device_Injection_maintanceEntity> maxBatch = deviceInjectionMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+            List<Device_Medicine_MaintanceEntity> maxBatch = deviceMedicineMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
             System.out.println("批次");
             System.out.println(maxBatch.get(0).getDeviceId());
 
@@ -122,28 +128,38 @@ public class Inject {
 
         System.out.println(user1.getUsername());
 
-        deviceInjectionMaintanceEntity.setWorker(username);
-        deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceInjectionMaintanceEntity.setLongitude(longitude);
-        deviceInjectionMaintanceEntity.setLatitude(latitude);
-        deviceInjectionMaintanceEntity.setAltitude(altitude);
-        deviceInjectionMaintanceEntity.setDataPrecision(accuracy);
-        deviceInjectionMaintanceEntity.setWoodstatus(WoodStatus);
-        deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
-        deviceInjectionMaintanceEntity.setRemarks(remarks);
-        deviceInjectionMaintanceEntity.setWorkContent(workingContent);
-        deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
-        deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
-        deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
-
+//        deviceInjectionMaintanceEntity.setWorker(username);
+//        deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
+//        deviceInjectionMaintanceEntity.setLongitude(longitude);
+//        deviceInjectionMaintanceEntity.setLatitude(latitude);
+//        deviceInjectionMaintanceEntity.setAltitude(altitude);
+//        deviceInjectionMaintanceEntity.setDataPrecision(accuracy);
+//        deviceInjectionMaintanceEntity.setWoodstatus(WoodStatus);
+//        deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
+//        deviceInjectionMaintanceEntity.setRemarks(remarks);
+//        deviceInjectionMaintanceEntity.setWorkContent(workingContent);
+//        deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
+//        deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
+//        deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
+        deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
+        deviceMedicineMaintanceEntity.setLongitude(longitude);
+        deviceMedicineMaintanceEntity.setLatitude(latitude);
+      //  deviceMedicineMaintanceEntity.setaltitude(altitude);
+      //  deviceMedicineMaintanceEntity.setaccuracy(accuracy);
+        deviceMedicineMaintanceEntity.setMedicineName(medicinename);
+        deviceMedicineMaintanceEntity.setWorkContent(workContentValue);
+        deviceMedicineMaintanceEntity.setMedicineQua(String.valueOf(medicinenumber));
+        deviceMedicineMaintanceEntity.setAreaFz(controlarea);
+        deviceMedicineMaintanceEntity.setRemarks(remarks);
 
         BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
 
-        deviceInjectionMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
+ //setTown
+//        deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
 
         System.out.println("CustomeSerial");
-        
+
         System.out.println(realDeviceId.getCustomSerial());
 
         Date date= new Date(System.currentTimeMillis());
@@ -151,8 +167,8 @@ public class Inject {
         SimpleDateFormat sdf= new SimpleDateFormat(pattern);
         String datestr=sdf.format(date);// format  为格式化方法
 
-        deviceInjectionMaintanceEntity.setSubmitDate(datestr);
-        deviceInjectionMaintanceEntity.setRegion(realDeviceId.getArea());
+        deviceMedicineMaintanceEntity.setSubmitDate(sdf.parse(datestr));
+        deviceMedicineMaintanceEntity.setRegion(realDeviceId.getArea());
 
         //修改了一些
 
@@ -161,11 +177,11 @@ public class Inject {
 
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
-            deviceInjectionMaintanceEntity.setPic(imgId);
+            deviceMedicineMaintanceEntity.setPic(imgId);
             System.out.println("执行了这部");
 
         }
-        deviceInjectionMaintanceEntityMapper.addMaintanceData(deviceInjectionMaintanceEntity);
+        deviceMedicineMaintanceEntityMapper.addMaintanceData(deviceMedicineMaintanceEntity);
         Device device1 = deviceService.getDeviceById(realDeviceId.getId());
         if(device1 == null || device1.getReceiveDate() == null) {
 
@@ -185,10 +201,11 @@ public class Inject {
         //return null;
     }
 
-    @RequestMapping("/InjectWorker")
-    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String scanId){
-        return deviceBeetleMapper.InjectWorker(scanId);
+    @RequestMapping("/MedicineWorker")
+    public List<Device_Medicine_MaintanceEntity> getMedicine(@RequestParam String scanId){
+        return deviceBeetleMapper.MedicineWorker(scanId);
 
     }
+
 
 }
