@@ -269,7 +269,7 @@ public class OtherBeetleController {
     }
 
 
-    @GetMapping("/inject_workContent")
+    @GetMapping("/medicine/inject_workContent")
     public Object getMedicineWork() {
         return Result.ok(otherBeetleMapper.getInject_WorkContent());
     }
