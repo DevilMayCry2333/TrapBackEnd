@@ -138,6 +138,34 @@ public class OtherBeetleController {
     }
 
 
+    @ApiOperation("")
+    @GetMapping("/medicine/town")
+    public Object medicine1(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getInjectForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/medicine/town")
+    public Object medicine2(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertInjectForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/medicine/town")
+    public Object medicine3(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteInjectForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+
+
 
     @ApiOperation("")
     @GetMapping("/workContent/town")
@@ -246,24 +274,26 @@ public class OtherBeetleController {
         return Result.ok(otherBeetleMapper.getInject_WorkContent());
     }
 
-    @PostMapping("/inject_workContent")
+    @PostMapping("/medicine_workContent")
     public Object addMedicineWork(String name) {
-        otherBeetleMapper.insertInject_WorkContent(name);
+        otherBeetleMapper.insertMedicine_WorkContent(name);
         return Result.ok();
     }
 
 
-    @PutMapping("/inject_workContent")
-    public Object updateMedicineWork(inject_WorkContent injectWorkContent) {
-        otherBeetleMapper.updateInject_WorkContent(injectWorkContent);
+    @PutMapping("/medicine_workContent")
+    public Object updateMedicineWork(Medicine_WorkContentEntity medicine_workContentEntity) {
+        otherBeetleMapper.updateMedicine_WorkContent(medicine_workContentEntity);
         return Result.ok();
     }
 
-    @DeleteMapping("/inject_workContent")
+    @DeleteMapping("/medicine_workContent")
     public Object deleteMedicineWork(int id) {
-        otherBeetleMapper.deleteWorkContent(id);
+        otherBeetleMapper.deleteWorkContent1(id);
         return Result.ok();
     }
+
+
     @GetMapping("/inject_workContent")
     public Object getinjectWork() {
         return Result.ok(otherBeetleMapper.getInject_WorkContent());
