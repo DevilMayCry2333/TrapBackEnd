@@ -1,9 +1,11 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface Device_Medicine_MaintanceEntityMapper {
@@ -39,5 +41,13 @@ public interface Device_Medicine_MaintanceEntityMapper {
     List<Device> getDeviceByManager(@Param("manager") String manager);
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
+
+    int updateRecordById1(Device_Medicine_MaintanceEntity device_medicine_maintanceEntity);
+
+    Device_Medicine_MaintanceEntity selectById1(BigInteger id);
+
+
+
+
 
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 public class Device_Medicine_MaintanceEntity {
 
+    @Excel(name = "记录ID")
     private Long id;
     @Excel(name = "设备ID")
     private Long deviceId;
@@ -17,10 +18,11 @@ public class Device_Medicine_MaintanceEntity {
     private String serial;
     @Excel(name = "所属区域")
     private String region;
-    @Excel(name = "日期")
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
     // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    @Excel(name = "日期")
     private Date submitDate;
     @Excel(name = "批次")
     private Integer batch;

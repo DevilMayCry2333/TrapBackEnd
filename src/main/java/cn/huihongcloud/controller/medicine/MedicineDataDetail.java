@@ -1,7 +1,9 @@
 package cn.huihongcloud.controller.medicine;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
@@ -15,9 +17,11 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -120,8 +124,30 @@ public class MedicineDataDetail {
         }
 
         List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities  = device_medicine_maintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("注干剂监测", "注干剂监测"), Device_Medicine_MaintanceEntity.class, device_medicine_maintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("药剂防治管理", "药剂防治管理"), Device_Medicine_MaintanceEntity.class, device_medicine_maintanceEntities);
         workbook.write(response.getOutputStream());
+    }
+
+
+    @RequestMapping("/importExcel")
+    public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
+        ImportParams importParams = new ImportParams();
+        importParams.setTitleRows(1);
+        importParams.setHeadRows(1);
+        List<Device_Medicine_MaintanceEntity> deviceMaintenanceList = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), Device_Medicine_MaintanceEntity.class, importParams);
+        for (Device_Medicine_MaintanceEntity d:
+                deviceMaintenanceList) {
+            System.out.println("natural");
+            System.out.println(d.getId());
+            Device_Medicine_MaintanceEntity tmp =  device_medicine_maintanceEntityMapper.selectById1(BigInteger.valueOf(d.getId()));
+            if(tmp!=null){
+                device_medicine_maintanceEntityMapper.updateRecordById1(d);
+            }else {
+                device_medicine_maintanceEntityMapper.insert(d);
+            }
+        }
+        return "OK";
     }
 
     @RequestMapping(value = "device_list", method = RequestMethod.GET)
