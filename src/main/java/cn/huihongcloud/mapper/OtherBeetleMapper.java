@@ -27,6 +27,7 @@ public interface OtherBeetleMapper {
     int insertMedicine_WorkContent(String name);
 
     int insertEnemy_Type(String name);
+    int insertMedicine_Type(String name);
 
     int insertDead_Kill(String name);
 
@@ -48,6 +49,8 @@ public interface OtherBeetleMapper {
 
     int updateEnemy_Type(enemy_EneType enemyEneType);
 
+    int updateMedicine_Type(Medicine_nameEntity medicine_nameEntity);
+
     int updateDead_Kill(deadTree_KillMethods deadTreeKillMethods);
 
     int deleteBeetleInfo(int id);
@@ -60,9 +63,12 @@ public interface OtherBeetleMapper {
 
     int deleteEnemy_Type(int id);
 
+    int deleteMedicine_Type(int id);
+
     int deleteDead_Kill(int id);
 
     int deleteEnemy_TypeForTown(int id,String adcode);
+    int deleteMedicine_TypeForTown(int id,String adcode);
 
     int deleteInjectForTown(int id,String adcode);
 
@@ -74,8 +80,10 @@ public interface OtherBeetleMapper {
 
     int insertEnemy_TypeForTown(int id,String adcode);
 
-    int insertWorkContentForTOwn(int id,String adcode);
+    int insertMedicine_TypeForTown(int id,String adcode);
 
+    int insertWorkContentForTOwn(int id,String adcode);
+    int insertWorkContentForTOwn1(int id,String adcode);
     int deleteBeetleInfoMap(@Param("beetleInfoId") int beetleInfoId, @Param("adcode") String adcode);
 
     int deleteWorkContent(int id);
@@ -83,6 +91,7 @@ public interface OtherBeetleMapper {
     int deleteWorkContent1(int id);
 
     int deleteWorkContentFOrTown(int id,String adcode);
+    int deleteWorkContentFOrTown1(int id,String adcode);
 
     List<injectInfo> getInjectInfo();
 
@@ -90,13 +99,19 @@ public interface OtherBeetleMapper {
 
     List<inject_WorkContent> getInject_WorkContent();
 
+    List<inject_WorkContent> getMedicine_WorkContent();
+
     List<enemy_EneType> getEnemy_Type();
+
+    List<Medicine_nameEntity> getMedicine_Type();
 
     List<deadTree_KillMethods> getDead_Kill();
 
     List<enemy_EneType> getEnemy_TypeForTown(String adcode);
 
+    List<Medicine_nameEntity> getMedicine_TypeForTown(String adcode);
     List<workContent> getWorkContentForTown(String adcode);
+    List<workContent> getWorkContentForTown1(String adcode);
 
     List<injectInfo> getInjectForTown(String adcode);
 
