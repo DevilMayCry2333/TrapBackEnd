@@ -3,10 +3,12 @@ package cn.huihongcloud.mapper;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.summary.MedicineSummary;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 public interface Device_Medicine_MaintanceEntityMapper {
     int deleteByPrimaryKey(Long id);
@@ -57,9 +59,28 @@ public interface Device_Medicine_MaintanceEntityMapper {
     List<Device_Medicine_MaintanceEntity> getMaintenanceDataByManager222(@Param("adcode") String adcode, @Param("town") String town,
                                                                         @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
 
+    Map<String,Integer> getDeviceSum(String adcode,String startDate,String endDate);
 
+    Map<String,Integer> getDeviceSum5(String adcode,String stareDate,String endDate);
 
+<<<<<<< Updated upstream
     List<Device_Medicine_MaintanceEntity> getMaxBatch(String deviceId);
     //缺twon
     int addMaintanceData(Device_Medicine_MaintanceEntity dataEntity);
+=======
+    List<MedicineSummary> queryDeviceSummaryByManager111(String adcode, String startDate, String endDate);
+
+    List<MedicineSummary> queryDeviceSummaryByArea111(String adcode, String startDate, String endDate);
+
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByAdcodeAndTownArea111(@Param("adcode") String adcode, @Param("town") String town,
+                                                                                 @Param("condition") String condition, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByManagerArea111(@Param("adcode") String adcode, @Param("town") String town,
+                                                                           @Param("condition") String condition, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
+
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByDeviceId111(String myusername, String deviceId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("reported") Boolean reported);
+
+>>>>>>> Stashed changes
 }
