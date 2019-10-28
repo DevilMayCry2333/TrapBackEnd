@@ -47,8 +47,10 @@ public class Device_Medicine_MaintanceEntity {
 
     private String customTown;
 
+    @Excel(name = "是否上报")
     private Byte reported;
 
+    @Excel(name = "管理员")
     private String username;
 
     private Double medicineQuaSum;
