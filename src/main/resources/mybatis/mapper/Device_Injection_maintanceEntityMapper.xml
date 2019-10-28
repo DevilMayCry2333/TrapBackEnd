@@ -257,6 +257,7 @@
 
   </update>
 
+
   <delete id="deleteRecord">
     delete from device_injection_maintance where id=#{id};
   </delete>
@@ -823,5 +824,6 @@
     group by device.CustomTown
 
   </select>
+
 
 </mapper>

@@ -21,12 +21,15 @@
       <arg column="custom_town" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="reported" jdbcType="TINYINT" javaType="java.lang.Byte" />
       <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="town" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="altitude" jdbcType="VARCHAR" javaType="java.lang.String" />
+
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, device_id, serial, region, submit_date, batch, longitude, latitude, medicine_qua, 
     medicine_name, area_fz, work_content, worker, remarks, pic, custom_town, reported, 
-    username
+    username,town,altitude
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -156,7 +159,161 @@
         where user_id = #{worker}
         AND project = '药剂防治管理'
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <select id="selectById1" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select * from device_medicine_maintance where id = #{id}
+  </select>
+  <select id="getMaintenanceDataByAdcodeAndTown222"
+          resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select device_medicine_maintance.id,
+    device_medicine_maintance.device_id,
+    device_medicine_maintance.batch,
+    device_medicine_maintance.medicine_qua,
+    device_medicine_maintance.username,
+    user.name,
+    device_medicine_maintance.submit_date,
+    device_medicine_maintance.longitude,
+    device_medicine_maintance.latitude,
+    device_medicine_maintance.altitude,
+    device_medicine_maintance.pic,
+    device_medicine_maintance.medicine_name,
+    device_medicine_maintance.area_fz,
+    device_medicine_maintance.scanId,
+    device_medicine_maintance.remarks,
+    device.province,
+    device.city,
+    device.area,
+    device_medicine_maintance.town,
+    device_medicine_maintance.work_content,
+    device_medicine_maintance.reported
+    from device_medicine_maintance
+    left join device on device.id = device_medicine_maintance.device_id
+    left join user on device_medicine_maintance.username = user.username
+    where device_id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition !='null'">
+    and (
+    user.username like concat('%', #{condition}, '%') or
+    device.province like concat('%', #{condition}, '%') or
+    device.city like concat('%', #{condition}, '%') or
+    device.area like concat('%', #{condition}, '%') or
+    device.town like concat('%', #{condition}, '%') or
+    user.username like concat('%', #{condition}, '%') or
+    user.name like concat('%', #{condition}, '%') or
+    device_medicine_maintance.device_id like concat('%', #{condition}, '%')
+    )
+    </if>
+    <if test="batch != null and batch != '' and batch !='null'">
+      and `batch` = #{batch}
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+    <if test="searchtown != null and searchtown != '' and searchtown !='null'">
+      and device.town like concat('%', #{searchtown}, '%')
+    </if>
+    <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="reported != null and reported != ''">
+      and reported = #{reported}
+    </if>
+
+    order by submit_date desc
+  </select>
+  <select id="getMaintenanceDataByManager222"
+          resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select device_medicine_maintance.id,
+    device_medicine_maintance.device_Id,
+    device_medicine_maintance.batch,
+    device_medicine_maintance.medicine_qua,
+    device_medicine_maintance.username,
+    user.name,
+    device_medicine_maintance.submit_date,
+    device_medicine_maintance.longitude,
+    device_medicine_maintance.latitude,
+    device_medicine_maintance.altitude,
+    device_medicine_maintance.pic,
+    device_medicine_maintance.medicine_name,
+    device_medicine_maintance.area_fz,
+    device_medicine_maintance.scanId,
+    device_medicine_maintance.remarks,
+    device.province,
+    device.city,
+    device.area,
+    device_medicine_maintance.town,
+    device_medicine_maintance.work_content,
+    device_medicine_maintance.reported
+    from device_medicine_maintance
+    left join device on device.Id = device_medicine_maintance.device_id
+    left join user on device_medicine_maintance.username = user.username
+    where device_id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition != 'null'">
+      and (
+      user.username like concat('%', #{condition}, '%') or
+      device.province like concat('%', #{condition}, '%') or
+      device.city like concat('%', #{condition}, '%') or
+      device.area like concat('%', #{condition}, '%') or
+      device.town like concat('%', #{condition}, '%') or
+      user.username like concat('%', #{condition}, '%') or
+      user.name like concat('%', #{condition}, '%') or
+        device_medicine_maintance.device_id like concat('%', #{condition}, '%')
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+    <if test="batch != null and batch != '' and batch !='null'">
+      and `batch` = #{batch}
+    </if>
+    <if test="searchtown != null and searchtown != '' and searchtown !='null'">
+      and device.town like concat('%', #{searchtown}, '%')
+    </if>
+    <if test="endDate != null and endDate != '' and endDate!= 'null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="manager != null">
+      and manager = #{manager}
+    </if>
+    order by submit_date desc
+  </select>
+  <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
+    select count(distinct device_id) deviceCount, sum(injection_num) injectNum, device.area `name`, device.adcode code
+    from Device_Injection_maintance
+    left join device on Device_Injection_maintance.device_id = device.id
+    where adcode like concat(#{adcode}, '%')
+
+    and  device.area is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device.area
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from device_medicine_maintance
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -165,15 +322,13 @@
       region, submit_date, batch, 
       longitude, latitude, medicine_qua, 
       medicine_name, area_fz, work_content, 
-      worker, remarks, pic, 
-      custom_town, reported, username
+      worker, remarks, pic, reported, username,altitude
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{medicineQua,jdbcType=VARCHAR}, 
       #{medicineName,jdbcType=VARCHAR}, #{areaFz,jdbcType=DOUBLE}, #{workContent,jdbcType=VARCHAR}, 
-      #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
-      #{customTown,jdbcType=VARCHAR}, #{reported,jdbcType=TINYINT}, #{username,jdbcType=VARCHAR}
+      #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},#{reported,jdbcType=TINYINT}, #{username,jdbcType=VARCHAR},#{altitude,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
@@ -357,6 +512,7 @@
       batch = #{batch,jdbcType=INTEGER},
       longitude = #{longitude,jdbcType=VARCHAR},
       latitude = #{latitude,jdbcType=VARCHAR},
+    altitude = #{altitude,jdbcType=VARCHAR},
       medicine_qua = #{medicineQua,jdbcType=VARCHAR},
       medicine_name = #{medicineName,jdbcType=VARCHAR},
       area_fz = #{areaFz,jdbcType=DOUBLE},
@@ -368,5 +524,15 @@
       reported = #{reported,jdbcType=TINYINT},
       username = #{username,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateRecordById1">
+    update device_medicine_maintance set device_Id=#{deviceId},serial=#{serial},region=#{region},
+    submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
+    medicine_qua=#{medicineQua},medicine_name = #{medicineName},worker=#{worker},remarks=#{remarks},area_fz=#{areaFz},altitude=#{altitude} where id=#{id};
+  </update>
+  <update id="reportData1">
+    update device_medicine_maintance
+        set reported = 1
+        where id = #{id}
   </update>
 </mapper>
