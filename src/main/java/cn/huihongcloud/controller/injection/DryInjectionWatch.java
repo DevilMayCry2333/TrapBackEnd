@@ -379,7 +379,7 @@ public class DryInjectionWatch {
                 deviceMaintenanceList) {
             System.out.println("natural");
             System.out.println(d.getId());
-            Device_Injection_maintanceEntity tmp = deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getId()));
+            Device_Injection_maintanceEntity tmp =  deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getId()));
             if(tmp!=null){
                 deviceInjectionMaintanceEntityMapper.updateRecordById(d);
             }else {

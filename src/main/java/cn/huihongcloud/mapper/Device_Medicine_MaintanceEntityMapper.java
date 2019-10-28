@@ -5,6 +5,7 @@ import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface Device_Medicine_MaintanceEntityMapper {
@@ -40,6 +41,24 @@ public interface Device_Medicine_MaintanceEntityMapper {
     List<Device> getDeviceByManager(@Param("manager") String manager);
 
     List<Device> getDeviceByWorker(@Param("worker") String worker);
+
+    int updateRecordById1(Device_Medicine_MaintanceEntity device_medicine_maintanceEntity);
+
+    int reportData1(@Param("id") Integer id);
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByAdcodeAndTown222(@Param("adcode") String adcode, @Param("town") String town,
+                                                                               @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
+
+
+    Device_Medicine_MaintanceEntity selectById1(BigInteger id);
+
+
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByManager222(@Param("adcode") String adcode, @Param("town") String town,
+                                                                        @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
+
+
+
     List<Device_Medicine_MaintanceEntity> getMaxBatch(String deviceId);
     //缺twon
     int addMaintanceData(Device_Medicine_MaintanceEntity dataEntity);
