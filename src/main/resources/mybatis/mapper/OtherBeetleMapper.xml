@@ -43,6 +43,18 @@
     <insert id="insertDeadKillFOrTown">
         insert into deadtrees_KillMethods_map values (#{id},#{adcode});
     </insert>
+    <insert id="insertMedicine_WorkContent">
+        insert into medicine_workcontent(`name`) values (#{name})
+    </insert>
+    <insert id="insertWorkContentForTOwn1">
+        insert  into  medicine_workcontent_map values (#{id},#{adcode})
+    </insert>
+    <insert id="insertMedicine_Type">
+                insert into medicine_name (`name`) values (#{name});
+    </insert>
+    <insert id="insertMedicine_TypeForTown">
+         insert into medicine_nameInfo_map values (#{id},#{adcode});
+    </insert>
     <update id="updateBeetleInfo">
         update beetle_info set `name` = #{name} where id = #{id}
     </update>
@@ -63,6 +75,12 @@
     </update>
     <update id="updateDead_Kill">
         update deadtree_KillMethods set `name` = #{name} where id = #{id};
+    </update>
+    <update id="updateMedicine_WorkContent" parameterType="cn.huihongcloud.entity.Medicine_WorkContentEntity">
+        update medicine_workcontent set `name` = #{name} where id = #{id}
+    </update>
+    <update id="updateMedicine_Type" parameterType="cn.huihongcloud.entity.Medicine_nameEntity">
+        update medicine_name set `name` = #{name} where id = #{id};
     </update>
     <delete id="deleteBeetleInfo">
         delete from beetle_info where id = #{id}
@@ -105,6 +123,18 @@
     </delete>
     <delete id="deleteDeadKillForTOwn">
         delete from deadtrees_KillMethods_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteWorkContent1">
+        delete from medicine_workcontent where id = #{id};
+    </delete>
+    <delete id="deleteWorkContentFOrTown1">
+        delete from medicine_workcontent_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteMedicine_Type">
+        delete from medicine_name where id = #{id};
+    </delete>
+    <delete id="deleteMedicine_TypeForTown">
+        delete from medicine_nameInfo_map where id = #{id} and adcode = #{adcode};
     </delete>
     <select id="queryBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
         select * from beetle_info;
@@ -150,5 +180,17 @@
     </select>
     <select id="getDeadKillForTown" resultType="cn.huihongcloud.entity.deadTree_KillMethods">
         select * from deadtree_KillMethods t1 left join deadtrees_KillMethods_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="getMedicine_WorkContent" resultType="cn.huihongcloud.entity.inject_WorkContent">
+        select * from medicine_workcontent
+    </select>
+    <select id="getWorkContentForTown1" resultType="cn.huihongcloud.entity.workContent">
+        select * from medicine_workcontent t1 left join medicine_workcontent_map t2 on t1.id = t2.id where adcode = #{adcode}
+    </select>
+    <select id="getMedicine_Type" resultType="cn.huihongcloud.entity.Medicine_nameEntity">
+        select * from medicine_name
+    </select>
+    <select id="getMedicine_TypeForTown" resultType="cn.huihongcloud.entity.Medicine_nameEntity">
+        select * from medicine_name t1 left join medicine_nameInfo_map t2 on t1.id = t2.id where t2.adcode = #{adcode};
     </select>
 </mapper>

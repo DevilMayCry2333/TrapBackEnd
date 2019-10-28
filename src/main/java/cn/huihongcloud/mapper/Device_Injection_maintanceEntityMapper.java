@@ -1,6 +1,7 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.inject_WoodStatus;
@@ -32,10 +33,7 @@ public interface Device_Injection_maintanceEntityMapper {
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 
-    List<Device_Injection_maintanceEntity> selectById(BigInteger id);
-
     Device_Injection_maintanceEntity selectById2(BigInteger id);
-
 
     int insert(Device_Injection_maintanceEntity record);
 
@@ -60,6 +58,8 @@ public interface Device_Injection_maintanceEntityMapper {
                                                                         @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
 
     int reportData(@Param("id") Integer id);
+
+
 
     List<InjectionSummary> queryDeviceSummaryByCity(String adcode, String startDate, String endDate);
 
@@ -97,7 +97,6 @@ public interface Device_Injection_maintanceEntityMapper {
     int deleteRecord(long recordId);
 
     int updateRecordById(Device_Injection_maintanceEntity dataEntity);
-
 
     int updateRecordByFront(Device_Injection_maintanceEntity dataEntity);
 

@@ -1,8 +1,10 @@
 package cn.huihongcloud.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.models.auth.In;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class Device_Injection_maintanceEntity {
@@ -15,6 +17,8 @@ public class Device_Injection_maintanceEntity {
 
 
     private String region;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
     @Excel(name = "提交日期")
     private String submitDate;
     @Excel(name = "批次")

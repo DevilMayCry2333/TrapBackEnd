@@ -138,29 +138,57 @@ public class OtherBeetleController {
     }
 
 
-
     @ApiOperation("")
-    @GetMapping("/workContent/town")
-    public Object getworkContentForTown(@RequestAttribute("username") String username) {
+    @GetMapping("/medicine/town")
+    public Object medicine1(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
         System.out.println("fortown");
-        return otherBeetleMapper.getWorkContentForTown(user.getAdcode());
+        return otherBeetleMapper.getInjectForTown(user.getAdcode());
 
     }
 
     @ApiOperation("")
-    @PostMapping("/workContent/town")
-    public Object addworkContentForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+    @PostMapping("/medicine/town")
+    public Object medicine2(@RequestAttribute("username") String username, Integer beetleInfoId) {
         User user = userService.getUserByUserName(username);
-        otherBeetleMapper.insertWorkContentForTOwn(beetleInfoId,user.getAdcode());
+        otherBeetleMapper.insertInjectForTown(beetleInfoId,user.getAdcode());
         return Result.ok();
     }
 
     @ApiOperation("")
-    @DeleteMapping("/workContent/town")
+    @DeleteMapping("/medicine/town")
+    public Object medicine3(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteInjectForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+
+
+
+
+    @ApiOperation("")
+    @GetMapping("/medicine_workContent/town")
+    public Object getworkContentForTown(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getWorkContentForTown1(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/medicine_workContent/town")
+    public Object addworkContentForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertWorkContentForTOwn1(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/medicine_workContent/town")
     public Object deleteworkContentForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
         User user = userService.getUserByUserName(username);
-        otherBeetleMapper.deleteWorkContentFOrTown(beetleInfoId,user.getAdcode());
+        otherBeetleMapper.deleteWorkContentFOrTown1(beetleInfoId,user.getAdcode());
         return Result.ok();
     }
 
@@ -187,6 +215,36 @@ public class OtherBeetleController {
     public Object deleteEnemyTypeForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
         User user = userService.getUserByUserName(username);
         otherBeetleMapper.deleteEnemy_TypeForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    /**
+     * 配置药剂的相关管理员
+     * @return
+     */
+
+    @ApiOperation("")
+    @GetMapping("/medicine_type/town")
+    public Object getMedicineTypeForTown(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getMedicine_TypeForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/medicine_type/town")
+    public Object addMedicineTypeForTown(@RequestAttribute("username") String username,Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertMedicine_TypeForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/medicine_type/town")
+    public Object deleteMedicineTypeForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteMedicine_TypeForTown(beetleInfoId,user.getAdcode());
         return Result.ok();
     }
 
@@ -237,6 +295,62 @@ public class OtherBeetleController {
     @DeleteMapping("/enemy_Type")
     public Object d(int id) {
         otherBeetleMapper.deleteEnemy_Type(id);
+        return Result.ok();
+    }
+
+    /**
+     *
+     *
+     * 配置一下medicine name
+     */
+
+
+    @GetMapping("/medicine_type")
+    public Object a1() {
+        return Result.ok(otherBeetleMapper.getMedicine_Type());
+    }
+
+    @PostMapping("/medicine_type")
+    public Object b1(String name) {
+        otherBeetleMapper.insertMedicine_Type(name);
+        return Result.ok();
+    }
+
+
+    @PutMapping("/medicine_type")
+    public Object c1(Medicine_nameEntity medicine_nameEntity) {
+        otherBeetleMapper.updateMedicine_Type(medicine_nameEntity);
+        return Result.ok();
+    }
+
+    @DeleteMapping("/medicine_type")
+    public Object d1(int id) {
+        otherBeetleMapper.deleteMedicine_Type(id);
+        return Result.ok();
+    }
+
+
+    @GetMapping("/medicine_workContent")
+    public Object getMedicineWork() {
+        return Result.ok(otherBeetleMapper.getMedicine_WorkContent());
+    }
+
+    @PostMapping("/medicine_workContent")
+    public Object addMedicineWork(String name) {
+        otherBeetleMapper.insertMedicine_WorkContent(name);
+        return Result.ok();
+    }
+
+
+    @PutMapping("/medicine_workContent")
+    public Object updateMedicineWork(Medicine_WorkContentEntity medicine_workContentEntity) {
+        otherBeetleMapper.updateMedicine_WorkContent(medicine_workContentEntity);
+        return Result.ok();
+    }
+
+    @DeleteMapping("/medicine_workContent")
+    public Object deleteMedicineWork(int id) {
+        otherBeetleMapper.deleteWorkContent1(id);
         return Result.ok();
     }
 
