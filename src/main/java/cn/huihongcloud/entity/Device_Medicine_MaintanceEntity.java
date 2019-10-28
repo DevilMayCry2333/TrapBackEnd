@@ -58,6 +58,54 @@ public class Device_Medicine_MaintanceEntity {
     private Double areaFzSum;
     private String startDate;
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Double getMedicineQuaSum() {
+        return medicineQuaSum;
+    }
+
+    public void setMedicineQuaSum(Double medicineQuaSum) {
+        this.medicineQuaSum = medicineQuaSum;
+    }
+
+    public Double getAreaFzSum() {
+        return areaFzSum;
+    }
+
+    public void setAreaFzSum(Double areaFzSum) {
+        this.areaFzSum = areaFzSum;
+    }
+
+    public Double getTotalMedicineQuaSum() {
+        return totalMedicineQuaSum;
+    }
+
+    public void setTotalMedicineQuaSum(Double totalMedicineQuaSum) {
+        this.totalMedicineQuaSum = totalMedicineQuaSum;
+    }
+
+    public Double getTotalAreaFzNum() {
+        return totalAreaFzNum;
+    }
+
+    public void setTotalAreaFzNum(Double totalAreaFzNum) {
+        this.totalAreaFzNum = totalAreaFzNum;
+    }
+
     private String endDate;
     private Double totalMedicineQuaSum;
     private Double totalAreaFzNum;

@@ -313,7 +313,10 @@
     </if>
     group by device.area
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+       select * from device_medicine_maintance where device_id = #{deviceId} order by batch desc;
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from device_medicine_maintance
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -445,6 +448,11 @@
         #{username,jdbcType=VARCHAR},
       </if>
     </trim>
+  </insert>
+  <insert id="addMaintanceData" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    insert into device_medicine_maintance(device_id,longitude,latitude,medicine_name,medicine_qua,area_fz,work_content,remarks,pic,reported,
+    submit_date,batch,region,worker,serial,username) values (#{deviceId},#{longitude},#{latitude},#{medicineName},#{medicineQua},
+    #{areaFz},#{workContent},#{remarks},#{pic},#{reported},#{submitDate},#{batch},#{region},#{worker},#{serial},#{username})
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
     update device_medicine_maintance left join device on device_medicine_maintance.device_id = device.id

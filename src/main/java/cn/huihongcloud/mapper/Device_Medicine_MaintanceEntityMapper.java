@@ -59,5 +59,7 @@ public interface Device_Medicine_MaintanceEntityMapper {
 
 
 
-
+    List<Device_Medicine_MaintanceEntity> getMaxBatch(String deviceId);
+    //缺twon
+    int addMaintanceData(Device_Medicine_MaintanceEntity dataEntity);
 }
