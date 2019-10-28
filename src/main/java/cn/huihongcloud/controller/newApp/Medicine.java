@@ -44,22 +44,21 @@ public class Medicine {
 
 
     @RequestMapping("/getMedicinename")
-    public Object getmedicineName(@RequestParam String worker){         //
+    public Object getmedicineName(@RequestParam String worker){
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
         System.out.println(user2.getUsername());
 
-        return deviceBeetleMapper.getMedicineName(user2.getAdcode());        //
+        return deviceBeetleMapper.getMedicineName(user2.getAdcode());
     }
 
-
     @RequestMapping("/getMedicineWorkContent")
-    public Object getWorkContent(@RequestParam String worker){           //
+    public Object getWorkContent(@RequestParam String worker){
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
-        return deviceBeetleMapper.getMedicinetWorkContent(user2.getAdcode());             //
+        return deviceBeetleMapper.getMedicinetWorkContent(user2.getAdcode());
 
     }
 
@@ -76,7 +75,7 @@ public class Medicine {
                                      String accuracy,
                                      String medicinename,          //要和前端名称一致
                                      String workContentValue,
-                                     Double medicinenumber,           //
+                                     Double medicinenumber,
                                      Double controlarea,
                                      String remarks,
                                      HttpServletResponse response) throws Exception {
@@ -144,8 +143,8 @@ public class Medicine {
         deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
         deviceMedicineMaintanceEntity.setLongitude(longitude);
         deviceMedicineMaintanceEntity.setLatitude(latitude);
-      //  deviceMedicineMaintanceEntity.setaltitude(altitude);
-      //  deviceMedicineMaintanceEntity.setaccuracy(accuracy);
+        deviceMedicineMaintanceEntity.setaltitude(altitude);
+        deviceMedicineMaintanceEntity.setaccuracy(accuracy);
         deviceMedicineMaintanceEntity.setMedicineName(medicinename);
         deviceMedicineMaintanceEntity.setWorkContent(workContentValue);
         deviceMedicineMaintanceEntity.setMedicineQua(String.valueOf(medicinenumber));
@@ -155,7 +154,7 @@ public class Medicine {
         BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
 
  //setTown
-//        deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
+       deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
 
         System.out.println("CustomeSerial");
