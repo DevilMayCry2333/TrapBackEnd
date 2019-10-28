@@ -59,6 +59,8 @@ public interface Device_Injection_maintanceEntityMapper {
 
     int reportData(@Param("id") Integer id);
 
+
+
     List<InjectionSummary> queryDeviceSummaryByCity(String adcode, String startDate, String endDate);
 
     Map<String, Integer> queryDeviceSum(String adcode, String startDate, String endDate);

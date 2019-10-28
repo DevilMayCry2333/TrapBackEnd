@@ -44,8 +44,18 @@ public interface Device_Medicine_MaintanceEntityMapper {
 
     int updateRecordById1(Device_Medicine_MaintanceEntity device_medicine_maintanceEntity);
 
+    int reportData1(@Param("id") Integer id);
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByAdcodeAndTown222(@Param("adcode") String adcode, @Param("town") String town,
+                                                                               @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
+
+
     Device_Medicine_MaintanceEntity selectById1(BigInteger id);
 
+
+
+    List<Device_Medicine_MaintanceEntity> getMaintenanceDataByManager222(@Param("adcode") String adcode, @Param("town") String town,
+                                                                        @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
 
 
 

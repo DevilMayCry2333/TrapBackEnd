@@ -5,6 +5,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
+import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
@@ -25,6 +26,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -208,4 +210,42 @@ public class MedicineDataDetail {
     }
 
 
+    @PostMapping("/maintenance/medicinereport")
+    public Object reportMaintenanceData(@RequestBody Map<String, Object> data) {
+        System.out.println(data.size());
+        List<Integer> list = (List<Integer>) data.get("list");
+        deviceMedicineMaintanceService.report11(list);
+        return Result.ok();
+    }
+
+    @GetMapping("/maintenance1")
+    public Object getMaintenanceData1(@RequestAttribute("username") String username, int page, int limit,
+                                      @RequestParam(required = false) String condition,
+                                      @RequestParam(required = false) String batch, @RequestParam(required = false) String town,
+                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
+        //System.out.println(startDate+"cc");
+//        if(startDate.equals("null")){
+//            startDate=null;
+//        }
+//        if(endDate.equals("null")){
+//            endDate=null;
+//        }
+        if (startDate != "" && startDate != null) {
+            startDate = startDate + " 00:00:00";
+            System.out.println(startDate + "dd");
+        }
+        if (endDate != "" && endDate != null) {
+            endDate = endDate + " 23:59:59";
+        }
+        User user = userService.getUserByUserName(username);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
+        List<Device_Medicine_MaintanceEntity> maintenanceData = deviceMedicineMaintanceService.getMaintenanceData1(user, condition, startDate, endDate, batch, town);
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setData(maintenanceData);
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalPage(pageObject.getPages());
+        return pageWrapper;
+    }
 }

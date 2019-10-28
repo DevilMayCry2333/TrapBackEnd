@@ -52,15 +52,18 @@ public class Device_Medicine_MaintanceEntity {
     private String username;
 
     private Double medicineQuaSum;
-
+    private Long scanId;
+    private String town;
+    private String dataPrecision;
     private Double areaFzSum;
     private String startDate;
 
     private String endDate;
     private Double totalMedicineQuaSum;
     private Double totalAreaFzNum;
+    private String altitude;
 
-    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Byte reported, String username) {
+    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Byte reported, String username,String town,String altitude,Long scanId) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -79,6 +82,9 @@ public class Device_Medicine_MaintanceEntity {
         this.customTown = customTown;
         this.reported = reported;
         this.username = username;
+        this.town = town;
+        this.altitude = altitude;
+        this.scanId = scanId;
     }
 
     public Device_Medicine_MaintanceEntity() {
