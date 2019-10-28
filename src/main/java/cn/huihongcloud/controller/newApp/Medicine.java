@@ -63,7 +63,7 @@ public class Medicine {
     }
 
     @ApiOperation("上传维护信息")
-    @PostMapping("/AddMedicineData")
+    @PostMapping("/Addmedicine")
     public Object addMaintenanceData(@RequestAttribute("username") String username,
                                      @RequestParam(required = false) MultipartFile image,
                                      @RequestParam(value = "username", required = false) String targetUsername,
@@ -143,8 +143,9 @@ public class Medicine {
         deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
         deviceMedicineMaintanceEntity.setLongitude(longitude);
         deviceMedicineMaintanceEntity.setLatitude(latitude);
-        deviceMedicineMaintanceEntity.setaltitude(altitude);
-        deviceMedicineMaintanceEntity.setaccuracy(accuracy);
+
+        deviceMedicineMaintanceEntity.setAltitude(altitude);
+        deviceMedicineMaintanceEntity.setDataPrecision(accuracy);
         deviceMedicineMaintanceEntity.setMedicineName(medicinename);
         deviceMedicineMaintanceEntity.setWorkContent(workContentValue);
         deviceMedicineMaintanceEntity.setMedicineQua(String.valueOf(medicinenumber));
@@ -154,7 +155,7 @@ public class Medicine {
         BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
 
  //setTown
-       deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
+//       deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
 
         System.out.println("CustomeSerial");
