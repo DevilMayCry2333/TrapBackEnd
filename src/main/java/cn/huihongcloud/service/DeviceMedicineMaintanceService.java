@@ -61,4 +61,32 @@ public class DeviceMedicineMaintanceService {
         }
         return deviceList;
     }
+
+    public boolean report11(List<Integer> ids) {
+        for (Integer id : ids) {
+            device_medicine_maintanceEntityMapper.reportData1(id);
+        }
+        return true;
+    }
+
+    public List<Device_Medicine_MaintanceEntity> getMaintenanceData1(User user, String condition, String date, String endDate, String batch, String searchtown) {
+        int role = user.getRole();
+        if (role < 3) {
+            // 省到县级用户
+            boolean reported = true;
+
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByAdcodeAndTown222(user.getAdcode(), user.getTown(), condition, batch, searchtown, date, endDate, reported);
+        } else if (role == 3) {
+
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByAdcodeAndTown222(user.getAdcode(), user.getTown(), condition, batch, searchtown, date, endDate, null);
+        } else if (role == 4) {
+            // 管理员
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByManager222(user.getAdcode(), user.getTown(), condition, batch, searchtown, date, endDate, user.getUsername());
+        } else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+
 }

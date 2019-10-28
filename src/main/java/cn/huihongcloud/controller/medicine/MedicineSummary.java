@@ -51,8 +51,8 @@ public class MedicineSummary {
 
         List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities = deviceMedicineMaintanceService.getDryInjectionSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate);
 
-        int totalMedicineQuaSum = 0;
-        int totalAreaFzNum = 0;
+        double totalMedicineQuaSum = 0;
+        double totalAreaFzNum = 0;
         for (Device_Medicine_MaintanceEntity lim: device_medicine_maintanceEntities) {
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
@@ -64,8 +64,8 @@ public class MedicineSummary {
 
 
         for (Device_Medicine_MaintanceEntity lim: device_medicine_maintanceEntities) {
-            lim.setTotalAreaFzNum((double) totalAreaFzNum);
-            lim.setTotalMedicineQuaSum((double) totalMedicineQuaSum);
+            lim.setTotalAreaFzNum(totalAreaFzNum);
+            lim.setTotalMedicineQuaSum(totalMedicineQuaSum);
         }
 
 

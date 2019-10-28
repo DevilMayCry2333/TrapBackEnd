@@ -107,7 +107,6 @@
     </select>
     <select id="getKillMethods" resultType="cn.huihongcloud.entity.deadTree_KillMethods">
         select * from deadtree_KillMethods t1 left join deadtrees_KillMethods_map t2 on t1.id = t2.id where adcode = #{adcode};
-
     </select>
     <select id="getById" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
         select * from device_naturalenemies_maintance where device_Id = #{deivceId};
@@ -165,6 +164,18 @@
             and ${colName} = #{searchText}
         </if>
 
+    </select>
+    <select id="getMedicineName" resultType="cn.huihongcloud.entity.MedicineName">
+         select * from medicine_name t1 left join medicine_nameInfo_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="getWorkContent" resultType="cn.huihongcloud.entity.Medicine_WorkContentEntity">
+         select * from medicine_workcontent t1 left join medicine_workcontent_map t2 on t1.id = t2.id where adcode = #{adcode};
+    </select>
+    <select id="MedicineWorker" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+         select * from device_medicine_maintance left join device on device.id = device_Id where device.scanId like concat('%', #{scanId}, '%');
+    </select>
+    <select id="getMedicinetWorkContent" resultType="cn.huihongcloud.entity.Medicine_WorkContentEntity">
+        select * from medicine_workcontent left join medicine_workcontent_map on medicine_workcontent.id = medicine_workcontent_map.id where adcode = #{adcode};
     </select>
 
 </mapper>

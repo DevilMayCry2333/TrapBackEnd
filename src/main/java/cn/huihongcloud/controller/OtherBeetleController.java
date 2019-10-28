@@ -229,7 +229,6 @@ public class OtherBeetleController {
         User user = userService.getUserByUserName(username);
         System.out.println("fortown");
         return otherBeetleMapper.getMedicine_TypeForTown(user.getAdcode());
-
     }
 
     @ApiOperation("")
