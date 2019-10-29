@@ -316,4 +316,12 @@ public class Device_Medicine_MaintanceEntity {
     public void setAltitude(String altitude) {
         this.altitude = altitude;
     }
+
+    public int getReported() {
+        return reported;
+    }
+
+    public void setReported(int reported) {
+        this.reported = reported;
+    }
 }
