@@ -328,7 +328,61 @@ public class OtherBeetleController {
         return Result.ok();
     }
 
+    /**
+     * 配置一下注剂名称
+     * @return
+     */
+    @GetMapping("/injectName_type")
+    public Object a11() {
+        return Result.ok(otherBeetleMapper.getInjectname_Type());
+    }
 
+    @PostMapping("/injectName_type")
+    public Object b11(String name) {
+        otherBeetleMapper.insertInjectName_Type(name);
+        return Result.ok();
+    }
+
+
+    @PutMapping("/injectName_type")
+    public Object c11(InjectName injectName) {
+        otherBeetleMapper.updateInjectName_Type(injectName);
+        return Result.ok();
+    }
+
+    @DeleteMapping("/injectName_type")
+    public Object d11(int id) {
+        otherBeetleMapper.deleteInjectName_Type(id);
+        return Result.ok();
+    }
+
+    /**
+     * 配置一下注剂管理员
+     * @return
+     */
+    @ApiOperation("")
+    @GetMapping("/injectName_type/town")
+    public Object getinjectNameTypeForTown(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getinjectName_TypeForTown(user.getAdcode());
+    }
+
+    @ApiOperation("")
+    @PostMapping("/injectName_type/town")
+    public Object addinjectNameTypeForTown(@RequestAttribute("username") String username,Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertMedicine_TypeForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/injectName_type/town")
+    public Object deleteinjectNameTypeForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteMedicine_TypeForTown(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
     @GetMapping("/medicine_workContent")
     public Object getMedicineWork() {
         return Result.ok(otherBeetleMapper.getMedicine_WorkContent());

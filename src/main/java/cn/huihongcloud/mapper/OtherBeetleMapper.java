@@ -28,7 +28,7 @@ public interface OtherBeetleMapper {
 
     int insertEnemy_Type(String name);
     int insertMedicine_Type(String name);
-
+    int insertInjectName_Type(String name);
     int insertDead_Kill(String name);
 
     List<BeetleInfo> queryBeetleInfo();
@@ -50,6 +50,7 @@ public interface OtherBeetleMapper {
     int updateEnemy_Type(enemy_EneType enemyEneType);
 
     int updateMedicine_Type(Medicine_nameEntity medicine_nameEntity);
+    int updateInjectName_Type(InjectName injectName);
 
     int updateDead_Kill(deadTree_KillMethods deadTreeKillMethods);
 
@@ -65,12 +66,15 @@ public interface OtherBeetleMapper {
 
 //    药剂名称（类型）
     int deleteMedicine_Type(int id);
-
+    int deleteInjectName_Type(int id);
     int deleteDead_Kill(int id);
 
     int deleteEnemy_TypeForTown(int id,String adcode);
 //
     int deleteMedicine_TypeForTown(int id,String adcode);
+
+    int deleteinjectName_TypeForTown(int id,String adcode);
+
 
     int deleteInjectForTown(int id,String adcode);
 
@@ -83,6 +87,7 @@ public interface OtherBeetleMapper {
     int insertEnemy_TypeForTown(int id,String adcode);
 //
     int insertMedicine_TypeForTown(int id,String adcode);
+    int insertInjectName_TypeForTown(int id,String adcode);
 
     int insertWorkContentForTOwn(int id,String adcode);
     int insertWorkContentForTOwn1(int id,String adcode);
@@ -106,12 +111,14 @@ public interface OtherBeetleMapper {
     List<enemy_EneType> getEnemy_Type();
 //
     List<Medicine_nameEntity> getMedicine_Type();
-
+    List<InjectName> getInjectname_Type();
     List<deadTree_KillMethods> getDead_Kill();
 
     List<enemy_EneType> getEnemy_TypeForTown(String adcode);
 //
     List<Medicine_nameEntity> getMedicine_TypeForTown(String adcode);
+
+    List<InjectName> getinjectName_TypeForTown(String adcode);
     List<workContent> getWorkContentForTown(String adcode);
     List<workContent> getWorkContentForTown1(String adcode);
 

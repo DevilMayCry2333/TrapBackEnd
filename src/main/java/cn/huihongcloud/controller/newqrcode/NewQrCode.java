@@ -97,7 +97,7 @@ public class NewQrCode {
                 app = "枯死树采伐";
                 break;
             case 5:
-                app = "轨迹追踪";
+                app = "药剂防治管理";
                 break;
         }
         List<Device> device = newQrCodeMapper.getMaxAvaDevice(adcode,app);
@@ -116,7 +116,7 @@ public class NewQrCode {
         System.out.println(mydist[1]);
         System.out.println(mydist[2]);
 
-        String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","轨迹追踪"};
+        String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","药剂防治管理"};
         int switchProject = Integer.parseInt(projectCode);
 
 
