@@ -48,7 +48,7 @@ public class Device_Medicine_MaintanceEntity {
     private String customTown;
 
     @Excel(name = "是否上报")
-    private Byte reported;
+    private int reported;
 
     @Excel(name = "管理员")
     private String username;
@@ -269,14 +269,6 @@ public class Device_Medicine_MaintanceEntity {
         this.customTown = customTown == null ? null : customTown.trim();
     }
 
-    public Byte getReported() {
-        return reported;
-    }
-
-    public void setReported(Byte reported) {
-        this.reported = reported;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -307,5 +299,13 @@ public class Device_Medicine_MaintanceEntity {
 
     public void setAltitude(String altitude) {
         this.altitude = altitude;
+    }
+
+    public int getReported() {
+        return reported;
+    }
+
+    public void setReported(int reported) {
+        this.reported = reported;
     }
 }
