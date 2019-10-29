@@ -313,12 +313,11 @@
     </if>
     group by device.area
   </select>
-<<<<<<< Updated upstream
+
     <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
        select * from device_medicine_maintance where device_id = #{deviceId} order by batch desc;
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-=======
+
   <select id="getDeviceSum" resultType="java.util.Map">
     select count(distinct device_id) `count`, sum(medicine_qua) medicineQuaSum,sum(area_fz) areaFzSum
     from device_medicine_maintance
@@ -522,11 +521,12 @@
       and submit_date &lt;= #{endDate}
     </if>
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
->>>>>>> Stashed changes
     delete from device_medicine_maintance
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
     insert into device_medicine_maintance (id, device_id, serial, 
       region, submit_date, batch, 

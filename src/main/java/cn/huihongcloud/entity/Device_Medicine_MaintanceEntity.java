@@ -284,4 +284,28 @@ public class Device_Medicine_MaintanceEntity {
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
     }
+
+    public String getDataPrecision() {
+        return dataPrecision;
+    }
+
+    public void setDataPrecision(String dataPrecision) {
+        this.dataPrecision = dataPrecision;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
+    }
 }
