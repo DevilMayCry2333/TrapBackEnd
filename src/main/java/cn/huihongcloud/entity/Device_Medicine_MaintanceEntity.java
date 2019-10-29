@@ -48,7 +48,7 @@ public class Device_Medicine_MaintanceEntity {
     private String customTown;
 
     @Excel(name = "是否上报")
-    private Byte reported;
+    private Integer reported;
 
     @Excel(name = "管理员")
     private String username;
@@ -113,7 +113,7 @@ public class Device_Medicine_MaintanceEntity {
     private Double totalAreaFzNum;
     private String altitude;
 
-    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Byte reported, String username,String town,String altitude,Long scanId) {
+    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Integer reported, String username,String town,String altitude,Long scanId) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -269,12 +269,20 @@ public class Device_Medicine_MaintanceEntity {
         this.customTown = customTown == null ? null : customTown.trim();
     }
 
-    public Byte getReported() {
+    public Integer getReported() {
         return reported;
     }
 
-    public void setReported(Byte reported) {
+    public void setReported(Integer reported) {
         this.reported = reported;
+    }
+
+    public Long getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(Long scanId) {
+        this.scanId = scanId;
     }
 
     public String getUsername() {
@@ -307,5 +315,13 @@ public class Device_Medicine_MaintanceEntity {
 
     public void setAltitude(String altitude) {
         this.altitude = altitude;
+    }
+
+    public int getReported() {
+        return reported;
+    }
+
+    public void setReported(int reported) {
+        this.reported = reported;
     }
 }

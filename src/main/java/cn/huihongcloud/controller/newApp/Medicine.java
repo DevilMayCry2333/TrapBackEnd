@@ -151,6 +151,12 @@ public class Medicine {
         deviceMedicineMaintanceEntity.setMedicineQua(String.valueOf(medicinenumber));
         deviceMedicineMaintanceEntity.setAreaFz(controlarea);
         deviceMedicineMaintanceEntity.setRemarks(remarks);
+        deviceMedicineMaintanceEntity.setUsername(user1.getUsername());
+        deviceMedicineMaintanceEntity.setBatch(maxBatchNum);
+        deviceMedicineMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
+        deviceMedicineMaintanceEntity.setReported(0);
+        deviceMedicineMaintanceEntity.setWorker(username);
+
 
         BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
 
