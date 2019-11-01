@@ -316,4 +316,5 @@ public class Device_Medicine_MaintanceEntity {
     public void setAltitude(String altitude) {
         this.altitude = altitude;
     }
+
 }
