@@ -83,4 +83,6 @@ public interface Device_Medicine_MaintanceEntityMapper {
 
     List<Device_Medicine_MaintanceEntity> getMaintenanceDataByDeviceId111(String myusername, String deviceId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("reported") Boolean reported);
 
+    int countAll1(String username,String startDate,String endDate,Integer optionIndex,String searchText);
+
 }

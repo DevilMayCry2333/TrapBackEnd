@@ -521,6 +521,20 @@
       and submit_date &lt;= #{endDate}
     </if>
   </select>
+  <select id="countAll1" resultType="java.lang.Integer">
+    SELECT COUNT(t1.id) FROM device_medicine_maintance t1
+    left join device on device.id = t1.device_id WHERE username = #{username}
+    <if test="startDate!=null and startDate !=''">
+      and t1.submit_date >= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and t1.submit_date &lt;= #{endDate}
+    </if>
+    <if test="optionIndex!=null and optionIndex !='' and searchText!=null and searchText!=''">
+      and ${optionIndex} = #{searchText}
+    </if>
+
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from device_medicine_maintance
