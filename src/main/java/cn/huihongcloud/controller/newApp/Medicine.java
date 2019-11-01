@@ -73,7 +73,7 @@ public class Medicine {
                                      String latitude,
                                      String altitude,
                                      String accuracy,
-                                     String medicinename,          //要和前端名称一致
+                                     String medicinenameValue,          //要和前端名称一致
                                      String workContentValue,
                                      Double medicinenumber,
                                      Double controlarea,
@@ -140,28 +140,27 @@ public class Medicine {
 //        deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
 //        deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
 //        deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
-        deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(deviceId));
+        deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceMedicineMaintanceEntity.setLongitude(longitude);
         deviceMedicineMaintanceEntity.setLatitude(latitude);
-
         deviceMedicineMaintanceEntity.setAltitude(altitude);
         deviceMedicineMaintanceEntity.setDataPrecision(accuracy);
-        deviceMedicineMaintanceEntity.setMedicineName(medicinename);
+        deviceMedicineMaintanceEntity.setMedicineName(medicinenameValue);
         deviceMedicineMaintanceEntity.setWorkContent(workContentValue);
         deviceMedicineMaintanceEntity.setMedicineQua(String.valueOf(medicinenumber));
         deviceMedicineMaintanceEntity.setAreaFz(controlarea);
         deviceMedicineMaintanceEntity.setRemarks(remarks);
         deviceMedicineMaintanceEntity.setUsername(user1.getUsername());
-        deviceMedicineMaintanceEntity.setBatch(maxBatchNum);
+        deviceMedicineMaintanceEntity.setBatch(maxBatchNum + 1);
         deviceMedicineMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceMedicineMaintanceEntity.setReported(0);
         deviceMedicineMaintanceEntity.setWorker(username);
 
-
         BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+//setTown
+        deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
- //setTown
-//       deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
+
 
 
         System.out.println("CustomeSerial");
