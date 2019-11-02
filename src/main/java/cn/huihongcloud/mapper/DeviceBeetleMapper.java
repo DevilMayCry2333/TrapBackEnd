@@ -30,6 +30,7 @@ public interface DeviceBeetleMapper {
 
     List<inject_WoodStatus> getInjectWoodStatus(String adcode);
     List<MedicineName> getMedicineName(String adcode);
+    List<InjectName> getInjectName(String adcode);
     List<inject_WorkContent> getInjectWorkContent(String adcode);
     List<enemy_EneType> getEnemyType(String adcode);
     List<deadTree_KillMethods> getKillMethods(String adcode);
