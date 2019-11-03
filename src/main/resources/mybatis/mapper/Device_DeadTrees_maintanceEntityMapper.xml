@@ -169,9 +169,11 @@
         </if>
         <if test="latitude != null and latitude != ''">
           t1.latitude = #{latitude},
+          t2.latitude = #{latitude},
         </if>
         <if test="longitude != null and longitude != ''">
           t1.longitude = #{longitude},
+          t2.longitude = #{longitude},
         </if>
         <if test="region != null and region != ''">
           t1.region = #{region},
