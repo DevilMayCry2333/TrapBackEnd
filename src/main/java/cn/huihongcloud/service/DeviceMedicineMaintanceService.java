@@ -129,4 +129,10 @@ public class DeviceMedicineMaintanceService {
     }
 
 
+
+    public int countAll1(String username,String startDate,String endDate,Integer optionIndex,String searchText){
+        return device_medicine_maintanceEntityMapper.countAll1(username,startDate,endDate,optionIndex,searchText);
+    }
+
+
 }

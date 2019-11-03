@@ -15,6 +15,7 @@ import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,8 @@ public class MedicineDataDetail {
     @Autowired
     private Device_Medicine_MaintanceEntityMapper device_medicine_maintanceEntityMapper;
 
+    //JSONObject jsonObject = new JSONObject();
+
 
     @RequestMapping("/getDetail")
     public Object getDetail(@RequestAttribute("username") String username,
@@ -47,9 +50,10 @@ public class MedicineDataDetail {
                             @RequestParam(required = false) Integer optionIndex,
                             @RequestParam(required = false) String searchText,
                             @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate){
-        User user =  userService.getUserByUserName(username);
-        Page<Object> pageObject = PageHelper.startPage(page,limit);
 
+        User user = userService.getUserByUserName(username);
+
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
         System.out.println(username);
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
@@ -57,23 +61,23 @@ public class MedicineDataDetail {
         if (!Objects.equals(endDate, "")) {
             endDate = endDate + " 23:59:59";
         }
-        Date date = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        ft.format(date);
+//        Date date = new Date();
+//        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+//        ft.format(date);
 
         List<Device_Medicine_MaintanceEntity> list = null;
         if(user.getRole()==4){
             list = deviceMedicineMaintanceService.getMedicineDetail(user.getParent(),optionIndex,searchText,startDate,endDate);
-            System.out.println(list.size());
         }if(user.getRole()<=3){
             list = device_medicine_maintanceEntityMapper.selectByConditionsAdcode(user.getAdcode(),optionIndex,searchText,startDate,endDate);
         }
         PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setData(list);
         pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalPage(pageObject.getPages());
-        pageWrapper.setTotalNum(pageObject.getPageNum());
-        return pageWrapper;
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        return Result.ok(pageWrapper);
+        //jsonObject.put("current",page);
     }
 
     @RequestMapping("/deleteRecord")
