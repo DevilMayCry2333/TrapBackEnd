@@ -695,9 +695,11 @@
       </if>
       <if test="longitude != null" >
         device_medicine_maintance.longitude = #{longitude,jdbcType=VARCHAR},
+        device.longitude = #{longitude,jdbcType=VARCHAR},
       </if>
       <if test="latitude != null" >
         device_medicine_maintance.latitude = #{latitude,jdbcType=VARCHAR},
+        device.latitude = #{latitude,jdbcType=VARCHAR},
       </if>
       <if test="medicineQua != null" >
         medicine_qua = #{medicineQua,jdbcType=VARCHAR},
