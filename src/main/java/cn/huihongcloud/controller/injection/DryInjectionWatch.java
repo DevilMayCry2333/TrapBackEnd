@@ -42,6 +42,7 @@ public class DryInjectionWatch {
     UserService userService;
     @Autowired
     private Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
+    JSONObject jsonObject = new JSONObject();
 
 
     @RequestMapping("/dataDetail")
@@ -81,6 +82,7 @@ public class DryInjectionWatch {
             System.out.println(d.getDeviceId());
 
         }
+
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);

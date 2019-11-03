@@ -10,7 +10,7 @@
         <result column="date" property="date"/>
     </resultMap>
     
-    <insert id="insert" useGeneratedKeys="true">
+        <insert id="insert" useGeneratedKeys="true">
         insert into device_img
         (img_name, username, device_id, date)
         values

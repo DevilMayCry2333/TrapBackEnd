@@ -521,6 +521,20 @@
       and submit_date &lt;= #{endDate}
     </if>
   </select>
+  <select id="countAll1" resultType="java.lang.Integer">
+    SELECT COUNT(t1.id) FROM device_medicine_maintance t1
+    left join device on device.id = t1.device_id WHERE username = #{username}
+    <if test="startDate!=null and startDate !=''">
+      and t1.submit_date >= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and t1.submit_date &lt;= #{endDate}
+    </if>
+    <if test="optionIndex!=null and optionIndex !='' and searchText!=null and searchText!=''">
+      and ${optionIndex} = #{searchText}
+    </if>
+
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from device_medicine_maintance
@@ -658,8 +672,8 @@
   </insert>
   <insert id="addMaintanceData" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
     insert into device_medicine_maintance(device_id,longitude,latitude,medicine_name,medicine_qua,area_fz,work_content,remarks,pic,reported,
-    submit_date,batch,region,worker,serial,username) values (#{deviceId},#{longitude},#{latitude},#{medicineName},#{medicineQua},
-    #{areaFz},#{workContent},#{remarks},#{pic},#{reported},#{submitDate},#{batch},#{region},#{worker},#{serial},#{username})
+    submit_date,batch,region,worker,serial,username,town) values (#{deviceId},#{longitude},#{latitude},#{medicineName},#{medicineQua},
+    #{areaFz},#{workContent},#{remarks},#{pic},#{reported},#{submitDate},#{batch},#{region},#{worker},#{serial},#{username},#{town})
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
     update device_medicine_maintance left join device on device_medicine_maintance.device_id = device.id
@@ -681,9 +695,11 @@
       </if>
       <if test="longitude != null" >
         device_medicine_maintance.longitude = #{longitude,jdbcType=VARCHAR},
+        device.longitude = #{longitude,jdbcType=VARCHAR},
       </if>
       <if test="latitude != null" >
         device_medicine_maintance.latitude = #{latitude,jdbcType=VARCHAR},
+        device.latitude = #{latitude,jdbcType=VARCHAR},
       </if>
       <if test="medicineQua != null" >
         medicine_qua = #{medicineQua,jdbcType=VARCHAR},

@@ -49,7 +49,6 @@ public class Medicine {
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
         System.out.println(user2.getUsername());
-
         return deviceBeetleMapper.getMedicineName(user2.getAdcode());
     }
 
