@@ -372,7 +372,7 @@ public class OtherBeetleController {
     @PostMapping("/injectName_type/town")
     public Object addinjectNameTypeForTown(@RequestAttribute("username") String username,Integer beetleInfoId) {
         User user = userService.getUserByUserName(username);
-        otherBeetleMapper.insertMedicine_TypeForTown(beetleInfoId,user.getAdcode());
+        otherBeetleMapper.insertInjectName_TypeForTown(beetleInfoId,user.getAdcode());
         return Result.ok();
     }
 

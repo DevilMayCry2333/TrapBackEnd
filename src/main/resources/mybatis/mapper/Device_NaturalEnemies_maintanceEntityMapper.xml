@@ -159,6 +159,7 @@
       <set>
         <if test="altitude != null and altitude != ''">
           t1.altitude = #{altitude},
+          t2.altitude = #{altitude},
         </if>
         <if test="area != null and area != ''">
           area = #{area},
@@ -171,9 +172,11 @@
         </if>
         <if test="longitude != null and longitude != ''">
           t1.longitude = #{longitude},
+          t2.longitude = #{longitude},
         </if>
         <if test="latitude != null and latitude != ''">
           t1.latitude = #{latitude},
+          t2.latitude = #{latitude},
         </if>
         <if test="predatorstype != null and predatorstype != ''">
           predatorstype = #{predatorstype},

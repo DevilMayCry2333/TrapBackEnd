@@ -26,6 +26,8 @@
       <arg column="area" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="town" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="reported" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="inject_name" jdbcType="DOUBLE" javaType="java.lang.Double" />
+      <arg column="chest_diameter" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
@@ -33,7 +35,7 @@
       region, submit_date, batch,
       longitude, latitude, work_content,
       injection_num, WoodStatus, Pic,
-      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,reported
+      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,reported,inject_name,chest_diameter
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR},
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER},
@@ -41,7 +43,7 @@
       #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},
       #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
       ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR}
-      ,#{reported,jdbcType=INTEGER})
+      ,#{reported,jdbcType=INTEGER},#{injectName,jdbcType=VARCHAR},#{chestDiameter,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
     insert into Device_Injection_maintance
@@ -198,8 +200,8 @@
   </insert>
 
     <insert id="addMaintanceData">
-        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,woodstatus,injection_num,Remarks,work_content,Pic,username,town)
-        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodstatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username},#{town})
+        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,woodstatus,injection_num,Remarks,work_content,Pic,username,town,inject_name,chest_diameter)
+        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodstatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username},#{town},#{injectName},#{chestDiameter})
     </insert>
 
     <update id="reportData">
@@ -211,13 +213,14 @@
   <update id="updateRecordById">
     update device_injection_maintance set device_Id=#{deviceId},serial=#{serial},region=#{region},
     submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
-    injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus} where id=#{id};
+    injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus},#{injectName},#{chestDiameter} where id=#{id};
   </update>
   <update id="updateRecordByFront">
     update device_injection_maintance t1 left join device t2 on t2.id = t1.device_Id
     <set>
       <if test="altitude != null and altitude != ''">
         t1.altitude = #{altitude},
+        t2.altitude = #{altitude},
       </if>
       <if test="batch != null and batch != ''">
         batch = #{batch},
@@ -230,9 +233,11 @@
       </if>
       <if test="latitude != null">
         t1.latitude = #{latitude},
+        t2.latitude = #{latitude},
       </if>
       <if test="longitude != null and longitude != ''">
         t1.longitude = #{longitude},
+        t2.longitude = #{longitude},
       </if>
       <if test="region != null and region != ''">
         region = #{region},
@@ -248,6 +253,12 @@
       </if>
       <if test="workContent != null and workContent != ''">
         work_content = #{workContent},
+      </if>
+      <if test="injectName != null and injectName != ''">
+        inject_name = #{injectName},
+      </if>
+      <if test="chestDiameter != null and chestDiameter != ''">
+        chest_diameter = #{chest_diameter},
       </if>
       <if test="customtown != null and customtown != ''">
         t2.CustomTown = #{customtown},
@@ -332,6 +343,8 @@
     Device_Injection_maintance.Pic,
     Device_Injection_maintance.Remarks,
     Device_Injection_maintance.reported,
+    Device_Injection_maintance.inject_name,
+    Device_Injection_maintance.chest_diameter,
     device.province,
     device.city,
     device.area,
@@ -393,6 +406,8 @@
     Device_Injection_maintance.altitude,
     Device_Injection_maintance.Pic,
     Device_Injection_maintance.Remarks,
+    Device_Injection_maintance.inject_name,
+    Device_Injection_maintance.chest_diameter,
     Device_Injection_maintance.reported,
     device.province,
     device.city,
@@ -490,6 +505,8 @@
       Device_Injection_maintance.altitude,
       Device_Injection_maintance.Pic,
       Device_Injection_maintance.WoodStatus,
+      Device_Injection_maintance.inject_name,
+      Device_Injection_maintance.chest_diameter,
       Device_Injection_maintance.scanId,
       Device_Injection_maintance.Remarks,
       device.province,
@@ -559,6 +576,8 @@
     Device_Injection_maintance.longitude,
     Device_Injection_maintance.latitude,
     Device_Injection_maintance.altitude,
+    Device_Injection_maintance.inject_name,
+    Device_Injection_maintance.chest_diameter,
     Device_Injection_maintance.Pic,
     Device_Injection_maintance.scanId,
     Device_Injection_maintance.Remarks,
@@ -822,7 +841,6 @@
       and submit_date &lt;= #{endDate}
     </if>
     group by device.CustomTown
-
   </select>
 
 
