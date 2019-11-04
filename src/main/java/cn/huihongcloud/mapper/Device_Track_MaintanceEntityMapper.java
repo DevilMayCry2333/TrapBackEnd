@@ -59,7 +59,7 @@ public interface Device_Track_MaintanceEntityMapper {
 
     List<Device_Track_MaintanceEntity> selectByLineName(String linename);
 
-    int updatePic(String linename,String colName,String text);
+    int updatePic(String linename,String colName,String text,String username);
 
     int updateMaintance(Device_Track_MaintanceEntity dataentity);
 
