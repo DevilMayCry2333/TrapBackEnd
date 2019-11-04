@@ -70,7 +70,7 @@
         where device.id = #{device.id}
     </update>
     <update id="updateScanId">
-        update device set scanId = #{scanId} where id = #{id};
+        update device set scanId = #{scanId} where id = #{id} and manager = #{username};
 
     </update>
     <insert id="addDevice">
@@ -98,6 +98,7 @@
               area like concat('%', #{searchText}, '%') or
               town like concat('%', #{searchText}, '%'))
           </if>
+          and isManagerAssign = 1
     </select>
     <insert id="addDeviceRelation">
         insert into device_map (device_id, user_id) values (#{deviceId}, #{userId})
@@ -209,7 +210,7 @@
         select count(*) from device where adcode = #{adcode}
     </select>
     <select id="getDeviceByManager" resultMap="Device">
-        select * from device where manager = #{manager}
+        select * from device where manager = #{manager} and isManagerAssign = 1
 
     </select>
     <select id="getDeviceandWorkerByManager" resultMap="Device">
@@ -251,7 +252,7 @@
         select * from device where scanId = #{scanId};
     </select>
     <select id="getDeviceBySerial" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where CustomSerial = #{serial};
+        select * from device where CustomSerial = #{serial} and manager = #{username};
     </select>
     <select id="adminDevice" resultType="cn.huihongcloud.entity.device.Device">
         select * from device

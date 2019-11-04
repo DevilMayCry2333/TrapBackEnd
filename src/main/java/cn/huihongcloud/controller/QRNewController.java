@@ -155,7 +155,6 @@ public class QRNewController {
         String username = jwtComponent.verify(token);
         User user = userService.getUserByUserName(username);
         Integer role = user.getRole();
-
         /*
             当前只有县级用户与管理员可以下载二维码
          */
