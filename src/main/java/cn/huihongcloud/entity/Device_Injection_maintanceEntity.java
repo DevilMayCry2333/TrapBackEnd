@@ -84,6 +84,8 @@ public class Device_Injection_maintanceEntity {
 
     private Integer totalDeadSum;
 
+    private Double deadRate;
+
     public void setReported(Integer reported) {
         this.reported = reported;
     }
@@ -112,10 +114,28 @@ public class Device_Injection_maintanceEntity {
     @Excel(name = "注剂类型")
     private String injectName;
 
+    private String woodStatusName;
+
+    public String getWoodStatusName() {
+        return woodStatusName;
+    }
+
+    public void setWoodStatusName(String woodStatusName) {
+        this.woodStatusName = woodStatusName;
+    }
+
+    public Double getDeadRate() {
+        return deadRate;
+    }
+
+    public void setDeadRate(Double deadRate) {
+        this.deadRate = deadRate;
+    }
+
     public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude,
-                                            String workContent, Integer injectionNum,String pic, String worker, String remarks,
+                                            String workContent, Integer injectionNum, String pic, String worker, String remarks,
                                             Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String customtown, Integer injectNumSum,
-                                            Integer woodstatus,Integer WoodStatusSum,Integer totalInjectSum,Integer totalWoodSum,Integer totalDeadSum,Double chestDiameter,String injectName) {
+                                            Integer woodstatus, Integer WoodStatusSum, Integer totalInjectSum, Integer totalWoodSum, Integer totalDeadSum, Double chestDiameter, String injectName, Double deadRate,String woodStatusName) {
 
         this.woodstatus = woodstatus;
         this.chestDiameter = chestDiameter;
@@ -149,8 +169,8 @@ public class Device_Injection_maintanceEntity {
         this.totalInjectSum = totalInjectSum;
         this.totalWoodSum = totalWoodSum;
         this.totalDeadSum = totalDeadSum;
-
-
+        this.deadRate = deadRate;
+        this.woodStatusName = woodStatusName;
     }
 
     public Device_Injection_maintanceEntity() {

@@ -91,6 +91,7 @@ public class newStatic {
         }
         workerStaticList.forEach(ws -> {
             System.out.println(ws.getWorkerName() + " " + ws.getNum() + " " + ws.getCurrentDate());
+            System.out.println(ws.getWorkerName() + " " + ws.getNum1() + " " + ws.getCurrentDate());
         });
 
         WorkerStatic lastWs = null;
@@ -108,8 +109,15 @@ public class newStatic {
             int day = list.size();
             jsonObject.put("day", day);
             double num = list.stream().mapToDouble(WorkerStatic::getNum).sum();
+            double num1 = list.stream().mapToDouble(WorkerStatic::getNum1).sum();
+            double num2 = list.stream().mapToDouble(WorkerStatic::getNum2).sum();
+            double num3 = list.stream().mapToDouble(WorkerStatic::getNum3).sum();
             jsonObject.put("Num", num);
+            jsonObject.put("Num1",num1);
+            jsonObject.put("Num2",num2);
+            jsonObject.put("Num3",num3);
             jsonObject.put("Avg", num / day);
+            jsonObject.put("Avg1",num3 / day);
             jsonArray.add(jsonObject);
         });
 
