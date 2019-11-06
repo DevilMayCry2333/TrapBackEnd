@@ -21,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/newQrCode")
 public class NewQrCode {
+    //搜索19，魔术数字
+
     @Autowired
     NewQrCodeMapper newQrCodeMapper;
     @Autowired
@@ -89,6 +91,21 @@ public class NewQrCode {
 //        return "OK";
     }
 
+    @RequestMapping("/getMaxCodeByProvince")
+    public Object getMaxCodeByAreaAndProject(@RequestParam String username){
+        User user = userMapper.getUserByUserName(username);
+        List<Device> deviceList = newQrCodeMapper.getMaxScanId(user.getProvince());
+        return deviceList.get(0).getScanId();
+
+    }
+
+    @RequestMapping("/reAssignQRCode")
+    public Object reAssignQRCode(@RequestParam String customSerial,@RequestParam String scanId,@RequestParam String customProject){
+        newQrCodeMapper.deleteScanId(scanId);
+        newQrCodeMapper.updateScanId(customProject,customSerial, scanId);
+        return "OK";
+    }
+
     @RequestMapping("/assignQRCode")
     public JSONObject assignCode(@RequestParam String proxyCode,@RequestParam String startID,@RequestParam String endID){
 //        List<User> cityUser = newQrCodeMapper.getCity(cityCode);
@@ -123,16 +140,21 @@ public class NewQrCode {
         System.out.println(username);
         User user = userMapper.getUserByUserName(username);
         System.out.println(user.getAdcode());
+
+        String mydist[] = distUtil.getNames(user.getAdcode(),null);
+        System.out.println(mydist[0]);
+        System.out.println(mydist[1]);
+        System.out.println(mydist[2]);
+
         try {
-
-
+            String devicePrefix = user.getAdcode() + "19" + applicationValue;
 
             for (long i = Long.parseLong(startScanID),j=0; i <= Long.parseLong(endScanID); i++,j++) {
-                List<Device> device = newQrCodeMapper.getMaxDeviceId(user.getAdcode(), String.valueOf(applicationValue));
+                List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
                 System.out.println("=====1=");
                 System.out.println(device.get(0).getId());
                 System.out.println("=====1=");
-                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username);
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2]);
 //                Thread.sleep(5 * 100);
             }
             res.put("Res",true);
@@ -140,13 +162,16 @@ public class NewQrCode {
         }catch (Exception e){
             String deviceId = user.getAdcode() +"19" + applicationValue +  "000001";
 
-            newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username);
+            String devicePrefix = user.getAdcode() + "19" + applicationValue;
+
+
+            newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2]);
             for (long i = Long.parseLong(startScanID) + 1,j=1; i <= Long.parseLong(endScanID); i++,j++) {
-                List<Device> device = newQrCodeMapper.getMaxDeviceId(user.getAdcode(), String.valueOf(applicationValue));
+                List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
                 System.out.println("======");
                 System.out.println(device.get(0).getId());
                 System.out.println("======");
-                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username);
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2]);
 //                Thread.sleep(5 * 100);
             }
             res.put("Res",true);

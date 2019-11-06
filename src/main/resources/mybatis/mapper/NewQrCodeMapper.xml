@@ -6,8 +6,14 @@
     </insert>
     <update id="assginDeviceByManager">
         update device set isManagerAssign = 1,CustomPrefix = #{prefix},CustomTown = #{CustomRegion}, CustomSerial = concat(#{prefix},#{serial}),
-        CustomProject = #{username}, manager = #{manager}, id = #{id}, project=#{appval} where scanId = #{scanId}
+        CustomProject = #{username}, manager = #{manager}, id = #{id}, project=#{appval},city=#{city},area=#{area} where scanId = #{scanId}
     </update>
+    <update id="updateScanId">
+        update device set scanId = #{scanId} where customProject = #{customProject} and customSerial = #{customSerial}
+    </update>
+    <delete id="deleteScanId">
+        delete from device where scanId = #{scanId};
+    </delete>
 
     <select id="getProxy" resultType="cn.huihongcloud.entity.user.User">
         select * from  user where role = '7'
@@ -40,5 +46,8 @@
     </select>
     <select id="getMaxDeviceId" resultType="cn.huihongcloud.entity.device.Device">
         select * from device where id like concat(#{adcode} , '%') and isManagerAssign = 1 and project=#{appval} order by id DESC;
+    </select>
+    <select id="getMaxScanId" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device where province=#{province} and isManagerAssign = 0 order by scanId;
     </select>
 </mapper>

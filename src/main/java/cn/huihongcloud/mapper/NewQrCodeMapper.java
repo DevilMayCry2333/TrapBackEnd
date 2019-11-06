@@ -13,11 +13,19 @@ public interface NewQrCodeMapper {
     List<User> getArea(String adcode);
     List<User> getProxyByCode(String adcode);
     int insertDevice(String id,String proxy);
-    int assginDeviceByManager(String appval,long id,long scanId,String CustomRegion,String prefix,long serial,String username,String manager);
+    int assginDeviceByManager(String appval,long id,long scanId,String CustomRegion,String prefix,long serial,String username,String manager,String city,String area);
 
     List<Device> getMaxAvaDevice(String province);
 
     List<Device> getMaxDeviceId(String adcode,String appval);
+
+    List<Device> getMaxScanId(String province);
+
+    int deleteScanId(String scanId);
+
+    int updateScanId(String customProject,String customSerial,String scanId);
+
+
 
     List<Device> selectByConditions(String colName,String searchText,int num1,int num2);
 

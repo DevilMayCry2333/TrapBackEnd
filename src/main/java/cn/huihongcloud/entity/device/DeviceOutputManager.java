@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class DeviceOutputManager {
     @Excel(name = "设备id")
-    private String id;
+    private String scanId;
     @Excel(name = "省")
     private String province;
     @Excel(name = "市")
