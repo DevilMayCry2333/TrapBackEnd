@@ -37,7 +37,7 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     int insertSelective(Device_DeadTrees_maintanceEntity record);
 
-    int countAllByArea(String adcode);
+    int countAllByArea(String adcode,String startDate,String endDate,String colName,String searchText);
 
     List<Device_DeadTrees_maintanceEntity> selectAllByArea(String adcode,int num1,int num2);
 
@@ -49,6 +49,7 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     int selectWorkDayByDateAndColSearch(String customProject,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 
+    int selectWorkDayByDateAndColSearchAndAdcode(String adcode,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2);
 
     List<Device_DeadTrees_maintanceEntity> selectByDateAndColSearchAdcode(String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 

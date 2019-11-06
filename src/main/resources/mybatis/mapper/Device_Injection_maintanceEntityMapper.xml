@@ -282,7 +282,9 @@
     </select>
 
     <select id="selectByConditions" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-        select * from device_injection_maintance left join device on device_Id = device.id where CustomProject = #{customProject}
+        select device_injection_maintance.*,(inject_woodstatus.name) woodStatusName,device.CustomTown from device_injection_maintance left join device on device_injection_maintance.device_Id = device.id
+         left join inject_woodstatus on device_injection_maintance.woodstatus = inject_woodstatus.id
+         where CustomProject = #{customProject}
         <if test="searchText != null and searchText != ''">
           <choose>
             <when test="optionIndex == 1">
@@ -760,10 +762,10 @@
 
   
   <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-    select device.CustomTown,Device_Injection_maintance.*,sum(Device_Injection_maintance.injection_num) injectNumSum,
-    sum(if(Device_Injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
-     count(Device_Injection_maintance.id) woodNum
-    from device left join Device_Injection_maintance on device.id = Device_Injection_maintance.device_Id
+    select device.CustomTown,device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
+    sum(if(device_injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
+     count(device_injection_maintance.id) woodNum
+    from device left join device_injection_maintance on device.id = device_injection_maintance.device_Id
     <if test="startDate != null and startDate != ''">
       where submit_date &gt;= #{startDate}
     </if>
@@ -829,18 +831,17 @@
   </select>
   <select id="selectByCustomReigonCustomProject"
           resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-    select device.CustomTown,Device_Injection_maintance.*,sum(Device_Injection_maintance.injection_num) injectNumSum,
-    sum(if(Device_Injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
-    count(Device_Injection_maintance.id) woodNum
-    from device left join Device_Injection_maintance on device.id = Device_Injection_maintance.device_Id
-    where CustomProject = #{customProject}
+    select device.CustomTown,device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
+    sum(if(device_injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
+    count(device_injection_maintance.id) woodNum
+    from device left join device_injection_maintance on device.id = device_injection_maintance.device_Id
+    where device.CustomProject = #{customProject} group by device.CustomTown
     <if test="startDate != null and startDate != ''">
       and submit_date &gt;= #{startDate}
     </if>
     <if test="endDate != null and endDate != ''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.CustomTown
   </select>
 
 

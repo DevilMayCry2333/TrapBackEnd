@@ -199,7 +199,7 @@
 
   </update>
   <update id="updatePic">
-    update device_track_maintance set ${colName} = #{text} where LineName = #{linename}
+    update device_track_maintance set ${colName} = #{text} where LineName = #{linename} and username=#{username}
   </update>
 
   <update id="updateMaintance">
@@ -212,8 +212,7 @@
     AltitudeCollect = #{altitudeCollect},
     Working_Content = #{workingContent},
     adcode = #{adcode},
-    endpoint=#{endpoint},worker=#{worker},
-    username=#{username} where linename=#{linename}
+    endpoint=#{endpoint},worker=#{worker} where linename=#{linename} and username=#{username}
   </update>
 
 
