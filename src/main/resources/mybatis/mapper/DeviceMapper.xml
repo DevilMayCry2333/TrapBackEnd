@@ -214,7 +214,7 @@
 
     </select>
     <select id="getDeviceandWorkerByManager" resultMap="Device">
-        select device_map.user_id worker,device.id id,province,city,area from device
+        select device_map.user_id worker,device.id id,province,city,area,device.scanId from device
         left join device_map on device.id = device_map.device_id
         where manager = #{manager}
 

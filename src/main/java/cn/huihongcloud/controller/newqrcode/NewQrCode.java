@@ -21,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/newQrCode")
 public class NewQrCode {
+    //搜索19，魔术数字
+
     @Autowired
     NewQrCodeMapper newQrCodeMapper;
     @Autowired
@@ -79,51 +81,48 @@ public class NewQrCode {
     }
 
     @RequestMapping("/getMaxAvableCode")
-    public Object getgetMaxAvableCode(@RequestParam String adcode,@RequestParam String appVal){
-        System.out.println(adcode);
-        System.out.println(appVal);
-        String app = "";
-        switch (Integer.parseInt(appVal)){
-            case 1:
-                app = "诱捕器管理";
-                break;
-            case 2:
-                app = "注干剂监测";
-                break;
-            case 3:
-                app = "天敌防治";
-                break;
-            case 4:
-                app = "枯死树采伐";
-                break;
-            case 5:
-                app = "药剂防治管理";
-                break;
-        }
-        List<Device> device = newQrCodeMapper.getMaxAvaDevice(adcode,app);
+    public Object getgetMaxAvableCode(@RequestParam String provinceCode){
+        System.out.println(provinceCode);
+        List<User> proxyUser = newQrCodeMapper.getProxyByCode(provinceCode);
 
-        return device.get(0).getId();
+        List<Device> device = newQrCodeMapper.getMaxAvaDevice(proxyUser.get(0).getProvince());
+
+        return device.get(0).getScanId();
 //        return "OK";
     }
 
+    @RequestMapping("/getMaxCodeByProvince")
+    public Object getMaxCodeByAreaAndProject(@RequestParam String username){
+        User user = userMapper.getUserByUserName(username);
+        List<Device> deviceList = newQrCodeMapper.getMaxScanId(user.getProvince());
+        return deviceList.get(0).getScanId();
+
+    }
+
+    @RequestMapping("/reAssignQRCode")
+    public Object reAssignQRCode(@RequestParam String customSerial,@RequestParam String scanId,@RequestParam String customProject){
+        newQrCodeMapper.deleteScanId(scanId);
+        newQrCodeMapper.updateScanId(customProject,customSerial, scanId);
+        return "OK";
+    }
+
     @RequestMapping("/assignQRCode")
-    public JSONObject assignCode(@RequestParam String proxyCode,@RequestParam String cityCode,@RequestParam String areaCode,@RequestParam String projectCode,@RequestParam String startID,@RequestParam String endID){
+    public JSONObject assignCode(@RequestParam String proxyCode,@RequestParam String startID,@RequestParam String endID){
 //        List<User> cityUser = newQrCodeMapper.getCity(cityCode);
 //        List<User> areaUser = newQrCodeMapper.getArea(areaCode);
-//        List<User> proxyUser = newQrCodeMapper.getProxyByCode(proxyCode);
-        String mydist[] = distUtil.getNames(areaCode,null);
-        System.out.println(mydist[0]);
-        System.out.println(mydist[1]);
-        System.out.println(mydist[2]);
-
-        String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","药剂防治管理"};
-        int switchProject = Integer.parseInt(projectCode);
-
+        List<User> proxyUser = newQrCodeMapper.getProxyByCode(proxyCode);
+//        String mydist[] = distUtil.getNames(areaCode,null);
+//        System.out.println(mydist[0]);
+//        System.out.println(mydist[1]);
+//        System.out.println(mydist[2]);
+//
+//        String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","药剂防治管理"};
+//        int switchProject = Integer.parseInt(projectCode);
 
         long startIDInt = Long.parseLong(startID);
         long endIDInt = Long.parseLong(endID);
         for (long i = startIDInt; i <= endIDInt; i++) {
-            newQrCodeMapper.insertDevice(String.valueOf(i),mydist[0],mydist[1],mydist[2],project[switchProject-1],areaCode);
+            newQrCodeMapper.insertDevice(String.valueOf(i),proxyUser.get(0).getProvince());
         }
         res.put("Res",true);
 
@@ -132,20 +131,52 @@ public class NewQrCode {
     }
 
     @RequestMapping("/assignCodeByManager")
-    public JSONObject assignCodeByManager(@RequestParam String startID,@RequestParam String endID,
+    public JSONObject assignCodeByManager(@RequestParam String startScanID,@RequestParam String endScanID,
                                           @RequestParam int IDNum,@RequestParam int applicationValue,
                                           @RequestParam String customRegion,@RequestParam String prefix,
                                           @RequestParam String serialStart,@RequestParam String serialEnd,
                                           @RequestParam int serialNum,
-                                          @RequestParam String username)
-    {
+                                          @RequestParam String username) throws InterruptedException {
         System.out.println(username);
         User user = userMapper.getUserByUserName(username);
+        System.out.println(user.getAdcode());
 
-        for (long i = Long.parseLong(startID),j=0; i <= Long.parseLong(endID); i++,j++) {
-            newQrCodeMapper.assginDeviceByManager(i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username);
+        String mydist[] = distUtil.getNames(user.getAdcode(),null);
+        System.out.println(mydist[0]);
+        System.out.println(mydist[1]);
+        System.out.println(mydist[2]);
+
+        try {
+            String devicePrefix = user.getAdcode() + "19" + applicationValue;
+
+            for (long i = Long.parseLong(startScanID),j=0; i <= Long.parseLong(endScanID); i++,j++) {
+                List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
+                System.out.println("=====1=");
+                System.out.println(device.get(0).getId());
+                System.out.println("=====1=");
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2]);
+//                Thread.sleep(5 * 100);
+            }
+            res.put("Res",true);
+
+        }catch (Exception e){
+            String deviceId = user.getAdcode() +"19" + applicationValue +  "000001";
+
+            String devicePrefix = user.getAdcode() + "19" + applicationValue;
+
+
+            newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2]);
+            for (long i = Long.parseLong(startScanID) + 1,j=1; i <= Long.parseLong(endScanID); i++,j++) {
+                List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
+                System.out.println("======");
+                System.out.println(device.get(0).getId());
+                System.out.println("======");
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2]);
+//                Thread.sleep(5 * 100);
+            }
+            res.put("Res",true);
         }
-        res.put("Res",true);
+
         return res;
     }
 
