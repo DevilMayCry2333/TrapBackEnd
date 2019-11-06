@@ -56,11 +56,29 @@ public class DeadTreeCut {
     }
 
     @RequestMapping("/areaDetail")
-    public Object areaDetail(@RequestParam String username,@RequestParam int page,@RequestParam int limit){
+    public Object areaDetail(@RequestParam String username,@RequestParam int page,@RequestParam int limit,@RequestParam(required = false) String startDate,@RequestParam(required = false) String endDate,@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,@RequestParam String adcode){
         User user = userService.getUserByUserName(username);
+        String dateString = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ParsePosition pos = new ParsePosition(0);
+        if(endDate!=null) {
+            try {
+                Date currentTime_2 = formatter.parse(endDate, pos);
 
+                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
+
+                System.out.println(currentTime_2.getDate());
+
+                dateString = formatter.format(currentTime_2);
+
+                System.out.println(dateString);
+            }catch (Exception e){
+                dateString = null;
+            }
+
+        }
         jsonObject.put("Data",deadTreeCutService.selectAllByArea(user.getAdcode(), page*limit-limit, limit));
-        jsonObject.put("total",deadTreeCutService.countAllByArea(user.getAdcode()));
+        jsonObject.put("total",deadTreeCutService.countAllByArea(user.getAdcode(),startDate,dateString,colName,searchText));
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
@@ -106,6 +124,7 @@ public class DeadTreeCut {
             List<Device_DeadTrees_maintanceEntity> dataEntity = deviceDeadTreesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode);
             for (Device_DeadTrees_maintanceEntity data:dataEntity) {
                 woodVolume += Double.parseDouble(data.getWoodvolume());
+                System.out.println(woodVolume);
             }
             woodNum = dataEntity.size();
 
@@ -113,12 +132,26 @@ public class DeadTreeCut {
             jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
             jsonObject.put("woodVolume",woodVolume);
             jsonObject.put("woodNum",woodNum);
+            jsonObject.put("total",deadTreeCutService.countAll(username,startDate,dateString,colName,searchText));
+
 
         }else if(user.getRole()<=3){
+            double woodVolume1 = 0;
+            int woodNum1 = 0;
+            List<Device_DeadTrees_maintanceEntity> dataEntity1 = deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode());
+
+            for (Device_DeadTrees_maintanceEntity data1:dataEntity1) {
+                woodVolume1 += Double.parseDouble(data1.getWoodvolume());
+                System.out.println(woodVolume1);
+            }
+            woodNum1 = dataEntity1.size();
+            jsonObject.put("woodVolume",woodVolume1);
+            jsonObject.put("woodNum",woodNum1);
+            jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearchAndAdcode(user.getAdcode(),startDate,dateString,colName,searchText,page*limit-limit,page*limit));
             jsonObject.put("Data",deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+            jsonObject.put("total",deviceDeadTreesMaintanceEntityMapper.countAllByArea(user.getAdcode(),startDate,dateString,colName,searchText));
         }
 
-        jsonObject.put("total",deadTreeCutService.countAll(username,startDate,dateString,colName,searchText));
         jsonObject.put("current",page);
         System.out.println(jsonObject);
 
