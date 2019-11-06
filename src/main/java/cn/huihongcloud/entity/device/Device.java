@@ -1,5 +1,6 @@
 package cn.huihongcloud.entity.device;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -32,6 +33,7 @@ public class Device {
     private String CustomTown;
     private String CustomPrefix;
     private String CustomSerial;
+    @Excel(name = "设备id")
     private String scanId;
     private String CustomProject;
     private String project;

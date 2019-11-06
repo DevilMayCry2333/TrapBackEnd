@@ -163,10 +163,6 @@ public class OtherBeetleController {
         return Result.ok();
     }
 
-
-
-
-
     @ApiOperation("")
     @GetMapping("/medicine_workContent/town")
     public Object getworkContentForTown(@RequestAttribute("username") String username) {
@@ -563,6 +559,31 @@ public class OtherBeetleController {
     public Object deleteOtherBeetleForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
         User user = userService.getUserByUserName(username);
         otherBeetleService.deleteOtherBeetleInfoForTown(user.getAdcode(), beetleInfoId);
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @GetMapping("/workContent/town")
+    public Object getworkContentForTown2(@RequestAttribute("username") String username) {
+        User user = userService.getUserByUserName(username);
+        System.out.println("fortown");
+        return otherBeetleMapper.getWorkContentForTown(user.getAdcode());
+
+    }
+
+    @ApiOperation("")
+    @PostMapping("/workContent/town")
+    public Object addworkContentForTown2(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.insertWorkContentForTOwn(beetleInfoId,user.getAdcode());
+        return Result.ok();
+    }
+
+    @ApiOperation("")
+    @DeleteMapping("/workContent/town")
+    public Object deleteworkContentForTown2(@RequestAttribute("username") String username, Integer beetleInfoId) {
+        User user = userService.getUserByUserName(username);
+        otherBeetleMapper.deleteWorkContentFOrTown(beetleInfoId,user.getAdcode());
         return Result.ok();
     }
 
