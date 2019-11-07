@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -180,11 +181,40 @@ public class NewQrCode {
         return res;
     }
 
-    @RequestMapping("/search")
-    public Object serach(@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,int page,int limit){
-        List<Device> deviceList = newQrCodeMapper.selectByConditions(colName, searchText,page*limit-limit,limit);
 
-        int allNum = newQrCodeMapper.countByCond(colName, searchText);
+
+    @RequestMapping("/rootSearch")
+    public Object serach(@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,int page,int limit){
+        List<Device> deviceList = newQrCodeMapper.selectByConditions1(colName, searchText,page*limit-limit,limit);
+
+        int allNum = newQrCodeMapper.countByCond1(colName, searchText);
+
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
+        PageWrapper pageWrapper = new PageWrapper();
+
+        pageWrapper.setData(deviceList);
+        System.out.println(pageObject.getPages());
+        System.out.println(pageObject.getTotal());
+
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(allNum);
+        pageWrapper.setTotalPage(allNum/limit);
+
+
+
+        return pageWrapper;
+    }
+
+
+    @RequestMapping("/usertosearch")
+    public Object serach(@RequestAttribute("username") String username,@RequestParam(required = false) String colName, @RequestParam(required = false) String searchText, int page, int limit){
+
+        //User user = userMapper.getUserByUserName(username);
+        System.out.println(username);
+        List<Device> deviceList = newQrCodeMapper.selectByConditions(username,colName, searchText,page*limit-limit,limit);
+
+        int allNum = newQrCodeMapper.countByCond(username,colName, searchText);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 

@@ -213,7 +213,7 @@
   <update id="updateRecordById">
     update device_injection_maintance set device_Id=#{deviceId},serial=#{serial},region=#{region},
     submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
-    injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus},#{injectName},#{chestDiameter} where id=#{id};
+    injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus},inject_name = #{injectName},chest_diameter = #{chestDiameter} where id=#{id};
   </update>
   <update id="updateRecordByFront">
     update device_injection_maintance t1 left join device t2 on t2.id = t1.device_Id
