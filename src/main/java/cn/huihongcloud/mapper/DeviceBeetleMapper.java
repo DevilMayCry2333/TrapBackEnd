@@ -39,7 +39,7 @@ public interface DeviceBeetleMapper {
 
     List<DeviceMaintenance> getTrapById(String scanId);
 
-    List<Device_Injection_maintanceEntity> InjectWorker(String scanId);
+    List<Device_Injection_maintanceEntity> InjectWorker(String id);
 
     List<Device_DeadTrees_maintanceEntity> DeadWorker(String scanId);
 
