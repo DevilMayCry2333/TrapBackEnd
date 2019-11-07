@@ -5,6 +5,15 @@ public class AreaStatic {
     private Integer otherNum;
     private Integer avager;
     private String CustomTown;
+    private Integer avagerother;
+
+    public Integer getAvagerother() {
+        return avagerother;
+    }
+
+    public void setAvagerother(Integer avagerother) {
+        this.avagerother = avagerother;
+    }
 
     public Integer getBeetlesNum() {
         return beetlesNum;
