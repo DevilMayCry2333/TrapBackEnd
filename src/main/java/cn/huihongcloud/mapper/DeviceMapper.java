@@ -71,9 +71,9 @@ public interface DeviceMapper {
 
     Device getDeviceByScanId(String scanId);
 
-    Device getDeviceBySerial(String serial);
+    Device getDeviceBySerial(String serial,String username);
 
-    int updateScanId(String id,String scanId);
+    int updateScanId(String id,String scanId,String username);
 
     List<Device> adminDevice();
 
