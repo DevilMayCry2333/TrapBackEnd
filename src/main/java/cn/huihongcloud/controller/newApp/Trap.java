@@ -37,6 +37,8 @@ public class Trap {
     public Object getBeetle(@RequestParam String username){
         User user = userMapper.getUserByUserName(username);
         String adcode = user.getAdcode();
+        System.out.println(adcode);
+        System.out.println(user.getUsername());
         return deviceBeetleMapper.getBeetleInfoByArea(adcode);
     }
 

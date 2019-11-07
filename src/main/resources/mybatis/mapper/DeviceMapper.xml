@@ -246,7 +246,7 @@
         select max(id) from device where id like concat(#{adcode}, '%')
     </select>
     <select id="getDeviceByCustomProject" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where CustomProject = #{projectUserName}
+        select * from device where CustomProject = #{projectUserName} and isManagerAssign = 1
     </select>
     <select id="getDeviceByScanId" resultType="cn.huihongcloud.entity.device.Device">
         select * from device where scanId = #{scanId};
@@ -262,6 +262,9 @@
     </select>
     <select id="countDevice" resultType="java.lang.Integer">
         select count(id) from device
+    </select>
+    <select id="queryDeviceId" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device where scanId = #{scanId};
     </select>
 
 </mapper>
