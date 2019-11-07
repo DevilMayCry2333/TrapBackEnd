@@ -79,5 +79,7 @@ public interface DeviceMapper {
 
     int countDevice();
 
+    List<Device> queryDeviceId(String scanId);
+
 
 }

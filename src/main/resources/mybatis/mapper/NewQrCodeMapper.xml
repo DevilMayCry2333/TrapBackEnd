@@ -2,12 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.huihongcloud.mapper.NewQrCodeMapper">
     <insert id="insertDevice">
-        insert into device (id,adcode,province,city,area,project) values (#{id},#{adcode},#{proxy},#{city},#{area},#{project})
+        insert into device (scanId,province) values (#{id},#{proxy})
     </insert>
     <update id="assginDeviceByManager">
         update device set isManagerAssign = 1,CustomPrefix = #{prefix},CustomTown = #{CustomRegion}, CustomSerial = concat(#{prefix},#{serial}),
-        CustomProject = #{username}, manager = #{manager}, scanId = #{id} where id = #{id}
+        CustomProject = #{username}, manager = #{manager}, id = #{id}, project=#{appval},city=#{city},area=#{area} where scanId = #{scanId}
     </update>
+    <update id="updateScanId">
+        update device set scanId = #{scanId} where customProject = #{customProject} and customSerial = #{customSerial}
+    </update>
+    <delete id="deleteScanId">
+        delete from device where scanId = #{scanId};
+    </delete>
 
     <select id="getProxy" resultType="cn.huihongcloud.entity.user.User">
         select * from  user where role = '7'
@@ -23,16 +29,36 @@
     </select>
 
     <select id="getMaxAvaDevice" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where adcode = #{adcode} and project = #{project} and isManagerAssign = 0 order by id;
+        select * from device where province = #{province} and isManagerAssign = 0 order by id;
     </select>
     <select id="selectByConditions" resultType="cn.huihongcloud.entity.device.Device">
         select * from device
+        where manager = #{username}
         <if test="searchText!=null and searchText!=''">
             where ${colName}=#{searchText}
         </if>
     </select>
 
     <select id="countByCond" resultType="java.lang.Integer">
+        select count(id) from device
+        where manager = #{username}
+        <if test="searchText!=null and searchText!=''">
+                where ${colName}=#{searchText}
+        </if>
+    </select>
+    <select id="getMaxDeviceId" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device where id like concat(#{adcode} , '%') and isManagerAssign = 1 and project=#{appval} order by id DESC;
+    </select>
+    <select id="getMaxScanId" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device where province=#{province} and isManagerAssign = 0 order by scanId;
+    </select>
+    <select id="selectByConditions1" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device
+        <if test="searchText!=null and searchText!=''">
+            where ${colName}=#{searchText}
+        </if>
+    </select>
+    <select id="countByCond1" resultType="java.lang.Integer">
         select count(id) from device
         <if test="searchText!=null and searchText!=''">
             where ${colName}=#{searchText}
