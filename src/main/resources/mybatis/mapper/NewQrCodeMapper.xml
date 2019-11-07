@@ -33,6 +33,7 @@
     </select>
     <select id="selectByConditions" resultType="cn.huihongcloud.entity.device.Device">
         select * from device
+        where manager = #{username}
         <if test="searchText!=null and searchText!=''">
             where ${colName}=#{searchText}
         </if>
@@ -40,8 +41,9 @@
 
     <select id="countByCond" resultType="java.lang.Integer">
         select count(id) from device
+        where manager = #{username}
         <if test="searchText!=null and searchText!=''">
-            where ${colName}=#{searchText}
+                where ${colName}=#{searchText}
         </if>
     </select>
     <select id="getMaxDeviceId" resultType="cn.huihongcloud.entity.device.Device">
@@ -49,5 +51,17 @@
     </select>
     <select id="getMaxScanId" resultType="cn.huihongcloud.entity.device.Device">
         select * from device where province=#{province} and isManagerAssign = 0 order by scanId;
+    </select>
+    <select id="selectByConditions1" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device
+        <if test="searchText!=null and searchText!=''">
+            where ${colName}=#{searchText}
+        </if>
+    </select>
+    <select id="countByCond1" resultType="java.lang.Integer">
+        select count(id) from device
+        <if test="searchText!=null and searchText!=''">
+            where ${colName}=#{searchText}
+        </if>
     </select>
 </mapper>
