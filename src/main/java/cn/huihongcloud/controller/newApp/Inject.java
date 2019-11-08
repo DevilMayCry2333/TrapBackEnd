@@ -204,8 +204,8 @@ public class Inject {
     }
 
     @RequestMapping("/InjectWorker")
-    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String scanId){
-        return deviceBeetleMapper.InjectWorker(scanId);
+    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String id){
+        return deviceBeetleMapper.InjectWorker(id);
 
     }
 

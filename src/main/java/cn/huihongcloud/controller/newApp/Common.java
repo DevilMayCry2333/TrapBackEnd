@@ -25,4 +25,9 @@ public class Common {
         Device toBeUpdated = deviceMapper.getDeviceBySerial(serial,user.getParent());
         return deviceMapper.updateScanId(toBeUpdated.getId(),scanId,user.getParent());
     }
+
+    @RequestMapping("/queryDeviceId")
+    public Object queryDeviceId(@RequestParam String scanId){
+        return deviceMapper.queryDeviceId(scanId);
+    }
 }
