@@ -155,7 +155,7 @@ public class NewQrCode {
                 System.out.println("=====1=");
                 System.out.println(device.get(0).getId());
                 System.out.println("=====1=");
-                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2]);
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
 //                Thread.sleep(5 * 100);
             }
             res.put("Res",true);
@@ -166,13 +166,13 @@ public class NewQrCode {
             String devicePrefix = user.getAdcode() + "19" + applicationValue;
 
 
-            newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2]);
+            newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
             for (long i = Long.parseLong(startScanID) + 1,j=1; i <= Long.parseLong(endScanID); i++,j++) {
                 List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
                 System.out.println("======");
                 System.out.println(device.get(0).getId());
                 System.out.println("======");
-                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2]);
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
 //                Thread.sleep(5 * 100);
             }
             res.put("Res",true);
