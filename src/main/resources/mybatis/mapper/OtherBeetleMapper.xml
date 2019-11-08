@@ -98,7 +98,7 @@
         delete from beetle_info_map where beetle_info_id = #{beetleInfoId} and adcode = #{adcode}
     </delete>
     <delete id="deleteWorkContent">
-        delete from WorkContent where id = #{id};
+        delete from inject_workcontent where id = #{id};
     </delete>
     <delete id="deleteInjectInfo">
         delete from injectInfo where id = #{id};
