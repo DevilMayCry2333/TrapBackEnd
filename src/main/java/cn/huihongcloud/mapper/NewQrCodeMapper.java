@@ -13,7 +13,7 @@ public interface NewQrCodeMapper {
     List<User> getArea(String adcode);
     List<User> getProxyByCode(String adcode);
     int insertDevice(String id,String proxy);
-    int assginDeviceByManager(String appval,long id,long scanId,String CustomRegion,String prefix,long serial,String username,String manager,String city,String area);
+    int assginDeviceByManager(String appval,long id,long scanId,String CustomRegion,String prefix,long serial,String username,String manager,String city,String area,String adcode);
 
     List<Device> getMaxAvaDevice(String province);
 
