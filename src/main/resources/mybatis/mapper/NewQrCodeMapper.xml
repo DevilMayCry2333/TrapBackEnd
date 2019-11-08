@@ -6,7 +6,7 @@
     </insert>
     <update id="assginDeviceByManager">
         update device set isManagerAssign = 1,CustomPrefix = #{prefix},CustomTown = #{CustomRegion}, CustomSerial = concat(#{prefix},#{serial}),
-        CustomProject = #{username}, manager = #{manager}, id = #{id}, project=#{appval},city=#{city},area=#{area} where scanId = #{scanId}
+        CustomProject = #{username}, manager = #{manager}, id = #{id}, project=#{appval},city=#{city},area=#{area},adcode = #{adcode} where scanId = #{scanId}
     </update>
     <update id="updateScanId">
         update device set scanId = #{scanId} where customProject = #{customProject} and customSerial = #{customSerial}
