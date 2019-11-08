@@ -717,7 +717,7 @@
     left join device on Device_NaturalEnemies_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%')
 
-    and Woker is not null
+    and Worker is not null
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
     </if>

@@ -66,7 +66,8 @@
     </if>
   </select>
   <select id="selectByConditionsAdcode" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select * from device_medicine_maintance left join device on device_Id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    select * from device_medicine_maintance left join device on device_id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    and isManagerAssign = 1
     <if test="searchText != null and searchText != ''">
       <choose>
         <when test="optionIndex == 1">
