@@ -97,8 +97,8 @@ public class newStatic {
         WorkerStatic lastWs = null;
         WorkerStatic ws = null;
 
-        lastWs = workerStaticList.get(0);
-        ws = workerStaticList.get(1);
+//        lastWs = workerStaticList.get(0);
+//        ws = workerStaticList.get(1);
         int workDay = 1;
 
         JSONArray jsonArray = new JSONArray();

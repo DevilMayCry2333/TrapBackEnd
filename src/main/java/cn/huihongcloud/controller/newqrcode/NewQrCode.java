@@ -8,6 +8,7 @@ import cn.huihongcloud.mapper.UserMapper;
 import cn.huihongcloud.util.DistUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sun.org.apache.xpath.internal.objects.XObject;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,8 +202,6 @@ public class NewQrCode {
         pageWrapper.setTotalNum(allNum);
         pageWrapper.setTotalPage(allNum/limit);
 
-
-
         return pageWrapper;
     }
 
@@ -227,10 +226,16 @@ public class NewQrCode {
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(allNum);
         pageWrapper.setTotalPage(allNum/limit);
-
-
-
         return pageWrapper;
+    }
+
+    @RequestMapping("/getavailableNum")
+    public Object serach(@RequestParam String province ){
+        List<User> users = userMapper.getProvinceByCode(province);    //获取省级用户名字
+        String ProvinceName = users.get(0).getProvince();
+        int availabID = newQrCodeMapper.countByNOassign("0",ProvinceName);
+        return availabID;
+
     }
 
 }
