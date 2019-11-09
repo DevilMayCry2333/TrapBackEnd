@@ -168,19 +168,19 @@ public class DeviceMaintenanceController {
             }
 
             if (device != null && device.getReceiveDate() != null) {
-                Double longitudeOrg = device.getLongitude();
-                Double latitudeOrg = device.getLatitude();
-                double threshold = Double.parseDouble(dictService.getValueByKey("abnormal_threshold"));
-                double offset = algorithm(longitudeOrg, latitudeOrg, longitude, latitude);
-                if (offset > threshold) {
-
-                    deviceMaintenance.setIsActive(0);
-                    deviceMaintenanceService.recordAbnormal(deviceMaintenance);
-                    //这里注释了一下 2019.10.1
-//                    throw new Exception("人员未到场");
-                } else {
+//                Double longitudeOrg = device.getLongitude();
+//                Double latitudeOrg = device.getLatitude();
+//                double threshold = Double.parseDouble(dictService.getValueByKey("abnormal_threshold"));
+//                double offset = algorithm(longitudeOrg, latitudeOrg, longitude, latitude);
+//                if (offset > threshold) {
+//
+//                    deviceMaintenance.setIsActive(0);
+//                    deviceMaintenanceService.recordAbnormal(deviceMaintenance);
+//                    //这里注释了一下 2019.10.1
+////                    throw new Exception("人员未到场");
+//                } else {
                     deviceMaintenanceService.addMaintenanceData(username, deviceMaintenance);
-                }
+//                }
             }else {
                 deviceMaintenanceService.addMaintenanceData(username, deviceMaintenance);
             }
