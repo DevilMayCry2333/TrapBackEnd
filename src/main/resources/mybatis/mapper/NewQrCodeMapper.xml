@@ -64,4 +64,7 @@
             where ${colName}=#{searchText}
         </if>
     </select>
+    <select id="countByNOassign" resultType="java.lang.Integer">
+        select count(scanId) from device where isManagerAssign = 0 and province=#{province};
+    </select>
 </mapper>

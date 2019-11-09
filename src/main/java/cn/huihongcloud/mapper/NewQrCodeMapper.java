@@ -34,6 +34,7 @@ public interface NewQrCodeMapper {
     int countByCond(String username,String colName,String searchText);
 
     int countByCond1(String colName,String searchText);
+    int countByNOassign(String isManagerAssign,String province);
 
 
 }

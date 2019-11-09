@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserMapper {
 
     List<User> getProxyByProvzinces (String province);
-
+    List<User> getProvinceByCode(String code);
     User getUserByUserName(String userName);
     int verifyUserByUserNameAndPassword(@Param("username") String userName, @Param("password") String password);
     int registerUser(@Param("user") User user);
