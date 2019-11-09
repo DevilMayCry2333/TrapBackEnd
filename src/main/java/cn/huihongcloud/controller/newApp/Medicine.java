@@ -139,6 +139,7 @@ public class Medicine {
 //        deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
 //        deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
 //        deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
+        deviceMedicineMaintanceEntity.setSubmitDate(new Date());
         deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
         deviceMedicineMaintanceEntity.setLongitude(longitude);
         deviceMedicineMaintanceEntity.setLatitude(latitude);

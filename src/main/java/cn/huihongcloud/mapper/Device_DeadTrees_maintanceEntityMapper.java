@@ -21,7 +21,22 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     List<DeadTreesSummary> queryDeviceSummaryByArea(String adcode, String startDate, String endDate);
 
-    List<DeadTreesSummary> queryDeviceSummaryByManager(String adcode, String startDate, String endDate);
+    List<DeadTreesSummary> queryDeviceSummaryByManager(String adcode,String startDate, String endDate);
+
+    DeadTreesSummary queryMannerSum1(String adcode,String CustomProject);
+    DeadTreesSummary queryMannerSum2(String adcode,String CustomProject);
+    DeadTreesSummary queryMannerSum3(String adcode,String CustomProject);
+    DeadTreesSummary queryMannerSum4(String adcode,String CustomProject);
+    DeadTreesSummary queryMannerSum5(String adcode,String CustomProject);
+
+
+    List<DeadTreesSummary> queryMannerSum11(String adcode,String town);
+    List<DeadTreesSummary> queryMannerSum22(String adcode,String town);
+    List<DeadTreesSummary> queryMannerSum33(String adcode,String town);
+    List<DeadTreesSummary> queryMannerSum44(String adcode,String town);
+    List<DeadTreesSummary> queryMannerSum55(String adcode,String town);
+
+
 
     List<Device_DeadTrees_maintanceEntity> getMaintenanceDataByManagerArea(@Param("adcode") String adcode, @Param("town") String town,
                                                                                 @Param("condition") String condition, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
@@ -29,8 +44,8 @@ public interface Device_DeadTrees_maintanceEntityMapper {
     int reportData(@Param("id") Integer id);
 
 
-    Map<String, Long> queryDeviceSum(String adcode, String startDate, String endDate);
-    Map<String, Long> queryDeviceSum4(String adcode,String startDate,String endDate);
+    Map<String, Double> queryDeviceSum(String adcode, String startDate, String endDate);
+    Map<String, Double> queryDeviceSum4(String adcode,String startDate,String endDate);
 
 
     int insert(Device_DeadTrees_maintanceEntity record);

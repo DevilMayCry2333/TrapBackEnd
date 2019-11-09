@@ -19,10 +19,10 @@ public class Device_Medicine_MaintanceEntity {
     @Excel(name = "所属区域")
     private String region;
 
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy年MM月dd日")
-    @Excel(name = "日期")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "日期", format = "yyyy-MM-dd")
     private Date submitDate;
     @Excel(name = "批次")
     private Integer batch;
