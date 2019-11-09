@@ -52,21 +52,23 @@ public class MyTrack {
         System.out.println(image);
         System.out.println(lineName);
         System.out.println(current);
+        User user = userMapper.getUserByUserName(username);
+
 
         if (image!=null) {
             String imgId = deviceService.saveImg(image, lineName, username);
             if(current==1) {
-                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic1",imgId);
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic1",imgId,user.getParent());
             }else if(current==2){
-                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic2",imgId);
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic2",imgId,user.getParent());
 
             }else if(current==3){
-                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic3",imgId);
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic3",imgId,user.getParent());
 
             }else if(current==4){
-                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic4",imgId);
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic4",imgId,user.getParent());
             }else if(current==5){
-                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic5",imgId);
+                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic5",imgId,user.getParent());
             }
         }
 
@@ -184,10 +186,11 @@ public class MyTrack {
 
         System.out.println(username);
         System.out.println(linename);
+        User user = userMapper.getUserByUserName(username);
         Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
         deviceTrackMaintanceEntity.setLinename(linename);
+        deviceTrackMaintanceEntity.setUsername(user.getParent());
         deviceTrackMaintanceEntityMapper.addMaintance(deviceTrackMaintanceEntity);
-
         return "OK";
     }
 

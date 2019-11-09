@@ -47,8 +47,10 @@ public class Device_Medicine_MaintanceEntity {
 
     private String customTown;
 
-    private Byte reported;
+    @Excel(name = "是否上报")
+    private Integer reported;
 
+    @Excel(name = "管理员")
     private String username;
 
     private Double medicineQuaSum;
@@ -58,12 +60,60 @@ public class Device_Medicine_MaintanceEntity {
     private Double areaFzSum;
     private String startDate;
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Double getMedicineQuaSum() {
+        return medicineQuaSum;
+    }
+
+    public void setMedicineQuaSum(Double medicineQuaSum) {
+        this.medicineQuaSum = medicineQuaSum;
+    }
+
+    public Double getAreaFzSum() {
+        return areaFzSum;
+    }
+
+    public void setAreaFzSum(Double areaFzSum) {
+        this.areaFzSum = areaFzSum;
+    }
+
+    public Double getTotalMedicineQuaSum() {
+        return totalMedicineQuaSum;
+    }
+
+    public void setTotalMedicineQuaSum(Double totalMedicineQuaSum) {
+        this.totalMedicineQuaSum = totalMedicineQuaSum;
+    }
+
+    public Double getTotalAreaFzNum() {
+        return totalAreaFzNum;
+    }
+
+    public void setTotalAreaFzNum(Double totalAreaFzNum) {
+        this.totalAreaFzNum = totalAreaFzNum;
+    }
+
     private String endDate;
     private Double totalMedicineQuaSum;
     private Double totalAreaFzNum;
     private String altitude;
 
-    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Byte reported, String username,String town,String altitude,Long scanId) {
+    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Integer reported, String username,String town,String altitude,Long scanId) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -219,12 +269,20 @@ public class Device_Medicine_MaintanceEntity {
         this.customTown = customTown == null ? null : customTown.trim();
     }
 
-    public Byte getReported() {
+    public Integer getReported() {
         return reported;
     }
 
-    public void setReported(Byte reported) {
+    public void setReported(Integer reported) {
         this.reported = reported;
+    }
+
+    public Long getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(Long scanId) {
+        this.scanId = scanId;
     }
 
     public String getUsername() {
@@ -234,4 +292,29 @@ public class Device_Medicine_MaintanceEntity {
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
     }
+
+    public String getDataPrecision() {
+        return dataPrecision;
+    }
+
+    public void setDataPrecision(String dataPrecision) {
+        this.dataPrecision = dataPrecision;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
+    }
+
 }

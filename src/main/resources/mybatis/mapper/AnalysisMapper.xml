@@ -41,7 +41,7 @@
         group by DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%m')
     </select>
     <select id="getAreaStatic" resultType="cn.huihongcloud.entity.AreaStatic">
-        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,CustomTown
+        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,(sum(other_num)/count(device_Id)) avagerother,CustomTown
         from device_maintenance t1 left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
 
         <if test="startDate != null and startDate != ''">
@@ -85,9 +85,8 @@
     </select>
 
     <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.WorkerStatic">
-        select username workerName,count(t1.username) num,DATE(`date`) currentDate from device_maintenance t1
+        select username workerName,count(t1.username) num,DATE(`date`) currentDate,sum(t1.num) num1,sum(t1.other_num) num2,(sum(t1.num)+sum(t1.other_num)) num3 from device_maintenance t1
         left join device t2 on t2.id = t1.device_id where CustomProject = #{customProject}
-
         <if test="startDate != null and startDate != ''">
             and DATE(`date`) &gt;= #{startDate}
         </if>

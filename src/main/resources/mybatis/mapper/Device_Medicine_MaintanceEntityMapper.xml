@@ -66,7 +66,8 @@
     </if>
   </select>
   <select id="selectByConditionsAdcode" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select * from device_medicine_maintance left join device on device_Id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    select * from device_medicine_maintance left join device on device_id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    and isManagerAssign = 1
     <if test="searchText != null and searchText != ''">
       <choose>
         <when test="optionIndex == 1">
@@ -313,10 +314,234 @@
     </if>
     group by device.area
   </select>
+
+    <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+       select * from device_medicine_maintance where device_id = #{deviceId} order by batch desc;
+    </select>
+
+  <select id="getDeviceSum" resultType="java.util.Map">
+    select count(distinct device_id) `count`, sum(medicine_qua) medicineQuaSum,sum(area_fz) areaFzSum
+    from device_medicine_maintance
+    left join device on device.id = device_medicine_maintance.device_id
+    where adcode like concat(#{adcode}, '%')
+
+    <if test="startDate != null and startDate !=''">
+
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+
+      and submit_date &lt;= #{endDate}
+    </if>
+  </select>
+  <select id="getDeviceSum5" resultType="java.util.Map">
+    select count(distinct device_id) `count`, sum(medicine_qua) medicineQuaSum,sum(area_fz) areaFzSum from device_medicine_maintance
+    left join device on device.id = device_medicine_maintance.device_id
+    left join user on device_medicine_maintance.username = user.username
+    where parent = #{adcode}
+
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+  </select>
+  <select id="queryDeviceSummaryByManager111" resultType="cn.huihongcloud.entity.summary.MedicineSummary">
+    select count(distinct device_id) deviceCount, sum(medicine_qua) medicineQuaSum,sum(area_fz) areaFzSum , device.manager `name`, device.adcode code
+    from device_medicine_maintance
+    left join device on device_medicine_maintance.device_id = device.id
+    where device.adcode like concat(#{adcode}, '%')
+
+    and device.manager is not null
+    and device.project = '药剂防治管理'
+
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device.manager
+  </select>
+  <select id="queryDeviceSummaryByArea111" resultType="cn.huihongcloud.entity.summary.MedicineSummary">
+    select count(distinct device_id) deviceCount, sum(medicine_qua) medicineQuaSum, sum(area_fz) areaFzSum,device_medicine_maintance.town `name`, device.adcode code
+    from device_medicine_maintance
+    left join device on device_medicine_maintance.device_id = device.id
+    where adcode like concat(#{adcode}, '%')
+    and device_medicine_maintance.town is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_Date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_Date &lt;= #{endDate}
+    </if>
+    group by device_medicine_maintance.town
+  </select>
+  <select id="getMaintenanceDataByAdcodeAndTownArea111"
+          resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select device_medicine_maintance.id,
+    device_medicine_maintance.device_id,
+    device_medicine_maintance.batch,
+    sum(device_medicine_maintance.medicine_qua) medicineQua,
+    device_medicine_maintance.worker,
+    user.name,
+    device_medicine_maintance.submit_date,
+    device_medicine_maintance.longitude,
+    device_medicine_maintance.latitude,
+    device_medicine_maintance.altitude,
+    device_medicine_maintance.pic,
+    device_medicine_maintance.remarks,
+    device_medicine_maintance.reported,
+    device.province,
+    device.city,
+    device.area,
+    device_medicine_maintance.town,
+    device_medicine_maintance.work_content,
+    device_medicine_maintance.username,
+    device_medicine_maintance.medicine_name,
+    device_medicine_maintance.area_fz
+    from device_medicine_maintance
+    left join device on device.id = device_medicine_maintance.device_id
+    left join user on device_medicine_maintance.worker = user.username
+    where device_id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      device_medicine_maintance.town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition !='null'">
+      and (
+      user.username = #{condition} or
+      device.province = #{condition} or
+      device.city = #{condition} or
+      device.area =  #{condition} or
+      device_medicine_maintance.town = #{condition} or
+      device_medicine_maintance.device_id = #{condition} or
+      device.manager=#{condition} or
+      device.CustomProject = #{condition}
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+
+    <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device_id,device_medicine_maintance.worker
+
+    order by submit_date desc
+
+  </select>
+  <select id="getMaintenanceDataByManagerArea111"
+          resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select device_medicine_maintance.id,
+    device_medicine_maintance.device_id,
+    device_medicine_maintance.batch,
+    sum(device_medicine_maintance.medicine_qua) medicineQua,
+    device_medicine_maintance.worker,
+    user.name,
+    device_medicine_maintance.submit_date,
+    device_medicine_maintance.longitude,
+    device_medicine_maintance.latitude,
+    device_medicine_maintance.altitude,
+    device_medicine_maintance.pic,
+    device_medicine_maintance.eemarks,
+    device_medicine_maintance.reported,
+    device.province,
+    device.city,
+    device.area,
+    device.town,
+    device_medicine_maintance.work_content,
+    device_medicine_maintance.medicine_name,
+    device_medicine_maintance.area_fz,
+    device_medicine_maintance.username
+    from device_medicine_maintance
+    left join device on device.id = device_medicine_maintance.device_id
+    left join user on device_medicine_maintance.worker = user.username
+    where device_id in
+    (select id from device where
+    1 = 1
+    <if test="adcode != null and adcode != ''">
+      and
+      adcode like concat(#{adcode}, '%')
+    </if>
+
+    <if test="town != null and town != ''">
+      and
+      town = #{town}
+    </if>
+    )
+    <if test="condition != null and condition != '' and condition != 'null'">
+      and (
+      user.username =#{condition} or
+      device.province =#{condition} or
+      device.city = #{condition} or
+      device.area =#{condition} or
+      device.town = #{condition} or
+      device_medicine_maintance.device_id = #{condition} or
+      device.CustomProject = #{condition}
+      )
+    </if>
+    <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
+      and submit_date &gt;= #{date}
+    </if>
+
+    <if test="endDate != null and endDate != '' and endDate!= 'null' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+    <if test="manager != null">
+      and manager = #{manager}
+    </if>
+
+    group by device_id,device_medicine_maintance.worker
+    order by submit_date desc
+  </select>
+  <select id="getMaintenanceDataByDeviceId111"
+          resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select * from device_medicine_maintance
+    where device_id = #{deviceId}
+
+    <if test="myusername != null and myusername !=''">
+      and username = #{myusername}
+    </if>
+    <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !='' and endDate!= 'null 23:59:59'">
+      and submit_date &lt;= #{endDate}
+    </if>
+  </select>
+  <select id="countAll1" resultType="java.lang.Integer">
+    SELECT COUNT(t1.id) FROM device_medicine_maintance t1
+    left join device on device.id = t1.device_id WHERE username = #{username}
+    <if test="startDate!=null and startDate !=''">
+      and t1.submit_date >= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and t1.submit_date &lt;= #{endDate}
+    </if>
+    <if test="optionIndex!=null and optionIndex !='' and searchText!=null and searchText!=''">
+      and ${optionIndex} = #{searchText}
+    </if>
+
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from device_medicine_maintance
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
     insert into device_medicine_maintance (id, device_id, serial, 
       region, submit_date, batch, 
@@ -446,6 +671,11 @@
       </if>
     </trim>
   </insert>
+  <insert id="addMaintanceData" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    insert into device_medicine_maintance(device_id,longitude,latitude,medicine_name,medicine_qua,area_fz,work_content,remarks,pic,reported,
+    submit_date,batch,region,worker,serial,username,town) values (#{deviceId},#{longitude},#{latitude},#{medicineName},#{medicineQua},
+    #{areaFz},#{workContent},#{remarks},#{pic},#{reported},#{submitDate},#{batch},#{region},#{worker},#{serial},#{username},#{town})
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
     update device_medicine_maintance left join device on device_medicine_maintance.device_id = device.id
     <set >
@@ -466,9 +696,11 @@
       </if>
       <if test="longitude != null" >
         device_medicine_maintance.longitude = #{longitude,jdbcType=VARCHAR},
+        device.longitude = #{longitude,jdbcType=VARCHAR},
       </if>
       <if test="latitude != null" >
         device_medicine_maintance.latitude = #{latitude,jdbcType=VARCHAR},
+        device.latitude = #{latitude,jdbcType=VARCHAR},
       </if>
       <if test="medicineQua != null" >
         medicine_qua = #{medicineQua,jdbcType=VARCHAR},

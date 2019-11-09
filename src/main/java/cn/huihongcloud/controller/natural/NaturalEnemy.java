@@ -250,7 +250,7 @@ public class NaturalEnemy {
             jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode()));
         }
 
-        jsonObject.put("total",naturalEnemyService.countAll(username,startDate,dateString,colName,searchText,adcode));
+            jsonObject.put("total",naturalEnemyService.countAll(username,startDate,dateString,colName,searchText,adcode));
         jsonObject.put("current",1);
         System.out.println(jsonObject);
 

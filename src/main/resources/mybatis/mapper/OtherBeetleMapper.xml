@@ -53,7 +53,13 @@
                 insert into medicine_name (`name`) values (#{name});
     </insert>
     <insert id="insertMedicine_TypeForTown">
-         insert into medicine_nameInfo_map values (#{id},#{adcode});
+         insert into medicine_nameinfo_map values (#{id},#{adcode});
+    </insert>
+    <insert id="insertInjectName_Type">
+        insert into inject_name (`name`) values (#{name});
+    </insert>
+    <insert id="insertInjectName_TypeForTown">
+        insert into inject_name_map values (#{id},#{adcode});
     </insert>
     <update id="updateBeetleInfo">
         update beetle_info set `name` = #{name} where id = #{id}
@@ -82,6 +88,9 @@
     <update id="updateMedicine_Type" parameterType="cn.huihongcloud.entity.Medicine_nameEntity">
         update medicine_name set `name` = #{name} where id = #{id};
     </update>
+    <update id="updateInjectName_Type">
+                update inject_name set `name` = #{name} where id = #{id};
+    </update>
     <delete id="deleteBeetleInfo">
         delete from beetle_info where id = #{id}
     </delete>
@@ -89,7 +98,7 @@
         delete from beetle_info_map where beetle_info_id = #{beetleInfoId} and adcode = #{adcode}
     </delete>
     <delete id="deleteWorkContent">
-        delete from WorkContent where id = #{id};
+        delete from inject_workcontent where id = #{id};
     </delete>
     <delete id="deleteInjectInfo">
         delete from injectInfo where id = #{id};
@@ -134,7 +143,13 @@
         delete from medicine_name where id = #{id};
     </delete>
     <delete id="deleteMedicine_TypeForTown">
-        delete from medicine_nameInfo_map where id = #{id} and adcode = #{adcode};
+        delete from medicine_nameinfo_map where id = #{id} and adcode = #{adcode};
+    </delete>
+    <delete id="deleteInjectName_Type">
+        delete from inject_name where id = #{id};
+    </delete>
+    <delete id="deleteinjectName_TypeForTown">
+                delete from inject_name_map where id = #{id} and adcode = #{adcode};
     </delete>
     <select id="queryBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
         select * from beetle_info;
@@ -191,6 +206,12 @@
         select * from medicine_name
     </select>
     <select id="getMedicine_TypeForTown" resultType="cn.huihongcloud.entity.Medicine_nameEntity">
-        select * from medicine_name t1 left join medicine_nameInfo_map t2 on t1.id = t2.id where t2.adcode = #{adcode};
+        select * from medicine_name t1 left join medicine_nameinfo_map t2 on t1.id = t2.id where t2.adcode = #{adcode};
+    </select>
+    <select id="getInjectname_Type" resultType="cn.huihongcloud.entity.InjectName">
+    select * from inject_name
+    </select>
+    <select id="getinjectName_TypeForTown" resultType="cn.huihongcloud.entity.InjectName">
+                select * from inject_name t1 left join inject_name_map t2 on t1.id = t2.id where t2.adcode = #{adcode};
     </select>
 </mapper>

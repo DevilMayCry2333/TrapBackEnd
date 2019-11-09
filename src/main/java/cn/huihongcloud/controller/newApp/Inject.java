@@ -60,7 +60,20 @@ public class Inject {
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
         return deviceBeetleMapper.getInjectWorkContent(user2.getAdcode());
+    }
 
+    /**
+     * 获得注剂名称
+     * @param worker
+     * @return
+     */
+    @RequestMapping("/getInjectname")
+    public Object getInjectName(@RequestParam String worker){
+        User user = userMapper.getUserByUserName(worker);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        User user2 = userMapper.getUserByUserName(user1.getParent());
+        System.out.println(user2.getUsername());
+        return deviceBeetleMapper.getInjectName(user2.getAdcode());
     }
 
     @ApiOperation("上传维护信息")
@@ -77,7 +90,9 @@ public class Inject {
                                      Integer WoodStatus,
                                      Integer injectNum,
                                      String remarks,
-                                     String workingContent, HttpServletResponse response) throws Exception {
+                                     String workingContent,
+                                     String injectName,
+                                     Double chestDiameter,HttpServletResponse response) throws Exception {
 
 
 
@@ -133,6 +148,8 @@ public class Inject {
         deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
         deviceInjectionMaintanceEntity.setRemarks(remarks);
         deviceInjectionMaintanceEntity.setWorkContent(workingContent);
+        deviceInjectionMaintanceEntity.setInjectName(injectName);
+        deviceInjectionMaintanceEntity.setChestDiameter(chestDiameter);
         deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
         deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
@@ -187,8 +204,8 @@ public class Inject {
     }
 
     @RequestMapping("/InjectWorker")
-    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String scanId){
-        return deviceBeetleMapper.InjectWorker(scanId);
+    public List<Device_Injection_maintanceEntity> getInject(@RequestParam String id){
+        return deviceBeetleMapper.InjectWorker(id);
 
     }
 

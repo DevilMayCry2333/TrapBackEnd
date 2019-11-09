@@ -1,20 +1,17 @@
-package cn.huihongcloud.entity.beetle;
+package cn.huihongcloud.entity;
 
 import lombok.Data;
 
-/**
- * Created by 钟晖宏 on 2019/1/16
- */
 @Data
-public class BeetleInfo {
-    private int id;
+public class InjectName {
+    private Integer id;
     private String name;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

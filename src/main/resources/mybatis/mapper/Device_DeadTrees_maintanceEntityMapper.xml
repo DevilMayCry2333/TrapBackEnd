@@ -169,9 +169,11 @@
         </if>
         <if test="latitude != null and latitude != ''">
           t1.latitude = #{latitude},
+          t2.latitude = #{latitude},
         </if>
         <if test="longitude != null and longitude != ''">
           t1.longitude = #{longitude},
+          t2.longitude = #{longitude},
         </if>
         <if test="region != null and region != ''">
           t1.region = #{region},
@@ -233,7 +235,16 @@
   </select>
 
     <select id="countAllByArea" resultType="java.lang.Integer">
-      SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance left join device on device.id = device_Id where adcode = #{adcode};
+      SELECT COUNT(Device_DeadTrees_maintance.id) FROM Device_DeadTrees_maintance left join device on device.id = device_Id where adcode = #{adcode}
+        <if test="startDate!=null and startDate !=''">
+            and Device_DeadTrees_maintance.submit_date >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate !=''">
+            and Device_DeadTrees_maintance.submit_date &lt;= #{endDate}
+        </if>
+        <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+            and ${colName} = #{searchText}
+        </if>
     </select>
 
   <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
@@ -307,8 +318,6 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-    LIMIT #{num1},#{num2}
-
   </select>
   <select id="selectWorkDayByDateAndColSearch"
           resultType="java.lang.Integer">
@@ -683,4 +692,17 @@
     order by submit_date desc
 
   </select>
+    <select id="selectWorkDayByDateAndColSearchAndAdcode" resultType="java.lang.Integer">
+        SELECT count(distinct DATE(t1.submit_date)) FROM  Device_DeadTrees_maintance t1 LEFT JOIN device t2 ON t1.device_Id = t2.id
+        WHERE t2.adcode like concat(#{adcode}, '%')
+        <if test="startDate!=null and startDate !=''">
+            and t1.submit_date >= #{startDate}
+        </if>
+        <if test="endDate != null and endDate !=''">
+            and t1.submit_date &lt;= #{endDate}
+        </if>
+        <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
+            and ${colName} = #{searchText}
+        </if>
+    </select>
 </mapper>

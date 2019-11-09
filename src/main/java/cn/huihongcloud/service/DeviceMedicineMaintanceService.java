@@ -2,6 +2,7 @@ package cn.huihongcloud.service;
 
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.summary.MedicineSummary;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.Device_Medicine_MaintanceEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,51 @@ public class DeviceMedicineMaintanceService {
             return null;
         }
         return null;
+    }
+
+
+    public List<MedicineSummary> queryDeviceSummaryByArea111(String adcode, String startDate, String endDate) {
+        return device_medicine_maintanceEntityMapper.queryDeviceSummaryByArea111(adcode, startDate, endDate);
+    }
+
+    public List<Device_Medicine_MaintanceEntity> getAreaMaintanceDetail(User user, String condition, String date, String endDate) {
+        int role = user.getRole();
+        if (role < 3) {
+            // 省到县级用户
+            boolean reported = true;
+
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea111(user.getAdcode(), user.getTown(), condition, date, endDate, reported);
+
+        } else if (role == 3) {
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea111(user.getAdcode(), user.getTown(), condition, date, endDate, null);
+        } else if (role == 4) {
+            // 管理员
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByManagerArea111(user.getAdcode(), user.getTown(), condition, date, endDate, user.getUsername());
+        } else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+
+    public List<Device_Medicine_MaintanceEntity> getMaintenanceDataByDeviceId111(User user, String myusername, String deviceId, String startDate, String endDate) {
+        Integer role = user.getRole();
+        if (role < 3) {
+            Boolean reported = true;
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByDeviceId111(myusername, deviceId, startDate, endDate, reported);
+        } else if (role == 3 || role == 4) {
+
+            return device_medicine_maintanceEntityMapper.getMaintenanceDataByDeviceId111(myusername, deviceId, startDate, endDate, null);
+        } else if (role == 5) {
+            return null;
+        }
+        return null;
+    }
+
+
+
+    public int countAll1(String username,String startDate,String endDate,Integer optionIndex,String searchText){
+        return device_medicine_maintanceEntityMapper.countAll1(username,startDate,endDate,optionIndex,searchText);
     }
 
 
