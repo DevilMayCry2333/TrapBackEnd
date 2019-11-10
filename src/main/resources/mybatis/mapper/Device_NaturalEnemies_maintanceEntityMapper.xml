@@ -780,7 +780,7 @@
 
   </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
-      select * from device where 1 = 1 and project = '天敌防治'
+      select * from device where 1 = 1 and project = '3'
       <if test="adcode != null and adcode != ''">
         and adcode like '${adcode}%'
       </if>
@@ -798,7 +798,7 @@
 
     </select>
   <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.device.Device">
-     select * from device where manager = #{manager} AND project = '天敌防治'
+     select * from device where manager = #{manager} AND project = '3'
   </select>
 
   <select id="getDeviceByWorker" resultType="cn.huihongcloud.entity.device.Device">
@@ -806,7 +806,7 @@
         from device
         left join device_map on device.id = device_map.device_id
         where user_id = #{worker}
-        AND project = '天敌防治'
+        AND project = '3'
   </select>
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
       select * from device_naturalenemies_maintance where id = #{id};

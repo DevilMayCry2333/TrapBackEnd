@@ -272,7 +272,7 @@
         LIMIT #{num1},#{num2}
     </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
-      select * from device where 1 = 1 and project = '枯死树采伐'
+      select * from device where 1 = 1 and project = '4'
       <if test="adcode != null and adcode != ''">
         and adcode like '${adcode}%'
       </if>
@@ -289,14 +289,14 @@
       </if>
     </select>
   <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where manager = #{manager} AND project = '枯死树采伐'
+        select * from device where manager = #{manager} AND project = '4'
   </select>
   <select id="getDeviceByWorker" resultType="cn.huihongcloud.entity.device.Device">
         select device.*
         from device
         left join device_map on device.id = device_map.device_id
         where user_id = #{worker}
-        AND project = '枯死树采伐'
+        AND project = '4'
   </select>
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
       select * from device_deadtrees_maintance where id = #{id};
