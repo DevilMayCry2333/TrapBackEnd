@@ -732,7 +732,7 @@
     group by device.city
   </select>
   <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
-    select * from device where project = '注干剂监测'
+    select * from device where project = '2'
     <if test="adcode != null and adcode != ''">
       and adcode like '${adcode}%'
     </if>
@@ -750,14 +750,14 @@
 
   </select>
   <select id="getDeviceByManager" resultType="cn.huihongcloud.entity.device.Device">
-      select * from device where manager = #{manager} AND project = '注干剂监测'
+      select * from device where manager = #{manager} AND project = '2'
   </select>
   <select id="getDeviceByWorker" resultType="cn.huihongcloud.entity.device.Device">
         select device.*
         from device
         left join device_map on device.id = device_map.device_id
         where user_id = #{worker}
-        AND project = '注干剂监测'
+        AND project = '2'
   </select>
 
   

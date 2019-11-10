@@ -85,22 +85,22 @@ public class DeviceMaintenanceController {
 
 
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
-        logger.info("===开始记录数据===");
-        logger.info(username);
-        logger.info(realDeviceId.getId());
-        logger.info(String.valueOf(longitude));
-        logger.info(String.valueOf(latitude));
-        logger.info(String.valueOf(altitude));
-        logger.info(String.valueOf(num));
-        logger.info(String.valueOf(maleNum));
-        logger.info(String.valueOf(femaleNum));
-        logger.info(drug);
-        logger.info(remark);
-        logger.info(String.valueOf(otherNum));
-        logger.info(String.valueOf(otherType));
-        logger.info(String.valueOf(workingContent));
+//        logger.info("===开始记录数据===");
+//        logger.info(username);
+//        logger.info(realDeviceId.getId());
+//        logger.info(String.valueOf(longitude));
+//        logger.info(String.valueOf(latitude));
+//        logger.info(String.valueOf(altitude));
+//        logger.info(String.valueOf(num));
+//        logger.info(String.valueOf(maleNum));
+//        logger.info(String.valueOf(femaleNum));
+//        logger.info(drug);
+//        logger.info(remark);
+//        logger.info(String.valueOf(otherNum));
+//        logger.info(String.valueOf(otherType));
+//        logger.info(String.valueOf(workingContent));
 
-        System.out.println("image" + image);
+//        System.out.println("image" + image);
 
          Boolean relation=deviceService.judgeDeviceRelation(username,realDeviceId.getId());
         //if被我注释了 2019.10.1
@@ -147,7 +147,7 @@ public class DeviceMaintenanceController {
             String imgId = deviceService.saveImg(image, realDeviceId.getId(), username);
 
             deviceMaintenance.setImageId(imgId);
-            System.out.println("执行了这部");
+//            System.out.println("执行了这部");
 
         }
         if (targetUsername != null) {
@@ -398,7 +398,7 @@ public class DeviceMaintenanceController {
     public Object getMaintenanceData(@RequestAttribute("username") String username, int page, int limit,
                                      @RequestParam(required = false) String condition,
                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+//        System.out.println(condition);
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -425,7 +425,7 @@ public class DeviceMaintenanceController {
     public Object getMaintenanceData2(@RequestAttribute("username") String username, int page, int limit,
                                      @RequestParam(required = false) String condition,
                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+//        System.out.println(condition);
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
