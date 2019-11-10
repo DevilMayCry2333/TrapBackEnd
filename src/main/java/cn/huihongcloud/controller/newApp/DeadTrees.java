@@ -3,6 +3,7 @@ package cn.huihongcloud.controller.newApp;
 import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
+import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
@@ -49,6 +50,65 @@ public class DeadTrees {
 
     }
 
+    @RequestMapping("/AddDeadtreePhoto")
+    public Object addDeadtreePhoto(@RequestAttribute("username") String username,
+                                   @RequestParam(required = false) MultipartFile image,
+                                   String deviceId,
+                                   int current){
+        User user = userMapper.getUserByUserName(username);
+        Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
+        int maxBatch = 1;
+        try {
+            List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDevice.getId());
+            maxBatch = Integer.parseInt(deviceDeadTreesMaintanceEntities.get(0).getBatch());
+        }catch (Exception e){
+            maxBatch = 1;
+        }
+
+
+        if (image!=null) {
+            String imgId = deviceService.saveImg(image, realDevice.getId(), username);
+            if(current==1) {
+                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic",imgId,user.getParent(),maxBatch);
+            }else if(current==2){
+                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic2",imgId,user.getParent(),maxBatch);
+
+            }else if(current==3){
+                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic3",imgId,user.getParent(),maxBatch);
+
+            }
+        }
+
+
+        return "OK";
+
+    }
+
+    @RequestMapping("/addDeviceId")
+    public Object addLineName(@RequestAttribute("username") String username,@RequestParam Long deviceId){
+
+
+        User user = userMapper.getUserByUserName(username);
+        Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
+        deviceDeadTreesMaintanceEntity.setUsername(username);
+        Device realDevice = deviceMapper.getDeviceByScanId(String.valueOf(deviceId));
+        int maxBatch = 1;
+        try {
+            List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDevice.getId());
+            maxBatch = Integer.parseInt(deviceDeadTreesMaintanceEntities.get(0).getBatch()) + 1;
+        }catch (Exception e){
+
+        }
+
+        deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(realDevice.getId()));
+        deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxBatch));
+
+
+        deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+        return maxBatch;
+    }
+
+
     @ApiOperation("上传维护信息")
     @PostMapping("/AddDeadtrees")
     public Object addMaintenanceData(@RequestAttribute("username") String username,
@@ -64,7 +124,7 @@ public class DeadTrees {
                                      String height,
                                      String volume,
                                      String killMethodsValue,
-                                     String remarks,
+                                     @RequestParam(required = false) String remarks,
                                      HttpServletResponse response) throws Exception {
 
 
@@ -117,14 +177,14 @@ public class DeadTrees {
 
 
         List<Device_DeadTrees_maintanceEntity> maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
-        int maxIdNum = 0;
+        int maxIdNum = 1;
         try {
             maxIdNum = Integer.parseInt(maxId.get(0).getBatch());
         }catch (Exception e){
-            maxIdNum = 0;
+            maxIdNum = 1;
         }
 
-        deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxIdNum+1));
+        deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxIdNum));
 
 
         //修改了一些
@@ -132,13 +192,15 @@ public class DeadTrees {
         //随机数
         // deviceMaintenance.setNonceStr((int)(1+Math.random()*100000));
 
-        if (image != null) {
-            String imgId = deviceService.saveImg(image, deviceId, username);
-            deviceDeadTreesMaintanceEntity.setPic(imgId);
-            System.out.println("执行了这部");
+//        if (image != null) {
+//            String imgId = deviceService.saveImg(image, deviceId, username);
+//            deviceDeadTreesMaintanceEntity.setPic(imgId);
+//            System.out.println("执行了这部");
+//
+//        }
 
-        }
-        deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+
+        deviceDeadTreesMaintanceEntityMapper.updateMaintance(deviceDeadTreesMaintanceEntity);
 
         Device device1 = deviceService.getDeviceById(realDeviceId.getId());
         if(device1 == null || device1.getReceiveDate() == null) {

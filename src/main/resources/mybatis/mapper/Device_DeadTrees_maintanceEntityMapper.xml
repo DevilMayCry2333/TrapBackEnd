@@ -212,6 +212,20 @@
         where id = #{id}
 
   </update>
+  <update id="updatePic">
+    update device_deadtrees_maintance set ${colName} = #{text} where device_Id = #{deviceId} and batch = #{maxBatch}
+  </update>
+  <update id="updateMaintance">
+    update device_deadtrees_maintance set
+    <if test="remarks!=null and remarks != '' ">
+      Remarks = #{remarks},
+    </if>
+    serial=#{serial},submit_date=#{submitDate},region=#{region},
+    username=#{username},Worker=#{worker},longitude=#{longitude},latitude=#{latitude},
+    altitude=#{altitude},accuracy=#{accuracy},woodDiameter=#{wooddiameter},
+    woodHeight=#{woodheight},woodVolume=#{woodvolume},KillMethod=#{killmethod},Remarks=#{remarks},town=#{town}
+    where device_Id = #{deviceId} and batch=#{batch}
+  </update>
   <delete id="deleteById">
       delete from  device_deadtrees_maintance where id = #{id}
     </delete>
