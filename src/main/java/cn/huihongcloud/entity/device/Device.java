@@ -29,7 +29,7 @@ public class Device {
     private String qrcode;
     private String manager;
     private String worker;
-    private int isManagerAssign;
+    private Integer isManagerAssign;
     private String CustomTown;
     private String CustomPrefix;
     private String CustomSerial;
@@ -160,14 +160,6 @@ public class Device {
         this.manager = manager;
     }
 
-    public int getIsManagerAssign() {
-        return isManagerAssign;
-    }
-
-    public void setIsManagerAssign(int isManagerAssign) {
-        this.isManagerAssign = isManagerAssign;
-    }
-
     public String getCustomTown() {
         return CustomTown;
     }
@@ -214,5 +206,13 @@ public class Device {
 
     public void setProject(String project) {
         this.project = project;
+    }
+
+    public Integer getIsManagerAssign() {
+        return isManagerAssign;
+    }
+
+    public void setIsManagerAssign(Integer isManagerAssign) {
+        this.isManagerAssign = isManagerAssign;
     }
 }

@@ -185,12 +185,13 @@ public class NewQrCode {
 
 
     @RequestMapping("/rootSearch")
-    public Object serach(@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,int page,int limit){
-        List<Device> deviceList = newQrCodeMapper.selectByConditions1(colName, searchText,page*limit-limit,limit);
+    public Object serach(@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,Integer page,Integer limit){
+
 
         int allNum = newQrCodeMapper.countByCond1(colName, searchText);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<Device> deviceList = newQrCodeMapper.selectByConditions1(colName, searchText,page*limit-limit,limit);
 
         PageWrapper pageWrapper = new PageWrapper();
 
@@ -199,8 +200,11 @@ public class NewQrCode {
         System.out.println(pageObject.getTotal());
 
         pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(allNum);
-        pageWrapper.setTotalPage(allNum/limit);
+//        pageWrapper.setTotalNum(allNum);
+//        pageWrapper.setTotalPage(allNum/limit);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalPage(pageObject.getPages());
+
 
         return pageWrapper;
     }

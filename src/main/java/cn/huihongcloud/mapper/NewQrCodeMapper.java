@@ -29,7 +29,7 @@ public interface NewQrCodeMapper {
 
     List<Device> selectByConditions(String username,String colName,String searchText,int num1,int num2);
 
-    List<Device> selectByConditions1(String colName,String searchText,int num1,int num2);
+    List<Device> selectByConditions1(String colName,String searchText,Integer num1,Integer num2);
 
     int countByCond(String username,String colName,String searchText);
 
