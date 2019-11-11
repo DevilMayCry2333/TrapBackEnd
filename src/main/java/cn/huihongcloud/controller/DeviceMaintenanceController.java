@@ -485,11 +485,11 @@ public class DeviceMaintenanceController {
         }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
-        System.out.println("====page=====");
-        System.out.println(page);
-        System.out.println(pageObject.getTotal());
-        System.out.println(pageObject.getPages());
-        System.out.println("*********");
+//        System.out.println("====page=====");
+//        System.out.println(page);
+//        System.out.println(pageObject.getTotal());
+//        System.out.println(pageObject.getPages());
+//        System.out.println("*********");
 
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());

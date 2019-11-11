@@ -58,13 +58,18 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String area;
 
+    private String pic2;
+
+    private String pic3;
+
 
     public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial,
                                             String submitDate, String batch, String longitude,
                                             String latitude, String wooddiameter, String woodheight,
                                             String woodvolume, String killmethod, String worker, String remarks,
                                             Long scanid, String pic, String username,String region,
-                                            String altitude,String accuracy,String town,int reported) {
+                                            String altitude,String accuracy,String town,int reported,String pic2,
+                                            String pic3) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -86,6 +91,8 @@ public class Device_DeadTrees_maintanceEntity {
         this.accuracy = accuracy;
         this.town = town;
         this.reported = reported;
+        this.pic2 = pic2;
+        this.pic3 = pic3;
     }
 
     public Device_DeadTrees_maintanceEntity() {
@@ -290,5 +297,21 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public String getPic2() {
+        return pic2;
+    }
+
+    public void setPic2(String pic2) {
+        this.pic2 = pic2;
+    }
+
+    public String getPic3() {
+        return pic3;
+    }
+
+    public void setPic3(String pic3) {
+        this.pic3 = pic3;
     }
 }
