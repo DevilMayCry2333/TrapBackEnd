@@ -181,6 +181,7 @@ public class DryInjectionSummary {
             totalInjectNum += lim.getInjectNumSum();
             totalWoodNum += Integer.parseInt(lim.getWoodNum());
             lim.setDeadRate(lim.getWoodStatusSum()/Double.parseDouble(lim.getWoodNum()));
+            lim.setAverageNum(lim.getInjectNumSum()/Double.parseDouble(lim.getWoodNum()));
         }
 
         for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {

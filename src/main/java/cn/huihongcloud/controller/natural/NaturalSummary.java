@@ -1,9 +1,11 @@
 package cn.huihongcloud.controller.natural;
 
+import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.Device_NaturalEnemies_maintanceEntityMapper;
+import cn.huihongcloud.service.NaturalEnemyService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/natural/Summary")
@@ -20,6 +23,8 @@ public class NaturalSummary {
     Device_NaturalEnemies_maintanceEntityMapper deviceNaturalEnemiesMaintanceEntityMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    NaturalEnemyService naturalEnemyService;
 
     @RequestMapping("/area")
     public Object getDeviceSummaryByArea(String adcode, int page, int limit,
@@ -156,6 +161,61 @@ public class NaturalSummary {
         pageWrapper.setData(summaryEntities);
         return Result.ok(pageWrapper);
     }
+
+
+
+    @RequestMapping("/byCustomReigon")
+    public Object byCustomReigon(@RequestAttribute("username") String username,
+                                 @RequestParam int page,
+                                 @RequestParam int limit,
+                                 @RequestParam Integer optionIndex,
+                                 @RequestParam(required = false) String searchText,
+                                 @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
+        User user = userService.getUserByUserName(username);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        System.out.println(username);
+        System.out.printf("==================");
+
+
+        if (!Objects.equals(startDate, "")) {
+            startDate = startDate + " 00:00:00";
+        }
+        if (!Objects.equals(endDate, "")) {
+            endDate = endDate + " 23:59:59";
+        }
+
+        List<Device_NaturalEnemies_maintanceEntity> device_natural_maintanceEntities = naturalEnemyService.getNaturalSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate);
+
+        for(int i = 0 ; i<device_natural_maintanceEntities.size();i++){
+            device_natural_maintanceEntities.get(i).setNatualMannerTotal("花绒寄甲: " +""+deviceNaturalEnemiesMaintanceEntityMapper
+            .queryNatualMannerOne(user.getUsername(),device_natural_maintanceEntities.get(i).getCustomTown()).get(0).getNatualMannerOne()
+            + "肿腿蜂：" +""+ deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerTwo(user.getUsername(),device_natural_maintanceEntities.get(i).getCustomTown()).get(0).getNatualMannerTwo()
+            + "卵卡: " + "" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerThree(user.getUsername(),device_natural_maintanceEntities.get(i).getCustomTown()).get(0).getNatualMannerThree());
+        }
+        int totalReleasePlace = 0;
+        for (Device_NaturalEnemies_maintanceEntity lim: device_natural_maintanceEntities) {
+            lim.setStartDate(startDate);
+            lim.setEndDate(endDate);
+            totalReleasePlace += lim.getReleaseNum();
+            System.out.println(lim.getCustomTown());
+            System.out.println(lim.getId());
+        }
+
+
+        for (Device_NaturalEnemies_maintanceEntity lim: device_natural_maintanceEntities) {
+            lim.setTotalReleasePlace(totalReleasePlace);
+        }
+
+
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setData(device_natural_maintanceEntities);
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+
+        return Result.ok(pageWrapper);
+    }
+
 
 
 }

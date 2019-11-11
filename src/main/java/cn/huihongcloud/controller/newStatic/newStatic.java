@@ -62,8 +62,6 @@ public class newStatic {
     public Object getWorkerStatic(@RequestParam String ProjectAdminName, @RequestParam(required = false) String startM, @RequestParam(required = false) String endM) throws ParseException {
         User user = userService.getUserByUserName(ProjectAdminName);
         User user1 = userService.getUserByUserName(user.getParent());
-
-
         List<WorkerStatic> workerStaticList = analysisMapper.getWorkerStatic(startM, endM, user1.getUsername());
 
         String name = workerStaticList.get(0).getWorkerName();
@@ -103,10 +101,11 @@ public class newStatic {
 
         JSONArray jsonArray = new JSONArray();
 
-        workerStaticList.stream().collect(Collectors.groupingBy(WorkerStatic::getWorkerName)).forEach((worker, list) -> {
+        workerStaticList.stream().collect(Collectors.groupingBy(WorkerStatic::getWorkerName)).forEach((worker,list) -> {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Worker", worker);
             int day = list.size();
+            jsonObject.put("WorkRealName",list.stream().map(WorkerStatic::getRealName));
             jsonObject.put("day", day);
             double num = list.stream().mapToDouble(WorkerStatic::getNum).sum();
             double num1 = list.stream().mapToDouble(WorkerStatic::getNum1).sum();

@@ -95,6 +95,16 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
     int updateRecordByFront(Device_NaturalEnemies_maintanceEntity dataEntity);
 
 
+    List<Device_NaturalEnemies_maintanceEntity> selectNaturalByCustomReigonCustomProject(@Param("customProject") String customProject, @Param("optionIndex") Integer optionIndex,
+                                                                            @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
+
+    List<Device_NaturalEnemies_maintanceEntity> selectNaturalByCustomReigon(@Param("username") String username, @Param("optionIndex") Integer optionIndex,
+                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+
+    List<Device_NaturalEnemies_maintanceEntity> queryNatualMannerOne(String user,String customTown);
+    List<Device_NaturalEnemies_maintanceEntity> queryNatualMannerTwo(String user,String customTown);
+    List<Device_NaturalEnemies_maintanceEntity> queryNatualMannerThree(String user,String customTown);
 
 }

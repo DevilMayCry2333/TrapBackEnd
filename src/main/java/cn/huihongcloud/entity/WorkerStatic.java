@@ -7,6 +7,25 @@ public class WorkerStatic implements Comparable<WorkerStatic> {
     private int num1;
     private int num2;
     private int num3;
+    private String realName;
+    private int num4;
+
+    public int getNum4() {
+        return num4;
+    }
+
+    public void setNum4(int num4) {
+        this.num4 = num4;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     public String getWorkerName() {
         return workerName;
     }
@@ -38,23 +57,18 @@ public class WorkerStatic implements Comparable<WorkerStatic> {
     public void setWorkerName(String workerName) {
         this.workerName = workerName;
     }
-
     public int getNum() {
         return num;
     }
-
     public void setNum(int num) {
         this.num = num;
     }
-
     public String getCurrentDate() {
         return currentDate;
     }
-
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
     }
-
     @Override
     public int compareTo(WorkerStatic user) {
         return this.workerName.compareTo(user.workerName);
