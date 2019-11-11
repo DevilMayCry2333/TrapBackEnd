@@ -34,8 +34,101 @@ public class Device_NaturalEnemies_maintanceEntity {
     @Excel(name = "备注")
     private String remarks;
 
-//    @Excel(name = "二维码ID")
+
+    private String customTown;
+
+
+    private String natualMannerTotal;
+    private String natualMannerOne;
+    private String natualMannerTwo;
+    private String natualMannerThree;
+
+    public String getNatualMannerTotal() {
+        return natualMannerTotal;
+    }
+
+    public void setNatualMannerTotal(String natualMannerTotal) {
+        this.natualMannerTotal = natualMannerTotal;
+    }
+
+    public String getNatualMannerOne() {
+        return natualMannerOne;
+    }
+
+    public void setNatualMannerOne(String natualMannerOne) {
+        this.natualMannerOne = natualMannerOne;
+    }
+
+    public String getNatualMannerTwo() {
+        return natualMannerTwo;
+    }
+
+    public void setNatualMannerTwo(String natualMannerTwo) {
+        this.natualMannerTwo = natualMannerTwo;
+    }
+
+    public String getNatualMannerThree() {
+        return natualMannerThree;
+    }
+
+    public void setNatualMannerThree(String natualMannerThree) {
+        this.natualMannerThree = natualMannerThree;
+    }
+
+    private Integer releasePlace;
+
+    public Integer getTotalReleasePlace() {
+        return totalReleasePlace;
+    }
+
+    public void setTotalReleasePlace(Integer totalReleasePlace) {
+        this.totalReleasePlace = totalReleasePlace;
+    }
+
+    private Integer totalReleasePlace;
+    public String getCustomTown() {
+        return customTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        this.customTown = customTown;
+    }
+
+    public Integer getReleasePlace() {
+        return releasePlace;
+    }
+
+    public void setReleasePlace(Integer releasePlace) {
+        this.releasePlace = releasePlace;
+    }
+
+    //    @Excel(name = "二维码ID")
     private Long scanid;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getCustomtown() {
+        return customtown;
+    }
+
+    public void setCustomtown(String customtown) {
+        this.customtown = customtown;
+    }
+
     @Excel(name = "管理员")
     private String username;
     @Excel(name = "是否报告")
@@ -43,6 +136,9 @@ public class Device_NaturalEnemies_maintanceEntity {
     @Excel(name = "海拔")
     private String altitude;
 
+
+    private String startDate;
+    private String endDate;
 
     private String province;
 

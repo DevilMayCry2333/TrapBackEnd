@@ -86,6 +86,16 @@ public class Device_Injection_maintanceEntity {
 
     private Double deadRate;
 
+    public Double getAverageNum() {
+        return averageNum;
+    }
+
+    public void setAverageNum(Double averageNum) {
+        this.averageNum = averageNum;
+    }
+
+    private Double averageNum;
+
     public void setReported(Integer reported) {
         this.reported = reported;
     }

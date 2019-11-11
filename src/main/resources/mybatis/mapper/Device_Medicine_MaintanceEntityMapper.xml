@@ -113,6 +113,8 @@
     select device.CustomTown,device_medicine_maintance.*,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,
     sum(device_medicine_maintance.area_fz) areaFzSum
     from device left join device_medicine_maintance on device.id = device_medicine_maintance.device_id
+    WHERE device.adcode
+    LIKE concat(#{adcode}, '%')
     <if test="startDate != null and startDate != ''">
       and submit_date &gt;= #{startDate}
     </if>
@@ -353,10 +355,8 @@
     from device_medicine_maintance
     left join device on device_medicine_maintance.device_id = device.id
     where device.adcode like concat(#{adcode}, '%')
-
     and device.manager is not null
-    and device.project = '药剂防治管理'
-
+    and device.project = 5
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
     </if>

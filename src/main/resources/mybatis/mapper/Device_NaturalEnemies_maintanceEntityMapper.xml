@@ -230,7 +230,6 @@
     from Device_NaturalEnemies_maintance
     left join device on Device_NaturalEnemies_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%')
-
     and Device_NaturalEnemies_maintance.town is not null
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
@@ -369,7 +368,6 @@
       from Device_NaturalEnemies_maintance
       left join device on Device_NaturalEnemies_maintance.device_Id = device.id
       where device.adcode like concat(#{adcode}, '%')
-
       and device.manager is not null
       <if test="startDate != null and startDate !=''">
         and submit_date &gt;= #{startDate}
@@ -866,5 +864,49 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
+  </select>
+  <select id="selectNaturalByCustomReigonCustomProject"
+          resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+    select t2.CustomTown,t1.*,COUNT(t1.device_Id) releasePlace
+    from device_naturalenemies_maintance t1 left join device t2 on t1.device_Id = t2.id
+    where t2.CustomProject = #{customProject}
+    <if test="startDate != null and startDate != ''">
+      and t1.submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and t1.submit_date &lt;= #{endDate}
+    </if>
+    group by t2.CustomTown
+  </select>
+  <select id="selectNaturalByCustomReigon"
+          resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+    select t2.CustomTown,t1.*,COUNT(t1.device_Id) releasePlace
+    from device_naturalenemies_maintance t1 left join device t2 on t1.device_Id = t2.id
+    <if test="startDate != null and startDate != ''">
+      and t1.submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and t1.submit_date &lt;= #{endDate}
+    </if>
+    group by t2.CustomTown
+  </select>
+  <select id="queryNatualMannerOne" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+    select count(PredatorsType) natualMannerOne
+    from device_naturalenemies_maintance
+    left join device on device_naturalenemies_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '花绒寄甲'
+  </select>
+  <select id="queryNatualMannerTwo" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+    select count(PredatorsType) natualMannerTwo
+    from device_naturalenemies_maintance
+    left join device on device_naturalenemies_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '肿腿蜂'
+  </select>
+  <select id="queryNatualMannerThree"
+          resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
+    select count(PredatorsType) natualMannerThree
+    from device_naturalenemies_maintance
+    left join device on device_naturalenemies_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '卵卡'
   </select>
 </mapper>

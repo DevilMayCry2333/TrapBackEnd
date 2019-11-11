@@ -160,6 +160,24 @@ public class NaturalEnemyService {
 
 
 
+    public List<Device_NaturalEnemies_maintanceEntity> getNaturalSummaryByCustomReigon(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
+        int role = user.getRole();
+
+        if (role <= 3) {
+            return deviceNaturalEnemiesMaintanceEntityMapper.selectNaturalByCustomReigon(user.getUsername(), optionIndex, searchText, startDate, endDate);
+        } else if (role == 4) {
+            return deviceNaturalEnemiesMaintanceEntityMapper.selectNaturalByCustomReigonCustomProject(user.getParent(), optionIndex, searchText, startDate, endDate);
+
+        }
+
+        /*else if(){
+
+        }*/
+        return null;
+    }
+
+
+
 
 
 
