@@ -215,11 +215,12 @@ public class NewQrCode {
 
         //User user = userMapper.getUserByUserName(username);
         System.out.println(username);
-        List<Device> deviceList = newQrCodeMapper.selectByConditions(username,colName, searchText,page*limit-limit,limit);
+
 
         int allNum = newQrCodeMapper.countByCond(username,colName, searchText);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<Device> deviceList = newQrCodeMapper.selectByConditions(username,colName, searchText,page*limit-limit,limit);
 
         PageWrapper pageWrapper = new PageWrapper();
 
