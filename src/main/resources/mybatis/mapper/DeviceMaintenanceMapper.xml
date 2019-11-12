@@ -425,10 +425,10 @@
     <insert id="addMaintenanceData">
         insert into device_maintenance
         (num, male_num, female_num, username, `date`, longitude, latitude, altitude, img_id, device_id, drug, remark,
-         batch, working_content, other_type, other_num,isactive)
+         batch, working_content, other_type, other_num,isactive,scanId,work_content_front,other_beetle_front,drug_front)
         values
         (#{num}, #{maleNum}, #{femaleNum}, #{username}, #{date}, #{longitude}, #{latitude}, #{altitude}, #{imageId}, #{deviceId},
-        #{drug}, #{remark}, #{batch}, #{workingContent}, #{otherType}, #{otherNum},'0')
+        #{drug}, #{remark}, #{batch}, #{workingContent}, #{otherType}, #{otherNum},'0',#{scanId},#{workContentFront},#{otherBeetleFront},#{drugFront})
     </insert>
 
     <update id="reportData">
@@ -478,8 +478,21 @@
             <if test="otherNum != null">
                 other_num = #{otherNum},
             </if>
+
+            <if test="workContentFront != null">
+                work_content_front = #{workContentFront},
+            </if>
+
+            <if test="otherBeetleFront != null">
+                other_beetle_front = #{otherBeetleFront},
+            </if>
+
+            <if test="drugFront != null">
+                drug_front = #{drugFront},
+            </if>
+
         </set>
-        where device_id = #{deviceId} and batch = #{batch}
+        where scanId = #{scanId} and batch = #{batch}
         and isactive = '0'
         
     </update>
@@ -980,6 +993,7 @@
     <select id="getMaintenanceDataByManager1" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
+        device_maintenance.scanId,
         device_maintenance.batch,
         num num,
         device_maintenance.other_type,
@@ -993,6 +1007,7 @@
         device_maintenance.img_id,
         device_maintenance.drug,
         device_maintenance.remark,
+        device_maintenance.drug_front,
         device.province,
         device.city,
         device.CustomTown,
@@ -1000,12 +1015,14 @@
         device.area,
         device.town,
         workcontent.name workcontentfront,
+        beetle_info.name otherbeetlefront,
         device_maintenance.working_content,
         device_maintenance.reported
         from device_maintenance
         left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username
         left join workcontent on working_content = workcontent.Fvalue
+        left join beetle_info on beetle_info.id = other_type
 
 
         where device_id in

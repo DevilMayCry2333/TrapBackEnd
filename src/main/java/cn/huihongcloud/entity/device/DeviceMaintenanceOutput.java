@@ -33,9 +33,9 @@ public class DeviceMaintenanceOutput {
   //  @Excel(name = "时间", format = "yyyy-MM-dd HH:mm:ss")
     @Excel(name = "时间", format = "yyyy-MM-dd")
     private Date date;
-    @Excel(name = "经度")
+    @Excel(name = "经度",numFormat = "000.000000")
     private Double longitude;
-    @Excel(name = "纬度")
+    @Excel(name = "纬度",numFormat = "00.000000")
     private Double latitude;
     @Excel(name = "海拔")
     private Double altitude;

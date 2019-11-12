@@ -264,7 +264,28 @@
         select count(id) from device
     </select>
     <select id="queryDeviceId" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where scanId = #{scanId};
+        select * from device where scanId = #{scanId}
+    </select>
+    <select id="querySingalDeviceId" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device where scanId = #{scanId} limit 1;
+    </select>
+    <select id="getTrapBeetleInfo" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
+        select * from beetle_info where `name` = #{beetleName} limit 1;
+    </select>
+    <select id="getTrapInjectName" resultType="cn.huihongcloud.entity.injectInfo">
+        select * from injectinfo where `name` = #{injectName} limit 1;
+    </select>
+    <select id="getTrapWorkContent" resultType="cn.huihongcloud.entity.workContent">
+        select * from workcontent where `name` = #{workContentName} limit 1;
+    </select>
+    <select id="getTrapBeetleInfoId" resultType="cn.huihongcloud.entity.beetle.BeetleInfo">
+        select * from beetle_info where `id` = #{beetleId} limit 1;
+    </select>
+    <select id="getTrapInjectNameId" resultType="cn.huihongcloud.entity.injectInfo">
+        select * from injectinfo where `id` = #{injectId} limit 1;
+    </select>
+    <select id="getTrapWorkContentId" resultType="cn.huihongcloud.entity.workContent">
+        select * from workcontent where `id` = #{workContentId} limit 1;
     </select>
 
 </mapper>
