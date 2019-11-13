@@ -118,15 +118,13 @@ public class DeviceMaintenanceController {
         //修改了一些
         
         DeviceMaintenance deviceMaintenance = new DeviceMaintenance();
-
-
         deviceMaintenance.setDeviceId(realDeviceId.getId());
         deviceMaintenance.setScanId(realDeviceId.getScanId());
         deviceMaintenance.setMaleNum(maleNum);
         deviceMaintenance.setFemaleNum(femaleNum);
         deviceMaintenance.setNum(num);
-        deviceMaintenance.setLatitude(latitude);
-        deviceMaintenance.setLongitude(longitude);
+        deviceMaintenance.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
+        deviceMaintenance.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
         deviceMaintenance.setAltitude(altitude);
         deviceMaintenance.setDate(new Date());
         deviceMaintenance.setRemark(remark);

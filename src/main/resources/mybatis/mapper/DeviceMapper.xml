@@ -287,5 +287,32 @@
     <select id="getTrapWorkContentId" resultType="cn.huihongcloud.entity.workContent">
         select * from workcontent where `id` = #{workContentId} limit 1;
     </select>
+    <select id="getInjectWoodStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">
+        select * from inject_woodstatus
+        <if test="appVal == 1">
+            where id = #{id}
+        </if>
+        <if test="appVal == 2">
+            where `name` = #{name}
+        </if>
+    </select>
+    <select id="getInjectWorkContent" resultType="cn.huihongcloud.entity.inject_WorkContent">
+        select * from inject_workcontent
+        <if test="appVal == 1">
+            where id = #{id}
+        </if>
+        <if test="appVal == 2">
+            where `name` = #{name}
+        </if>
+    </select>
+    <select id="getInjectName" resultType="cn.huihongcloud.entity.InjectName">
+        select * from inject_name
+        <if test="appVal == 1">
+            where id = #{id}
+        </if>
+        <if test="appVal == 2">
+            where `name` = #{name}
+        </if>
+    </select>
 
 </mapper>

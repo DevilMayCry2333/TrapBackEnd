@@ -6,33 +6,61 @@ import io.swagger.models.auth.In;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
 @Data
 public class Device_Injection_maintanceEntity {
-    @Excel(name = "记录ID")
+
     private Long id;
     @Excel(name = "设备ID")
-    private Long deviceId;
+    private Long scanId;
     @Excel(name = "编号")
     private String serial;
 
+    @Excel(name = "区域")
+    private String customtown;
+
+
+    private Long deviceId;
+
+
 
     private String region;
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
     @DateTimeFormat(pattern = "yyyy年MM月dd日")
-    @Excel(name = "提交日期")
-    private String submitDate;
+    @Excel(name = "提交日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy年MM月dd日")
+    private Date submitDate;
+
     @Excel(name = "批次")
     private Integer batch;
-    @Excel(name = "经度")
-    private String longitude;
-    @Excel(name = "纬度")
-    private String latitude;
+
+    @Excel(name = "纬度",numFormat = "00.000000")
+    private Double latitude;
+
+    @Excel(name = "经度",numFormat = "000.000000")
+    private Double longitude;
+
+
     @Excel(name = "工作内容")
+    private String workContentFront;
+
+
+
     private String workContent;
+
+
     @Excel(name = "注剂数量")
     private Integer injectionNum;
 
+    @Excel(name = "树木状态")
+    private String woodStatusFront;
 
+    @Excel(name = "胸径")
+    private Double chestDiameter;
+
+    @Excel(name = "注剂名称")
+    private String injectNameFront;
 
     private String pic;
 
@@ -42,10 +70,11 @@ public class Device_Injection_maintanceEntity {
     @Excel(name = "备注")
     private String remarks;
 
-    private Long scanid;
+
 
     private String username;
-    @Excel(name = "海拔")
+
+
     private String altitude;
 
     private String dataPrecision;
@@ -58,17 +87,16 @@ public class Device_Injection_maintanceEntity {
 
     private String town;
 
-    @Excel(name = "是否报告")
+
     private Integer reported;
 
-    @Excel(name = "树木状态")
+
     private Integer woodstatus;
 
-//    @Excel(name = "树木数量")
+
     private String woodNum;
 
-    @Excel(name = "区域")
-    private String customtown;
+
 
     private Integer injectNumSum;
 
@@ -110,8 +138,7 @@ public class Device_Injection_maintanceEntity {
 
 
 
-    @Excel(name = "胸径")
-    private Double chestDiameter;
+
 
     public String getInjectName() {
         return injectName;
@@ -121,7 +148,7 @@ public class Device_Injection_maintanceEntity {
         this.injectName = injectName;
     }
 
-    @Excel(name = "注剂类型")
+
     private String injectName;
 
     private String woodStatusName;
@@ -142,50 +169,50 @@ public class Device_Injection_maintanceEntity {
         this.deadRate = deadRate;
     }
 
-    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude,
-                                            String workContent, Integer injectionNum, String pic, String worker, String remarks,
-                                            Long scanid, String username, String province, String city, String area, String town, Integer reported, String woodNum, String customtown, Integer injectNumSum,
-                                            Integer woodstatus, Integer WoodStatusSum, Integer totalInjectSum, Integer totalWoodSum, Integer totalDeadSum, Double chestDiameter, String injectName, Double deadRate,String woodStatusName) {
-
-        this.woodstatus = woodstatus;
-        this.chestDiameter = chestDiameter;
-        this.injectName = injectName;
-        this.id = id;
-        this.submitDate = submitDate;
-        this.deviceId = deviceId;
-        this.serial = serial;
-        this.region = region;
-        this.batch = batch;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.workContent = workContent;
-        this.injectionNum = injectionNum;
-        this.pic = pic;
-        this.worker = worker;
-        this.remarks = remarks;
-        this.scanid = scanid;
-        this.username = username;
-        this.altitude = altitude;
-        this.dataPrecision = dataPrecision;
-        this.province = province;
-        this.city = city;
-        this.area = area;
-        this.town = town;
-        this.reported = reported;
-        this.woodNum = woodNum;
-        this.customtown = customtown;
-        this.injectNumSum = injectNumSum;
-        this.WoodStatusSum = WoodStatusSum;
-        this.totalInjectSum = totalInjectSum;
-        this.totalWoodSum = totalWoodSum;
-        this.totalDeadSum = totalDeadSum;
-        this.deadRate = deadRate;
-        this.woodStatusName = woodStatusName;
-    }
-
-    public Device_Injection_maintanceEntity() {
-        super();
-    }
+//    public Device_Injection_maintanceEntity(String altitude, String dataPrecision, Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, Double longitude, Double latitude,
+//                                            String workContent, Integer injectionNum, String pic, String worker, String remarks,
+//                                            Long scanId, String username, String province, String city, String area, String town, Integer reported, String woodNum, String customtown, Integer injectNumSum,
+//                                            Integer woodstatus, Integer WoodStatusSum, Integer totalInjectSum, Integer totalWoodSum, Integer totalDeadSum, Double chestDiameter, String injectName, Double deadRate,String woodStatusName) {
+//
+//        this.woodstatus = woodstatus;
+//        this.chestDiameter = chestDiameter;
+//        this.injectName = injectName;
+//        this.id = id;
+//        this.submitDate = submitDate;
+//        this.deviceId = deviceId;
+//        this.serial = serial;
+//        this.region = region;
+//        this.batch = batch;
+//        this.scanId = scanId;
+//        this.longitude = longitude;
+//        this.latitude = latitude;
+//        this.workContent = workContent;
+//        this.injectionNum = injectionNum;
+//        this.pic = pic;
+//        this.worker = worker;
+//        this.remarks = remarks;
+//        this.username = username;
+//        this.altitude = altitude;
+//        this.dataPrecision = dataPrecision;
+//        this.province = province;
+//        this.city = city;
+//        this.area = area;
+//        this.town = town;
+//        this.reported = reported;
+//        this.woodNum = woodNum;
+//        this.customtown = customtown;
+//        this.injectNumSum = injectNumSum;
+//        this.WoodStatusSum = WoodStatusSum;
+//        this.totalInjectSum = totalInjectSum;
+//        this.totalWoodSum = totalWoodSum;
+//        this.totalDeadSum = totalDeadSum;
+//        this.deadRate = deadRate;
+//        this.woodStatusName = woodStatusName;
+//    }
+//
+//    public Device_Injection_maintanceEntity() {
+//        super();
+//    }
 
     public Long getId() {
         return id;
@@ -227,20 +254,20 @@ public class Device_Injection_maintanceEntity {
         this.batch = batch;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public String getWorkContent() {
@@ -283,19 +310,11 @@ public class Device_Injection_maintanceEntity {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
-    public Long getScanid() {
-        return scanid;
-    }
-
-    public void setScanid(Long scanid) {
-        this.scanid = scanid;
-    }
-
-    public String getSubmitDate() {
+    public Date getSubmitDate() {
         return submitDate;
     }
 
-    public void setSubmitDate(String submitDate) {
+    public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
     }
 
@@ -442,5 +461,37 @@ public class Device_Injection_maintanceEntity {
 
     public void setTotalDeadSum(Integer totalDeadSum) {
         this.totalDeadSum = totalDeadSum;
+    }
+
+    public String getInjectNameFront() {
+        return injectNameFront;
+    }
+
+    public void setInjectNameFront(String injectNameFront) {
+        this.injectNameFront = injectNameFront;
+    }
+
+    public String getWorkContentFront() {
+        return workContentFront;
+    }
+
+    public void setWorkContentFront(String workContentFront) {
+        this.workContentFront = workContentFront;
+    }
+
+    public String getWoodStatusFront() {
+        return woodStatusFront;
+    }
+
+    public void setWoodStatusFront(String woodStatusFront) {
+        this.woodStatusFront = woodStatusFront;
+    }
+
+    public Long getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(Long scanId) {
+        this.scanId = scanId;
     }
 }

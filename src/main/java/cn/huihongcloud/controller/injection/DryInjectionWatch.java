@@ -11,6 +11,7 @@ import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper;
 import cn.huihongcloud.service.DryInjectionService;
 import cn.huihongcloud.service.UserService;
@@ -43,6 +44,9 @@ public class DryInjectionWatch {
     @Autowired
     private Device_Injection_maintanceEntityMapper deviceInjectionMaintanceEntityMapper;
     JSONObject jsonObject = new JSONObject();
+
+    @Autowired
+    DeviceMapper deviceMapper;
 
 
     @RequestMapping("/dataDetail")
@@ -380,8 +384,14 @@ public class DryInjectionWatch {
         for (Device_Injection_maintanceEntity d:
                 deviceMaintenanceList) {
             System.out.println("natural");
-            System.out.println(d.getId());
-            Device_Injection_maintanceEntity tmp =  deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getId()));
+            System.out.println(d.getScanId());
+            d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
+            d.setWoodstatus(deviceMapper.getInjectWoodStatus(null,d.getWoodStatusFront(),2).getId());
+
+            d.setWorkContent(String.valueOf(deviceMapper.getInjectWorkContent(null,d.getWorkContentFront(),2).getId()));
+            d.setInjectName(String.valueOf(deviceMapper.getInjectName(null,d.getInjectNameFront(),2).getId()));
+
+            Device_Injection_maintanceEntity tmp =  deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getScanId()));
             if(tmp!=null){
                 deviceInjectionMaintanceEntityMapper.updateRecordById(d);
             }else {

@@ -83,8 +83,8 @@ public class Inject {
                                      @RequestParam(value = "username", required = false) String targetUsername,
                                      // targetUsername为手动伪造维护信息用的
                                      String deviceId,
-                                     String longitude,
-                                     String latitude,
+                                     Double longitude,
+                                     Double latitude,
                                      String altitude,
                                      String accuracy,
                                      Integer WoodStatus,
@@ -155,7 +155,7 @@ public class Inject {
         deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
 
 
-        BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+        BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
 
         deviceInjectionMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
@@ -165,11 +165,8 @@ public class Inject {
         System.out.println(realDeviceId.getCustomSerial());
 
         Date date= new Date(System.currentTimeMillis());
-        String pattern="yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat sdf= new SimpleDateFormat(pattern);
-        String datestr=sdf.format(date);// format  为格式化方法
 
-        deviceInjectionMaintanceEntity.setSubmitDate(datestr);
+        deviceInjectionMaintanceEntity.setSubmitDate(date);
         deviceInjectionMaintanceEntity.setRegion(realDeviceId.getArea());
 
         //修改了一些
