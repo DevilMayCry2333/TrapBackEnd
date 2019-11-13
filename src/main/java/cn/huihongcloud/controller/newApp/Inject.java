@@ -140,8 +140,8 @@ public class Inject {
 
         deviceInjectionMaintanceEntity.setWorker(username);
         deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceInjectionMaintanceEntity.setLongitude(longitude);
-        deviceInjectionMaintanceEntity.setLatitude(latitude);
+        deviceInjectionMaintanceEntity.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
+        deviceInjectionMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
         deviceInjectionMaintanceEntity.setAltitude(altitude);
         deviceInjectionMaintanceEntity.setDataPrecision(accuracy);
         deviceInjectionMaintanceEntity.setWoodstatus(WoodStatus);

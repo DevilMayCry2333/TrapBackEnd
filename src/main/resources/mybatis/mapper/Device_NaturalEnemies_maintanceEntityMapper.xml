@@ -774,7 +774,6 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-    LIMIT #{num1},#{num2}
 
   </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
@@ -831,7 +830,6 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-    LIMIT #{num1},#{num2}
 
   </select>
     <select id="selectDevicesByDateAndColSearch"

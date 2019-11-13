@@ -1,22 +1,31 @@
 package cn.huihongcloud.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-@Data
 
+@Data
 public class Device_NaturalEnemies_maintanceEntity {
-    @Excel(name = "记录ID")
+
     private Long id;
     @Excel(name = "设备ID")
     private Long deviceId;
     @Excel(name = "编号")
     private String serial;
+    @Excel(name = "区域")
+    private String customTown;
 
     private String region;
-    @Excel(name = "提交日期")
-    private String submitDate;
+
+    @Excel(name = "日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy年MM月dd日")
+    @JsonFormat(pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    private Date submitDate;
+
+
     @Excel(name = "批次")
     private Integer batch;
     @Excel(name = "经度")
@@ -34,14 +43,17 @@ public class Device_NaturalEnemies_maintanceEntity {
     @Excel(name = "备注")
     private String remarks;
 
+    private String luanKaNumSum;
 
-    private String customTown;
+    private String releaseNumSum;
 
 
     private String natualMannerTotal;
     private String natualMannerOne;
     private String natualMannerTwo;
     private String natualMannerThree;
+
+    private Integer deviceNum;
 
     public String getNatualMannerTotal() {
         return natualMannerTotal;
@@ -103,7 +115,7 @@ public class Device_NaturalEnemies_maintanceEntity {
     }
 
     //    @Excel(name = "二维码ID")
-    private Long scanid;
+    private Long scanId;
 
     public String getStartDate() {
         return startDate;
@@ -121,19 +133,9 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.endDate = endDate;
     }
 
-    public String getCustomtown() {
-        return customtown;
-    }
 
-    public void setCustomtown(String customtown) {
-        this.customtown = customtown;
-    }
-
-    @Excel(name = "管理员")
     private String username;
-    @Excel(name = "是否报告")
     private Integer reported;
-    @Excel(name = "海拔")
     private String altitude;
 
 
@@ -150,12 +152,12 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String precision;
 
-    @Excel(name = "区域")
-    private String customtown;
 
 
 
-    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, String submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanid, String username,Integer reported,String altitude,String province,String city,String area,String town,String precision,String customtown) {
+
+
+    public Device_NaturalEnemies_maintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String predatorstype, Integer releaseNum, String pic, String worker, String remarks, Long scanId, String username,Integer reported,String altitude,String province,String city,String area,String town,String precision) {
         this.id = id;
         this.deviceId = deviceId;
         this.serial = serial;
@@ -169,7 +171,7 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.pic = pic;
         this.worker = worker;
         this.remarks = remarks;
-        this.scanid = scanid;
+        this.scanId = scanId;
         this.username = username;
         this.reported = reported;
         this.altitude = altitude;
@@ -178,7 +180,6 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.area = area;
         this.town = town;
         this.precision = precision;
-        this.customtown = customtown;
     }
 
     public Device_NaturalEnemies_maintanceEntity() {
@@ -281,28 +282,12 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
-    public Long getScanid() {
-        return scanid;
-    }
-
-    public void setScanid(Long scanid) {
-        this.scanid = scanid;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(String submitDate) {
-        this.submitDate = submitDate;
     }
 
     public Integer getReported() {
@@ -359,5 +344,45 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setPrecision(String precision) {
         this.precision = precision;
+    }
+
+    public Long getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(Long scanId) {
+        this.scanId = scanId;
+    }
+
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
+    }
+
+    public String getLuanKaNumSum() {
+        return luanKaNumSum;
+    }
+
+    public void setLuanKaNumSum(String luanKaNumSum) {
+        this.luanKaNumSum = luanKaNumSum;
+    }
+
+    public String getReleaseNumSum() {
+        return releaseNumSum;
+    }
+
+    public void setReleaseNumSum(String releaseNumSum) {
+        this.releaseNumSum = releaseNumSum;
+    }
+
+    public Integer getDeviceNum() {
+        return deviceNum;
+    }
+
+    public void setDeviceNum(Integer deviceNum) {
+        this.deviceNum = deviceNum;
     }
 }
