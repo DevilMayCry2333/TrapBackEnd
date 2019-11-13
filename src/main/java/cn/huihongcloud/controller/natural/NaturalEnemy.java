@@ -246,7 +246,7 @@ public class NaturalEnemy {
 
         deviceNaturalEnemiesMaintanceEntities.get(0).setLuanKaNumSum(String.valueOf(luanKaNum));
         deviceNaturalEnemiesMaintanceEntities.get(0).setReleaseNumSum(String.valueOf(releasNum));
-        
+
         deviceNaturalEnemiesMaintanceEntities.get(0).setDeviceNum(
                 deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(
                         user.getParent(),startDate,endDate,colName,searchText,1,100000,adcode
