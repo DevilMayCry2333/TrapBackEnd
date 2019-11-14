@@ -27,12 +27,52 @@ public class DeviceMaintenance {
 
     @Excel(name = "ID")
     private int id;
+
     @Excel(name = "设备ID")
+    private String scanId;
+    @Excel(name = "编号")
+    private String customSerial;
+    @Excel(name = "区域")
+    private String customTown;
+
+    @Excel(name = "日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy年MM月dd日")
+    @JsonFormat(pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    private Date date;
+
+
     private String deviceId;
     @Excel(name = "批次")
     private int batch;
+
+    @Excel(name = "经度",numFormat = "000.000000")
+    private Double longitude;
+    @Excel(name = "纬度",numFormat = "00.000000")
+    private Double latitude;
+    @Excel(name = "海拔")
+    private Double altitude;
+
+    @Excel(name = "工作内容")
+    private String workContentFront;
+
+
+
     @Excel(name = "天牛数量")
     private Integer num;
+
+
+
+    @Excel(name = "其他天牛类型")
+    private String otherBeetleFront;
+
+
+    @Excel(name = "其他天牛数量")
+    private Integer otherNum;
+
+    @Excel(name = "药剂类型")
+    private String drugFront;
+
+
 //    @Excel(name = "雄虫数")
     private Integer maleNum;
 //    @Excel(name = "雌虫数")
@@ -40,13 +80,12 @@ public class DeviceMaintenance {
     @Excel(name = "用户名")
     private String username;
     private String name;
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
-   // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
-   @DateTimeFormat(pattern = "yyyy年MM月dd日")
 
-    private Date date;
 
-    @Excel(name = "日期")
+    //    @Excel(name = "其他天牛种类")
+    private Integer otherType;
+
+//    @Excel(name = "日期")
     private String realdate;
     @DateTimeFormat(pattern = "yyyy年MM月")
 //    @Excel(name = "年月")
@@ -57,15 +96,10 @@ public class DeviceMaintenance {
     @DateTimeFormat(pattern = "MM月")
 //    @Excel(name = "月")
     private Integer month;
-    @Excel(name = "经度")
-    private Double longitude;
-    @Excel(name = "纬度")
-    private Double latitude;
-    @Excel(name = "海拔")
-    private Double altitude;
+
 
     private String imageId;
-    @Excel(name = "药剂类型")
+
     private String drug;
     @Excel(name = "备注")
     private String remark;
@@ -76,25 +110,31 @@ public class DeviceMaintenance {
     private String city;
     private String area;
     private String town;
+
+
     private Integer workingContent;
 //    private Integer working_content;
     private Integer isactive;
     private Boolean reported;
 
-    private Integer otherType;
-    private Integer otherNum;
+
+
+
 
     private String cityname;
 
-//    @Excel(name = "区域")
-    private String customtown;
-//    @Excel(name = "编号")
-    private String customserial;
+
+
 
     private String customProject;
 
 
-    private String workcontentfront;
+
+
+
+
+
+
 
 
 
@@ -346,29 +386,7 @@ public class DeviceMaintenance {
         this.imgId = imgId;
     }
 
-    public String getWorkcontentfront() {
-        return workcontentfront;
-    }
 
-    public void setWorkcontentfront(String workcontentfront) {
-        this.workcontentfront = workcontentfront;
-    }
-
-    public String getCustomtown() {
-        return customtown;
-    }
-
-    public void setCustomtown(String customtown) {
-        this.customtown = customtown;
-    }
-
-    public String getCustomserial() {
-        return customserial;
-    }
-
-    public void setCustomserial(String customserial) {
-        this.customserial = customserial;
-    }
 
     public Date getDate() {
         return date;
@@ -392,5 +410,53 @@ public class DeviceMaintenance {
 
     public void setCustomProject(String customProject) {
         this.customProject = customProject;
+    }
+
+    public String getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(String scanId) {
+        this.scanId = scanId;
+    }
+
+    public String getWorkContentFront() {
+        return workContentFront;
+    }
+
+    public void setWorkContentFront(String workContentFront) {
+        this.workContentFront = workContentFront;
+    }
+
+    public String getOtherBeetleFront() {
+        return otherBeetleFront;
+    }
+
+    public void setOtherBeetleFront(String otherBeetleFront) {
+        this.otherBeetleFront = otherBeetleFront;
+    }
+
+    public String getDrugFront() {
+        return drugFront;
+    }
+
+    public void setDrugFront(String drugFront) {
+        this.drugFront = drugFront;
+    }
+
+    public String getCustomTown() {
+        return customTown;
+    }
+
+    public void setCustomTown(String customTown) {
+        this.customTown = customTown;
+    }
+
+    public String getCustomSerial() {
+        return customSerial;
+    }
+
+    public void setCustomSerial(String customSerial) {
+        this.customSerial = customSerial;
     }
 }

@@ -33,7 +33,7 @@ public interface Device_Injection_maintanceEntityMapper {
                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 
-    Device_Injection_maintanceEntity selectById2(BigInteger id);
+    Device_Injection_maintanceEntity selectById2(BigInteger scanId);
 
     int insert(Device_Injection_maintanceEntity record);
 

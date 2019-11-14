@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/natural")
@@ -196,31 +197,18 @@ public class NaturalEnemy {
     }
 
     @RequestMapping("/searchDetail")
-    public JSONObject searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam(required = false) String startDate,@RequestParam(required = false) String endDate,@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,@RequestParam String adcode){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        ParsePosition pos = new ParsePosition(0);
+    public Object searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam(required = false) String startDate,@RequestParam(required = false) String endDate,@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,@RequestParam String adcode){
 
-        String dateString = null;
 
         User user = userService.getUserByUserName(username);
 
 
 
-        if(endDate!=null) {
-            try {
-                Date currentTime_2 = formatter.parse(endDate, pos);
-
-                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
-
-                System.out.println(currentTime_2.getDate());
-
-                dateString = formatter.format(currentTime_2);
-
-                System.out.println(dateString);
-            }catch (Exception e){
-                dateString = null;
-            }
-
+        if (!Objects.equals(startDate, "")) {
+            startDate = startDate + " 00:00:00";
+        }
+        if (!Objects.equals(endDate, "")) {
+            endDate = endDate + " 23:59:59";
         }
 
         jsonObject.put("Res",true);
@@ -228,12 +216,13 @@ public class NaturalEnemy {
         System.out.println(limit);
         int luanKaNum = 0;
         int releasNum = 0;
-
-        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,limit,adcode);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
 
         if(user.getRole()==4){
-            List<Device_NaturalEnemies_maintanceEntity> allEntity = deviceNaturalEnemiesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,limit,adcode);
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,limit,adcode);
+            List<Device_NaturalEnemies_maintanceEntity> allEntity = deviceNaturalEnemiesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,limit,adcode);
 
             for (Device_NaturalEnemies_maintanceEntity dataEntity: allEntity) {
                 if(dataEntity.getPredatorstype().equals("卵卡")){
@@ -241,20 +230,37 @@ public class NaturalEnemy {
                 }
                 releasNum += dataEntity.getReleaseNum();
             }
-            
-            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntities);
-            jsonObject.put("DeviceNum",deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,1,100000,adcode));
-            jsonObject.put("LuanKaNum",luanKaNum);
-            jsonObject.put("releaseNum",releasNum);
+
+//            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntities);
+//            jsonObject.put("DeviceNum",deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1,100000,adcode));
+//            jsonObject.put("LuanKaNum",luanKaNum);
+//            jsonObject.put("releaseNum",releasNum);
         }else if(user.getRole()<=3){
-            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode()));
+            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,page*limit-limit,limit,user.getAdcode());
+//            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,page*limit-limit,limit,user.getAdcode()));
         }
 
-            jsonObject.put("total",naturalEnemyService.countAll(username,startDate,dateString,colName,searchText,adcode));
-        jsonObject.put("current",1);
-        System.out.println(jsonObject);
+//            jsonObject.put("total",naturalEnemyService.countAll(username,startDate,endDate,colName,searchText,adcode));
+//        jsonObject.put("current",1);
+//        System.out.println(jsonObject);
 
-        return jsonObject;
+        deviceNaturalEnemiesMaintanceEntities.get(0).setLuanKaNumSum(String.valueOf(luanKaNum));
+        deviceNaturalEnemiesMaintanceEntities.get(0).setReleaseNumSum(String.valueOf(releasNum));
+
+        deviceNaturalEnemiesMaintanceEntities.get(0).setDeviceNum(
+                deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(
+                        user.getParent(),startDate,endDate,colName,searchText,1,100000,adcode
+                )
+        );
+
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setData(deviceNaturalEnemiesMaintanceEntities);
+        return Result.ok(pageWrapper);
+
+//        return jsonObject;
     }
 
 //    @RequestMapping("/allDetail")

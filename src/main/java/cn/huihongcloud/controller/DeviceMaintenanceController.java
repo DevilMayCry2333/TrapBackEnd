@@ -118,14 +118,13 @@ public class DeviceMaintenanceController {
         //修改了一些
         
         DeviceMaintenance deviceMaintenance = new DeviceMaintenance();
-
-
         deviceMaintenance.setDeviceId(realDeviceId.getId());
+        deviceMaintenance.setScanId(realDeviceId.getScanId());
         deviceMaintenance.setMaleNum(maleNum);
         deviceMaintenance.setFemaleNum(femaleNum);
         deviceMaintenance.setNum(num);
-        deviceMaintenance.setLatitude(latitude);
-        deviceMaintenance.setLongitude(longitude);
+        deviceMaintenance.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
+        deviceMaintenance.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
         deviceMaintenance.setAltitude(altitude);
         deviceMaintenance.setDate(new Date());
         deviceMaintenance.setRemark(remark);
@@ -137,6 +136,12 @@ public class DeviceMaintenanceController {
         // 其他天牛数量与类型
         deviceMaintenance.setOtherNum(otherNum);
         deviceMaintenance.setOtherType(otherType);
+        deviceMaintenance.setCustomSerial(realDeviceId.getCustomSerial());
+        deviceMaintenance.setCustomTown(realDeviceId.getCustomTown());
+
+        deviceMaintenance.setWorkContentFront(deviceMapper.getTrapWorkContentId(String.valueOf(deviceMaintenance.getWorkingContent())).getName());
+        deviceMaintenance.setDrugFront(deviceMapper.getTrapInjectNameId(deviceMaintenance.getDrug()).getName());
+        deviceMaintenance.setOtherBeetleFront(deviceMapper.getTrapBeetleInfoId(String.valueOf(deviceMaintenance.getOtherType())).getName());
 
 
 
@@ -746,8 +751,20 @@ public Object deleteMaintenanceAbnormal(@RequestAttribute("username") String use
         User user = userService.getUserByUserName(username);
 
 
-        List<DeviceMaintenanceOutput> deviceMaintenanceList = ExcelImportUtil
-                .importExcel(multipartFile.getInputStream(), DeviceMaintenanceOutput.class, importParams);
+        List<DeviceMaintenance> deviceMaintenanceList = ExcelImportUtil
+                .importExcel(multipartFile.getInputStream(), DeviceMaintenance.class, importParams);
+
+        for (DeviceMaintenance dm:deviceMaintenanceList) {
+            dm.setDeviceId(deviceMapper.querySingalDeviceId(dm.getScanId()).getId());
+            System.out.println(dm.getOtherBeetleFront());
+            System.out.println(dm.getDrugFront());
+            System.out.println(dm.getWorkContentFront());
+
+            dm.setOtherType(deviceMapper.getTrapBeetleInfo(String.valueOf(dm.getOtherBeetleFront())).getId());
+            dm.setDrug(deviceMapper.getTrapInjectName(dm.getDrugFront()).getId().toString());
+            dm.setWorkingContent(deviceMapper.getTrapWorkContent(dm.getWorkContentFront()).getFvalue());
+
+        }
         //获取其他天 牛类型编号
         //ObjectMapper objectMapper = new ObjectMapper();
         //String s = objectMapper.writeValueAsString(deviceMaintenanceList);

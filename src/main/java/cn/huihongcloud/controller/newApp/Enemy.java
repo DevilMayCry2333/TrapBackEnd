@@ -102,8 +102,8 @@ public class Enemy {
 
         deviceNaturalEnemiesMaintanceEntity.setWorker(username);
         deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceNaturalEnemiesMaintanceEntity.setLongitude(longitude);
-        deviceNaturalEnemiesMaintanceEntity.setLatitude(latitude);
+        deviceNaturalEnemiesMaintanceEntity.setLongitude(String.format("%.6f",longitude));
+        deviceNaturalEnemiesMaintanceEntity.setLatitude(String.format("%.6f",latitude));
         deviceNaturalEnemiesMaintanceEntity.setAltitude(altitude);
         deviceNaturalEnemiesMaintanceEntity.setPrecision(accuracy);
         deviceNaturalEnemiesMaintanceEntity.setPredatorstype(predatorsTypeValue);
@@ -113,11 +113,8 @@ public class Enemy {
         deviceNaturalEnemiesMaintanceEntity.setReported(0);
 
         Date date= new Date(System.currentTimeMillis());
-        String pattern="yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat sdf= new SimpleDateFormat(pattern);
-        String datestr=sdf.format(date);// format  为格式化方法
         deviceNaturalEnemiesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
-        deviceNaturalEnemiesMaintanceEntity.setSubmitDate(datestr);
+        deviceNaturalEnemiesMaintanceEntity.setSubmitDate(date);
         deviceNaturalEnemiesMaintanceEntity.setRegion(realDeviceId.getArea());
         deviceNaturalEnemiesMaintanceEntity.setBatch(maxBatchNum + 1);
 

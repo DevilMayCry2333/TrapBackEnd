@@ -234,7 +234,7 @@ public class DeviceMaintenanceService {
     public void recordAbnormal(DeviceMaintenance deviceMaintenance) {
         DeviceMaintenanceAbnormalData deviceMaintenanceAbnormalData = new DeviceMaintenanceAbnormalData();
         BeanUtils.copyProperties(deviceMaintenance, deviceMaintenanceAbnormalData);
-        deviceMaintenanceAbnormalData.setIsactive(0);
+//        deviceMaintenanceAbnormalData.setIsactive(0);
         deviceMaintenanceAbnormalDataMapper.insert(deviceMaintenanceAbnormalData);
 
     }
@@ -337,7 +337,7 @@ public class DeviceMaintenanceService {
         return true;
     }
 
-    public void importExcel(User user,List<DeviceMaintenanceOutput> importList) {
+    public void importExcel(User user,List<DeviceMaintenance> importList) {
         Integer role = user.getRole();
 
         List<DeviceMaintenance> list = new ArrayList<>();
@@ -351,17 +351,17 @@ public class DeviceMaintenanceService {
         for (BeetleInfo beetleInfo: otherBeetleInfoList) {
             beetleMap.put(beetleInfo.getName(), beetleInfo.getId());
         }
-        for (DeviceMaintenanceOutput deviceMaintenanceOutput: importList) {
+        for (DeviceMaintenance deviceMaintenanceOutput: importList) {
             DeviceMaintenance deviceMaintenance = new DeviceMaintenance();
             BeanUtils.copyProperties(deviceMaintenanceOutput, deviceMaintenance);
-            if (beetleMap.containsKey(deviceMaintenanceOutput.getOtherTypeString())) {
-                deviceMaintenance.setOtherType(beetleMap.get(deviceMaintenanceOutput.getOtherTypeString()));
-
-            }
-
-            if (workingContentMap.containsKey(deviceMaintenanceOutput.getWorkingContentString())) {
-                deviceMaintenance.setWorkingContent(workingContentMap.get(deviceMaintenanceOutput.getWorkingContentString()));
-            }
+//            if (beetleMap.containsKey(deviceMaintenanceOutput.getOtherTypeString())) {
+//                deviceMaintenance.setOtherType(beetleMap.get(deviceMaintenanceOutput.getOtherTypeString()));
+//
+//            }
+//
+//            if (workingContentMap.containsKey(deviceMaintenanceOutput.getWorkingContentString())) {
+//                deviceMaintenance.setWorkingContent(workingContentMap.get(deviceMaintenanceOutput.getWorkingContentString()));
+//            }
             list.add(deviceMaintenance);
         }
         this.updateList(user,list);
@@ -381,6 +381,7 @@ public class DeviceMaintenanceService {
         for (DeviceMaintenance deviceMaintenance: list) {
             Boolean can=false;
             String deviceId=deviceMaintenance.getDeviceId();
+
             if(role==3){
                 String adcode=user.getAdcode();
                 if(deviceMapper.judgeDeviceUser(adcode,deviceId)>0){
@@ -396,6 +397,8 @@ public class DeviceMaintenanceService {
             }
             if(can){
                 Integer updatenum=deviceMaintenanceMapper.updateMaintenanceDataByDeviceIdAndBatch(deviceMaintenance);
+                System.out.println(updatenum);
+
                 if(updatenum==0){
                     int nums=deviceMaintenanceMapper.addMaintenanceData(deviceMaintenance);
                     if(nums>0) {

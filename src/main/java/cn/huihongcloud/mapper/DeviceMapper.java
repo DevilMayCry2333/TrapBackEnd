@@ -1,5 +1,7 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.*;
+import cn.huihongcloud.entity.beetle.BeetleInfo;
 import cn.huihongcloud.entity.device.Device;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -80,6 +82,32 @@ public interface DeviceMapper {
     int countDevice();
 
     List<Device> queryDeviceId(String scanId);
+
+    Device querySingalDeviceId(String scanId);
+
+    BeetleInfo getTrapBeetleInfo(String beetleName);
+
+    injectInfo getTrapInjectName(String injectName);
+
+    workContent getTrapWorkContent(String workContentName);
+
+
+    BeetleInfo getTrapBeetleInfoId(String beetleId);
+
+    injectInfo getTrapInjectNameId(String injectId);
+
+    workContent getTrapWorkContentId(String workContentId);
+
+    inject_WoodStatus getInjectWoodStatus(String id,String name,Integer appVal);
+
+    inject_WorkContent getInjectWorkContent(String id, String name, Integer appVal);
+
+    InjectName getInjectName(String id,String name,Integer appVal);
+
+
+
+
+
 
 
 }

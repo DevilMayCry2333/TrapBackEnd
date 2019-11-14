@@ -35,15 +35,15 @@
       region, submit_date, batch,
       longitude, latitude, work_content,
       injection_num, WoodStatus, Pic,
-      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,reported,inject_name,chest_diameter
+      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,inject_name,chest_diameter,inject_name_front,work_content_front,wood_status_front
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR},
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER},
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{workContent,jdbcType=VARCHAR},
       #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},
-      #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
+      #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanId,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
       ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR}
-      ,#{reported,jdbcType=INTEGER},#{injectName,jdbcType=VARCHAR},#{chestDiameter,jdbcType=DOUBLE})
+      ,#{injectName,jdbcType=VARCHAR},#{chestDiameter,jdbcType=DOUBLE},#{injectNameFront},#{workContentFront},#{woodStatusFront})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
     insert into Device_Injection_maintance
@@ -212,8 +212,13 @@
 
   <update id="updateRecordById">
     update device_injection_maintance set device_Id=#{deviceId},serial=#{serial},region=#{region},
-    submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
-    injection_num=#{injectionNum},worker=#{worker},remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus},inject_name = #{injectName},chest_diameter = #{chestDiameter} where id=#{id};
+    submit_date=#{submitDate},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
+    injection_num=#{injectionNum},worker=#{worker},
+    remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus},
+    inject_name = #{injectName},chest_diameter = #{chestDiameter},
+    inject_name_front = #{injectNameFront},work_content_front=#{workContentFront},
+    wood_status_front = #{woodStatusFront}
+    where scanId=#{scanId} and batch=#{batch};
   </update>
   <update id="updateRecordByFront">
     update device_injection_maintance t1 left join device t2 on t2.id = t1.device_Id
@@ -778,7 +783,7 @@
       select * from device_injection_maintance where device_Id = #{deviceId} order by batch desc;
     </select>
   <select id="selectById2" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-     select * from device_injection_maintance where id = #{id};
+     select * from device_injection_maintance where scanId = #{scanId};
   </select>
 
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
