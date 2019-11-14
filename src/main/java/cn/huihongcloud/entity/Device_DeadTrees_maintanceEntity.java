@@ -34,6 +34,10 @@ public class Device_DeadTrees_maintanceEntity {
 //    // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @Excel(name = "提交日期", format = "yyyy-MM-dd")
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "日期", format = "yyyy-MM-dd")
     private String submitDate;
     @Excel(name = "批次")
     private String batch;
