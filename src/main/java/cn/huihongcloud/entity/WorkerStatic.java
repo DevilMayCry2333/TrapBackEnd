@@ -9,6 +9,15 @@ public class WorkerStatic implements Comparable<WorkerStatic> {
     private int num3;
     private String realName;
     private int num4;
+    private int num5;
+
+    public int getNum5() {
+        return num5;
+    }
+
+    public void setNum5(int num5) {
+        this.num5 = num5;
+    }
 
     public int getNum4() {
         return num4;

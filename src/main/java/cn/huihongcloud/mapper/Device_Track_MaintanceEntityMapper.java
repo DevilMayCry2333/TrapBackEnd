@@ -39,6 +39,9 @@ public interface Device_Track_MaintanceEntityMapper {
 
     List<Device_Track_MaintanceEntity> getDeviceByManager(@Param("manager") String manager);
 
+    List<Device_Track_MaintanceEntity> getDeviceByManagerAndByLineName(@Param("manager") String manager,String lineName);
+
+
     List<Device_Track_MaintanceEntity> getDeviceByAdcode(@Param("adcode") String adcode);
 
 

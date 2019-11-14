@@ -51,8 +51,13 @@ public interface UserMapper {
 
     int reportDead(String customProject);
 
+    //修改用户状态
+    int reportUser(String username);
+
     int reportTrack(String projectAdmin);
 
+    //修改工人name和phone
+    int updateUserNameAndPhone(String username,String myName,String myPhone);
 
 
 

@@ -37,8 +37,6 @@ public class UserController {
     @RequestMapping(path = "auth_api/user", method = RequestMethod.PUT)
     @ApiOperation("更新用户信息")
     public Result updateUser(@RequestAttribute("username") String username, @RequestBody User user,
-
-
                              HttpServletResponse response) {
         /*
         //获取当前用户
@@ -109,7 +107,8 @@ public class UserController {
 
         User currentUser = userService.getUserByUserName(username);
         User userToUpdate = userService.getUserByUserName(user.getUsername());
-
+        System.out.printf("====================");
+        System.out.printf(userToUpdate.getName());
         if (currentUser.getRole() != 0 && currentUser.getRole() != 3 && currentUser.getRole() != 4) {
             return new Result.PermissionDenied();
         }

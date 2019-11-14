@@ -111,12 +111,14 @@ public class newStatic {
             double num1 = list.stream().mapToDouble(WorkerStatic::getNum1).sum();
             double num2 = list.stream().mapToDouble(WorkerStatic::getNum2).sum();
             double num3 = list.stream().mapToDouble(WorkerStatic::getNum3).sum();
+            double num5 = list.stream().mapToDouble(WorkerStatic::getNum5).sum();
             jsonObject.put("Num", num);
             jsonObject.put("Num1",num1);
             jsonObject.put("Num2",num2);
             jsonObject.put("Num3",num3);
             jsonObject.put("Avg", num / day);
             jsonObject.put("Avg1",num3 / day);
+            jsonObject.put("distinctId",num5);
             jsonArray.add(jsonObject);
         });
 
