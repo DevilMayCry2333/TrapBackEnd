@@ -27,14 +27,14 @@
       submit_date, batch, longitude, 
       latitude, woodDiameter, woodHeight, 
       woodVolume, KillMethod, Worker, 
-      Remarks, scanId, Pic, username, region
+      Remarks, scanId, Pic, username, region,scanId
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
       #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{latitude,jdbcType=VARCHAR}, #{wooddiameter,jdbcType=VARCHAR}, #{woodheight,jdbcType=VARCHAR}, 
       #{woodvolume,jdbcType=VARCHAR}, #{killmethod,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, 
       #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{pic,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}
-      #{region,jdbcType=VARCHAR})
+      #{region,jdbcType=VARCHAR},#{scanId})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity" >
     insert into Device_DeadTrees_maintance
@@ -156,7 +156,7 @@
     update device_deadtrees_maintance set device_Id=#{deviceId},serial=#{serial},submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},
     woodDiameter = #{wooddiameter},woodHeight = #{woodheight}, woodvolume = #{woodvolume},killmethod = #{killmethod},
     worker = #{worker},remarks=#{remarks},scanid=#{scanid},pic=#{pic},username=#{username},region=#{region},
-    altitude=#{altitude},accuracy=#{accuracy} where id = #{id}
+    altitude=#{altitude},accuracy=#{accuracy} where scanId = #{scanId} and batch = #{batch}
   </update>
     <update id="updateRecordByFront">
       update device_deadtrees_maintance t1 left join device t2 on t2.id = t1.device_Id
@@ -313,7 +313,7 @@
         AND project = '4'
   </select>
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
-      select * from device_deadtrees_maintance where id = #{id};
+      select * from device_deadtrees_maintance where scanId = #{scanId};
     </select>
     <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
       select * from device_deadtrees_maintance where device_Id = #{deviceId} order by batch desc;

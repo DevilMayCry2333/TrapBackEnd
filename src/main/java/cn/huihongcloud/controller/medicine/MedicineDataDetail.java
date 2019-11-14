@@ -9,6 +9,7 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Medicine_MaintanceEntityMapper;
 import cn.huihongcloud.service.DeviceMedicineMaintanceService;
 import cn.huihongcloud.service.UserService;
@@ -39,6 +40,8 @@ public class MedicineDataDetail {
     private DeviceMedicineMaintanceService deviceMedicineMaintanceService;
     @Autowired
     private Device_Medicine_MaintanceEntityMapper device_medicine_maintanceEntityMapper;
+    @Autowired
+    DeviceMapper deviceMapper;
 
     //JSONObject jsonObject = new JSONObject();
 
@@ -145,8 +148,9 @@ public class MedicineDataDetail {
         for (Device_Medicine_MaintanceEntity d:
                 deviceMaintenanceList) {
             System.out.println("natural");
-            System.out.println(d.getId());
-            Device_Medicine_MaintanceEntity tmp =  device_medicine_maintanceEntityMapper.selectById1(BigInteger.valueOf(d.getId()));
+
+            d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
+            Device_Medicine_MaintanceEntity tmp =  device_medicine_maintanceEntityMapper.selectById1(BigInteger.valueOf(d.getScanId()));
             if(tmp!=null){
                 device_medicine_maintanceEntityMapper.updateRecordById1(d);
             }else {

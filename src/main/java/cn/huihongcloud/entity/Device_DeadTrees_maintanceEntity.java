@@ -1,25 +1,34 @@
 package cn.huihongcloud.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 @Data
 public class Device_DeadTrees_maintanceEntity {
-    @Excel(name = "记录ID")
+
     private Long id;
     @Excel(name = "设备ID")
-    private Long deviceId;
+    private Long scanId;
     @Excel(name = "序列号")
     private String serial;
-    @Excel(name = "提交日期")
-    private String submitDate;
+    @Excel(name = "区域")
+    private String customTown;
+
+    private Long deviceId;
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    @Excel(name = "日期", format = "yyyy年MM月dd日")
+    private Date submitDate;
     @Excel(name = "批次")
     private String batch;
     @Excel(name = "经度")
-    private String longitude;
+    private Double longitude;
     @Excel(name = "纬度")
-    private String latitude;
+    private Double latitude;
     @Excel(name = "树木直径")
     private String wooddiameter;
     @Excel(name = "树木高度")
@@ -33,20 +42,18 @@ public class Device_DeadTrees_maintanceEntity {
     @Excel(name = "备注")
     private String remarks;
 //    @Excel(name = "二维码ID")
-    private Long scanid;
-    @Excel(name = "图片")
+
     private String pic;
     @Excel(name = "用户名")
     private String username;
 
     private String region;
-    @Excel(name = "海拔")
+
     private String altitude;
-    @Excel(name = "精度")
+
     private String accuracy;
 
-    @Excel(name = "区域")
-    private String customTown;
+
 
     private String town;
 
@@ -62,12 +69,16 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String pic3;
 
+    private String workDaySum;
+    private String woodVolumeSum;
+    private String woodNumSum;
+
 
     public Device_DeadTrees_maintanceEntity(Long id, Long deviceId, String serial,
-                                            String submitDate, String batch, String longitude,
-                                            String latitude, String wooddiameter, String woodheight,
+                                            Date submitDate, String batch, Double longitude,
+                                            Double latitude, String wooddiameter, String woodheight,
                                             String woodvolume, String killmethod, String worker, String remarks,
-                                            Long scanid, String pic, String username,String region,
+                                            Long scanId, String pic, String username,String region,
                                             String altitude,String accuracy,String town,int reported,String pic2,
                                             String pic3) {
         this.id = id;
@@ -83,7 +94,7 @@ public class Device_DeadTrees_maintanceEntity {
         this.killmethod = killmethod;
         this.worker = worker;
         this.remarks = remarks;
-        this.scanid = scanid;
+        this.scanId = scanId;
         this.pic = pic;
         this.username = username;
         this.region = region;
@@ -129,22 +140,6 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setBatch(String batch) {
         this.batch = batch == null ? null : batch.trim();
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
     }
 
     public String getWooddiameter() {
@@ -195,28 +190,12 @@ public class Device_DeadTrees_maintanceEntity {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
-    public Long getScanid() {
-        return scanid;
-    }
-
-    public void setScanid(Long scanid) {
-        this.scanid = scanid;
-    }
-
     public String getPic() {
         return pic;
     }
 
     public void setPic(String pic) {
         this.pic = pic == null ? null : pic.trim();
-    }
-
-    public String getSubmitDate() {
-        return submitDate;
-    }
-
-    public void setSubmitDate(String submitDate) {
-        this.submitDate = submitDate;
     }
 
     public String getUsername() {
@@ -313,5 +292,61 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setPic3(String pic3) {
         this.pic3 = pic3;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Long getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(Long scanId) {
+        this.scanId = scanId;
+    }
+
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
+    }
+
+    public String getWorkDaySum() {
+        return workDaySum;
+    }
+
+    public void setWorkDaySum(String workDaySum) {
+        this.workDaySum = workDaySum;
+    }
+
+    public String getWoodVolumeSum() {
+        return woodVolumeSum;
+    }
+
+    public void setWoodVolumeSum(String woodVolumeSum) {
+        this.woodVolumeSum = woodVolumeSum;
+    }
+
+    public String getWoodNumSum() {
+        return woodNumSum;
+    }
+
+    public void setWoodNumSum(String woodNumSum) {
+        this.woodNumSum = woodNumSum;
     }
 }
