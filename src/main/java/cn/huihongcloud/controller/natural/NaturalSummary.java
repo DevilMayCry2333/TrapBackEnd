@@ -5,6 +5,7 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.Device_NaturalEnemies_maintanceEntityMapper;
+import cn.huihongcloud.mapper.UserMapper;
 import cn.huihongcloud.service.NaturalEnemyService;
 import cn.huihongcloud.service.UserService;
 import com.github.pagehelper.Page;
@@ -25,6 +26,8 @@ public class NaturalSummary {
     UserService userService;
     @Autowired
     NaturalEnemyService naturalEnemyService;
+    @Autowired
+    UserMapper userMapper;
 
     @RequestMapping("/area")
     public Object getDeviceSummaryByArea(String adcode, int page, int limit,
@@ -38,7 +41,13 @@ public class NaturalSummary {
             endDate = endDate + " 23:59:59";
         }
 
-        List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByArea(adcode,startDate,endDate);
+        List<cn.huihongcloud.entity.summary.NaturalSummary>summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByArea(adcode,startDate,endDate);
+        for(int i=0;i<summaryEntities.size();i++){
+               summaryEntities.get(i).setTotalNaturalMannerByTown("花绒寄甲: " +""+deviceNaturalEnemiesMaintanceEntityMapper
+                       .queryNatualMannerOneBytownOne(adcode,summaryEntities.get(i).getName()).get(0).getNaturalMannerOneByTown()
+                       + "肿腿蜂：" +""+ deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneBytownTwo(adcode,summaryEntities.get(i).getName()).get(0).getNaturalMannerTwoByTown()
+                       + "卵卡: " + "" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneBytownThree(adcode,summaryEntities.get(i).getName()).get(0).getNaturalMannerThreeByTown());
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
@@ -59,6 +68,15 @@ public class NaturalSummary {
             endDate = endDate + " 23:59:59";
         }
         List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
+        List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
+        for (User user : userList){
+            System.out.printf("=================================");
+            System.out.println(user.getUsername());
+        }
+        for(int i=0;i<summaryEntities.size();i++){
+            summaryEntities.get(i).setTotalNaturalMannerByCustomProject("花绒寄甲:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerOneByCustomProject() + "  " + "肿腿蜂:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerTwoByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerTwoByCustomProject() +"  "+
+                    "卵卡:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerThreeByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerThreeByCustomProject());
+        }
         for (cn.huihongcloud.entity.summary.NaturalSummary ns:summaryEntities) {
             User user = userService.getUserByUserName(ns.getName());
             ns.setName(user.getParent());

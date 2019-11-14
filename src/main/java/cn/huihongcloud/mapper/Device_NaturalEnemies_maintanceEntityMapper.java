@@ -107,4 +107,12 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
     List<Device_NaturalEnemies_maintanceEntity> queryNatualMannerTwo(String user,String customTown);
     List<Device_NaturalEnemies_maintanceEntity> queryNatualMannerThree(String user,String customTown);
 
+    List<NaturalSummary> queryNatualMannerOneBytownOne(String adcode,String town);
+    List<NaturalSummary> queryNatualMannerOneBytownTwo(String adcode,String town);
+    List<NaturalSummary> queryNatualMannerOneBytownThree(String adcode,String town);
+
+    NaturalSummary queryNatualMannerOneByCustomProject(String adcode,String CustomProject);
+    NaturalSummary queryNatualMannerTwoByCustomProject(String adcode,String CustomProject);
+    NaturalSummary queryNatualMannerThreeByCustomProject(String adcode,String CustomProject);
+
 }

@@ -151,6 +151,22 @@ public class DeadTreeCutService {
     }
 
 
+    public List<Device_DeadTrees_maintanceEntity> getDeadTreesSummaryByCustomReigon(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
+        int role = user.getRole();
+
+//        if (role <= 3) {
+//            return deviceDeadTreesMaintanceEntityMapper.selectByCustomReigon(user.getUsername(), optionIndex, searchText, startDate, endDate,deadId);
+//        }else
+        if (role == 4) {
+            return deviceDeadTreesMaintanceEntityMapper.selectDeadTreesByCustomReigonCustomProject(user.getParent(), optionIndex, searchText, startDate, endDate);
+        }
+
+        /*else if(){
+
+        }*/
+        return null;
+
+    }
 
 
 

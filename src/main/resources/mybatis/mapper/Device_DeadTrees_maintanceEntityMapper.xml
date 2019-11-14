@@ -769,6 +769,49 @@
     where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '其他' and device_deadtrees_maintance.town=#{town}
     and device_deadtrees_maintance.town is not null
   </select>
+    <select id="selectDeadTreesByCustomReigonCustomProject"
+            resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+      select t2.CustomTown,t1.*,sum(t1.woodVolume) totalWoodVolume,count(t1.id) totalDeadId
+      from device_deadtrees_maintance t1 left join device t2 on t1.device_id = t2.id
+      where t2.CustomProject = #{customProject}
+      <if test="startDate != null and startDate != ''">
+        and t1.submit_date &gt;= #{startDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and t1.submit_date &lt;= #{endDate}
+      </if>
+      group by t2.CustomTown
+    </select>
+  <select id="queryDeadTreesMannerOne" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+    select count(KillMethod) deadTreesMannerOne
+    from device_deadtrees_maintance
+    left join device on device_deadtrees_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_deadtrees_maintance.KillMethod = '切片粉碎'
+  </select>
+  <select id="queryDeadTreesMannerTwo" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+     select count(KillMethod) deadTreesMannerTwo
+    from device_deadtrees_maintance
+    left join device on device_deadtrees_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_deadtrees_maintance.KillMethod = '套袋熏蒸'
+  </select>
+  <select id="queryDeadTreesMannerThree" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+     select count(KillMethod) deadTreesMannerThree
+    from device_deadtrees_maintance
+    left join device on device_deadtrees_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_deadtrees_maintance.KillMethod = '焚烧处理'
+  </select>
+  <select id="queryDeadTreesMannerFour" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+     select count(KillMethod) deadTreesMannerFour
+    from device_deadtrees_maintance
+    left join device on device_deadtrees_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_deadtrees_maintance.KillMethod = '铁丝罩网'
+  </select>
+  <select id="queryDeadTreesMannerFive" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
+     select count(KillMethod) deadTreesMannerFive
+    from device_deadtrees_maintance
+    left join device on device_deadtrees_maintance.device_Id = device.id
+    where CustomTown = #{customTown} and device_deadtrees_maintance.KillMethod = '其他'
+  </select>
 
 
 </mapper>

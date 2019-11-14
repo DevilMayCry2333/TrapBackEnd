@@ -209,6 +209,20 @@
     <update id="reportTrack">
         update device_track_maintance set reported = 1 where username = #{projectAdmin};
     </update>
+    <update id="reportUser">
+    </update>
+    <update id="updateUserNameAndPhone">
+        update user
+        <set>
+            <if test="user.phone!=null">
+                phone = #{myPhone},
+            </if>
+            <if test="user.name!=null">
+                phone = #{myName},
+            </if>
+        </set>
+        where username = #{username}
+    </update>
 
     <delete id="deleteUserByUsername">
         delete from user where username = #{username}

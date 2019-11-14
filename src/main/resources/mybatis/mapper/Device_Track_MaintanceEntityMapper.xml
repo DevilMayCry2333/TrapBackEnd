@@ -337,6 +337,10 @@
     </if>
 
   </select>
+  <select id="getDeviceByManagerAndByLineName"
+          resultType="cn.huihongcloud.entity.Device_Track_MaintanceEntity">
+    select * from device_track_maintance where username = #{manager} and LineName = #{lineName}
+  </select>
 
 
 </mapper>

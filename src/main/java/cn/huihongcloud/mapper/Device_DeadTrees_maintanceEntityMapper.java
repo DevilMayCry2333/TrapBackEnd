@@ -104,6 +104,16 @@ public interface Device_DeadTrees_maintanceEntityMapper {
     int updateMaintance(Device_DeadTrees_maintanceEntity dataEntity);
 
 
+    List<Device_DeadTrees_maintanceEntity> selectDeadTreesByCustomReigonCustomProject(@Param("customProject") String customProject, @Param("optionIndex") Integer optionIndex,
+                                                                            @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+
+
+    List<Device_DeadTrees_maintanceEntity> queryDeadTreesMannerOne(String user,String customTown);
+    List<Device_DeadTrees_maintanceEntity> queryDeadTreesMannerTwo(String user,String customTown);
+    List<Device_DeadTrees_maintanceEntity> queryDeadTreesMannerThree(String user,String customTown);
+    List<Device_DeadTrees_maintanceEntity> queryDeadTreesMannerFour(String user,String customTown);
+    List<Device_DeadTrees_maintanceEntity> queryDeadTreesMannerFive(String user,String customTown);
 
 
 

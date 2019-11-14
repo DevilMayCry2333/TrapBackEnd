@@ -907,4 +907,36 @@
     left join device on device_naturalenemies_maintance.device_Id = device.id
     where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '卵卡'
   </select>
+  <select id="queryNatualMannerOneBytownOne" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(PredatorsType) NaturalMannerOneByTown
+    from device_naturalenemies_maintance
+    left join device on device_naturalenemies_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲' and device_naturalenemies_maintance.town=#{town}
+  </select>
+  <select id="queryNatualMannerOneBytownTwo" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+        select count(PredatorsType) NaturalMannerTwoByTown
+    from device_naturalenemies_maintance
+    left join device on device_naturalenemies_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂' and device_naturalenemies_maintance.town=#{town}
+  </select>
+  <select id="queryNatualMannerOneBytownThree" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(PredatorsType) NaturalMannerThreeByTown
+    from device_naturalenemies_maintance
+    left join device on device_naturalenemies_maintance.device_Id = device.id
+    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.town=#{town}
+  </select>
+  <select id="queryNatualMannerOneByCustomProject" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+     select count(PredatorsType) naturalMannerOneByCustomProject from device_naturalenemies_maintance left join device on device.id = device_naturalenemies_maintance.device_Id
+    where device.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲' and device.CustomProject=#{CustomProject}
+  </select>
+  <select id="queryNatualMannerTwoByCustomProject" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(PredatorsType) naturalMannerTwoByCustomProject from device_naturalenemies_maintance left join device on device.id = device_naturalenemies_maintance.device_Id
+    where device.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂' and device.CustomProject=#{CustomProject}
+  </select>
+  <select id="queryNatualMannerThreeByCustomProject"
+          resultType="cn.huihongcloud.entity.summary.NaturalSummary">
+    select count(PredatorsType) naturalMannerThreeByCustomProject from device_naturalenemies_maintance left join device on device.id = device_naturalenemies_maintance.device_Id
+    where device.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device.CustomProject=#{CustomProject}
+  </select>
+
 </mapper>
