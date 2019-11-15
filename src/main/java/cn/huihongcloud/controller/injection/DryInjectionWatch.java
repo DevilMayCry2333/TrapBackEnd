@@ -376,7 +376,7 @@ public class DryInjectionWatch {
 
 
     @RequestMapping("/exportImage")
-    public Object exportImage(HttpServletResponse response,
+    public void exportImage(HttpServletResponse response,
                             String token,
                             @RequestParam(required = false) String startDate,
                             @RequestParam(required = false) String endDate,
@@ -385,9 +385,6 @@ public class DryInjectionWatch {
                             @RequestParam String username,
                             @RequestParam String adcode
     ) throws IOException {
-        response.setContentType("application/excel");
-        response.setHeader("Content-disposition",
-                "attachment; filename=" +  "export.xls");
 
         System.out.println(startDate);
         System.out.println(endDate);
@@ -411,7 +408,8 @@ public class DryInjectionWatch {
         for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + d.getScanId() + d.getSerial() + d.getCustomtown() + "Ser1");
         }
-        return "OK";
+        imageDownUtil.tarFile();
+        response.sendRedirect("http://106.15.200.245/img.tar");
 
     }
 
