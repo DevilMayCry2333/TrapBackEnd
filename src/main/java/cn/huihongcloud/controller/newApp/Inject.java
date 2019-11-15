@@ -167,7 +167,7 @@ public class Inject {
         Date date= new Date(System.currentTimeMillis());
 
         deviceInjectionMaintanceEntity.setSubmitDate(date);
-        deviceInjectionMaintanceEntity.setRegion(realDeviceId.getArea());
+        deviceInjectionMaintanceEntity.setRegion(realDeviceId.getCustomTown());
 
         //修改了一些
 
