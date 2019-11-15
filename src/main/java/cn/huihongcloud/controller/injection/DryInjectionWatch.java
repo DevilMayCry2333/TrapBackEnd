@@ -409,7 +409,7 @@ public class DryInjectionWatch {
         List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
         ImageDownUtil imageDownUtil = new ImageDownUtil();
         for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
-            imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/" + d.getScanId() + d.getSerial() + d.getCustomtown() + "Ser1");
+            imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + d.getScanId() + d.getSerial() + d.getCustomtown() + "Ser1");
         }
         return "OK";
 
