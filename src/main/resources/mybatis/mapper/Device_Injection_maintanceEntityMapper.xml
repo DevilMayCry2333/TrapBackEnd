@@ -200,8 +200,8 @@
   </insert>
 
     <insert id="addMaintanceData">
-        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,woodstatus,injection_num,Remarks,work_content,Pic,username,town,inject_name,chest_diameter)
-        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodstatus},#{injectionNum},#{remarks},#{workContent},#{pic},#{username},#{town},#{injectName},#{chestDiameter})
+        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,wood_status_front,injection_num,Remarks,work_content_front,Pic,username,town,inject_name_front,chest_diameter,scanId)
+        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodStatusFront},#{injectionNum},#{remarks},#{workContentFront},#{pic},#{username},#{town},#{injectNameFront},#{chestDiameter},#{scanId})
     </insert>
 
     <update id="reportData">

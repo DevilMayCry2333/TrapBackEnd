@@ -2,7 +2,7 @@ package cn.huihongcloud.controller.newApp;
 
 import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.controller.DeviceMaintenanceController;
-import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.*;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
@@ -137,6 +137,13 @@ public class Inject {
 
 
         System.out.println(user1.getUsername());
+        inject_WoodStatus injectWoodStatus = deviceMapper.getInjectWoodStatus(String.valueOf(WoodStatus),null,1);
+        inject_WorkContent workContent = deviceMapper.getInjectWorkContent(workingContent,null,1);
+        InjectName injectName1 = deviceMapper.getInjectName(injectName,null,1);
+
+        System.out.println(injectName1.getName());
+        System.out.println(workContent.getName());
+        System.out.println(injectWoodStatus.getName());
 
         deviceInjectionMaintanceEntity.setWorker(username);
         deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
@@ -144,15 +151,19 @@ public class Inject {
         deviceInjectionMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
         deviceInjectionMaintanceEntity.setAltitude(altitude);
         deviceInjectionMaintanceEntity.setDataPrecision(accuracy);
-        deviceInjectionMaintanceEntity.setWoodstatus(WoodStatus);
+//        deviceInjectionMaintanceEntity.setWoodstatus(WoodStatus);
+        deviceInjectionMaintanceEntity.setWoodStatusFront(injectWoodStatus.getName());
         deviceInjectionMaintanceEntity.setInjectionNum(injectNum);
         deviceInjectionMaintanceEntity.setRemarks(remarks);
-        deviceInjectionMaintanceEntity.setWorkContent(workingContent);
-        deviceInjectionMaintanceEntity.setInjectName(injectName);
+//        deviceInjectionMaintanceEntity.setWorkContent(workingContent);
+        deviceInjectionMaintanceEntity.setWorkContentFront(workContent.getName());
+//        deviceInjectionMaintanceEntity.setInjectName(injectName);
+        deviceInjectionMaintanceEntity.setInjectNameFront(injectName1.getName());
         deviceInjectionMaintanceEntity.setChestDiameter(chestDiameter);
         deviceInjectionMaintanceEntity.setUsername(user1.getUsername());
         deviceInjectionMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
+        deviceInjectionMaintanceEntity.setScanId(Long.valueOf(realDeviceId.getScanId()));
 
 
         BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
