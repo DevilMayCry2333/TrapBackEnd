@@ -15,6 +15,7 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper;
 import cn.huihongcloud.service.DryInjectionService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -372,6 +373,49 @@ public class DryInjectionWatch {
         workbook.write(response.getOutputStream());
 
     }
+
+
+    @RequestMapping("/exportImage")
+    public Object exportImage(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
+
+        List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
+            imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/" + d.getScanId() + d.getSerial() + d.getCustomtown() + "Ser1");
+        }
+        return "OK";
+
+    }
+
+
 
     //这里还没写完
     @RequestMapping("/importExcel")
