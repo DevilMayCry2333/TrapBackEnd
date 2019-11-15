@@ -35,7 +35,7 @@
         select * from device
         where manager = #{username}
         <if test="searchText!=null and searchText!=''">
-            where ${colName}=#{searchText}
+            and ${colName}=#{searchText}
         </if>
     </select>
 
@@ -43,7 +43,7 @@
         select count(id) from device
         where manager = #{username}
         <if test="searchText!=null and searchText!=''">
-                where ${colName}=#{searchText}
+        and ${colName}=#{searchText}
         </if>
     </select>
     <select id="getMaxDeviceId" resultType="cn.huihongcloud.entity.device.Device">

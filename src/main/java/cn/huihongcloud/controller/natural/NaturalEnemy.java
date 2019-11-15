@@ -16,6 +16,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.Device_NaturalEnemies_maintanceEntityMapper;
 import cn.huihongcloud.service.NaturalEnemyService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -369,6 +370,52 @@ public class NaturalEnemy {
         workbook.write(response.getOutputStream());
 
     }
+
+
+    @RequestMapping("/exportImage")
+    public void exportImage(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        response.setContentType("application/excel");
+        response.setHeader("Content-disposition",
+                "attachment; filename=" +  "export.xls");
+
+        User user = userService.getUserByUserName(username);
+
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
+
+        if(user.getRole()==4){
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        }else {
+            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+        }
+
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        for (Device_NaturalEnemies_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
+            try {
+                String pic = d.getPic();
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1");
+            }catch (Exception e){
+            }
+
+        }
+        imageDownUtil.tarFile();
+        response.sendRedirect("http://106.15.200.245/img.tar");
+
+    }
+
+
 
     @RequestMapping("/importExcel")
     public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
