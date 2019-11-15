@@ -264,7 +264,7 @@ public class DeadTreeCut {
 //            System.out.println(d.getArea());
 //
 //        }
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("枯死树", "枯死树"), Device_DeadTrees_maintanceEntity.class, deviceDeadTreesMaintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("枯死木防治管理情况明细表", "枯死木防治管理情况明细表"), Device_DeadTrees_maintanceEntity.class, deviceDeadTreesMaintanceEntities);
         workbook.write(response.getOutputStream());
 
     }

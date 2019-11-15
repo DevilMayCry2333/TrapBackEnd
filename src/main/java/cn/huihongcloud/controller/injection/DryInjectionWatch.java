@@ -368,7 +368,7 @@ public class DryInjectionWatch {
 //            System.out.println(d.getArea());
 //
 //        }
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("注干剂监测", "注干剂监测"), Device_Injection_maintanceEntity.class, deviceNaturalEnemiesMaintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("注干剂管理情况明细表", "注干剂管理情况明细表"), Device_Injection_maintanceEntity.class, deviceNaturalEnemiesMaintanceEntities);
         workbook.write(response.getOutputStream());
 
     }

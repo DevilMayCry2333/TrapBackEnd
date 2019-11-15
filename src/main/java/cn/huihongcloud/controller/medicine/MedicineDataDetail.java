@@ -133,7 +133,7 @@ public class MedicineDataDetail {
         }
 
         List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities  = device_medicine_maintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("药剂防治管理", "药剂防治管理"), Device_Medicine_MaintanceEntity.class, device_medicine_maintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("药剂防治管理情况明细表", "药剂防治管理情况明细表"), Device_Medicine_MaintanceEntity.class, device_medicine_maintanceEntities);
         workbook.write(response.getOutputStream());
     }
 
