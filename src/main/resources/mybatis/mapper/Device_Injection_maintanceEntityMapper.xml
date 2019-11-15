@@ -35,7 +35,7 @@
       region, submit_date, batch,
       longitude, latitude, work_content,
       injection_num, WoodStatus, Pic,
-      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,inject_name,chest_diameter,inject_name_front,work_content_front,wood_status_front
+      Worker, Remarks, scanId,username,altitude,dataPrecision,province,city,area,town,inject_name,chest_diameter,inject_name_front,work_content_front,wood_status_front,town
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR},
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER},
@@ -43,7 +43,7 @@
       #{injectionNum,jdbcType=INTEGER}, #{woodstatus,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR},
       #{worker,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{scanId,jdbcType=BIGINT}, #{username.jdbcType=VARCHAR}
       ,#{altitude,jdbcType=VARCHAR},#{dataPrecision,jdbcType=VARCHAR},#{province,jdbcType=VARCHAR},#{city,jdbcType=VARCHAR},#{area,jdbcType=VARCHAR},#{town,jdbcType=VARCHAR}
-      ,#{injectName,jdbcType=VARCHAR},#{chestDiameter,jdbcType=DOUBLE},#{injectNameFront},#{workContentFront},#{woodStatusFront})
+      ,#{injectName,jdbcType=VARCHAR},#{chestDiameter,jdbcType=DOUBLE},#{injectNameFront},#{workContentFront},#{woodStatusFront},#{town})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Injection_maintanceEntity" >
     insert into Device_Injection_maintance
@@ -217,7 +217,7 @@
     remarks=#{remarks},altitude=#{altitude},woodstatus=#{woodstatus},
     inject_name = #{injectName},chest_diameter = #{chestDiameter},
     inject_name_front = #{injectNameFront},work_content_front=#{workContentFront},
-    wood_status_front = #{woodStatusFront}
+    wood_status_front = #{woodStatusFront},town=#{town}
     where scanId=#{scanId} and batch=#{batch};
   </update>
   <update id="updateRecordByFront">

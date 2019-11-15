@@ -48,11 +48,11 @@ public class Device_Medicine_MaintanceEntity {
 
 
     private Integer reported;
-
+    @Excel(name = "管理员")
     private String username;
 
     private Double medicineQuaSum;
-
+    @Excel(name = "乡镇")
     private String town;
     private String dataPrecision;
     private Double areaFzSum;

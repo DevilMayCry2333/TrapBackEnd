@@ -54,7 +54,7 @@ public class Device_DeadTrees_maintanceEntity {
     private String accuracy;
 
 
-
+    @Excel(name = "乡镇")
     private String town;
 
     private int reported;

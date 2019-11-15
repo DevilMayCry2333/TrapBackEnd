@@ -79,6 +79,7 @@ public class DeviceMaintenance {
     private Integer femaleNum;
     @Excel(name = "用户名")
     private String username;
+
     private String name;
 
 

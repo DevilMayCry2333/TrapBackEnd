@@ -380,8 +380,8 @@ public class NaturalEnemy {
         for (Device_NaturalEnemies_maintanceEntity d:
              deviceMaintenanceList) {
             System.out.println("natural");
-            System.out.println(d.getId());
-            Device_NaturalEnemies_maintanceEntity tmp = deviceNaturalEnemiesMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
+            System.out.println(d.getScanId());
+            Device_NaturalEnemies_maintanceEntity tmp = deviceNaturalEnemiesMaintanceEntityMapper.selectById(String.valueOf(d.getScanId()));
             if(tmp!=null){
                 deviceNaturalEnemiesMaintanceEntityMapper.updateRecordById(d);
             }else {

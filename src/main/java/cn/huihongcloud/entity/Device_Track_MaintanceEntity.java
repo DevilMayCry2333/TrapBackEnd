@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class Device_Track_MaintanceEntity {
-    @Excel(name = "记录ID")
     private Long id;
     @Excel(name = "线路名称")
     private String linename;
@@ -39,6 +38,7 @@ public class Device_Track_MaintanceEntity {
     @Excel(name = "工人")
     private String worker;
     private String workingContent;
+    @Excel(name = "备注")
     private String remarks;
     private Long scanid;
     private Long deviceId;
