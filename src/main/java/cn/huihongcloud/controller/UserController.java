@@ -136,6 +136,7 @@ public class UserController {
         if (!userService.updateUser(user)) {
             return new Result.Failed();
         }
+
         return new Result.Ok();
     }
 
@@ -336,6 +337,8 @@ public class UserController {
         return currentUser;
     }
 
+
+
     @RequestMapping(path = "auth_api/user", method = RequestMethod.POST)
     @ApiOperation("增加用户")
     public Result addUser(@RequestAttribute("username") String username, @RequestBody User user,
@@ -409,6 +412,80 @@ public class UserController {
         return Result.ok();
     }
 
+
+
+//    @RequestMapping(path = "auth_api/user", method = RequestMethod.PUT)
+//    @ApiOperation("修改用户")
+//    public Result updateUser1(@RequestAttribute("username") String username, @RequestBody User user,
+//                          HttpServletResponse response) {
+//
+//        /*
+//        // 工人与业主只能在乡镇
+//        if (user.getRole() >= 2) {
+//            if (user.getTown() == null) {
+//                return Result.failed();
+//            }
+//        }
+//        // 获取当前用户
+//        User currentUser = userService.getUserByUserName(username);
+//        if (!userService.verifyUser(currentUser, user)) {
+//            return new Result.PermissionDenied();
+//        }
+//        // 为用户添加文字行政区
+//        String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
+//        user.setProvince(Dist[0]);
+//        user.setCity(Dist[1]);
+//        user.setArea(Dist[2]);
+////        user.setTown(Dist[3]);
+//        if (!userService.registerUser(user)) {
+//            return Result.failed();
+//        }
+//        */
+//
+//        System.out.println("===修改用户==");
+//        System.out.println(user.getAdcode());
+//        System.out.println(user.getUsername());
+//        String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
+//        user.setProvince(Dist[0]);
+//        user.setCity(Dist[1]);
+//        user.setArea(Dist[2]);
+//
+//        /*
+//            如果是工人，要写入parent信息
+//         */
+//        if (user.getRole() == 5) {
+//            user.setParent(username);
+//        } else if (user.getRole() == 4) { //如果是项目管理员，通过parent与项目工程对应
+//            User project = userService.getUserByUserName(user.getParent());
+//            project.setParent(user.getUsername());
+//            if (!userService.updateUser(project)) {
+//                return Result.failed();
+//            }
+//        }
+//
+//        System.out.println(user);
+//        if (userService.getUserByUserName(user.getUsername()) != null) {
+//            return Result.failed("用户名已存在");
+//        }
+//
+//        userService.registerUser(user);
+//        if (user.getRole() < 5) {
+//            List<User> users = userService.listUserByArea(user.getProvince(), user.getCity(), user.getArea());
+//            //禁用县级用户@Param("adcode") String adcode,@Param("area") String area
+//            // adcode = #{adcode} and and town = #{town}
+//            //userToForbid.getAdcode(),userToForbid.getArea()
+//            for (User myuser : users) {
+//                Integer roleType = myuser.getRole();
+//                Boolean active = myuser.getActive();
+//                if (user.getRole() == 5) {
+//                    userService.ActiveDevice(user.getUsername());
+//                }
+//            }
+//        }
+//
+//        return Result.ok();
+//    }
+
     @RequestMapping(path = "auth_api/user", method = RequestMethod.DELETE)
     @ApiOperation("删除用户")
     public Result deleteUserByUsername(@RequestAttribute("username") String currentUsername,
@@ -447,6 +524,18 @@ public class UserController {
         return new Result.Ok();
     }
 
+    @PutMapping("auth_api/user/nameAndPhone")
+    public Result changeNameAndPhone(@RequestAttribute("username") String username,
+                                 @RequestParam String name,
+                                 @RequestParam String phone) {
+        try {
+            userMapper.updateUserNameAndPhone(username,name,phone);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result.Failed();
+        }
+        return new Result.Ok();
+    }
     @GetMapping("auth_api/user_associated")
     @ApiOperation("获取已关联用户")
     public Object getAssociatedUser(String deviceId, int page, int limit) {
