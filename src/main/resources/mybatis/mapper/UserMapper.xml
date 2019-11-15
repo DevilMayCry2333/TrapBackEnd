@@ -212,13 +212,13 @@
     <update id="reportUser">
     </update>
     <update id="updateUserNameAndPhone">
-        update user
+        update `user`
         <set>
             <if test="user.phone!=null">
-                phone = #{myPhone},
+                phone = #{phone},
             </if>
             <if test="user.name!=null">
-                phone = #{myName},
+                `user`.name = #{name},
             </if>
         </set>
         where username = #{username}
