@@ -188,7 +188,7 @@
         <if test="wooddiameter != null and wooddiameter != ''">
           wooddiameter = #{wooddiameter},
         </if>
-        <if test="submitDate != null and submitDate != ''">
+        <if test="submitDate != null">
           submit_date = #{submitDate},
         </if>
         <if test="woodheight != null and woodheight != ''">
