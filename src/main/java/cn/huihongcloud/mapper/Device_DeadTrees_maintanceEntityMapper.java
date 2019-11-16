@@ -1,7 +1,6 @@
 package cn.huihongcloud.mapper;
 
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
-import cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.summary.DeadTreesSummary;
 import cn.huihongcloud.entity.summary.NaturalSummary;
