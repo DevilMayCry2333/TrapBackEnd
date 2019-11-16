@@ -865,7 +865,7 @@
   </select>
   <select id="selectNaturalByCustomReigonCustomProject"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-    select t2.CustomTown,t1.*,COUNT(t1.device_Id) releasePlace
+    select t1.*,COUNT(t1.device_Id) releasePlace
     from device_naturalenemies_maintance t1 left join device t2 on t1.device_Id = t2.id
     where t2.CustomProject = #{customProject}
     <if test="startDate != null and startDate != ''">
@@ -874,11 +874,11 @@
     <if test="endDate != null and endDate != ''">
       and t1.submit_date &lt;= #{endDate}
     </if>
-    group by t2.CustomTown
+    group by t1.CustomTown
   </select>
   <select id="selectNaturalByCustomReigon"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-    select t2.CustomTown,t1.*,COUNT(t1.device_Id) releasePlace
+    select t1.*,COUNT(t1.device_Id) releasePlace
     from device_naturalenemies_maintance t1 left join device t2 on t1.device_Id = t2.id
     <if test="startDate != null and startDate != ''">
       and t1.submit_date &gt;= #{startDate}
@@ -886,7 +886,7 @@
     <if test="endDate != null and endDate != ''">
       and t1.submit_date &lt;= #{endDate}
     </if>
-    group by t2.CustomTown
+    group by t1.CustomTown
   </select>
   <select id="queryNatualMannerOne" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select count(PredatorsType) natualMannerOne
