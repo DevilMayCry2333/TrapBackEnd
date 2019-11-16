@@ -142,6 +142,11 @@ public class DeadTrees {
         logger.info(killMethodsValue);
         logger.info(remarks);
 
+        if(username==null || deviceId==null || longitude==null || latitude==null|| altitude==null || accuracy==null || diameter==null || height==null || volume==null||killMethodsValue==null){
+            response.setStatus(500);
+            return response;
+        }
+
         System.out.println("image" + image);
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
