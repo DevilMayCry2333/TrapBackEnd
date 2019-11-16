@@ -168,7 +168,12 @@ public class DeadTrees {
         Date date= new Date(System.currentTimeMillis());
         deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
         deviceDeadTreesMaintanceEntity.setSubmitDate(date);
-        deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
+        deviceDeadTreesMaintanceEntity.setReported(0);
+        deviceDeadTreesMaintanceEntity.setProvince(realDeviceId.getProvince());
+        deviceDeadTreesMaintanceEntity.setCity(realDeviceId.getCity());
+        deviceDeadTreesMaintanceEntity.setArea(realDeviceId.getArea());
+        deviceDeadTreesMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
+
 
         BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
 

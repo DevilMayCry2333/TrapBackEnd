@@ -169,7 +169,6 @@ public class DeadTreeCut {
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
-
     }
 
     @RequestMapping(value = "/device_list", method = RequestMethod.GET)

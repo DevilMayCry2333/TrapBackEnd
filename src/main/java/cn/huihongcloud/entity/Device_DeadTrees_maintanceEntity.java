@@ -61,6 +61,8 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String province;
 
+    private String customProject;
+
     private String city;
 
     private String area;
@@ -460,5 +462,13 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getCustomProject() {
+        return customProject;
+    }
+
+    public void setCustomProject(String customProject) {
+        this.customProject = customProject;
     }
 }
