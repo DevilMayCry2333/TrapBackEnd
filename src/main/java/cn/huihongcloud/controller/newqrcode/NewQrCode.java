@@ -217,7 +217,7 @@ public class NewQrCode {
         System.out.println(username);
 
 
-        int allNum = newQrCodeMapper.countByCond(username,colName, searchText);
+//        int allNum = newQrCodeMapper.countByCond(username,colName, searchText);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         List<Device> deviceList = newQrCodeMapper.selectByConditions(username,colName, searchText,page*limit-limit,limit);
@@ -229,8 +229,8 @@ public class NewQrCode {
         System.out.println(pageObject.getTotal());
 
         pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(allNum);
-        pageWrapper.setTotalPage(allNum/limit);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalPage(pageObject.getPages());
         return pageWrapper;
     }
 

@@ -157,7 +157,7 @@ public class Trap {
 
 
         }
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("诱捕器管理", "诱捕器管理"), DeviceMaintenance.class, deviceNaturalEnemiesMaintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("诱捕器管理情况明细表", "诱捕器管理情况明细表"), DeviceMaintenance.class, deviceNaturalEnemiesMaintanceEntities);
         workbook.write(response.getOutputStream());
 
     }

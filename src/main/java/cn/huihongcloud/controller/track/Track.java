@@ -249,7 +249,7 @@ public class Track {
 //            System.out.println(d.getArea());
 //
 //        }
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("轨迹追踪", "轨迹追踪"), Device_Track_MaintanceEntity.class, deviceTrackMaintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("轨迹跟踪明细表", "轨迹跟踪明细表"), Device_Track_MaintanceEntity.class, deviceTrackMaintanceEntities);
         workbook.write(response.getOutputStream());
 
     }

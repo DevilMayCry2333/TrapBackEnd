@@ -116,8 +116,8 @@ public class DeadTrees {
                                      @RequestParam(value = "username", required = false) String targetUsername,
                                      // targetUsername为手动伪造维护信息用的
                                      String deviceId,
-                                     String longitude,
-                                     String latitude,
+                                     Double longitude,
+                                     Double latitude,
                                      String altitude,
                                      String accuracy,
                                      String diameter,
@@ -152,8 +152,9 @@ public class DeadTrees {
 
         deviceDeadTreesMaintanceEntity.setWorker(username);
         deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceDeadTreesMaintanceEntity.setLongitude(longitude);
-        deviceDeadTreesMaintanceEntity.setLatitude(latitude);
+        deviceDeadTreesMaintanceEntity.setScanId(Long.valueOf(realDeviceId.getScanId()));
+        deviceDeadTreesMaintanceEntity.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
+        deviceDeadTreesMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
         deviceDeadTreesMaintanceEntity.setAltitude(altitude);
         deviceDeadTreesMaintanceEntity.setAccuracy(accuracy);
         deviceDeadTreesMaintanceEntity.setWooddiameter(diameter);
@@ -162,16 +163,19 @@ public class DeadTrees {
         deviceDeadTreesMaintanceEntity.setKillmethod(killMethodsValue);
         deviceDeadTreesMaintanceEntity.setRemarks(remarks);
         deviceDeadTreesMaintanceEntity.setUsername(user1.getUsername());
+        deviceDeadTreesMaintanceEntity.setCustomTown(realDeviceId.getCustomTown());
 
         Date date= new Date(System.currentTimeMillis());
-        String pattern="yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat sdf= new SimpleDateFormat(pattern);
-        String datestr=sdf.format(date);// format  为格式化方法
         deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
-        deviceDeadTreesMaintanceEntity.setSubmitDate(datestr);
-        deviceDeadTreesMaintanceEntity.setRegion(realDeviceId.getArea());
+        deviceDeadTreesMaintanceEntity.setSubmitDate(date);
+        deviceDeadTreesMaintanceEntity.setReported(0);
+        deviceDeadTreesMaintanceEntity.setProvince(realDeviceId.getProvince());
+        deviceDeadTreesMaintanceEntity.setCity(realDeviceId.getCity());
+        deviceDeadTreesMaintanceEntity.setArea(realDeviceId.getArea());
+        deviceDeadTreesMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
 
-        BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+
+        BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
 
         deviceDeadTreesMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 

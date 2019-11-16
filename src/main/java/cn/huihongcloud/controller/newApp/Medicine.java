@@ -1,7 +1,6 @@
 package cn.huihongcloud.controller.newApp;
 
 import cn.huihongcloud.component.BDComponent;
-import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
@@ -68,8 +67,8 @@ public class Medicine {
                                      @RequestParam(value = "username", required = false) String targetUsername,
                                      // targetUsername为手动伪造维护信息用的
                                      String deviceId,
-                                     String longitude,
-                                     String latitude,
+                                     Double longitude,
+                                     Double latitude,
                                      String altitude,
                                      String accuracy,
                                      String medicinenameValue,          //要和前端名称一致
@@ -141,8 +140,10 @@ public class Medicine {
 //        deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
         deviceMedicineMaintanceEntity.setSubmitDate(new Date());
         deviceMedicineMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceMedicineMaintanceEntity.setLongitude(longitude);
-        deviceMedicineMaintanceEntity.setLatitude(latitude);
+        deviceMedicineMaintanceEntity.setScanId(Long.valueOf(realDeviceId.getScanId()));
+        deviceMedicineMaintanceEntity.setCustomTown(realDeviceId.getCustomTown());
+        deviceMedicineMaintanceEntity.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
+        deviceMedicineMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
         deviceMedicineMaintanceEntity.setAltitude(altitude);
         deviceMedicineMaintanceEntity.setDataPrecision(accuracy);
         deviceMedicineMaintanceEntity.setMedicineName(medicinenameValue);
@@ -156,7 +157,7 @@ public class Medicine {
         deviceMedicineMaintanceEntity.setReported(0);
         deviceMedicineMaintanceEntity.setWorker(username);
 
-        BDInfo bdInfo = mBDComponent.parseLocation(Double.parseDouble(latitude),Double.parseDouble(longitude));
+        BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
 //setTown
         deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 

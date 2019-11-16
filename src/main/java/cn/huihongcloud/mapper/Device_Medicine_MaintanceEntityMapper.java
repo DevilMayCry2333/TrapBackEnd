@@ -54,7 +54,7 @@ public interface Device_Medicine_MaintanceEntityMapper {
                                                                                @Param("condition") String condition, @Param("batch") String batch, @Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
 
 
-    Device_Medicine_MaintanceEntity selectById1(BigInteger id);
+    Device_Medicine_MaintanceEntity selectById1(BigInteger scanId);
 
 
 

@@ -10,26 +10,27 @@ import java.util.Date;
 @Data
 public class Device_Medicine_MaintanceEntity {
 
-    @Excel(name = "记录ID")
     private Long id;
     @Excel(name = "设备ID")
+    private Long scanId;
     private Long deviceId;
     @Excel(name = "编号")
     private String serial;
     @Excel(name = "所属区域")
+    private String customTown;
+
     private String region;
 
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-    // @DateTimeFormat(pattern = "yyyy年MM月dd日 HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "日期", format = "yyyy-MM-dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    @Excel(name = "日期", format = "yyyy年MM月dd日")
     private Date submitDate;
     @Excel(name = "批次")
     private Integer batch;
     @Excel(name = "经度")
-    private String longitude;
+    private Double longitude;
     @Excel(name = "纬度")
-    private String latitude;
+    private Double latitude;
     @Excel(name = "药剂质量")
     private String medicineQua;
     @Excel(name = "药剂名称")
@@ -45,16 +46,13 @@ public class Device_Medicine_MaintanceEntity {
 
     private String pic;
 
-    private String customTown;
 
-    @Excel(name = "是否上报")
     private Integer reported;
-
     @Excel(name = "管理员")
     private String username;
 
     private Double medicineQuaSum;
-    private Long scanId;
+    @Excel(name = "乡镇")
     private String town;
     private String dataPrecision;
     private Double areaFzSum;
@@ -113,33 +111,29 @@ public class Device_Medicine_MaintanceEntity {
     private Double totalAreaFzNum;
     private String altitude;
 
-    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, String longitude, String latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Integer reported, String username,String town,String altitude,Long scanId) {
-        this.id = id;
-        this.deviceId = deviceId;
-        this.serial = serial;
-        this.region = region;
-        this.submitDate = submitDate;
-        this.batch = batch;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.medicineQua = medicineQua;
-        this.medicineName = medicineName;
-        this.areaFz = areaFz;
-        this.workContent = workContent;
-        this.worker = worker;
-        this.remarks = remarks;
-        this.pic = pic;
-        this.customTown = customTown;
-        this.reported = reported;
-        this.username = username;
-        this.town = town;
-        this.altitude = altitude;
-        this.scanId = scanId;
-    }
-
-    public Device_Medicine_MaintanceEntity() {
-        super();
-    }
+//    public Device_Medicine_MaintanceEntity(Long id, Long deviceId, String serial, String region, Date submitDate, Integer batch, Double longitude, Double latitude, String medicineQua, String medicineName, Double areaFz, String workContent, String worker, String remarks, String pic, String customTown, Integer reported, String username,String town,String altitude,Long scanId) {
+//        this.id = id;
+//        this.deviceId = deviceId;
+//        this.serial = serial;
+//        this.region = region;
+//        this.submitDate = submitDate;
+//        this.batch = batch;
+//        this.longitude = longitude;
+//        this.latitude = latitude;
+//        this.medicineQua = medicineQua;
+//        this.medicineName = medicineName;
+//        this.areaFz = areaFz;
+//        this.workContent = workContent;
+//        this.worker = worker;
+//        this.remarks = remarks;
+//        this.pic = pic;
+//        this.customTown = customTown;
+//        this.reported = reported;
+//        this.username = username;
+//        this.town = town;
+//        this.altitude = altitude;
+//        this.scanId = scanId;
+//    }
 
     public Long getId() {
         return id;
@@ -189,20 +183,20 @@ public class Device_Medicine_MaintanceEntity {
         this.batch = batch;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public String getMedicineQua() {

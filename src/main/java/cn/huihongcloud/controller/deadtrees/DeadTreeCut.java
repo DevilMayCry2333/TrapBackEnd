@@ -10,6 +10,7 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
 import cn.huihongcloud.service.DeadTreeCutService;
 import cn.huihongcloud.service.UserService;
@@ -29,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/deadTree")
@@ -39,6 +41,8 @@ public class DeadTreeCut {
     UserService userService;
     @Autowired
     Device_DeadTrees_maintanceEntityMapper deviceDeadTreesMaintanceEntityMapper;
+    @Autowired
+    DeviceMapper deviceMapper;
 
 
     JSONObject jsonObject = new JSONObject();
@@ -87,75 +91,74 @@ public class DeadTreeCut {
     @RequestMapping("/searchDetail")
     public Object searchDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username,@RequestParam(required = false) String startDate,@RequestParam(required = false) String endDate,@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,@RequestParam String adcode){
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        ParsePosition pos = new ParsePosition(0);
         User user = userService.getUserByUserName(username);
 
 
-        String dateString = null;
-
-        if(endDate!=null) {
-            try {
-                Date currentTime_2 = formatter.parse(endDate, pos);
-
-                currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
-
-                System.out.println(currentTime_2.getDate());
-
-                dateString = formatter.format(currentTime_2);
-
-                System.out.println(dateString);
-            }catch (Exception e){
-                dateString = null;
-            }
-
+        System.out.println(username);
+        if (!Objects.equals(startDate, "")) {
+            startDate = startDate + " 00:00:00";
+        }
+        if (!Objects.equals(endDate, "")) {
+            endDate = endDate + " 23:59:59";
         }
 
 
-        jsonObject.put("Res",true);
-        System.out.println(page);
-        System.out.println(limit);
+//        jsonObject.put("Res",true);
+//        System.out.println(page);
+//        System.out.println(limit);
 
         double woodVolume = 0;
 
+        List<Device_DeadTrees_maintanceEntity> dataEntity = null;
         int woodNum = 0;
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
 
         if(user.getRole()==4){
-            List<Device_DeadTrees_maintanceEntity> dataEntity = deviceDeadTreesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode);
+            dataEntity = deviceDeadTreesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode);
             for (Device_DeadTrees_maintanceEntity data:dataEntity) {
                 woodVolume += Double.parseDouble(data.getWoodvolume());
                 System.out.println(woodVolume);
             }
             woodNum = dataEntity.size();
-
-            jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
-            jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
-            jsonObject.put("woodVolume",woodVolume);
-            jsonObject.put("woodNum",woodNum);
-            jsonObject.put("total",deadTreeCutService.countAll(username,startDate,dateString,colName,searchText));
+            dataEntity.get(0).setWoodNumSum(String.valueOf(woodNum));
+            dataEntity.get(0).setWorkDaySum(String.valueOf(deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,page*limit,adcode)));
+            dataEntity.get(0).setWoodVolumeSum(String.valueOf(woodVolume));
+//            jsonObject.put("Data",deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+//            jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearch(user.getParent(),startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
+//            jsonObject.put("woodVolume",woodVolume);
+//            jsonObject.put("woodNum",woodNum);
+//            jsonObject.put("total",deadTreeCutService.countAll(username,startDate,dateString,colName,searchText));
 
 
         }else if(user.getRole()<=3){
             double woodVolume1 = 0;
             int woodNum1 = 0;
-            List<Device_DeadTrees_maintanceEntity> dataEntity1 = deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode());
+            dataEntity = deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,page*limit-limit,page*limit,user.getAdcode());
 
-            for (Device_DeadTrees_maintanceEntity data1:dataEntity1) {
+            for (Device_DeadTrees_maintanceEntity data1:dataEntity) {
                 woodVolume1 += Double.parseDouble(data1.getWoodvolume());
                 System.out.println(woodVolume1);
             }
-            woodNum1 = dataEntity1.size();
-            jsonObject.put("woodVolume",woodVolume1);
-            jsonObject.put("woodNum",woodNum1);
-            jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearchAndAdcode(user.getAdcode(),startDate,dateString,colName,searchText,page*limit-limit,page*limit));
-            jsonObject.put("Data",deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
-            jsonObject.put("total",deviceDeadTreesMaintanceEntityMapper.countAllByArea(user.getAdcode(),startDate,dateString,colName,searchText));
+            woodNum1 = dataEntity.size();
+            dataEntity.get(0).setWoodNumSum(String.valueOf(woodNum1));
+            dataEntity.get(0).setWorkDaySum(String.valueOf(deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearchAndAdcode(user.getAdcode(),startDate,endDate,colName,searchText,page*limit-limit,page*limit)));
+            dataEntity.get(0).setWoodVolumeSum(String.valueOf(woodVolume1));
+
+//            jsonObject.put("woodVolume",woodVolume1);
+//            jsonObject.put("woodNum",woodNum1);
+//            jsonObject.put("WorkDay",deviceDeadTreesMaintanceEntityMapper.selectWorkDayByDateAndColSearchAndAdcode(user.getAdcode(),startDate,dateString,colName,searchText,page*limit-limit,page*limit));
+//            jsonObject.put("Data",deviceDeadTreesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,page*limit,user.getAdcode()));
+//            jsonObject.put("total",deviceDeadTreesMaintanceEntityMapper.countAllByArea(user.getAdcode(),startDate,dateString,colName,searchText));
         }
 
-        jsonObject.put("current",page);
-        System.out.println(jsonObject);
-
-        return jsonObject;
+//        jsonObject.put("current",page);
+//        System.out.println(jsonObject);
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setData(dataEntity);
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        return pageWrapper;
 
     }
 
@@ -166,7 +169,6 @@ public class DeadTreeCut {
         jsonObject.put("current",page);
         jsonObject.put("Res",true);
         return jsonObject;
-
     }
 
     @RequestMapping(value = "/device_list", method = RequestMethod.GET)
@@ -261,7 +263,7 @@ public class DeadTreeCut {
 //            System.out.println(d.getArea());
 //
 //        }
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("枯死树", "枯死树"), Device_DeadTrees_maintanceEntity.class, deviceDeadTreesMaintanceEntities);
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("枯死木防治管理情况明细表", "枯死木防治管理情况明细表"), Device_DeadTrees_maintanceEntity.class, deviceDeadTreesMaintanceEntities);
         workbook.write(response.getOutputStream());
 
     }
@@ -276,8 +278,9 @@ public class DeadTreeCut {
         for (Device_DeadTrees_maintanceEntity d:
                 deviceDeadTreesMaintanceEntities) {
             System.out.println("natural");
-            System.out.println(d.getId());
-            Device_DeadTrees_maintanceEntity tmp = deviceDeadTreesMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
+            System.out.println(d.getScanId());
+            d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
+            Device_DeadTrees_maintanceEntity tmp = deviceDeadTreesMaintanceEntityMapper.selectById(String.valueOf(d.getScanId()));
             if(tmp!=null){
                 deviceDeadTreesMaintanceEntityMapper.updateRecordById(d);
             }else {

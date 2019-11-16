@@ -55,6 +55,26 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private Integer deviceNum;
 
+    @Excel(name = "用户名")
+    private String username;
+    private Integer reported;
+    private String altitude;
+
+
+    private String startDate;
+    private String endDate;
+
+    private String province;
+
+    private String city;
+
+    private String area;
+    @Excel(name = "乡镇")
+    private String town;
+
+    private String precision;
+
+
     public String getNatualMannerTotal() {
         return natualMannerTotal;
     }
@@ -134,23 +154,7 @@ public class Device_NaturalEnemies_maintanceEntity {
     }
 
 
-    private String username;
-    private Integer reported;
-    private String altitude;
 
-
-    private String startDate;
-    private String endDate;
-
-    private String province;
-
-    private String city;
-
-    private String area;
-
-    private String town;
-
-    private String precision;
 
 
 

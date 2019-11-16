@@ -70,8 +70,7 @@ public class Device_Injection_maintanceEntity {
     @Excel(name = "备注")
     private String remarks;
 
-
-
+    @Excel(name = "管理员")
     private String username;
 
 
@@ -85,6 +84,7 @@ public class Device_Injection_maintanceEntity {
 
     private String area;
 
+    @Excel(name = "乡镇")
     private String town;
 
 
