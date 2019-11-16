@@ -274,12 +274,19 @@ public class DeadTreeCut {
         importParams.setHeadRows(1);
         List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = ExcelImportUtil
                 .importExcel(multipartFile.getInputStream(), Device_DeadTrees_maintanceEntity.class, importParams);
+        Device device = deviceMapper.getDeviceByScanId(String.valueOf(deviceDeadTreesMaintanceEntities.get(0).getScanId()));
+
         for (Device_DeadTrees_maintanceEntity d:
                 deviceDeadTreesMaintanceEntities) {
             System.out.println("natural");
             System.out.println(d.getScanId());
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
             Device_DeadTrees_maintanceEntity tmp = deviceDeadTreesMaintanceEntityMapper.selectById(String.valueOf(d.getScanId()));
+            d.setCustomProject(device.getCustomProject());
+            d.setProvince(device.getProvince());
+            d.setCity(device.getCity());
+            d.setArea(device.getArea());
+
             if(tmp!=null){
                 deviceDeadTreesMaintanceEntityMapper.updateRecordById(d);
             }else {

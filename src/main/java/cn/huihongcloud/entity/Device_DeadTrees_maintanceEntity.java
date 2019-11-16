@@ -272,13 +272,6 @@ public class Device_DeadTrees_maintanceEntity {
         this.killmethod = killmethod == null ? null : killmethod.trim();
     }
 
-    public String getWorker() {
-        return worker;
-    }
-
-    public void setWorker(String worker) {
-        this.worker = worker == null ? null : worker.trim();
-    }
 
     public String getRemarks() {
         return remarks;
@@ -470,5 +463,13 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setCustomProject(String customProject) {
         this.customProject = customProject;
+    }
+
+    public String getWorker() {
+        return worker;
+    }
+
+    public void setWorker(String worker) {
+        this.worker = worker;
     }
 }

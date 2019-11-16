@@ -27,13 +27,14 @@
       submit_date, batch, longitude, 
       latitude, woodDiameter, woodHeight, 
       woodVolume, KillMethod, Worker, 
-      Remarks, scanId,username,customTown,town,Worker,reported
+      Remarks, scanId,username,customTown,town,reported,customProject,province,city,area
       )
     values (#{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR},
       #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{latitude,jdbcType=VARCHAR}, #{wooddiameter,jdbcType=VARCHAR}, #{woodheight,jdbcType=VARCHAR}, 
       #{woodvolume,jdbcType=VARCHAR}, #{killmethod,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR}, #{scanId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},#{customTown},#{town},#{Worker},0)
+      #{remarks,jdbcType=VARCHAR}, #{scanId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},#{customTown},#{town},0
+      ,#{customProject},#{province},#{city},#{area})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity" >
     insert into Device_DeadTrees_maintance
@@ -152,10 +153,14 @@
       values (#{pic},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town})
     </insert>
   <update id="updateRecordById">
-    update device_deadtrees_maintance set device_Id=#{deviceId},serial=#{serial},submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},
-    woodDiameter = #{wooddiameter},woodHeight = #{woodheight}, woodvolume = #{woodvolume},killmethod = #{killmethod},
+    update device_deadtrees_maintance set
+    device_Id=#{deviceId},serial=#{serial},
+    submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},
+    woodDiameter = #{wooddiameter},woodHeight = #{woodheight},
+    woodvolume = #{woodvolume},killmethod = #{killmethod},
     Worker = #{worker},remarks=#{remarks},scanId=#{scanId},username=#{username},customTown=#{customTown},
-    altitude=#{altitude},accuracy=#{accuracy},customTown=#{customTown},town=#{town},reported=0 where scanId = #{scanId} and batch = #{batch}
+    altitude=#{altitude},accuracy=#{accuracy},town=#{town},
+    reported=0,province=#{province},customProject=#{customProject},city=#{city},area=#{area} where scanId = #{scanId} and batch = #{batch}
   </update>
     <update id="updateRecordByFront">
       update device_deadtrees_maintance t1 left join device t2 on t2.id = t1.device_Id
