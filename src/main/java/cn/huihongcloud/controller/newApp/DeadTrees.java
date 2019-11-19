@@ -79,7 +79,7 @@ public class DeadTrees {
 
         deviceDeadTreesMaintanceEntity.setWorker(username);
         deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceDeadTreesMaintanceEntity.setScanId(Long.valueOf(realDeviceId.getScanId()));
+        deviceDeadTreesMaintanceEntity.setScanId(Long.valueOf(deviceId));
         deviceDeadTreesMaintanceEntity.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
         deviceDeadTreesMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
         deviceDeadTreesMaintanceEntity.setAltitude(altitude);
