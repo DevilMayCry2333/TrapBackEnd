@@ -448,7 +448,7 @@ public class DeviceService {
      * @param username
      * @return
      */
-    public String saveImg2(MultipartFile multipartFile, String scanId, String username,
+    public String saveImg2(MultipartFile multipartFile, String deviceId, String username,
                            int current,Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity,
                            int project,
                            String userParent,
@@ -479,20 +479,21 @@ public class DeviceService {
             multipartFile.transferTo(outfile);
             DeviceImg deviceImg = new DeviceImg();
             deviceImg.setDate(new Date());
-            deviceImg.setDeviceId(scanId);
+            deviceImg.setDeviceId(deviceId);
             deviceImg.setImgName(imgName);
             deviceImg.setUsername(username);
+            deviceImg.setCurrentPic(String.valueOf(current));
             if(current==1){
                 deviceDeadTreesMaintanceEntity.setPic(imgName);
                 deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }else if(current==2){
-                deviceDeadTreesMaintanceEntityMapper.updatePic(scanId,"Pic2",imgName,userParent,maxBatch);
+                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic2",imgName,userParent,maxBatch);
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }else if(current==3){
-                deviceDeadTreesMaintanceEntityMapper.updatePic(scanId,"Pic3",imgName,userParent,maxBatch);
+                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic3",imgName,userParent,maxBatch);
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }
-            deviceImgMapper.insert(deviceImg);
+            deviceImgMapper.insert2(deviceImg);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
