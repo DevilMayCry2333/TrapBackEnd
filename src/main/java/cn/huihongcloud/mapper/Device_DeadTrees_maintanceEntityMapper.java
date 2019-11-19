@@ -79,6 +79,13 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
     int addMaintance(Device_DeadTrees_maintanceEntity dataEnity);
 
+    int addMaintance2(Device_DeadTrees_maintanceEntity dataEnity);
+
+    int addMaintance3(Device_DeadTrees_maintanceEntity dataEnity);
+
+    int addMaintance4(Device_DeadTrees_maintanceEntity dataEnity);
+
+
     Device_DeadTrees_maintanceEntity selectById(String scanId);
 
     int updateRecordById(Device_DeadTrees_maintanceEntity dataEnity);

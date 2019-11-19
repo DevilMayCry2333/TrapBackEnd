@@ -149,9 +149,24 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_DeadTrees_maintance (Pic,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town)
-      values (#{pic},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town})
+      insert into Device_DeadTrees_maintance (Pic,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town,customTown,customProject,province,city,area)
+      values (#{pic},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town},#{customTown},#{customProject},#{province},#{city},#{area})
     </insert>
+  <insert id="addMaintance2">
+insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town)
+      values (#{pic},#{pic2},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town})
+  </insert>
+  <insert id="addMaintance3">
+    insert into Device_DeadTrees_maintance (Pic,Pic2,Pic3,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town)
+      values (#{pic},#{pic2},#{pic3},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town})
+  </insert>
+
+  <insert id="addMaintance4">
+    insert into Device_DeadTrees_maintance (serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town)
+      values (#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town})
+  </insert>
+
+
   <update id="updateRecordById">
     update device_deadtrees_maintance set
     device_Id=#{deviceId},serial=#{serial},
@@ -223,6 +238,15 @@
     update device_deadtrees_maintance set
     <if test="remarks!=null and remarks != '' ">
       Remarks = #{remarks},
+    </if>
+    <if test="pic!=null and pic != '' ">
+      Pic = #{pic},
+    </if>
+    <if test="pic2!=null and pic2 != '' ">
+      Pic2 = #{pic2},
+    </if>
+    <if test="pic3!=null and pic3 != '' ">
+      Pic3 = #{pic3},
     </if>
     serial=#{serial},submit_date=#{submitDate},
     username=#{username},Worker=#{worker},longitude=#{longitude},latitude=#{latitude},
