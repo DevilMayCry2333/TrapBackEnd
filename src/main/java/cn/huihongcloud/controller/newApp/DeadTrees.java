@@ -123,7 +123,7 @@ public class DeadTrees {
         String imgId = null;
 
         if (image!=null) {
-            imgId = deviceService.saveImg2(image, deviceId, username,current,deviceDeadTreesMaintanceEntity,4,user.getParent(),maxIdNum);
+            imgId = deviceService.saveImg2(image, realDevice.getId(),deviceId, username,current,deviceDeadTreesMaintanceEntity,4,user.getParent(),maxIdNum);
 //            if(current==1) {
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
 ////                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic",imgId,user.getParent(),maxBatch);

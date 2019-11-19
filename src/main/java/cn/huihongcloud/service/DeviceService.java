@@ -448,7 +448,7 @@ public class DeviceService {
      * @param username
      * @return
      */
-    public String saveImg2(MultipartFile multipartFile, String deviceId, String username,
+    public String saveImg2(MultipartFile multipartFile, String deviceId, String scanId,String username,
                            int current,Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity,
                            int project,
                            String userParent,
@@ -480,6 +480,7 @@ public class DeviceService {
             DeviceImg deviceImg = new DeviceImg();
             deviceImg.setDate(new Date());
             deviceImg.setDeviceId(deviceId);
+            deviceImg.setScanId(scanId);
             deviceImg.setImgName(imgName);
             deviceImg.setUsername(username);
             deviceImg.setCurrentPic(String.valueOf(current));

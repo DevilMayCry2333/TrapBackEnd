@@ -18,9 +18,9 @@
     </insert>
     <insert id="insert2">
                 insert into device_img
-        (img_name, username, device_id, date,current_pic)
+        (img_name, username, device_id, date,current_pic,scanId)
         values
-        (#{imgName}, #{username}, #{deviceId}, #{date},#{currentPic})
+        (#{imgName}, #{username}, #{deviceId}, #{date},#{currentPic},#{scanId})
     </insert>
 
     <select id="selectByDeviceId" resultMap="DeviceImg">
