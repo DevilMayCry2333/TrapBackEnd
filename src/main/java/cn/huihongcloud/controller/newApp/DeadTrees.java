@@ -121,7 +121,7 @@ public class DeadTrees {
 
 
         String imgId = null;
-        
+
         if (image!=null) {
             imgId = deviceService.saveImg2(image, realDevice.getId(), username,current,deviceDeadTreesMaintanceEntity,4,user.getParent(),maxIdNum);
 //            if(current==1) {
