@@ -105,7 +105,7 @@ public interface Device_DeadTrees_maintanceEntityMapper {
                                                                                    @Param("condition") String condition,@Param("batch") String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("reported") Boolean reported);
     List<Device_DeadTrees_maintanceEntity> getMaintenanceDataByManager1(@Param("adcode") String adcode, @Param("town") String town,
                                                                              @Param("condition") String condition,@Param("batch")String batch,@Param("searchtown") String searchtown, @Param("date") String date, @Param("endDate") String endDate, @Param("manager") String manager);
-    int updatePic(String deviceId,String colName,String text,String username,int maxBatch);
+    int updatePic(String scanId,String colName,String text,String username,int maxBatch);
 
     int updateMaintance(Device_DeadTrees_maintanceEntity dataEntity);
 
