@@ -149,8 +149,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_DeadTrees_maintance (Pic,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town,customTown,customProject,province,city,area)
-      values (#{pic},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town},#{customTown},#{customProject},#{province},#{city},#{area})
+      insert into Device_DeadTrees_maintance (scanId,Pic,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town,customTown,customProject,province,city,area)
+      values (#{scanId},#{pic},#{serial},#{submitDate},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{accuracy},#{wooddiameter},#{woodheight},#{woodvolume},#{killmethod},#{remarks},#{town},#{customTown},#{customProject},#{province},#{city},#{area})
     </insert>
   <insert id="addMaintance2">
 insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,username,Worker,device_Id,longitude,latitude,altitude,accuracy,woodDiameter,woodHeight,woodVolume,KillMethod,Remarks,town)
