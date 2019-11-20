@@ -11,6 +11,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.*;
 import cn.huihongcloud.service.DeviceService;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class DeadTrees {
     }
 
     @RequestMapping("/AddDeadtreePhoto")
-    public String addDeadtreePhoto(@RequestAttribute("username") String username,
+    public Object addDeadtreePhoto(@RequestAttribute("username") String username,
                                    @RequestParam(required = false) MultipartFile image,
                                    String deviceId,
                                    Double longitude,
@@ -63,6 +64,8 @@ public class DeadTrees {
                                    String diameter,
                                    String height,
                                    String volume,
+                                   Integer allLength,
+                                   Integer curRow,
                                    @RequestParam(required = false) String pic1,
                                    @RequestParam(required = false) String pic2,
                                    @RequestParam(required = false) String pic3,
@@ -137,7 +140,14 @@ public class DeadTrees {
 //            }
         }
 
-        return imgId;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("imgId",imgId);
+        if(curRow>=allLength-1){
+            jsonObject.put("isComp",true);
+        }else {
+            jsonObject.put("isComp",false);
+        }
+        return jsonObject;
 
     }
 
