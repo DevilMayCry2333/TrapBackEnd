@@ -486,15 +486,15 @@ public class DeviceService {
             deviceImg.setCurrentPic(String.valueOf(current));
             if(current==1){
                 deviceDeadTreesMaintanceEntity.setPic(imgName);
-//                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }else if(current==2){
-//                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic2",imgName,userParent,maxBatch);
+                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic2",imgName,userParent,maxBatch);
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }else if(current==3){
-//                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic3",imgName,userParent,maxBatch);
+                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic3",imgName,userParent,maxBatch);
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }
-            deviceImgMapper.insert2(deviceImg);
+//            deviceImgMapper.insert2(deviceImg);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

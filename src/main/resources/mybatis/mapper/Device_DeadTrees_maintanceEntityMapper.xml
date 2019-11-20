@@ -232,7 +232,7 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
 
   </update>
   <update id="updatePic">
-    update device_deadtrees_maintance set ${colName} = #{text} where deviceId = #{deviceId} and batch = #{maxBatch}
+    update device_deadtrees_maintance set ${colName} = #{text} where device_Id = #{deviceId} and batch = #{maxBatch}
   </update>
   <update id="updateMaintance">
     update device_deadtrees_maintance set
