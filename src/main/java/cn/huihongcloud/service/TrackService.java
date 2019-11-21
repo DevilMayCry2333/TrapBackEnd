@@ -62,14 +62,19 @@ public class TrackService {
      * @param manager 管理员用户名
      * @return 设备列表
      */
-    public List<DeviceTrackMap> getDeviceByManager(String manager,boolean isUseAdcode,String adcode) {
+    public List<DeviceTrackMap> getDeviceByManager(String manager,boolean isUseAdcode,String adcode,String detail,String lineName) {
         List<Device_Track_MaintanceEntity> deviceList = null;
         List<DeviceTrackMap> realData = new ArrayList<>();
 
             if(isUseAdcode){
                 deviceList = deviceTrackMaintanceEntityMapper.getDeviceByAdcode(adcode);
             }else{
-                deviceList = deviceTrackMaintanceEntityMapper.getDeviceByManager(manager);
+                if(detail.equals("detail")){
+                    deviceList = deviceTrackMaintanceEntityMapper.getDeviceByManagerAndByLineName(manager,lineName);
+                }else {
+                    deviceList = deviceTrackMaintanceEntityMapper.getDeviceByManager(manager);
+                }
+
             }
 
             for (Device_Track_MaintanceEntity d:

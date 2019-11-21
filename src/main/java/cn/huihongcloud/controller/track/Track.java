@@ -142,7 +142,8 @@ public class Track {
     public PageWrapper getDevices(@RequestAttribute("username") String username, @RequestParam("page") int page,
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
-                                  @RequestParam(value = "workerName", required = false) String workerName) {
+                                  @RequestParam(value = "workerName", required = false) String workerName,
+                                  @RequestParam(value = "lineName",required = false) String lineName) {
 
         System.out.println(workerName);
         User user = userService.getUserByUserName(username);
@@ -177,24 +178,29 @@ public class Track {
 
         if (user.getRole() == 1) {
 //            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
-            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode());
+            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode(),"map",null);
         }
         if (user.getRole() == 2) {
 //            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
-            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode());
+            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode(),"map",null);
         }
         if (user.getRole() == 3) {
 //            list = trackService.getDeviceByLocation(user.getAdcode(), null, null);
-            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode());
+            deviceTrackMaps = trackService.getDeviceByManager(username,true,user.getAdcode(),"map",null);
         }
 
         if (user.getRole() == 4) {
-            deviceTrackMaps = trackService.getDeviceByManager(username,false,null);
+            if(lineName!=null && lineName!=""){
+                deviceTrackMaps = trackService.getDeviceByManager(username,false,null,"detail",lineName);
+            }else {
+                deviceTrackMaps = trackService.getDeviceByManager(username,false,null,"map",null);
+            }
+
         }
 
         if (user.getRole() == 5) {
 //            list = trackService.getDeviceByWorker(username);
-            deviceTrackMaps = trackService.getDeviceByManager(username,false,null);
+            deviceTrackMaps = trackService.getDeviceByManager(username,false,null,"map",null);
         }
 
 
