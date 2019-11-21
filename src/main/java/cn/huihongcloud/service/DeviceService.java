@@ -1,6 +1,7 @@
 package cn.huihongcloud.service;
 
 import cn.huihongcloud.component.BDComponent;
+import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceImg;
@@ -9,6 +10,7 @@ import cn.huihongcloud.entity.device.DeviceOutputManager;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceImgMapper;
 import cn.huihongcloud.mapper.DeviceMapper;
+import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,10 @@ public class DeviceService {
 
     @Autowired
     private BDComponent bdComponent;
+
+    @Autowired
+    Device_DeadTrees_maintanceEntityMapper deviceDeadTreesMaintanceEntityMapper;
+
 
     @Autowired
     private DeviceMapper deviceMapper;
@@ -432,6 +438,71 @@ public class DeviceService {
         }
         return imgName;
     }
+
+
+    /**
+     * 保存上传的图片
+     *
+     * @param multipartFile
+     * @param deviceId
+     * @param username
+     * @return
+     */
+    public String saveImg2(MultipartFile multipartFile, String deviceId, String scanId,String username,
+                           int current,Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity,
+                           int project,
+                           String userParent,
+                           Integer maxBatch) {
+        UUID uuid = UUID.randomUUID();
+        System.out.println("Save");
+        System.out.println(IMG_PATH);
+
+        MessageDigest messageDigest;
+        String encodeStr = "";
+        String postFix = username + new Date().getTime();
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(postFix.getBytes("UTF-8"));
+            encodeStr = byte2Hex(messageDigest.digest());
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String suffix = multipartFile.getOriginalFilename()
+                .substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+        String imgName = uuid.toString() + "-" + encodeStr + suffix;
+        File filePath = new File(IMG_PATH);
+        if (!filePath.exists()) {
+            filePath.mkdirs();
+        }
+        File outfile = new File(IMG_PATH + imgName);
+        try {
+            multipartFile.transferTo(outfile);
+            DeviceImg deviceImg = new DeviceImg();
+            deviceImg.setDate(new Date());
+            deviceImg.setDeviceId(deviceId);
+            deviceImg.setScanId(scanId);
+            deviceImg.setImgName(imgName);
+            deviceImg.setUsername(username);
+            deviceImg.setCurrentPic(String.valueOf(current));
+            if(current==1){
+                deviceDeadTreesMaintanceEntity.setPic(imgName);
+                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+            }else if(current==2){
+                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic2",imgName,userParent,maxBatch);
+//                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+            }else if(current==3){
+                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic3",imgName,userParent,maxBatch);
+//                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+            }
+//            deviceImgMapper.insert2(deviceImg);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return imgName;
+    }
+
+
 
     /**
      * 获取设备的图片列表

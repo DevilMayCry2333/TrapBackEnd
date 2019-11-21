@@ -13,6 +13,8 @@ public class DeviceImg {
     private String imgName;
     private String username;
     private String deviceId;
+    private String currentPic;
+    private String scanId;
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日 HH:mm:ss")
     private Date date;
 
@@ -54,5 +56,21 @@ public class DeviceImg {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getCurrentPic() {
+        return currentPic;
+    }
+
+    public void setCurrentPic(String currentPic) {
+        this.currentPic = currentPic;
+    }
+
+    public String getScanId() {
+        return scanId;
+    }
+
+    public void setScanId(String scanId) {
+        this.scanId = scanId;
     }
 }

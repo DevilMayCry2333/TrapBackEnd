@@ -12,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,6 +45,9 @@ public class DeviceController {
 
     @Autowired
     DeviceMapper deviceMapper;
+
+    @Value("${device.img.path}")
+    String pathPrefix;
 
     @RequestMapping(value = "auth_api/device_list", method = RequestMethod.GET)
     @ApiOperation("获取设备列表")
@@ -328,6 +332,23 @@ public class DeviceController {
         }
         return null;
     }
+
+    @RequestMapping(value = "device_img2", method = RequestMethod.GET)
+    @ApiOperation("获取图片")
+    public ResponseEntity<byte[]> getDeviceImg2(@RequestParam("imgName") String imgName) throws IOException {
+//        String realPath = deviceService.getImgPath(imgName);
+        String realPath = pathPrefix + imgName;
+        if (realPath != null && !realPath.isEmpty()) {
+            File file = new File(realPath);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDispositionFormData("attachment", imgName);
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<byte[]>(Files.readAllBytes(file.toPath()), headers, HttpStatus.CREATED);
+        }
+        return null;
+    }
+
+
 
     @GetMapping("auth_api/device_count")
     public Object getDeviceCountByUser(@RequestAttribute String username) {

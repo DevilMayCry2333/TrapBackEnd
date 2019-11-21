@@ -13,6 +13,9 @@ public interface DeviceImgMapper {
 
     int insert(DeviceImg deviceImg);
 
+    int insert2(DeviceImg deviceImg);
+
+
     List<DeviceImg> selectByDeviceId(String deviceId);
 
     String selectImgNameByImgName(String imgName);

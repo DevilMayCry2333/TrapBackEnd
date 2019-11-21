@@ -16,6 +16,12 @@
         values
         (#{imgName}, #{username}, #{deviceId}, #{date})
     </insert>
+    <insert id="insert2">
+                insert into device_img
+        (img_name, username, device_id, date,current_pic,scanId)
+        values
+        (#{imgName}, #{username}, #{deviceId}, #{date},#{currentPic},#{scanId})
+    </insert>
 
     <select id="selectByDeviceId" resultMap="DeviceImg">
         select *
@@ -28,6 +34,7 @@
         from device_img
         where img_name = #{imgName}
     </select>
+
 
 
 </mapper>
