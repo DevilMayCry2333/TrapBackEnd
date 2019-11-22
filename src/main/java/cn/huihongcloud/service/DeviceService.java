@@ -2,6 +2,7 @@ package cn.huihongcloud.service;
 
 import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
+import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.device.DeviceImg;
@@ -11,6 +12,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceImgMapper;
 import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
+import cn.huihongcloud.mapper.Device_Track_MaintanceEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,9 @@ public class DeviceService {
     @Autowired
     Device_DeadTrees_maintanceEntityMapper deviceDeadTreesMaintanceEntityMapper;
 
+
+    @Autowired
+    Device_Track_MaintanceEntityMapper device_track_maintanceEntityMapper;
 
     @Autowired
     private DeviceMapper deviceMapper;
@@ -448,11 +453,13 @@ public class DeviceService {
      * @param username
      * @return
      */
-    public String saveImg2(MultipartFile multipartFile, String deviceId, String scanId,String username,
-                           int current,Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity,
+    public String saveImg2(MultipartFile multipartFile, String deviceId, String scanId, String username,
+                           int current, Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity, Device_Track_MaintanceEntity device_track_maintanceEntity,
                            int project,
                            String userParent,
-                           Integer maxBatch) {
+                           Integer maxBatch,
+                           String lineName
+                           ) {
         UUID uuid = UUID.randomUUID();
         System.out.println("Save");
         System.out.println(IMG_PATH);
@@ -484,15 +491,32 @@ public class DeviceService {
             deviceImg.setImgName(imgName);
             deviceImg.setUsername(username);
             deviceImg.setCurrentPic(String.valueOf(current));
-            if(current==1){
-                deviceDeadTreesMaintanceEntity.setPic(imgName);
-                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
-            }else if(current==2){
-                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic2",imgName,userParent,maxBatch);
+            if(project == 4) {
+                if (current == 1) {
+                    deviceDeadTreesMaintanceEntity.setPic(imgName);
+                    deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+                } else if (current == 2) {
+                    deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId, "Pic2", imgName, userParent, maxBatch);
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
-            }else if(current==3){
-                deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId,"Pic3",imgName,userParent,maxBatch);
+                } else if (current == 3) {
+                    deviceDeadTreesMaintanceEntityMapper.updatePic(deviceId, "Pic3", imgName, userParent, maxBatch);
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+                }
+            }else if(project == 6){
+                if(current==1) {
+                    device_track_maintanceEntity.setPic1(imgName);
+                    device_track_maintanceEntityMapper.addMaintance(device_track_maintanceEntity);
+                }else if(current==2){
+                    device_track_maintanceEntityMapper.updatePic(lineName,"Pic2",imgName,userParent);
+
+                }else if(current==3){
+                    device_track_maintanceEntityMapper.updatePic(lineName,"Pic3",imgName,userParent);
+
+                }else if(current==4){
+                    device_track_maintanceEntityMapper.updatePic(lineName,"Pic4",imgName,userParent);
+                }else if(current==5){
+                    device_track_maintanceEntityMapper.updatePic(lineName,"Pic5",imgName,userParent);
+                }
             }
 //            deviceImgMapper.insert2(deviceImg);
         } catch (Exception e) {

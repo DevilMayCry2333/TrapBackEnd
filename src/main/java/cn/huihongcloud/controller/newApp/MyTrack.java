@@ -78,6 +78,53 @@ public class MyTrack {
     }
 
 
+    @RequestMapping("/AddPhoto2")
+    public Object addPhoto2(@RequestAttribute("username") String username,
+                           @RequestParam(required = false) MultipartFile image,
+                           String lineName,
+                           int current,
+                            Integer allLength,
+                            Integer curRow
+    ){
+
+        System.out.println(username);
+        System.out.println(image);
+        System.out.println(lineName);
+        System.out.println(current);
+        User user = userMapper.getUserByUserName(username);
+
+        Device_Track_MaintanceEntity device_track_maintanceEntity = new Device_Track_MaintanceEntity();
+        if (image!=null) {
+            String imgId = deviceService.saveImg2(image,null,null,username,current,null,device_track_maintanceEntity,6,user.getParent(),null,lineName);
+//            if(current==1) {
+//                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic1",imgId,user.getParent());
+//            }else if(current==2){
+//                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic2",imgId,user.getParent());
+//
+//            }else if(current==3){
+//                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic3",imgId,user.getParent());
+//
+//            }else if(current==4){
+//                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic4",imgId,user.getParent());
+//            }else if(current==5){
+//                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic5",imgId,user.getParent());
+//            }
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("imgId",imgId);
+            if(curRow>=allLength-1){
+                jsonObject.put("isComp",true);
+            }else {
+                jsonObject.put("isComp",false);
+            }
+            return jsonObject;
+        }
+
+
+        return "OK";
+
+    }
+
+
     @ApiOperation("上传维护信息")
     @PostMapping("/AddTrack")
     public Object addMaintenanceData(@RequestAttribute("username") String username,

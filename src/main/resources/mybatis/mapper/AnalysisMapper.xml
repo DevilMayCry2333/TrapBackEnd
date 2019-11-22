@@ -41,17 +41,15 @@
         group by DATE_FORMAT(convert_tz(`date`, @@session.time_zone,'+08:00'), '%m')
     </select>
     <select id="getAreaStatic" resultType="cn.huihongcloud.entity.AreaStatic">
-        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,(sum(other_num)/count(device_Id)) avagerother,CustomTown
+        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,(sum(other_num)/count(device_Id)) avagerother,t1.CustomTown
         from device_maintenance t1 left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
-
         <if test="startDate != null and startDate != ''">
             and DATE(`date`) &gt;= #{startDate}
         </if>
         <if test="endDate != null and endDate != ''">
             and DATE(`date`) &lt;= #{endDate}
         </if>
-
-        group by CustomTown;
+        group by t1.CustomTown;
 
 
 
