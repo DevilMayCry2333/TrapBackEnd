@@ -212,6 +212,7 @@
     AltitudeCollect = #{altitudeCollect},
     Working_Content = #{workingContent},
     adcode = #{adcode},
+    Remarks = #{remarks}
     endpoint=#{endpoint},worker=#{worker} where linename=#{linename} and username=#{username}
   </update>
 
