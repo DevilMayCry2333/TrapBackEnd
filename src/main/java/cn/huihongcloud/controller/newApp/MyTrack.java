@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,14 +93,17 @@ public class MyTrack {
                             String lateIntravl,
                             String remarks,
                             String recordTime
-    ){
+    ) throws ParseException {
 
         System.out.println(username);
         System.out.println(image);
         System.out.println(lineName);
         System.out.println(current);
+        String []longData = longtitudeData.split(",");
+        String []latData = latitudeData.split(",");
+        String []altData = altitudeData.split(",");
         User user = userMapper.getUserByUserName(username);
-
+        org.json.simple.JSONObject jsonObject2 = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
         Device_Track_MaintanceEntity device_track_maintanceEntity = new Device_Track_MaintanceEntity();
         device_track_maintanceEntity.setLinename(lineName);
         device_track_maintanceEntity.setUsername(user.getParent());
@@ -110,6 +114,39 @@ public class MyTrack {
         device_track_maintanceEntity.setWorkingContent(workContent);
         device_track_maintanceEntity.setRemarks(remarks);
         device_track_maintanceEntity.setReported(0);
+
+        device_track_maintanceEntity.setAdcode(user.getAdcode());
+        device_track_maintanceEntity.setStarttime(String.valueOf(jsonObject2.get("startTime")));
+        device_track_maintanceEntity.setEndtime(String.valueOf(jsonObject2.get("endTime")));
+
+        String startTime = String.valueOf(jsonObject2.get("startTime"));
+        String endTime = String.valueOf(jsonObject2.get("endTime"));
+
+        System.out.println(startTime);
+        System.out.println(endTime);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos = new ParsePosition(0);
+
+        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos2 = new ParsePosition(0);
+
+        Date start = formatter.parse(startTime, pos);
+
+        Date end = formatter2.parse(endTime, pos2);
+
+        System.out.println(start.getTime());
+
+        System.out.println(end.getTime());
+
+        System.out.println(end.getTime() - start.getTime());
+
+        device_track_maintanceEntity.setTimeconsume(String.valueOf( ( end.getTime() - start.getTime() ) / 1000 ) );
+
+        device_track_maintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
+        device_track_maintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
+
+
 
         if (image!=null) {
             String imgId = deviceService.saveImg2(image,null,null,username,current,null,device_track_maintanceEntity,6,user.getParent(),null,lineName);
