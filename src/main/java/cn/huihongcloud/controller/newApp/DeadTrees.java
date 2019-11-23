@@ -176,6 +176,41 @@ public class DeadTrees {
     }
 
 
+    @RequestMapping("/AddDeadtreePhoto2")
+    public Object addDeadtreePhoto(@RequestAttribute("username") String username,
+                                   @RequestParam(required = false) MultipartFile image,
+                                   String deviceId,
+                                   int current){
+        User user = userMapper.getUserByUserName(username);
+        Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
+        int maxBatch = 1;
+        try {
+            List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDevice.getId());
+            maxBatch = Integer.parseInt(deviceDeadTreesMaintanceEntities.get(0).getBatch());
+        }catch (Exception e){
+            maxBatch = 1;
+        }
+
+
+        if (image!=null) {
+            String imgId = deviceService.saveImg(image, realDevice.getId(), username);
+            if(current==1) {
+                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic",imgId,user.getParent(),maxBatch);
+            }else if(current==2){
+                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic2",imgId,user.getParent(),maxBatch);
+
+            }else if(current==3){
+                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic3",imgId,user.getParent(),maxBatch);
+
+            }
+        }
+
+
+        return "OK";
+
+    }
+
+
     @ApiOperation("图像base64上传维护信息")
     @PostMapping("/AddDeadtrees2")
     public Object addMaintenanceData2(@RequestAttribute("username") String username,

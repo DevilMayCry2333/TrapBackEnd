@@ -84,7 +84,14 @@ public class MyTrack {
                            String lineName,
                            int current,
                             Integer allLength,
-                            Integer curRow
+                            Integer curRow,
+                            String longtitudeData,
+                            String latitudeData,
+                            String altitudeData,
+                            String workContent,
+                            String lateIntravl,
+                            String remarks,
+                            String recordTime
     ){
 
         System.out.println(username);
@@ -94,6 +101,16 @@ public class MyTrack {
         User user = userMapper.getUserByUserName(username);
 
         Device_Track_MaintanceEntity device_track_maintanceEntity = new Device_Track_MaintanceEntity();
+        device_track_maintanceEntity.setLinename(lineName);
+        device_track_maintanceEntity.setUsername(user.getParent());
+        device_track_maintanceEntity.setWorker(username);
+        device_track_maintanceEntity.setLongtitudeCollect(longtitudeData);
+        device_track_maintanceEntity.setLatitudeCollect(latitudeData);
+        device_track_maintanceEntity.setAltitudeCollect(altitudeData);
+        device_track_maintanceEntity.setWorkingContent(workContent);
+        device_track_maintanceEntity.setRemarks(remarks);
+        device_track_maintanceEntity.setReported(0);
+
         if (image!=null) {
             String imgId = deviceService.saveImg2(image,null,null,username,current,null,device_track_maintanceEntity,6,user.getParent(),null,lineName);
 //            if(current==1) {
@@ -171,6 +188,7 @@ public class MyTrack {
 
         deviceTrackMaintanceEntity.setLongtitudeCollect(longtitudeData);
         deviceTrackMaintanceEntity.setWorker(username);
+        deviceTrackMaintanceEntity.setReported(0);
         deviceTrackMaintanceEntity.setAltitudeCollect(altitudeData);
         deviceTrackMaintanceEntity.setLatitudeCollect(latitudeData);
         deviceTrackMaintanceEntity.setLinename(lineName);
@@ -213,6 +231,99 @@ public class MyTrack {
         return Result.ok();
         //return null;
     }
+
+
+    @ApiOperation("上传维护信息")
+    @PostMapping("/AddTrack2")
+    public Object addMaintenanceData2(@RequestAttribute("username") String username,
+                                     @RequestParam(required = false) MultipartFile image,
+                                     @RequestParam(value = "username", required = false) String targetUsername,
+                                     // targetUsername为手动伪造维护信息用的
+                                     String longtitudeData,
+                                     String latitudeData,
+                                     String altitudeData,
+                                     String lineName,
+                                     String workContent,
+                                     String lateIntravl,
+                                     String remarks,
+                                     int current,
+                                     String recordTime,
+                                     HttpServletResponse response) throws Exception {
+
+        logger.info("===开始记录数据===");
+        logger.info(username);
+        logger.info(String.valueOf(longtitudeData));
+        logger.info(String.valueOf(latitudeData));
+        logger.info(String.valueOf(altitudeData));
+        logger.info(String.valueOf(lineName));
+        logger.info(String.valueOf(workContent));
+        logger.info(lateIntravl);
+        logger.info(remarks);
+        logger.info(recordTime);
+        org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
+
+        System.out.println("image" + image);
+        Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
+
+        String []longData = longtitudeData.split(",");
+        String []latData = latitudeData.split(",");
+        String []altData = altitudeData.split(",");
+
+        System.out.println(longData);
+        System.out.println(latData);
+        System.out.println(altData);
+        User user = userMapper.getUserByUserName(username);
+        User user1 = userMapper.getUserByUserName(user.getParent());
+        System.out.println("USername");
+
+
+        deviceTrackMaintanceEntity.setLongtitudeCollect(longtitudeData);
+        deviceTrackMaintanceEntity.setWorker(username);
+        deviceTrackMaintanceEntity.setAltitudeCollect(altitudeData);
+        deviceTrackMaintanceEntity.setLatitudeCollect(latitudeData);
+        deviceTrackMaintanceEntity.setLinename(lineName);
+        deviceTrackMaintanceEntity.setWorkingContent(workContent);
+        deviceTrackMaintanceEntity.setRemarks(remarks);
+        deviceTrackMaintanceEntity.setReported(0);
+        deviceTrackMaintanceEntity.setUsername(user1.getUsername());
+        deviceTrackMaintanceEntity.setAdcode(user1.getAdcode());
+        deviceTrackMaintanceEntity.setStarttime(String.valueOf(jsonObject.get("startTime")));
+        deviceTrackMaintanceEntity.setEndtime(String.valueOf(jsonObject.get("endTime")));
+
+        String startTime = String.valueOf(jsonObject.get("startTime"));
+        String endTime = String.valueOf(jsonObject.get("endTime"));
+
+        System.out.println(startTime);
+        System.out.println(endTime);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos = new ParsePosition(0);
+
+        SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos2 = new ParsePosition(0);
+
+        Date start = formatter.parse(startTime, pos);
+
+        Date end = formatter2.parse(endTime, pos2);
+
+        System.out.println(start.getTime());
+
+        System.out.println(end.getTime());
+
+        System.out.println(end.getTime() - start.getTime());
+
+        deviceTrackMaintanceEntity.setTimeconsume(String.valueOf( ( end.getTime() - start.getTime() ) / 1000 ) );
+
+        deviceTrackMaintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
+        deviceTrackMaintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
+
+        deviceTrackMaintanceEntityMapper.addMaintance(deviceTrackMaintanceEntity);
+
+        return Result.ok();
+        //return null;
+    }
+
+
 
     @RequestMapping("/deleteTrackById")
     public Object deleteTrackById(@RequestParam String id){
