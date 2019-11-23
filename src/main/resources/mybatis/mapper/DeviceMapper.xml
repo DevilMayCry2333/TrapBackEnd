@@ -282,10 +282,10 @@
         select * from beetle_info where `id` = #{beetleId} limit 1;
     </select>
     <select id="getTrapInjectNameId" resultType="cn.huihongcloud.entity.injectInfo">
-        select * from injectinfo where `id` = #{injectId} limit 1;
+        select * from injectinfo where `name` = #{injectId} limit 1;
     </select>
     <select id="getTrapWorkContentId" resultType="cn.huihongcloud.entity.workContent">
-        select * from workcontent where `id` = #{workContentId} limit 1;
+        select * from workcontent where `Fvalue` = #{workContentId} limit 1;
     </select>
     <select id="getInjectWoodStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">
         select * from inject_woodstatus
