@@ -17,6 +17,7 @@ import cn.huihongcloud.service.*;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +78,8 @@ public class DeviceMaintenanceController {
                                          Integer num,
                                          Integer maleNum,
                                          Integer femaleNum,
+                                         Integer allLength,
+                                         Integer curRow,
                                          String drug,
                                          String remark,
                                          Integer otherNum,
@@ -221,7 +224,14 @@ public class DeviceMaintenanceController {
             deviceService.addDeviceRelation(realDeviceId.getId(), user.getUsername());
         }
         */
-        return Result.ok();
+        JSONObject jsonObject = new JSONObject();
+        if(curRow>=allLength-1){
+            jsonObject.put("isComp",true);
+        }else {
+            jsonObject.put("isComp",false);
+        }
+        return jsonObject;
+//        return Result.ok();
         //return null;
     }
 
