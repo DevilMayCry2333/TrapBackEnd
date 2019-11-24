@@ -139,8 +139,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-        insert into Device_NaturalEnemies_maintance (reported,Pic,serial,submit_date,region,batch,username,Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks,town)
-        values (#{reported},#{pic},#{serial},#{submitDate},#{region},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks},#{town})
+        insert into Device_NaturalEnemies_maintance (reported,Pic,serial,submit_date,region,batch,username,Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks,town,scanId,customTown)
+        values (#{reported},#{pic},#{serial},#{submitDate},#{region},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks},#{town},#{scanId},#{customTown})
     </insert>
     <update id="reportData">
         update Device_NaturalEnemies_maintance
