@@ -524,7 +524,7 @@ public class UserController {
         return new Result.Ok();
     }
 
-    @PutMapping("auth_api/user/nameAndPhone")
+    @RequestMapping("auth_api/user/nameAndPhone")
     public Result changeNameAndPhone(@RequestAttribute("username") String username,
                                  @RequestParam String name,
                                  @RequestParam String phone) {

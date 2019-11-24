@@ -102,8 +102,8 @@ public class Enemy {
 
         deviceNaturalEnemiesMaintanceEntity.setWorker(username);
         deviceNaturalEnemiesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceNaturalEnemiesMaintanceEntity.setLongitude(String.format("%.6f",longitude));
-        deviceNaturalEnemiesMaintanceEntity.setLatitude(String.format("%.6f",latitude));
+        deviceNaturalEnemiesMaintanceEntity.setLongitude(String.format("%.6f",Float.parseFloat(longitude)));
+        deviceNaturalEnemiesMaintanceEntity.setLatitude(String.format("%.6f",Float.parseFloat(latitude)));
         deviceNaturalEnemiesMaintanceEntity.setAltitude(altitude);
         deviceNaturalEnemiesMaintanceEntity.setPrecision(accuracy);
         deviceNaturalEnemiesMaintanceEntity.setPredatorstype(predatorsTypeValue);
