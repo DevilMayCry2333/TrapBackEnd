@@ -107,6 +107,7 @@ public class Inject {
         logger.info(String.valueOf(injectNum));
         logger.info(remarks);
         logger.info(workingContent);
+        logger.info(injectName);
 
 
 
@@ -137,8 +138,9 @@ public class Inject {
 
 
         System.out.println(user1.getUsername());
+        //改了一下
         inject_WoodStatus injectWoodStatus = deviceMapper.getInjectWoodStatus(String.valueOf(WoodStatus),null,1);
-        inject_WorkContent workContent = deviceMapper.getInjectWorkContent(workingContent,null,1);
+        inject_WorkContent workContent = deviceMapper.getInjectWorkContent(String.valueOf(workingContent),null,1);
         InjectName injectName1 = deviceMapper.getInjectName(injectName,null,1);
 
         System.out.println(injectName1.getName());
