@@ -57,7 +57,7 @@ public interface UserMapper {
     int reportTrack(String projectAdmin);
 
     //修改工人name和phone
-    int updateUserNameAndPhone(String username,String name,String phone);
+    int updateUserNameAndPhone(String username, @Param("name") String name,@Param("phone") String phone);
 
 
 

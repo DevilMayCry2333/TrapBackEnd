@@ -212,18 +212,17 @@
     <update id="reportUser">
     </update>
     <update id="updateUserNameAndPhone">
-        update `user`
+        update user
         <set>
-            <if test="user.phone!=null">
-                phone = #{phone},
+            <if test="phone!=null">
+                user.phone = #{phone},
             </if>
-            <if test="user.name!=null">
-                `user`.name = #{name},
+            <if test="name!=null">
+                user.name = #{name},
             </if>
         </set>
         where username = #{username}
     </update>
-
     <delete id="deleteUserByUsername">
         delete from user where username = #{username}
     </delete>

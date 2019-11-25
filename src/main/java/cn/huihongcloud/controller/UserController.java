@@ -524,10 +524,10 @@ public class UserController {
         return new Result.Ok();
     }
 
-    @RequestMapping("auth_api/user/nameAndPhone")
-    public Result changeNameAndPhone(@RequestAttribute("username") String username,
-                                 @RequestParam String name,
-                                 @RequestParam String phone) {
+    @PutMapping("auth_api/user/nameAndPhone")
+    public Result changeNameAndPhone(@RequestParam("username") String username,
+                                 @RequestParam("name") String name,
+                                 @RequestParam("phone") String phone) {
         try {
             userMapper.updateUserNameAndPhone(username,name,phone);
         } catch (Exception e) {
