@@ -527,9 +527,11 @@ public class UserController {
     @PutMapping("auth_api/user/nameAndPhone")
     public Result changeNameAndPhone(@RequestParam("username") String username,
                                  @RequestParam("name") String name,
-                                 @RequestParam("phone") String phone) {
+                                 @RequestParam("phone") String phone,
+                                 @RequestParam("active") Boolean active
+                                     ) {
         try {
-            userMapper.updateUserNameAndPhone(username,name,phone);
+            userMapper.updateUserNameAndPhone(username,name,phone,active);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result.Failed();

@@ -220,6 +220,9 @@
             <if test="name!=null">
                 user.name = #{name},
             </if>
+            <if test="active!=null">
+                user.active = #{active},
+            </if>
         </set>
         where username = #{username}
     </update>
