@@ -9,6 +9,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceBeetleMapper;
 import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.UserMapper;
+import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -141,6 +142,18 @@ public class Trap {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
@@ -154,12 +167,53 @@ public class Trap {
             String datestr=sdf.format(d.getDate());// format  为格式化方法
             d.setRealdate(datestr);
 
-
-
         }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("诱捕器管理情况明细表", "诱捕器管理情况明细表"), DeviceMaintenance.class, deviceNaturalEnemiesMaintanceEntities);
         workbook.write(response.getOutputStream());
 
+    }
+
+    @RequestMapping("/exportImage")
+    public void exportImage(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
+
+        List<DeviceMaintenance> deviceMaintenances = deviceBeetleMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        for (DeviceMaintenance d:deviceMaintenances) {
+            try {
+                String tmp = d.getImgId();
+                imageDownUtil.moveFile("/root/img/" + tmp, "/var/www/html/img/" + "编号："+ d.getCustomSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+            }catch (Exception e){
+
+            }
+
+        }
+        imageDownUtil.tarFile();
+        response.sendRedirect("http://106.15.200.245/img.tar");
     }
 
 

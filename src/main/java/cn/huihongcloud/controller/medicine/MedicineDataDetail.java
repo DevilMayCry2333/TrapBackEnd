@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
@@ -13,6 +14,7 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Medicine_MaintanceEntityMapper;
 import cn.huihongcloud.service.DeviceMedicineMaintanceService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -135,6 +137,52 @@ public class MedicineDataDetail {
         List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities  = device_medicine_maintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("药剂防治管理情况明细表", "药剂防治管理情况明细表"), Device_Medicine_MaintanceEntity.class, device_medicine_maintanceEntities);
         workbook.write(response.getOutputStream());
+    }
+
+
+    @RequestMapping("/exportImage")
+    public void exportImage(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
+
+        List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities  = device_medicine_maintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        for (Device_Medicine_MaintanceEntity d:device_medicine_maintanceEntities) {
+            try {
+                String tmp = d.getPic();
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+
+            }catch (Exception e){
+
+            }
+
+        }
+        imageDownUtil.tarFile();
+        response.sendRedirect("http://106.15.200.245/img.tar");
+
     }
 
 

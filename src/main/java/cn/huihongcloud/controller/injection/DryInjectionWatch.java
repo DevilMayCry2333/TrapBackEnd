@@ -407,7 +407,8 @@ public class DryInjectionWatch {
         for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {
                 String tmp = d.getPic();
-                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + d.getScanId() + d.getSerial() + d.getCustomtown() + "Ser1");
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomtown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+
             }catch (Exception e){
 
             }

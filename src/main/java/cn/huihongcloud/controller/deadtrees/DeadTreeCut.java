@@ -13,6 +13,7 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
 import cn.huihongcloud.service.DeadTreeCutService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -264,6 +265,54 @@ public class DeadTreeCut {
 //        }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("枯死木防治管理情况明细表", "枯死木防治管理情况明细表"), Device_DeadTrees_maintanceEntity.class, deviceDeadTreesMaintanceEntities);
         workbook.write(response.getOutputStream());
+
+    }
+
+    @RequestMapping("/exportImage")
+    public void exportImage(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        User user = userService.getUserByUserName(username);
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
+
+        List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
+            try {
+                for(int i = 0;i<3;i++){
+//                    String tmp = d.getPic();
+                    imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + "施工前," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img/" + "施工中," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                }
+            }catch (Exception e){
+
+            }
+
+        }
+        imageDownUtil.tarFile();
+        response.sendRedirect("http://106.15.200.245/img.tar");
 
     }
 

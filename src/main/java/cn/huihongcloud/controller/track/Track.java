@@ -14,6 +14,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.Device_Track_MaintanceEntityMapper;
 import cn.huihongcloud.service.TrackService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -259,6 +260,62 @@ public class Track {
         workbook.write(response.getOutputStream());
 
     }
+
+    @RequestMapping("/exportImage")
+    public void exportImage(HttpServletResponse response,
+                            String token,
+                            @RequestParam(required = false) String startDate,
+                            @RequestParam(required = false) String endDate,
+                            @RequestParam(required = false) String colName,
+                            @RequestParam(required = false) String searchText,
+                            @RequestParam String username,
+                            @RequestParam String adcode
+    ) throws IOException {
+        User user = userService.getUserByUserName(username);
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(colName);
+        System.out.println(searchText);
+        if(colName.equals("1")){
+            colName = "serial";
+        }
+        if(colName.equals("2")){
+            colName = "CustomTown";
+        }
+        if(colName.equals("3")){
+            colName = "batch";
+        }
+        if(colName.equals("4")){
+            colName = "Worker";
+        }
+
+        List<Device_Track_MaintanceEntity> deviceTrackMaintanceEntities = null;
+        if(user.getRole()==4){
+            deviceTrackMaintanceEntities  = trackService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+        }else {
+            deviceTrackMaintanceEntities  = deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+        }
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        for (Device_Track_MaintanceEntity d:deviceTrackMaintanceEntities) {
+            try {
+                for(int i = 0;i<5;i++){
+//                    String tmp = d.getPic();
+                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img/" + "照片1," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img/" + "照片2," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img/" + "照片3," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img/" + "照片4," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img/" + "照片5," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                }
+            }catch (Exception e){
+
+            }
+
+        }
+        imageDownUtil.tarFile();
+        response.sendRedirect("http://106.15.200.245/img.tar");
+
+    }
+
 
     @RequestMapping("/importExcel")
     public Object importExcel(String token,@RequestParam("file") MultipartFile multipartFile) throws Exception {
