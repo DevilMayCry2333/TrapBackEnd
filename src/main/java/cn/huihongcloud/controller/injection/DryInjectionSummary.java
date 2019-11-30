@@ -178,6 +178,8 @@ public class DryInjectionSummary {
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
             totalDeadNum += lim.getWoodStatusSum();
+            System.out.println(lim.getWoodStatusSum());
+            System.out.println(lim.getInjectNumSum());
             totalInjectNum += lim.getInjectNumSum();
             totalWoodNum += Integer.parseInt(lim.getWoodNum());
             lim.setDeadRate(lim.getWoodStatusSum()/Double.parseDouble(lim.getWoodNum()));

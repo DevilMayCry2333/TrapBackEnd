@@ -8,6 +8,7 @@ import cn.huihongcloud.entity.DeviceTrackMap;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Track_MaintanceEntity;
+import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
@@ -81,6 +82,7 @@ public class Track {
         ParsePosition pos = new ParsePosition(0);
 
         User user = userService.getUserByUserName(username);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
 
         System.out.println("=====用户名====");
         System.out.println(username);
@@ -109,20 +111,22 @@ public class Track {
         System.out.println(limit);
         System.out.println(colName);
         System.out.println(searchText);
+        List<Device_Track_MaintanceEntity> list = null;
         if(user.getRole()==4){
-            jsonObject.put("Data",trackService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode));
-            jsonObject.put("total",trackService.countAll(username,startDate,dateString,colName,searchText));
+            list = trackService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode);
+//            jsonObject.put("total",trackService.countAll(username,startDate,dateString,colName,searchText));
         }else {
-            jsonObject.put("Data",deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode()));
-            jsonObject.put("total",deviceTrackMaintanceEntityMapper.countAllByAdcode(user.getAdcode(),startDate,dateString,colName,searchText));
+            list = deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,dateString,colName,searchText,page*limit-limit,limit,user.getAdcode());
+//            jsonObject.put("total",deviceTrackMaintanceEntityMapper.countAllByAdcode(user.getAdcode(),startDate,dateString,colName,searchText));
         }
 
 
-
-        jsonObject.put("current",page);
-        System.out.println(jsonObject);
-
-        return jsonObject;
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setData(list);
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        return Result.ok(pageWrapper);
 
     }
 

@@ -874,7 +874,7 @@
     <if test="endDate != null and endDate != ''">
       and t1.submit_date &lt;= #{endDate}
     </if>
-    group by t1.CustomTown
+    group by t1.customTown
   </select>
   <select id="selectNaturalByCustomReigon"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
@@ -892,20 +892,20 @@
     select count(PredatorsType) natualMannerOne
     from device_naturalenemies_maintance
     left join device on device_naturalenemies_maintance.device_Id = device.id
-    where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '花绒寄甲'
+    where device_naturalenemies_maintance.customTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '花绒寄甲'
   </select>
   <select id="queryNatualMannerTwo" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select count(PredatorsType) natualMannerTwo
     from device_naturalenemies_maintance
     left join device on device_naturalenemies_maintance.device_Id = device.id
-    where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '肿腿蜂'
+    where device_naturalenemies_maintance.customTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '肿腿蜂'
   </select>
   <select id="queryNatualMannerThree"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select count(PredatorsType) natualMannerThree
     from device_naturalenemies_maintance
     left join device on device_naturalenemies_maintance.device_Id = device.id
-    where CustomTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '卵卡'
+    where device_naturalenemies_maintance.customTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '卵卡'
   </select>
   <select id="queryNatualMannerOneBytownOne" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(PredatorsType) NaturalMannerOneByTown
