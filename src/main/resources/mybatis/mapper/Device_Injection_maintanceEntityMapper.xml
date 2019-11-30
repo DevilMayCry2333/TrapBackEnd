@@ -837,7 +837,7 @@
   <select id="selectByCustomReigonCustomProject"
           resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
     select device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
-    sum(if(device_injection_maintance.work_content_front='枯死',1,0)) WoodStatusSum,
+    sum(if(device_injection_maintance.wood_status_front='枯死',1,0)) WoodStatusSum,
     count(device_injection_maintance.id) woodNum
     from device_injection_maintance left join device on device.id = device_injection_maintance.device_Id
     where device.CustomProject = #{customProject}

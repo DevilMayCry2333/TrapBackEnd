@@ -236,11 +236,12 @@ public class NewQrCode {
 
     @RequestMapping("/getavailableNum")
     public Object serach(@RequestParam String province ){
+        System.out.println(province);
         List<User> users = userMapper.getProvinceByCode(province);    //获取省级用户名字
         String ProvinceName = users.get(0).getProvince();
         int availabID = newQrCodeMapper.countByNOassign("0",ProvinceName);
+        System.out.println(availabID);
         return availabID;
-
     }
 
 }
