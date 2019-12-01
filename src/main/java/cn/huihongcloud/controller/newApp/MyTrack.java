@@ -83,9 +83,9 @@ public class MyTrack {
     public Object addPhoto2(@RequestAttribute("username") String username,
                            @RequestParam(required = false) MultipartFile image,
                            String lineName,
-                           int current,
-                            Integer allLength,
-                            Integer curRow,
+                           @RequestParam(required = false) Integer current,
+                            @RequestParam(required = false) Integer allLength,
+                            @RequestParam(required = false) Integer curRow,
                             String longtitudeData,
                             String latitudeData,
                             String altitudeData,
@@ -146,7 +146,7 @@ public class MyTrack {
         device_track_maintanceEntity.setStartpoint(longData[0] + "," + latData[0] + "," + altData[0]);
         device_track_maintanceEntity.setEndpoint(longData[longData.length-1] + "," + latData[latData.length-1] + "," + altData[altData.length-1]);
 
-
+        JSONObject jsonObject = new JSONObject();
 
         if (image!=null) {
             String imgId = deviceService.saveImg2(image,null,null,username,current,null,device_track_maintanceEntity,6,user.getParent(),null,lineName);
@@ -163,17 +163,19 @@ public class MyTrack {
 //            }else if(current==5){
 //                deviceTrackMaintanceEntityMapper.updatePic(lineName,"Pic5",imgId,user.getParent());
 //            }
-            JSONObject jsonObject = new JSONObject();
+
             jsonObject.put("imgId",imgId);
-            if(curRow>=allLength-1){
-                jsonObject.put("isComp",true);
-            }else {
-                jsonObject.put("isComp",false);
+            if(curRow!=null){
+                if(curRow>=allLength-1){
+                    jsonObject.put("isComp",true);
+                }else {
+                    jsonObject.put("isComp",false);
+                }
             }
-            return jsonObject;
+        }else {
+            logger.info("无图片轨迹");
+            deviceTrackMaintanceEntityMapper.addMaintance(device_track_maintanceEntity);
         }
-
-
         return "OK";
 
     }
