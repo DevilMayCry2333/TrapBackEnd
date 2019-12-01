@@ -64,14 +64,14 @@ public class DeadTrees {
                                    String diameter,
                                    String height,
                                    String volume,
-                                   Integer allLength,
-                                   Integer curRow,
+                                   @RequestParam(required = false) Integer allLength,
+                                   @RequestParam(required = false) Integer curRow,
                                    @RequestParam(required = false) String pic1,
                                    @RequestParam(required = false) String pic2,
                                    @RequestParam(required = false) String pic3,
                                    String killMethodsValue,
                                    @RequestParam(required = false) String remarks,
-                                   int current){
+                                   @RequestParam(required = false) Integer current){
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
 
@@ -142,10 +142,12 @@ public class DeadTrees {
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("imgId",imgId);
-        if(curRow>=allLength-1){
-            jsonObject.put("isComp",true);
-        }else {
-            jsonObject.put("isComp",false);
+        if(curRow!=null) {
+            if (curRow >= allLength - 1) {
+                jsonObject.put("isComp", true);
+            } else {
+                jsonObject.put("isComp", false);
+            }
         }
         return jsonObject;
 
