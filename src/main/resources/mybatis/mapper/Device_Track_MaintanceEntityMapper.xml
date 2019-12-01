@@ -162,8 +162,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-      insert into Device_Track_Maintance (adcode,TimeConsume,Pic1,StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
-      values (#{adcode},#{timeconsume},#{pic1},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{longtitudeCollect},#{latitudeCollect},#{altitudeCollect},#{linename},#{workingContent},#{remarks})
+      insert into Device_Track_Maintance (adcode,TimeConsume,StartTime,EndTIme,username,StartPoint,EndPoint,Worker,LongtitudeCollect,LatitudeCollect,AltitudeCollect,LineName,Working_Content,Remarks)
+      values (#{adcode},#{timeconsume},#{starttime},#{endtime},#{username},#{startpoint},#{endpoint},#{worker},#{longtitudeCollect},#{latitudeCollect},#{altitudeCollect},#{linename},#{workingContent},#{remarks})
     </insert>
   <update id="updateRecordById">
     update device_track_maintance set linename=#{linename},
