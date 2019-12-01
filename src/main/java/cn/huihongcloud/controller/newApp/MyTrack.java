@@ -92,18 +92,35 @@ public class MyTrack {
                             String workContent,
                             String lateIntravl,
                             String remarks,
-                            String recordTime
+                            @RequestParam(required = false) String recordTime
     ) throws ParseException {
+        logger.info(lineName);
+        logger.info(recordTime);
 
         System.out.println(username);
         System.out.println(image);
         System.out.println(lineName);
         System.out.println(current);
-        String []longData = longtitudeData.split(",");
-        String []latData = latitudeData.split(",");
-        String []altData = altitudeData.split(",");
+        String []longData = {"1"};
+        String []latData = {"2"};
+        String []altData = {"3"};
+        try {
+            longData = longtitudeData.split(",");
+            latData = latitudeData.split(",");
+            altData = altitudeData.split(",");
+        }catch (Exception e){
+
+        }
+
         User user = userMapper.getUserByUserName(username);
-        org.json.simple.JSONObject jsonObject2 = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
+        org.json.simple.JSONObject jsonObject2 = new org.json.simple.JSONObject();
+        if(recordTime!=null){
+            jsonObject2 = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
+        }else {
+            jsonObject2.put("startTime","2019-12-01 00:00:00");
+            jsonObject2.put("endTime","2019-12-01 00:00:00");
+        }
+
         Device_Track_MaintanceEntity device_track_maintanceEntity = new Device_Track_MaintanceEntity();
         device_track_maintanceEntity.setLinename(lineName);
         device_track_maintanceEntity.setUsername(user.getParent());
@@ -174,9 +191,11 @@ public class MyTrack {
             }
         }else {
             logger.info("无图片轨迹");
+            jsonObject.put("isComp",true);
+            device_track_maintanceEntity.setPic1("pic1");
             deviceTrackMaintanceEntityMapper.addMaintance(device_track_maintanceEntity);
         }
-        return "OK";
+        return jsonObject;
 
     }
 
