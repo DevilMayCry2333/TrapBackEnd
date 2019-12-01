@@ -138,6 +138,9 @@ public class DeadTrees {
 ////                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic3",imgId,user.getParent(),maxBatch);
 //
 //            }
+        }else {
+            logger.info("无图片");
+            deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
         }
 
         JSONObject jsonObject = new JSONObject();
