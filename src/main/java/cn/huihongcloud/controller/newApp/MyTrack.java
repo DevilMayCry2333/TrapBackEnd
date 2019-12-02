@@ -193,7 +193,7 @@ public class MyTrack {
             logger.info("无图片轨迹");
             jsonObject.put("isComp",true);
             device_track_maintanceEntity.setPic1("pic1");
-            if(lineName!=null && !lineName.equals(""))
+//            if(lineName!=null && !lineName.equals(""))
                 deviceTrackMaintanceEntityMapper.addMaintance(device_track_maintanceEntity);
         }
         return jsonObject;
