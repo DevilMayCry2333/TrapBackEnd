@@ -72,61 +72,63 @@ public class DeadTrees {
                                    String killMethodsValue,
                                    @RequestParam(required = false) String remarks,
                                    @RequestParam(required = false) Integer current){
-        User user = userMapper.getUserByUserName(username);
-        User user1 = userMapper.getUserByUserName(user.getParent());
-
-        Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
-
-        Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
-        Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
-
-        deviceDeadTreesMaintanceEntity.setWorker(username);
-        deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
-        deviceDeadTreesMaintanceEntity.setScanId(Long.valueOf(deviceId));
-        deviceDeadTreesMaintanceEntity.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
-        deviceDeadTreesMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
-        deviceDeadTreesMaintanceEntity.setAltitude(altitude);
-        deviceDeadTreesMaintanceEntity.setAccuracy(accuracy);
-        deviceDeadTreesMaintanceEntity.setWooddiameter(diameter);
-        deviceDeadTreesMaintanceEntity.setWoodheight(height);
-        deviceDeadTreesMaintanceEntity.setWoodvolume(volume);
-        deviceDeadTreesMaintanceEntity.setKillmethod(killMethodsValue);
-        deviceDeadTreesMaintanceEntity.setRemarks(remarks);
-        deviceDeadTreesMaintanceEntity.setUsername(user1.getUsername());
-        deviceDeadTreesMaintanceEntity.setCustomTown(realDeviceId.getCustomTown());
-
-        Date date= new Date(System.currentTimeMillis());
-        deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
-        deviceDeadTreesMaintanceEntity.setSubmitDate(date);
-        deviceDeadTreesMaintanceEntity.setReported(0);
-        deviceDeadTreesMaintanceEntity.setProvince(realDeviceId.getProvince());
-        deviceDeadTreesMaintanceEntity.setCity(realDeviceId.getCity());
-        deviceDeadTreesMaintanceEntity.setArea(realDeviceId.getArea());
-        deviceDeadTreesMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
-        deviceDeadTreesMaintanceEntity.setPic(pic1);
-        deviceDeadTreesMaintanceEntity.setPic2(pic2);
-        deviceDeadTreesMaintanceEntity.setPic3(pic3);
-
-        BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
-
-        deviceDeadTreesMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
-
-
-        List<Device_DeadTrees_maintanceEntity> maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
-        int maxIdNum = 1;
+        JSONObject jsonObject = new JSONObject();
         try {
-            maxIdNum = Integer.parseInt(maxId.get(0).getBatch());
-        }catch (Exception e){
-            maxIdNum = 1;
-        }
+            User user = userMapper.getUserByUserName(username);
+            User user1 = userMapper.getUserByUserName(user.getParent());
 
-        deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxIdNum));
+            Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
+
+            Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
+            Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
+
+            deviceDeadTreesMaintanceEntity.setWorker(username);
+            deviceDeadTreesMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
+            deviceDeadTreesMaintanceEntity.setScanId(Long.valueOf(deviceId));
+            deviceDeadTreesMaintanceEntity.setLongitude(Double.valueOf(String.format("%.6f",longitude)));
+            deviceDeadTreesMaintanceEntity.setLatitude(Double.valueOf(String.format("%.6f",latitude)));
+            deviceDeadTreesMaintanceEntity.setAltitude(altitude);
+            deviceDeadTreesMaintanceEntity.setAccuracy(accuracy);
+            deviceDeadTreesMaintanceEntity.setWooddiameter(diameter);
+            deviceDeadTreesMaintanceEntity.setWoodheight(height);
+            deviceDeadTreesMaintanceEntity.setWoodvolume(volume);
+            deviceDeadTreesMaintanceEntity.setKillmethod(killMethodsValue);
+            deviceDeadTreesMaintanceEntity.setRemarks(remarks);
+            deviceDeadTreesMaintanceEntity.setUsername(user1.getUsername());
+            deviceDeadTreesMaintanceEntity.setCustomTown(realDeviceId.getCustomTown());
+
+            Date date= new Date(System.currentTimeMillis());
+            deviceDeadTreesMaintanceEntity.setSerial(realDeviceId.getCustomSerial());
+            deviceDeadTreesMaintanceEntity.setSubmitDate(date);
+            deviceDeadTreesMaintanceEntity.setReported(0);
+            deviceDeadTreesMaintanceEntity.setProvince(realDeviceId.getProvince());
+            deviceDeadTreesMaintanceEntity.setCity(realDeviceId.getCity());
+            deviceDeadTreesMaintanceEntity.setArea(realDeviceId.getArea());
+            deviceDeadTreesMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
+            deviceDeadTreesMaintanceEntity.setPic(pic1);
+            deviceDeadTreesMaintanceEntity.setPic2(pic2);
+            deviceDeadTreesMaintanceEntity.setPic3(pic3);
+
+            BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
+
+            deviceDeadTreesMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
 
-        String imgId = null;
+            List<Device_DeadTrees_maintanceEntity> maxId = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
+            int maxIdNum = 1;
+            try {
+                maxIdNum = Integer.parseInt(maxId.get(0).getBatch());
+            }catch (Exception e){
+                maxIdNum = 1;
+            }
 
-        if (image!=null) {
-            imgId = deviceService.saveImg2(image, realDevice.getId(),deviceId, username,current,deviceDeadTreesMaintanceEntity,null,4,user.getParent(),maxIdNum,null);
+            deviceDeadTreesMaintanceEntity.setBatch(String.valueOf(maxIdNum));
+
+
+            String imgId = null;
+
+            if (image!=null) {
+                imgId = deviceService.saveImg2(image, realDevice.getId(),deviceId, username,current,deviceDeadTreesMaintanceEntity,null,4,user.getParent(),maxIdNum,null);
 //            if(current==1) {
 //                deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
 ////                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic",imgId,user.getParent(),maxBatch);
@@ -138,20 +140,25 @@ public class DeadTrees {
 ////                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic3",imgId,user.getParent(),maxBatch);
 //
 //            }
-        }else {
-            logger.info("无图片");
-            deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+            }else {
+                logger.info("无图片");
+                if(realDeviceId.getId()!=null)
+                    deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
+            }
+
+
+            jsonObject.put("imgId",imgId);
+            if(curRow!=null) {
+                if (curRow >= allLength - 1) {
+                    jsonObject.put("isComp", true);
+                } else {
+                    jsonObject.put("isComp", false);
+                }
+            }
+        }catch (Exception e){
+            return jsonObject;
         }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("imgId",imgId);
-        if(curRow!=null) {
-            if (curRow >= allLength - 1) {
-                jsonObject.put("isComp", true);
-            } else {
-                jsonObject.put("isComp", false);
-            }
-        }
         return jsonObject;
 
     }
