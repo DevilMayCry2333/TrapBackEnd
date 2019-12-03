@@ -142,6 +142,7 @@ public class DeadTrees {
 //            }
             }else {
                 logger.info("无图片");
+                jsonObject.put("isComp",true);
                 if(realDeviceId.getId()!=null)
                     deviceDeadTreesMaintanceEntityMapper.addMaintance(deviceDeadTreesMaintanceEntity);
             }
