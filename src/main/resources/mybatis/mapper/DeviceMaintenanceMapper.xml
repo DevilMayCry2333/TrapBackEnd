@@ -398,17 +398,17 @@
             <if test="altitude != null and altitude != ''">
                 altitude = #{altitude},
             </if>
-            <if test="drug != null and drug != ''">
-                drug = #{drug},
+            <if test="drugFront != null and drugFront != ''">
+                drug_front = #{drugFront},
             </if>
             <if test="remark != null and remark != ''">
                 remark = #{remark},
             </if>
+            <if test="workContentFront != null and workContentFront != ''">
+                work_content_front = #{workContentFront},
+            </if>
             <if test="batch != null and batch != ''">
                 batch = #{batch},
-            </if>
-            <if test="workingContent != null and workingContent > -1">
-                working_content = #{workingContent},
             </if>
             <if test="otherType != null">
                 other_type = #{otherType},
@@ -1017,7 +1017,8 @@
         workcontent.name workcontentfront,
         beetle_info.name otherbeetlefront,
         device_maintenance.working_content,
-        device_maintenance.reported
+        device_maintenance.reported,
+        device_maintenance.work_content_front
         from device_maintenance
         left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username

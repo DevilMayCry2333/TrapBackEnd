@@ -596,7 +596,8 @@ public class DeviceMaintenanceController {
     @PutMapping("/auth_api/maintenance")
     public Object updateMaintenanceData(@RequestAttribute("username") String username,
                                         @RequestBody DeviceMaintenance deviceMaintenance) {
-
+        System.out.println("===========================");
+        System.out.println(deviceMaintenance);
         deviceMaintenanceService.updateMaintenanceData(deviceMaintenance);
         String deviceId=deviceMaintenance.getDeviceId();
         System.out.println(deviceMaintenance.getBatch());

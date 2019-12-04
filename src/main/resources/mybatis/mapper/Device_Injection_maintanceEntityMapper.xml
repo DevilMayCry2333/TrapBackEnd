@@ -250,14 +250,11 @@
       <if test="serial != null and serial != ''">
         serial = #{serial},
       </if>
-      <if test="submitDate != null and submitDate != ''">
-        submit_date = #{submitDate},
+      <if test="woodStatusFront != null and woodStatusFront != ''">
+        wood_status_front = #{woodStatusFront},
       </if>
-      <if test="woodstatus != null and woodstatus != ''">
-        woodstatus = #{woodstatus},
-      </if>
-      <if test="workContent != null and workContent != ''">
-        work_content = #{workContent},
+      <if test="workContentFront != null and workContentFront != ''">
+        work_content_front = #{workContentFront},
       </if>
       <if test="injectName != null and injectName != ''">
         inject_name = #{injectName},

@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Data
+
 public class Device_Injection_maintanceEntity {
 
     private Long id;

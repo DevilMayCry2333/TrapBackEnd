@@ -98,7 +98,7 @@ public interface Device_Injection_maintanceEntityMapper {
 
     int updateRecordById(Device_Injection_maintanceEntity dataEntity);
 
-    int updateRecordByFront(Device_Injection_maintanceEntity dataEntity);
+    int updateRecordByFront(Device_Injection_maintanceEntity d);
 
 
     List<inject_WoodStatus> getDeadStatus();
