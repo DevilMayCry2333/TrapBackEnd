@@ -270,11 +270,14 @@ public class DryInjectionWatch {
     }
 
     @RequestMapping("/searchDetail")
-    public JSONObject searchDetail(@RequestAttribute("username") String username, @RequestParam(required = false) String startDate,
+    public Object searchDetail(@RequestAttribute("username") String username, @RequestParam(required = false) String startDate,
                                    @RequestParam(required = false) String endDate, @RequestParam(required = false) String optionIndex,
-                                   @RequestParam(required = false) String searchText){
-        JSONObject jsonObject = new JSONObject();
+                                   @RequestParam(required = false) String searchText,@RequestParam int page,
+                                   @RequestParam int limit){
+//        JSONObject jsonObject = new JSONObject();
         User user = userService.getUserByUserName(username);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
         System.out.println(user.getUsername());
         int optVal = 0;
 
@@ -283,42 +286,50 @@ public class DryInjectionWatch {
 
         }
 
-        String dateString = "";
+//        String dateString = "";
         System.out.println(endDate);
-
-        if(endDate!=null && endDate!="") {
-
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            ParsePosition pos = new ParsePosition(0);
-            Date currentTime_2 = formatter.parse(endDate, pos);
-
-            currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
-
-            System.out.println(currentTime_2.getDate());
-
-            dateString = formatter.format(currentTime_2);
-
-            System.out.println(dateString);
+        if (!Objects.equals(startDate, "")) {
+            startDate = startDate + " 00:00:00";
         }
+        if (!Objects.equals(endDate, "")) {
+            endDate = endDate + " 23:59:59";
+        }
+//        if(endDate!=null && endDate!="") {
+//
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            ParsePosition pos = new ParsePosition(0);
+//            Date currentTime_2 = formatter.parse(endDate, pos);
+//
+//            currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
+//
+//            System.out.println(currentTime_2.getDate());
+//
+//            dateString = formatter.format(currentTime_2);
+//
+//            System.out.println(dateString);
+//        }
 
 
 
-        jsonObject.put("Res",true);
+//        jsonObject.put("Res",true);
+
+        List<Device_Injection_maintanceEntity> list = null;
 
         System.out.println(optVal);
         System.out.println(searchText);
 
         if(user.getRole()==4){
-            jsonObject.put("Data",deviceInjectionMaintanceEntityMapper.selectByConditions(user.getParent(),optVal,searchText,startDate,dateString));
+            list = deviceInjectionMaintanceEntityMapper.selectByConditions(user.getParent(),optVal,searchText,startDate,endDate);
         }
 
 
 
-        jsonObject.put("total",deviceInjectionMaintanceEntityMapper.CountAll(username));
-        jsonObject.put("current",1);
-        System.out.println(jsonObject);
-
-        return jsonObject;
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setData(list);
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        return Result.ok(pageWrapper);
     }
 
     @RequestMapping("/deleteRecord")
