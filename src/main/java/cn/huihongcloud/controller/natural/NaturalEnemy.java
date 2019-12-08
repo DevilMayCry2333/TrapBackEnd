@@ -203,8 +203,6 @@ public class NaturalEnemy {
 
         User user = userService.getUserByUserName(username);
 
-
-
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }
@@ -284,8 +282,8 @@ public class NaturalEnemy {
         System.out.println(workerName);
         User user = userService.getUserByUserName(username);
         List<Device> list = null;
-        Page<Object> pages = null;
-        PageWrapper pageWrapper = new PageWrapper();
+//        Page<Object> pages = null;
+//        PageWrapper pageWrapper = new PageWrapper();
         /*
         if (user.getRole() > 1 && user.getRole() != 3) {
             // 工人查询所管理的设备
@@ -307,7 +305,7 @@ public class NaturalEnemy {
         管理员看到关联的
         工人看到关联的
          */
-        pages = PageHelper.startPage(page, limit);
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
         if (user.getRole() == 1) {
             list = naturalEnemyService.getDeviceByLocation(user.getAdcode(), null, null);
         }
@@ -325,10 +323,11 @@ public class NaturalEnemy {
         if (user.getRole() == 5) {
             list = naturalEnemyService.getDeviceByWorker(username);
         }
+        PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(list);
-        pageWrapper.setTotalPage(pages.getPages());
+        pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(pages.getTotal());
+        pageWrapper.setTotalNum(pageObject.getTotal());
         return pageWrapper;
     }
 
