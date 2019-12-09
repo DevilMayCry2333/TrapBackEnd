@@ -718,9 +718,9 @@
 
     </select>
     <select id="getInputEntityForTown" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select town name, sum(num1) `sum`, CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select town name, sum(num1) `sum`,CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
         from (
-        select CustomTown,town,sum(num) num1,device_id
+        select device_maintenance.CustomTown,town,sum(num) num1,device_id
         from device_maintenance
         left join device on device_id = device.id
         where adcode = #{adcode}
