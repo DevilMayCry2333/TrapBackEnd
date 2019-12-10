@@ -92,7 +92,7 @@ public class Inject {
                                      String remarks,
                                      String workingContent,
                                      String injectName,
-                                     Double chestDiameter,HttpServletResponse response) throws Exception {
+                                     Double chestDiameter,  HttpServletResponse response) throws Exception {
 
 
 
@@ -178,7 +178,9 @@ public class Inject {
         System.out.println(realDeviceId.getCustomSerial());
 
         Date date= new Date(System.currentTimeMillis());
-
+//        Date date = new Date();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date format = simpleDateFormat.format(date);
         deviceInjectionMaintanceEntity.setSubmitDate(date);
         deviceInjectionMaintanceEntity.setRegion(realDeviceId.getCustomTown());
 

@@ -28,8 +28,8 @@ public class Device_Injection_maintanceEntity {
     private String region;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
-    @DateTimeFormat(pattern = "yyyy年MM月dd日")
-    @Excel(name = "提交日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "提交日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy-MM-dd日")
     private Date submitDate;
 
     @Excel(name = "批次")
