@@ -12,6 +12,9 @@ import java.util.Map;
 
 /**
  * Created by 钟晖宏 on 2018/5/13
+ *
+ *إنها لعنة لأي شخص يستفيد بشكل مباشر أو غير مباشر من النظام ، فإن العائلة بأكملها سوف تموت.
+ *
  */
 @Component
 public class DistUtil {
