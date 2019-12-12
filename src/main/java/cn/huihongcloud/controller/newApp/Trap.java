@@ -108,12 +108,12 @@ public class Trap {
 
 
 
-        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
         User user = userMapper.getUserByUserName(username);
         List<DeviceMaintenance> deviceMaintenanceList = null;
-        PageWrapper pageWrapper = new PageWrapper();
         System.out.println(startDate);
-
+        PageWrapper pageWrapper = new PageWrapper();
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
         if(user.getRole()==4){
             deviceMaintenanceList = deviceBeetleMapper.getFuckFuckByCustomProject(colName,searchText,user.getParent(),startDate,dateString);
         }else {
