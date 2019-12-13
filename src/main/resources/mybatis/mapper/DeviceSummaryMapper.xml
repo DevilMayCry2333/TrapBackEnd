@@ -158,7 +158,7 @@
         <if test="endDate != null and endDate != ''">
             and `date` &lt;= #{endDate}
         </if>
-        group by device_maintenance.${colName};
+        group by device_maintenance.${colName}
 
     </select>
 </mapper>

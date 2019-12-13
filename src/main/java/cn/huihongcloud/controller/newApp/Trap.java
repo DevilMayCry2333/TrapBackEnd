@@ -72,7 +72,7 @@ public class Trap {
 
     }
 
-    @RequestMapping("/Fuck")
+    @RequestMapping("/getTrapDetail")
     public Object Fuck(@RequestParam(required = false) String colName,
                                         @RequestParam int page,
                                         @RequestParam int limit,
