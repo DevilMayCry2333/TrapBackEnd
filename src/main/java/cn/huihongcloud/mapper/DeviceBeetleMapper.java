@@ -46,9 +46,9 @@ public interface DeviceBeetleMapper {
     List<Device_Medicine_MaintanceEntity> MedicineWorker(String scanId);
 
 
-    List<DeviceMaintenance> getFuckFuck(String colName,String searchText,String adcode,String submitDate,String endDate);
+    List<DeviceMaintenance> getDetail(String colName,String searchText,String adcode,String submitDate,String endDate);
 
-    List<DeviceMaintenance> getFuckFuckByCustomProject(String colName,String searchText,String customProject,String startDate,String endDate);
+    List<DeviceMaintenance> getDetailByCustomProject(String colName,String searchText,String customProject,String startDate,String endDate);
 
     List<DeviceMaintenance> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,String adcode);
 
