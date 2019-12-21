@@ -418,15 +418,15 @@ public class DryInjectionWatch {
         for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {
                 String tmp = d.getPic();
-                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomtown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + username + "/" + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomtown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
 
             }catch (Exception e){
 
             }
 
         }
-        imageDownUtil.tarFile();
-        response.sendRedirect("http://106.15.200.245/img.tar");
+        imageDownUtil.tarFile(username);
+        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
 
     }
 

@@ -404,13 +404,13 @@ public class NaturalEnemy {
         for (Device_NaturalEnemies_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {
                 String pic = d.getPic();
-                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1");
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + username + "/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1");
             }catch (Exception e){
             }
 
         }
-        imageDownUtil.tarFile();
-        response.sendRedirect("http://106.15.200.245/img.tar");
+        imageDownUtil.tarFile(username);
+        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
 
     }
 
