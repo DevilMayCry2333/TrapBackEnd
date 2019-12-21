@@ -279,7 +279,14 @@ public class DeadTreeCut {
                             @RequestParam String username,
                             @RequestParam String adcode
     ) throws IOException {
+
         User user = userService.getUserByUserName(username);
+
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
+        int code = imageDownUtil.deleteFile(user.getAdcode());
+        System.out.println("code" + code);
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
@@ -298,20 +305,15 @@ public class DeadTreeCut {
         }
 
         List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
-        ImageDownUtil imageDownUtil = new ImageDownUtil();
 
-        int code = imageDownUtil.deleteFile(user.getAdcode());
-        System.out.println("code" + code);
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
             System.out.println(d.getScanId());
             System.out.println(d.getSerial());
             try {
-                for(int i = 0;i<3;i++){
 //                    String tmp = d.getPic();
                     imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img"  +"/" + "施工前," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
                     imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "施工中," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
                     imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img"  + "/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
-                }
             }catch (Exception e){
                 e.printStackTrace();
             }

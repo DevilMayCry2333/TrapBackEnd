@@ -27,7 +27,7 @@ public class ImageDownUtil {
     public int deleteFile(String username){
         int code = 111111;
         try {
-            String cmd = "sudo rm -rf /var/www/html/img/*.*";
+            String cmd = "sudo rm -rf /var/www/html/img/*";
             System.out.println(cmd);
             Process proc = Runtime.getRuntime().exec(cmd);
 
