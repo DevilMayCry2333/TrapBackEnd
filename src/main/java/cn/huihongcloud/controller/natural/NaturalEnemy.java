@@ -415,8 +415,8 @@ public class NaturalEnemy {
             }
 
         }
-        imageDownUtil.tarFile(username);
-        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
+        imageDownUtil.tarFile(user.getAdcode());
+        response.sendRedirect("http://106.15.200.245/img" + user.getAdcode() + ".tar");
 
     }
 

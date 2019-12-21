@@ -397,6 +397,8 @@ public class DryInjectionWatch {
                             @RequestParam String adcode
     ) throws IOException {
 
+        User user = userService.getUserByUserName(username);
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
@@ -434,8 +436,8 @@ public class DryInjectionWatch {
             }
 
         }
-        imageDownUtil.tarFile(username);
-        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
+        imageDownUtil.tarFile(user.getAdcode());
+        response.sendRedirect("http://106.15.200.245/img" + user.getAdcode() + ".tar");
 
     }
 
