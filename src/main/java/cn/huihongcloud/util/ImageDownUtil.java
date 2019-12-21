@@ -13,9 +13,9 @@ public class ImageDownUtil {
             e.printStackTrace();
         }
     }
-    public void tarFile(){
+    public void tarFile(String username){
         try {
-            String cmd = "sudo tar -cvf /var/www/html/img.tar /var/www/html/img";
+            String cmd = "sudo tar -cvf /var/www/html/img" + username + ".tar /var/www/html/img" + username;
             System.out.println(cmd);
             Process proc = Runtime.getRuntime().exec(cmd);
             proc.waitFor();
@@ -24,10 +24,10 @@ public class ImageDownUtil {
         }
     }
 
-    public void deleteFile(){
+    public void deleteFile(String username){
         try {
-            String cmd = "sudo rm -rf /var/www/html/img/*.*";
-            String cmd2 = "sudo rm -rf /var/www/html/img.tar";
+            String cmd = "sudo rm -rf /var/www/html/img" + username+ "/*.*";
+            String cmd2 = "sudo rm -rf /var/www/html/img" + username+ ".tar";
             System.out.println(cmd);
             Process proc = Runtime.getRuntime().exec(cmd);
             Process proc2 = Runtime.getRuntime().exec(cmd2);

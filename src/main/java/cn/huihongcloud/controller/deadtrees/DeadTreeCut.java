@@ -300,21 +300,21 @@ public class DeadTreeCut {
         List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
         ImageDownUtil imageDownUtil = new ImageDownUtil();
 
-        imageDownUtil.deleteFile();
+        imageDownUtil.deleteFile(username);
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
             try {
                 for(int i = 0;i<3;i++){
 //                    String tmp = d.getPic();
-                    imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img/" + "施工前," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img/" + "施工中," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + username +"/" + "施工前," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img" + username + "/" + "施工中," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img" + username + "/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
                 }
             }catch (Exception e){
 
             }
 
         }
-        imageDownUtil.tarFile();
+        imageDownUtil.tarFile(username);
         response.sendRedirect("http://106.15.200.245/img.tar");
 
     }
