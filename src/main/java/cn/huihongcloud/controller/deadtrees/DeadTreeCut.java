@@ -313,7 +313,7 @@ public class DeadTreeCut {
                     imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
                 }
             }catch (Exception e){
-
+                e.printStackTrace();
             }
 
         }
