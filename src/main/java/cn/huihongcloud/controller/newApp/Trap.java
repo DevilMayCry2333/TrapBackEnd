@@ -206,14 +206,14 @@ public class Trap {
         for (DeviceMaintenance d:deviceMaintenances) {
             try {
                 String tmp = d.getImgId();
-                imageDownUtil.moveFile("/root/img/" + tmp, "/var/www/html/img/" + "编号："+ d.getCustomSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+                imageDownUtil.moveFile("/root/img/" + tmp, "/var/www/html/img" + username + "/" +  "编号："+ d.getCustomSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
             }catch (Exception e){
 
             }
 
         }
-        imageDownUtil.tarFile();
-        response.sendRedirect("http://106.15.200.245/img.tar");
+        imageDownUtil.tarFile(username);
+        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
     }
 
 
