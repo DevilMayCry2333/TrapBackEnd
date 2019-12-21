@@ -300,7 +300,7 @@ public class DeadTreeCut {
         List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
         ImageDownUtil imageDownUtil = new ImageDownUtil();
 
-        imageDownUtil.deleteFile(username);
+        imageDownUtil.deleteFile(user.getAdcode());
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
             try {
                 for(int i = 0;i<3;i++){
@@ -314,8 +314,8 @@ public class DeadTreeCut {
             }
 
         }
-        imageDownUtil.tarFile(username);
-        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
+        imageDownUtil.tarFile(user.getAdcode());
+        response.sendRedirect("http://106.15.200.245/img" + user.getAdcode() + ".tar");
 
     }
 
