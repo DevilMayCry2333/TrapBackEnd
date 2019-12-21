@@ -305,9 +305,9 @@ public class DeadTreeCut {
             try {
                 for(int i = 0;i<3;i++){
 //                    String tmp = d.getPic();
-                    imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + username +"/" + "施工前," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img" + username + "/" + "施工中," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img" + username + "/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img"  +"/" + "施工前," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "施工中," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "施工后," + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId());
                 }
             }catch (Exception e){
 
