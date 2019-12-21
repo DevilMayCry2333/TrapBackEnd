@@ -15,7 +15,7 @@ public class ImageDownUtil {
     }
     public void tarFile(String username){
         try {
-            String cmd = "sudo tar -cvf /var/www/html/img" + ".tar /var/www/html/img" + username;
+            String cmd = "sudo tar -cvf /var/www/html/img" + username + ".tar /var/www/html/img";
             System.out.println(cmd);
             Process proc = Runtime.getRuntime().exec(cmd);
             proc.waitFor();
