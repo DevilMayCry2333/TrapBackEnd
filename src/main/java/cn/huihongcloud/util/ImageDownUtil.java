@@ -1,5 +1,6 @@
 package cn.huihongcloud.util;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ImageDownUtil {
@@ -24,14 +25,22 @@ public class ImageDownUtil {
         }
     }
 
-    public int deleteFile(String username){
+    public int deleteFile(File file){
         int code = 111111;
         try {
-            String cmd = "sudo rm -rf /var/www/html/img/*";
-            System.out.println(cmd);
-            Process proc = Runtime.getRuntime().exec(cmd);
+            if (file.isFile()) {
+                System.out.println(file.getAbsoluteFile());//打印路径
+                file.delete();
+            }else {
+                String[] childFilePath = file.list();//获取文件夹下所有文件相对路径
+                for (String path:childFilePath){
+                    File childFile= new File(file.getAbsoluteFile()+"/"+path);
+                    deleteFile(childFile);//递归，对每个都进行判断
+                }
+                System.out.println(file.getAbsoluteFile());
+                file.delete();
+            }
 
-            code = proc.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
         }
