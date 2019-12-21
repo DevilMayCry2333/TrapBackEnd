@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -298,6 +299,8 @@ public class DeadTreeCut {
 
         List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
         ImageDownUtil imageDownUtil = new ImageDownUtil();
+
+        imageDownUtil.deleteFile();
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
             try {
                 for(int i = 0;i<3;i++){

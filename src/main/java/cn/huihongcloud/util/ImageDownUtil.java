@@ -23,4 +23,15 @@ public class ImageDownUtil {
             e.printStackTrace();
         }
     }
+
+    public void deleteFile(){
+        try {
+            String cmd = "sudo rm -rf /var/www/html/img/*";
+            System.out.println(cmd);
+            Process proc = Runtime.getRuntime().exec(cmd);
+            proc.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
