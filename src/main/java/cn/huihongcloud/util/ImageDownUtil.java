@@ -26,14 +26,11 @@ public class ImageDownUtil {
 
     public void deleteFile(String username){
         try {
-            String cmd = "sudo rm -rf /var/www/html/img" + "/*.*";
-            String cmd2 = "sudo rm -rf /var/www/html/img" + username+ ".tar";
+            String cmd = "sudo rm -rf /var/www/html/img/*.*";
             System.out.println(cmd);
             Process proc = Runtime.getRuntime().exec(cmd);
-            Process proc2 = Runtime.getRuntime().exec(cmd2);
             proc.waitFor();
-            proc2.waitFor();
-        } catch (IOException | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
