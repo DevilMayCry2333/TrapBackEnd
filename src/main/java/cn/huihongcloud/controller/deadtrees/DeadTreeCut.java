@@ -300,7 +300,8 @@ public class DeadTreeCut {
         List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
         ImageDownUtil imageDownUtil = new ImageDownUtil();
 
-        imageDownUtil.deleteFile(user.getAdcode());
+        int code = imageDownUtil.deleteFile(user.getAdcode());
+        System.out.println("code" + code);
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
             try {
                 for(int i = 0;i<3;i++){

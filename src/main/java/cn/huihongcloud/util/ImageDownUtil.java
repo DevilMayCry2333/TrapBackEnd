@@ -24,14 +24,17 @@ public class ImageDownUtil {
         }
     }
 
-    public void deleteFile(String username){
+    public int deleteFile(String username){
+        int code = 111111;
         try {
             String cmd = "sudo rm -rf /var/www/html/img/*.*";
             System.out.println(cmd);
             Process proc = Runtime.getRuntime().exec(cmd);
-            proc.waitFor();
+
+            code = proc.waitFor();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return code;
     }
 }
