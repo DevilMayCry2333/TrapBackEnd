@@ -28,18 +28,12 @@ public class ImageDownUtil {
     public int deleteFile(File file){
         int code = 111111;
         try {
-            if (file.isFile()) {
-                System.out.println(file.getAbsoluteFile());//打印路径
-                file.delete();
-            }else {
                 String[] childFilePath = file.list();//获取文件夹下所有文件相对路径
                 for (String path:childFilePath){
                     File childFile= new File(file.getAbsoluteFile()+"/"+path);
-                    deleteFile(childFile);//递归，对每个都进行判断
+                    childFile.delete();
+                    System.out.println(childFile.getAbsoluteFile());
                 }
-                System.out.println(file.getAbsoluteFile());
-                file.delete();
-            }
 
         } catch (Exception e) {
             e.printStackTrace();

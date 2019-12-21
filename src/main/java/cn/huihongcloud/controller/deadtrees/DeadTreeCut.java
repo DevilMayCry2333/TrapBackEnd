@@ -288,8 +288,7 @@ public class DeadTreeCut {
 
         int code = imageDownUtil.deleteFile(file);
         System.out.println("code" + code);
-        imageDownUtil.MkDir();
-        
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
