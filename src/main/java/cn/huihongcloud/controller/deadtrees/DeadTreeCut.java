@@ -303,6 +303,8 @@ public class DeadTreeCut {
         int code = imageDownUtil.deleteFile(user.getAdcode());
         System.out.println("code" + code);
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
+            System.out.println(d.getScanId());
+            System.out.println(d.getSerial());
             try {
                 for(int i = 0;i<3;i++){
 //                    String tmp = d.getPic();
