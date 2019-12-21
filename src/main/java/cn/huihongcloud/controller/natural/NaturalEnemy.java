@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -387,6 +388,11 @@ public class NaturalEnemy {
 
         User user = userService.getUserByUserName(username);
 
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
+        File file=new File("/var/www/html/img");//路径
+
+        int code = imageDownUtil.deleteFile(file);
 
         System.out.println(startDate);
         System.out.println(endDate);
@@ -400,11 +406,11 @@ public class NaturalEnemy {
             deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
         }
 
-        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
         for (Device_NaturalEnemies_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {
                 String pic = d.getPic();
-                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + username + "/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1");
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + "/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1");
             }catch (Exception e){
             }
 

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.ParsePosition;
@@ -400,6 +401,14 @@ public class DryInjectionWatch {
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
+
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
+        File file=new File("/var/www/html/img");//路径
+
+        int code = imageDownUtil.deleteFile(file);
+
+
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -414,7 +423,7 @@ public class DryInjectionWatch {
         }
 
         List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
-        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
         for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {
                 String tmp = d.getPic();

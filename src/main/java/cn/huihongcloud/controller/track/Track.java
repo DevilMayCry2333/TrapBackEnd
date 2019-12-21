@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -276,6 +277,14 @@ public class Track {
                             @RequestParam String adcode
     ) throws IOException {
         User user = userService.getUserByUserName(username);
+
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
+        File file=new File("/var/www/html/img");//路径
+
+        int code = imageDownUtil.deleteFile(file);
+
+
         System.out.println(startDate);
         System.out.println(endDate);
         System.out.println(colName);
@@ -299,16 +308,16 @@ public class Track {
         }else {
             deviceTrackMaintanceEntities  = deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
         }
-        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
         for (Device_Track_MaintanceEntity d:deviceTrackMaintanceEntities) {
             try {
                 for(int i = 0;i<5;i++){
 //                    String tmp = d.getPic();
-                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img" + username + "/" + "照片1," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img" + username + "/" + "照片2," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img" + username + "/" + "照片3," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img" + username + "/" + "照片4," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img" + username + "/" + "照片5," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img"  + "/" + "照片1," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "照片2," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img"  + "/" + "照片3," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img"  + "/" + "照片4," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img"  + "/" + "照片5," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
                 }
             }catch (Exception e){
 

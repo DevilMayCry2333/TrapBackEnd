@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -188,6 +189,14 @@ public class Trap {
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
+
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
+        File file=new File("/var/www/html/img");//路径
+
+        int code = imageDownUtil.deleteFile(file);
+
+
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -202,11 +211,10 @@ public class Trap {
         }
 
         List<DeviceMaintenance> deviceMaintenances = deviceBeetleMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
-        ImageDownUtil imageDownUtil = new ImageDownUtil();
         for (DeviceMaintenance d:deviceMaintenances) {
             try {
                 String tmp = d.getImgId();
-                imageDownUtil.moveFile("/root/img/" + tmp, "/var/www/html/img" + username + "/" +  "编号："+ d.getCustomSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+                imageDownUtil.moveFile("/root/img/" + tmp, "/var/www/html/img" + "/" +  "编号："+ d.getCustomSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
             }catch (Exception e){
 
             }

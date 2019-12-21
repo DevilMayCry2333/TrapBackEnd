@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
@@ -155,6 +156,13 @@ public class MedicineDataDetail {
         System.out.println(endDate);
         System.out.println(colName);
         System.out.println(searchText);
+
+        ImageDownUtil imageDownUtil = new ImageDownUtil();
+        File file=new File("/var/www/html/img");//路径
+
+        int code = imageDownUtil.deleteFile(file);
+
+
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -169,11 +177,11 @@ public class MedicineDataDetail {
         }
 
         List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities  = device_medicine_maintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
-        ImageDownUtil imageDownUtil = new ImageDownUtil();
+
         for (Device_Medicine_MaintanceEntity d:device_medicine_maintanceEntities) {
             try {
                 String tmp = d.getPic();
-                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + username + "/" + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + "/" + "编号："+ d.getSerial()+ "," + "区域：" + d.getCustomTown() + "," +"设备ID："+ d.getScanId()+ "," + "批次："+d.getBatch());
 
             }catch (Exception e){
 
