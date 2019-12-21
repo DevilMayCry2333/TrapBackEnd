@@ -147,7 +147,7 @@
             and t1.`date` &lt;= #{endDate}
         </if>
         <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
-            and ${colName} = #{searchText}
+            and t1.${colName} = #{searchText}
         </if>
 
     </select>
