@@ -46,4 +46,16 @@ public class ImageDownUtil {
         }
         return code;
     }
+
+    public void MkDir(){
+        try {
+            String cmd = "sudo mkdir /var/www/html/img";
+            System.out.println(cmd);
+            Process proc = Runtime.getRuntime().exec(cmd);
+            proc.waitFor();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }
