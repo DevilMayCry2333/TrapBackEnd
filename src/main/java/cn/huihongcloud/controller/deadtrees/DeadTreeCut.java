@@ -284,7 +284,7 @@ public class DeadTreeCut {
         User user = userService.getUserByUserName(username);
 
         ImageDownUtil imageDownUtil = new ImageDownUtil();
-        File file=new File("/var/www/html/img");//路径
+        File file=new File("/var/www/html/img/");//路径
 
         int code = imageDownUtil.deleteFile(file);
         System.out.println("code" + code);
