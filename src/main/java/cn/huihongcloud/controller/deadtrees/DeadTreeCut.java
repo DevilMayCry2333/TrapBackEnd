@@ -315,7 +315,7 @@ public class DeadTreeCut {
 
         }
         imageDownUtil.tarFile(username);
-        response.sendRedirect("http://106.15.200.245/img.tar");
+        response.sendRedirect("http://106.15.200.245/img" + username + ".tar");
 
     }
 
