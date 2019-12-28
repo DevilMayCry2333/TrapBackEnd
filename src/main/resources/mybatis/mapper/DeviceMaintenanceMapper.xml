@@ -425,10 +425,10 @@
     <insert id="addMaintenanceData">
         insert into device_maintenance
         (num, male_num, female_num, username, `date`, longitude, latitude, altitude, img_id, device_id, drug, remark,
-         batch, working_content, other_type, other_num,isactive,scanId,work_content_front,other_beetle_front,drug_front,CustomSerial,CustomTown)
+         batch, working_content, other_type, other_num,isactive,scanId,work_content_front,other_beetle_front,drug_front,CustomSerial,CustomTown,CustomProject,adcode)
         values
         (#{num}, #{maleNum}, #{femaleNum}, #{username}, #{date}, #{longitude}, #{latitude}, #{altitude}, #{imageId}, #{deviceId},
-        #{drug}, #{remark}, #{batch}, #{workingContent}, #{otherType}, #{otherNum},'0',#{scanId},#{workContentFront},#{otherBeetleFront},#{drugFront},#{customSerial},#{customTown})
+        #{drug}, #{remark}, #{batch}, #{workingContent}, #{otherType}, #{otherNum},'0',#{scanId},#{workContentFront},#{otherBeetleFront},#{drugFront},#{customSerial},#{customTown},#{customProject},#{adcode})
     </insert>
 
     <update id="reportData">

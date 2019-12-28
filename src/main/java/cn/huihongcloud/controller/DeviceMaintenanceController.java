@@ -78,8 +78,8 @@ public class DeviceMaintenanceController {
                                          Integer num,
                                          Integer maleNum,
                                          Integer femaleNum,
-                                         Integer allLength,
-                                         Integer curRow,
+                                         @RequestParam(required = false) Integer allLength,
+                                         @RequestParam(required = false) Integer curRow,
                                          String drug,
                                          String remark,
                                          Integer otherNum,
@@ -141,11 +141,12 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setOtherType(otherType);
         deviceMaintenance.setCustomSerial(realDeviceId.getCustomSerial());
         deviceMaintenance.setCustomTown(realDeviceId.getCustomTown());
+        deviceMaintenance.setCustomProject(realDeviceId.getCustomProject());
+        deviceMaintenance.setAdcode(realDeviceId.getAdcode());
 
         deviceMaintenance.setWorkContentFront(deviceMapper.getTrapWorkContentId(String.valueOf(deviceMaintenance.getWorkingContent())).getName());
         deviceMaintenance.setDrugFront(deviceMapper.getTrapInjectNameId(deviceMaintenance.getDrug()).getName());
         deviceMaintenance.setOtherBeetleFront(deviceMapper.getTrapBeetleInfoId(String.valueOf(deviceMaintenance.getOtherType())).getName());
-
 
 
         //随机数
@@ -225,11 +226,15 @@ public class DeviceMaintenanceController {
         }
         */
         JSONObject jsonObject = new JSONObject();
-        if(curRow>=allLength-1){
-            jsonObject.put("isComp",true);
-        }else {
-            jsonObject.put("isComp",false);
+        if(curRow!=null && allLength!=null){
+
+            if(curRow>=allLength-1){
+                jsonObject.put("isComp",true);
+            }else {
+                jsonObject.put("isComp",false);
+            }
         }
+
         return jsonObject;
 //        return Result.ok();
         //return null;

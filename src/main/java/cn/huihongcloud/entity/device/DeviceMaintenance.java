@@ -82,6 +82,7 @@ public class DeviceMaintenance {
 
     private String name;
 
+    private String adcode;
 
     //    @Excel(name = "其他天牛种类")
     private Integer otherType;
@@ -459,5 +460,13 @@ public class DeviceMaintenance {
 
     public void setCustomSerial(String customSerial) {
         this.customSerial = customSerial;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
     }
 }
