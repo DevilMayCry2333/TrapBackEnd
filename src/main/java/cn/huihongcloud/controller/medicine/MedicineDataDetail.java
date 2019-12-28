@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +46,10 @@ public class MedicineDataDetail {
     private Device_Medicine_MaintanceEntityMapper device_medicine_maintanceEntityMapper;
     @Autowired
     DeviceMapper deviceMapper;
+
+    @Value("${com.youkaiyu.batchImg}")
+    private String batchImgUrl;
+
 
     //JSONObject jsonObject = new JSONObject();
 
@@ -191,7 +196,7 @@ public class MedicineDataDetail {
 
         }
         imageDownUtil.tarFile(user.getAdcode());
-        response.sendRedirect("http://106.15.200.245/img" + user.getAdcode() + ".tar");
+        response.sendRedirect(this.batchImgUrl + user.getAdcode() + ".tar");
 
     }
 

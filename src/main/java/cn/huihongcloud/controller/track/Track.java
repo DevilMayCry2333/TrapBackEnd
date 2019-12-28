@@ -23,6 +23,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,6 +48,9 @@ public class Track {
     @Autowired
     Device_Track_MaintanceEntityMapper deviceTrackMaintanceEntityMapper;
 
+
+    @Value("${com.youkaiyu.batchImg}")
+    private String batchImgUrl;
 
     JSONObject jsonObject = new JSONObject();
 
@@ -325,7 +329,7 @@ public class Track {
 
         }
         imageDownUtil.tarFile(user.getAdcode());
-        response.sendRedirect("http://106.15.200.245/img" +  user.getAdcode() + ".tar");
+        response.sendRedirect(this.batchImgUrl +  user.getAdcode() + ".tar");
 
     }
 

@@ -14,6 +14,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,11 @@ public class Trap {
     UserMapper userMapper;
     @Autowired
     DeviceMapper deviceMapper;
+
+    @Value("${com.youkaiyu.batchImg}")
+    private String batchImgUrl;
+
+
     @RequestMapping("/getBeetle")
     public Object getBeetle(@RequestParam String username){
         User user = userMapper.getUserByUserName(username);
@@ -223,7 +229,7 @@ public class Trap {
 
         }
         imageDownUtil.tarFile(user.getAdcode());
-        response.sendRedirect("http://106.15.200.245/img" + user.getAdcode() + ".tar");
+        response.sendRedirect(this.batchImgUrl + user.getAdcode() + ".tar");
     }
 
 
