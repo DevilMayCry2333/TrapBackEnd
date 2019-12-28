@@ -768,7 +768,6 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-    and 1 >= t1.batch
 
   </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">

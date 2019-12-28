@@ -108,7 +108,6 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-    and 1 >= t1.batch
   </select>
   <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
     select device.CustomTown,device_medicine_maintance.*,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,

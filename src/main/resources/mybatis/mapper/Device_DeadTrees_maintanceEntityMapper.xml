@@ -308,7 +308,6 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
       <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
         and ${colName} = #{searchText}
       </if>
-      and 1 >= t1.batch
 
     </select>
     <select id="selectAllByAdcode" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
