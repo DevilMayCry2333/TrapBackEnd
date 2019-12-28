@@ -42,7 +42,7 @@
     </select>
     <select id="getAreaStatic" resultType="cn.huihongcloud.entity.AreaStatic">
         select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(device_Id)) avager,(sum(other_num)/count(device_Id)) avagerother,t1.CustomTown
-        from device_maintenance t1 left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
+        from device_maintenance t1 where t1.CustomProject = #{customProject}
         <if test="startDate != null and startDate != ''">
             and DATE(`date`) &gt;= #{startDate}
         </if>
@@ -57,7 +57,7 @@
 
     </select>
     <select id="getMonthStatic" resultType="cn.huihongcloud.entity.AreaStatic">
-        select sum(num) beetlesNum,sum(other_num) otherNum,MONTH(`date`) CustomTown from device_maintenance t1 left join device t2 on t1.device_id = t2.id
+        select sum(num) beetlesNum,sum(other_num) otherNum,MONTH(`date`) CustomTown from device_maintenance t1
         where CustomProject = #{customProject}
 
         <if test="startDate != null and startDate != ''">
@@ -71,7 +71,7 @@
     </select>
     <select id="getBatchStatic" resultType="cn.huihongcloud.entity.AreaStatic">
         select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(t1.device_id)) avager,batch customTown
-        from device_maintenance t1 left join device t2 on t1.device_id = t2.id where CustomProject = #{customProject}
+        from device_maintenance t1 where CustomProject = #{customProject}
         <if test="startDate != null and startDate != ''">
             and DATE(`date`) &gt;= #{startDate}
         </if>
@@ -82,9 +82,8 @@
     </select>
 
     <select id="getWorkerStatic" resultType="cn.huihongcloud.entity.WorkerStatic">
-        select t1.username workerName,t3.name realName,count(t1.username) num,DATE(`date`) currentDate,sum(t1.num) num1,sum(t1.other_num) num2,(sum(t1.num)+sum(t1.other_num)) num3,COUNT(DISTINCT t2.id) num5
+        select t1.username workerName,t3.name realName,count(t1.username) num,DATE(`date`) currentDate,sum(t1.num) num1,sum(t1.other_num) num2,(sum(t1.num)+sum(t1.other_num)) num3,COUNT(DISTINCT t1.id) num5
         from device_maintenance t1
-        left join device t2 on t2.id = t1.device_id
         left join user t3 on t1.username = t3.username
         where CustomProject = #{customProject}
         <if test="startDate != null and startDate != ''">

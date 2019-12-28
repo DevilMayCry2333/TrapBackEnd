@@ -7,9 +7,7 @@
         from (
         select device_maintenance.username username,sum(num) num1,device_maintenance.CustomTown,device_id
         from device_maintenance
-        left join device on  device.scanId= device_maintenance.scanId
-        where device.CustomProject = '${customProject}'
-        and device.project = '1'
+        where device_maintenance.CustomProject = '${customProject}'
 
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= '${startDate}'
