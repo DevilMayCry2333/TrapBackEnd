@@ -149,6 +149,7 @@
         <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
             and t1.${colName} = #{searchText}
         </if>
+        and 1 >= t1.batch
 
     </select>
     <select id="getDetailByCustomProject" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">

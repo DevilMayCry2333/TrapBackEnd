@@ -297,7 +297,7 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
   </select>
 
     <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
-      SELECT * FROM  Device_DeadTrees_maintance
+      SELECT * FROM  Device_DeadTrees_maintance t1
       WHERE Device_DeadTrees_maintance.customProject = #{customProject}
       <if test="startDate!=null and startDate !=''">
         and t1.submit_date >= #{startDate}
@@ -308,6 +308,7 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
       <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
         and ${colName} = #{searchText}
       </if>
+      and 1 >= t1.batch
 
     </select>
     <select id="selectAllByAdcode" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">

@@ -796,7 +796,7 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-
+    and 1 >= t1.batch
   </select>
 
   <select id="getDeadStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">
