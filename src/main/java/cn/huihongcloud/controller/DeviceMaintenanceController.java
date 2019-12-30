@@ -86,6 +86,7 @@ public class DeviceMaintenanceController {
                                          Integer otherType,
                                          int workingContent,HttpServletResponse response) throws Exception {
 
+        User user = userService.getUserByUserName(username);
 
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 //        logger.info("===开始记录数据===");
@@ -144,6 +145,7 @@ public class DeviceMaintenanceController {
         deviceMaintenance.setCustomProject(realDeviceId.getCustomProject());
         deviceMaintenance.setAdcode(realDeviceId.getAdcode());
 
+        deviceMaintenance.setManager(user.getParent());
         deviceMaintenance.setWorkContentFront(deviceMapper.getTrapWorkContentId(String.valueOf(deviceMaintenance.getWorkingContent())).getName());
         deviceMaintenance.setDrugFront(deviceMapper.getTrapInjectNameId(deviceMaintenance.getDrug()).getName());
         deviceMaintenance.setOtherBeetleFront(deviceMapper.getTrapBeetleInfoId(String.valueOf(deviceMaintenance.getOtherType())).getName());
@@ -168,12 +170,17 @@ public class DeviceMaintenanceController {
             // 因为现在生成的二维码也就是设备，当接收日期不为空时才去判断是否偏离太远，否则认为是第一次收到设备信息了
 
             // 现在乡镇的信息改为用解析的, 如果不存在乡镇信息调用百度接口去解析
-            if (device != null && device.getTown() == null) {
+            if (device != null) {
                 device.setLatitude(latitude);
                 device.setLongitude(longitude);
                 BDInfo bdInfo = mBDComponent.parseLocation(device.getLatitude(), device.getLongitude());
                 device.setTown(bdInfo.getResult().getAddressComponent().getTown());
                 deviceService.updateDevice(device);
+                deviceMaintenance.setTown(bdInfo.getResult().getAddressComponent().getTown());
+                deviceMaintenance.setArea(user.getArea());
+                deviceMaintenance.setCity(user.getCity());
+                deviceMaintenance.setProvince(user.getProvince());
+                System.out.println(user.getArea());
             }
 
             if (device != null && device.getReceiveDate() != null) {

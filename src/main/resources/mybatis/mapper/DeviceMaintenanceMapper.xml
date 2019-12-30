@@ -201,14 +201,13 @@
         device_maintenance.img_id,
         device_maintenance.drug,
         device_maintenance.remark,
-        device.province,
-        device.city,
-        device.area,
-        device.town,
+        device_maintenance.province,
+        device_maintenance.city,
+        device_maintenance.area,
+        device_maintenance.town,
         device_maintenance.working_content,
         device_maintenance.reported
         from device_maintenance
-        left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username
         where device_id in
         (select id from device where
@@ -226,12 +225,12 @@
         <if test="condition != null and condition != '' and condition !='null'">
             and (
             user.username = #{condition} or
-            device.province = #{condition} or
-            device.city = #{condition} or
-            device.area =  #{condition} or
-            device.town = #{condition} or
+            device_maintenance.province = #{condition} or
+            device_maintenance.city = #{condition} or
+            device_maintenance.area =  #{condition} or
+            device_maintenance.town = #{condition} or
             device_maintenance.device_id = #{condition} or
-            device.manager=#{condition}
+            device_maintenance.manager=#{condition}
             )
         </if>
         <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -425,10 +424,10 @@
     <insert id="addMaintenanceData">
         insert into device_maintenance
         (num, male_num, female_num, username, `date`, longitude, latitude, altitude, img_id, device_id, drug, remark,
-         batch, working_content, other_type, other_num,isactive,scanId,work_content_front,other_beetle_front,drug_front,CustomSerial,CustomTown,CustomProject,adcode)
+         batch, working_content, other_type, other_num,isactive,scanId,work_content_front,other_beetle_front,drug_front,CustomSerial,CustomTown,CustomProject,adcode,town,area,city,province,manager)
         values
         (#{num}, #{maleNum}, #{femaleNum}, #{username}, #{date}, #{longitude}, #{latitude}, #{altitude}, #{imageId}, #{deviceId},
-        #{drug}, #{remark}, #{batch}, #{workingContent}, #{otherType}, #{otherNum},'0',#{scanId},#{workContentFront},#{otherBeetleFront},#{drugFront},#{customSerial},#{customTown},#{customProject},#{adcode})
+        #{drug}, #{remark}, #{batch}, #{workingContent}, #{otherType}, #{otherNum},'0',#{scanId},#{workContentFront},#{otherBeetleFront},#{drugFront},#{customSerial},#{customTown},#{customProject},#{adcode},#{town},#{area},#{city},#{province},#{manager})
     </insert>
 
     <update id="reportData">
@@ -547,7 +546,6 @@
     <select id="getMonthSummaryByArea" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
-        left join device on device_id=device.id
         where adcode like concat(#{adcode}, '%')
         and isactive = '0'
         
@@ -570,7 +568,6 @@
     <select id="getMonthSummaryByTown" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
-        left join device on device_id=device.id
         where adcode = #{adcode}
         and isactive = '0'
         
@@ -722,7 +719,6 @@
         from (
         select device_maintenance.CustomTown,town,sum(num) num1,device_id
         from device_maintenance
-        left join device on device_id = device.id
         where adcode = #{adcode}
               and isactive = '0'
         
@@ -741,7 +737,6 @@
          from (
             select area,sum(num) num1,CustomTown,device_id,adcode
             from device_maintenance
-            left join device on device_id = device.id
             where adcode like concat(#{code}, '%')
                   and isactive = '0'
         
@@ -873,14 +868,13 @@
         device_maintenance.img_id,
         device_maintenance.drug,
         device_maintenance.remark,
-        device.province,
-        device.city,
-        device.area,
-        device.town,
+        device_maintenance.province,
+        device_maintenance.city,
+        device_maintenance.area,
+        device_maintenance.town,
         device_maintenance.working_content,
         device_maintenance.reported
         from device_maintenance
-        left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username
         where device_id in
         (select id from device where
@@ -898,10 +892,10 @@
         <if test="condition != null and condition != '' and condition != 'null'">
             and (
             user.username =#{condition} or
-            device.province =#{condition} or
-            device.city = #{condition} or
-            device.area =#{condition} or
-            device.town = #{condition} or
+            device_maintenance.province =#{condition} or
+            device_maintenance.city = #{condition} or
+            device_maintenance.area =#{condition} or
+            device_maintenance.town = #{condition} or
             device_maintenance.device_id = #{condition}
             )
         </if>

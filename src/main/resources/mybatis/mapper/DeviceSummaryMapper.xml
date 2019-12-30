@@ -20,13 +20,12 @@
         group by device.city
     </select>
     <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
-        select count(distinct device_id) deviceCount, sum(num) beetleCount, device.area `name`, device.adcode code
+        select count(distinct device_id) deviceCount, sum(num) beetleCount, device_maintenance.area `name`, device_maintenance.adcode code
         from device_maintenance
-        left join device on device_maintenance.device_id = device.id
-        where adcode like concat(#{adcode}, '%')
+        where device_maintenance.adcode like concat(#{adcode}, '%')
               and isactive = '0'
         
-              and  device.area is not null
+              and  device_maintenance.area is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
         </if>
@@ -34,16 +33,15 @@
         <if test="endDate != null and endDate !=''">
             and `date` &lt;= #{endDate}
         </if>
-        group by device.area
+        group by device_maintenance.area
     </select>
     <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
-        select count(distinct device_id) deviceCount, sum(num) beetleCount, device.town `name`, device.adcode code
+        select count(distinct device_id) deviceCount, sum(num) beetleCount, device_maintenance.town `name`, device_maintenance.adcode code
         from device_maintenance
-        left join device on device_maintenance.device_id = device.id
-        where adcode like concat(#{adcode}, '%')
+        where device_maintenance.adcode like concat(#{adcode}, '%')
               and isactive = '0'
         
-              and device.town is not null
+              and device_maintenance.town is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
         </if>
@@ -51,16 +49,15 @@
         <if test="endDate != null and endDate !=''">
             and `date` &lt;= #{endDate}
         </if>
-        group by device.town
+        group by device_maintenance.town
     </select>
     <select id="queryDeviceSummaryByManager" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
-        select count(distinct device_id) deviceCount, sum(num) beetleCount, device.manager `name`, device.adcode code
+        select count(distinct device_id) deviceCount, sum(num) beetleCount, device_maintenance.manager `name`, device_maintenance.adcode code
         from device_maintenance
-        left join device on device_maintenance.device_id = device.id
-        where device.adcode like concat(#{adcode}, '%')
+        where device_maintenance.adcode like concat(#{adcode}, '%')
         and isactive = '0'
         
-        and device.manager is not null
+        and device_maintenance.manager is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
         </if>
@@ -68,13 +65,12 @@
         <if test="endDate != null and endDate !=''">
             and `date` &lt;= #{endDate}
         </if>
-        group by device.manager
+        group by device_maintenance.manager
     </select>
     <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
         select count(distinct device_id) deviceCount, sum(num) beetleCount, username `name`, username code
         from device_maintenance
-        left join device on device_maintenance.device_id = device.id
-        where adcode like concat(#{adcode}, '%')
+        where device_maintenance.adcode like concat(#{adcode}, '%')
               and isactive = '0'
         
               and username is not null
@@ -91,8 +87,7 @@
         select count(distinct device_id) `count`, sum(num) `sum`
         from device_maintenance
 
-        left join device on device.id = device_maintenance.device_id
-        where adcode like concat(#{adcode}, '%')
+        where device_maintenance.adcode like concat(#{adcode}, '%')
               and isactive = '0'
         
         <if test="startDate != null and startDate !=''">
@@ -106,7 +101,7 @@
         </if>
     </select>
     <select id="queryDeviceSum4" resultType="java.util.Map">
-        select count(distinct device_id) `count`, sum(num) `sum` from device_maintenance
+        select count(distinct device_maintenance.device_id) `count`, sum(num) `sum` from device_maintenance
         left join device on device.id = device_maintenance.device_id
         left join user on device_maintenance.username = user.username
         where parent = #{adcode}

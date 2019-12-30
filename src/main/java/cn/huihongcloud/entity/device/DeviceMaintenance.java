@@ -130,6 +130,8 @@ public class DeviceMaintenance {
 
     private String customProject;
 
+    private String manager;
+
 
 
 
@@ -468,5 +470,13 @@ public class DeviceMaintenance {
 
     public void setAdcode(String adcode) {
         this.adcode = adcode;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 }

@@ -15,6 +15,7 @@ import com.github.pagehelper.PageHelper;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,8 +84,9 @@ public class Trap {
     public Object Fuck(@RequestParam(required = false) String colName,
                                         @RequestParam int page,
                                         @RequestParam int limit,
+
                                         @RequestParam(required = false) String searchText,
-                                        @RequestParam String username,
+                       @RequestAttribute("username") String username,
                         @RequestParam(required = false) String startDate,
                        @RequestParam(required = false) String endDate){
 
@@ -117,6 +119,7 @@ public class Trap {
 
 
         User user = userMapper.getUserByUserName(username);
+        System.out.println(username);
         List<DeviceMaintenance> deviceMaintenanceList = null;
         System.out.println(startDate);
         PageWrapper pageWrapper = new PageWrapper();
