@@ -2,13 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.huihongcloud.mapper.DeviceSummaryMapper">
     <select id="queryDeviceSummaryByProvince" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
-        select count(distinct device_id ) deviceCount, sum(num) beetleCount, device.city `name`, device.adcode code
+        select count(distinct device_id ) deviceCount, sum(num) beetleCount, device_maintenance.city `name`, device_maintenance.adcode code
         from device_maintenance
-        left join device on device_maintenance.device_id = device.id
         where adcode like concat(#{adcode}, '%')
             and isactive = '0'
         
-            and device.city is not null
+            and device_maintenance.city is not null
         <if test="startDate != null and startDate !=''">
             and `date` &gt;= #{startDate}
         </if>
@@ -17,7 +16,7 @@
             and `date` &lt;= #{endDate}
         </if>
 
-        group by device.city
+        group by device_maintenance.city
     </select>
     <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
         select count(distinct device_id) deviceCount, sum(num) beetleCount, device_maintenance.area `name`, device_maintenance.adcode code

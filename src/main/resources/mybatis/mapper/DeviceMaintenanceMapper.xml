@@ -523,7 +523,6 @@
     <select id="getMonthSummaryByCity" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select sum(num) num,DATE_FORMAT(`date`, '%m') `month`
         from device_maintenance
-        left join device on device_id=device.id
         where adcode like concat(#{adcode}, '%')
         and isactive = '0'
         
@@ -754,7 +753,6 @@
         from (
         select city,sum(num) num1,CustomTown,device_id
          from device_maintenance
-        left join device on device_id = device.id
         where adcode like concat(#{code}, '%')
               and isactive = '0'
         
