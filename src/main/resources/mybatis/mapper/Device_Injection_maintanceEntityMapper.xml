@@ -200,8 +200,8 @@
   </insert>
 
     <insert id="addMaintanceData">
-        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,wood_status_front,injection_num,Remarks,work_content_front,Pic,username,town,inject_name_front,chest_diameter,scanId)
-        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodStatusFront},#{injectionNum},#{remarks},#{workContentFront},#{pic},#{username},#{town},#{injectNameFront},#{chestDiameter},#{scanId})
+        insert into Device_Injection_maintance (serial,region,submit_date,batch,Worker,device_Id,longitude,latitude,altitude,dataPrecision,wood_status_front,injection_num,Remarks,work_content_front,Pic,username,town,inject_name_front,chest_diameter,scanId,adcode,CustomTown,CustomProject,CustomSerial,area,city,province)
+        values (#{serial},#{region},#{submitDate},#{batch},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{dataPrecision},#{woodStatusFront},#{injectionNum},#{remarks},#{workContentFront},#{pic},#{username},#{town},#{injectNameFront},#{chestDiameter},#{scanId},#{adcode},#{customtown},#{customProject},#{customSerial},#{area},#{city},#{province})
     </insert>
 
     <update id="reportData">
@@ -284,16 +284,16 @@
     </select>
 
     <select id="selectByConditions" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-        select device_injection_maintance.*,(inject_woodstatus.name) woodStatusName,device.CustomTown from device_injection_maintance left join device on device_injection_maintance.device_Id = device.id
+        select device_injection_maintance.*,(inject_woodstatus.name) woodStatusName,device_injection_maintance.CustomTown from device_injection_maintance
          left join inject_woodstatus on device_injection_maintance.woodstatus = inject_woodstatus.id
          where CustomProject = #{customProject}
         <if test="searchText != null and searchText != ''">
           <choose>
             <when test="optionIndex == 1">
-              and device.CustomSerial = #{searchText}
+              and device_injection_maintance.CustomSerial = #{searchText}
             </when>
             <when test="optionIndex == 2">
-              and device.CustomTown = #{searchText}
+              and device_injection_maintance.CustomTown = #{searchText}
             </when>
             <when test="optionIndex == 3">
               and batch = #{searchText}
@@ -764,17 +764,17 @@
 
   
   <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-    select device.CustomTown,device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
+    select device_injection_maintance.CustomTown,device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
     sum(if(device_injection_maintance.woodstatus=#{deadId},1,0)) WoodStatusSum,
      count(device_injection_maintance.id) woodNum
-    from device left join device_injection_maintance on device.id = device_injection_maintance.device_Id
+    from device_injection_maintance
     <if test="startDate != null and startDate != ''">
       where submit_date &gt;= #{startDate}
     </if>
     <if test="endDate != null and endDate != ''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.CustomTown
+    group by device_injection_maintance.CustomTown
   </select>
     <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
       select * from device_injection_maintance where device_Id = #{deviceId} order by batch desc;

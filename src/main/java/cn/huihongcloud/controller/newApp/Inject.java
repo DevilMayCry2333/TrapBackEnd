@@ -167,8 +167,17 @@ public class Inject {
         deviceInjectionMaintanceEntity.setBatch(maxBatchNum + 1);
         deviceInjectionMaintanceEntity.setScanId(Long.valueOf(realDeviceId.getScanId()));
 
+        deviceInjectionMaintanceEntity.setCustomtown(realDeviceId.getCustomTown());
+
+        deviceInjectionMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
+
+        deviceInjectionMaintanceEntity.setCustomSerial(realDeviceId.getCustomSerial());
+        deviceInjectionMaintanceEntity.setAdcode(realDeviceId.getAdcode());
+
+
 
         BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
+
 
         deviceInjectionMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
@@ -183,6 +192,10 @@ public class Inject {
 //        Date format = simpleDateFormat.format(date);
         deviceInjectionMaintanceEntity.setSubmitDate(date);
         deviceInjectionMaintanceEntity.setRegion(realDeviceId.getCustomTown());
+
+        deviceInjectionMaintanceEntity.setArea(user.getArea());
+        deviceInjectionMaintanceEntity.setCity(user.getCity());
+        deviceInjectionMaintanceEntity.setProvince(user.getProvince());
 
         //修改了一些
 

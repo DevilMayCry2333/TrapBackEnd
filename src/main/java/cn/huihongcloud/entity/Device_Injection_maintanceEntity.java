@@ -114,6 +114,15 @@ public class Device_Injection_maintanceEntity {
 
     private Double deadRate;
 
+    private String customSerial;
+
+    private String adcode;
+
+    private String customProject;
+
+
+
+
     public Double getAverageNum() {
         return averageNum;
     }
@@ -493,5 +502,29 @@ public class Device_Injection_maintanceEntity {
 
     public void setScanId(Long scanId) {
         this.scanId = scanId;
+    }
+
+    public String getCustomSerial() {
+        return customSerial;
+    }
+
+    public void setCustomSerial(String customSerial) {
+        this.customSerial = customSerial;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
+    }
+
+    public String getCustomProject() {
+        return customProject;
+    }
+
+    public void setCustomProject(String customProject) {
+        this.customProject = customProject;
     }
 }
