@@ -349,39 +349,36 @@
     Device_Injection_maintance.reported,
     Device_Injection_maintance.inject_name,
     Device_Injection_maintance.chest_diameter,
-    device.province,
-    device.city,
-    device.area,
+    Device_Injection_maintance.province,
+    Device_Injection_maintance.city,
+    Device_Injection_maintance.area,
     Device_Injection_maintance.town,
     Device_Injection_maintance.work_content,
     Device_Injection_maintance.username,
     Device_Injection_maintance.WoodStatus
     from Device_Injection_maintance
-    left join device on device.id = Device_Injection_maintance.device_Id
     left join user on Device_Injection_maintance.Worker = user.username
-    where device_Id in
-    (select id from device where
-    1 = 1
+    where 1 = 1
     <if test="adcode != null and adcode != ''">
       and
-      adcode like concat(#{adcode}, '%')
+      Device_Injection_maintance.adcode like concat(#{adcode}, '%')
     </if>
 
     <if test="town != null and town != ''">
       and
       Device_Injection_maintance.town = #{town}
     </if>
-    )
+
     <if test="condition != null and condition != '' and condition !='null'">
       and (
       user.username = #{condition} or
-      device.province = #{condition} or
-      device.city = #{condition} or
-      device.area =  #{condition} or
+      Device_Injection_maintance.province = #{condition} or
+      Device_Injection_maintance.city = #{condition} or
+      Device_Injection_maintance.area =  #{condition} or
       Device_Injection_maintance.town = #{condition} or
       Device_Injection_maintance.device_Id = #{condition} or
-      device.manager=#{condition} or
-      device.CustomProject = #{condition}
+      Device_Injection_maintance.username=#{condition} or
+      Device_Injection_maintance.CustomProject = #{condition}
       )
     </if>
     <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -413,15 +410,14 @@
     Device_Injection_maintance.inject_name,
     Device_Injection_maintance.chest_diameter,
     Device_Injection_maintance.reported,
-    device.province,
-    device.city,
-    device.area,
-    device.town,
+    Device_Injection_maintance.province,
+    Device_Injection_maintance.city,
+    Device_Injection_maintance.area,
+    Device_Injection_maintance.town,
     Device_Injection_maintance.work_content,
     Device_Injection_maintance.WoodStatus,
     Device_Injection_maintance.username
     from Device_Injection_maintance
-    left join device on device.id = Device_Injection_maintance.device_Id
     left join user on Device_Injection_maintance.Worker = user.username
     where device_Id in
     (select id from device where
@@ -439,12 +435,12 @@
     <if test="condition != null and condition != '' and condition != 'null'">
       and (
       user.username =#{condition} or
-      device.province =#{condition} or
-      device.city = #{condition} or
-      device.area =#{condition} or
-      device.town = #{condition} or
+      Device_Injection_maintance.province =#{condition} or
+      Device_Injection_maintance.city = #{condition} or
+      Device_Injection_maintance.area =#{condition} or
+      Device_Injection_maintance.town = #{condition} or
       Device_Injection_maintance.device_Id = #{condition} or
-      device.CustomProject = #{condition}
+      Device_Injection_maintance.CustomProject = #{condition}
       )
     </if>
     <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -636,12 +632,11 @@
     order by submit_date desc
   </select>
   <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
-    select count(distinct device_id) deviceCount, sum(injection_num) injectNum, device.area `name`, device.adcode code
+    select count(distinct device_id) deviceCount, sum(injection_num) injectNum, Device_Injection_maintance.area `name`, Device_Injection_maintance.adcode code
     from Device_Injection_maintance
-    left join device on Device_Injection_maintance.device_id = device.id
     where adcode like concat(#{adcode}, '%')
 
-    and  device.area is not null
+    and  Device_Injection_maintance.area is not null
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
     </if>
@@ -649,14 +644,13 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.area
+    group by Device_Injection_maintance.area
   </select>
 
   <select id="queryDeviceSum" resultType="java.util.Map">
     select count(distinct device_Id) `count`, sum(injection_num) injectNum
     from Device_Injection_maintance
 
-    left join device on device.id = Device_Injection_maintance.device_Id
     where adcode like concat(#{adcode}, '%')
 
     <if test="startDate != null and startDate !=''">
@@ -672,7 +666,6 @@
 
   <select id="queryDeviceSum4" resultType="java.util.Map">
     select count(distinct device_Id) `count`, sum(injection_num) injectNum from Device_Injection_maintance
-    left join device on device.id = Device_Injection_maintance.device_id
     left join user on Device_Injection_maintance.username = user.username
     where parent = #{adcode}
 
@@ -687,7 +680,6 @@
   <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
     select count(distinct device_Id) deviceCount, sum(injection_num) injectNum, Worker `name`, Worker code
     from Device_Injection_maintance
-    left join device on Device_Injection_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%')
 
     and username is not null
