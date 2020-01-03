@@ -66,7 +66,7 @@ public interface DeviceMapper {
 
     int clearWorkerDeviceRelation(@Param("worker") String worker);
 
-    List<Device> getDeviceByCustomProject(String projectUserName);
+    List<Device> getDeviceByCustomProject(String projectUserName,String project);
 
     List<Device> getDeviceByCustomProjectAndTrap(String projectUserName);
 

@@ -69,7 +69,7 @@ public class Trap {
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
         String projectName = user2.getUsername();
-        return deviceMapper.getDeviceByCustomProject(projectName);
+        return deviceMapper.getDeviceByCustomProject(projectName,null);
     }
 
     @RequestMapping("/TrapWorker")

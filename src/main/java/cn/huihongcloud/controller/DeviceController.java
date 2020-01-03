@@ -55,7 +55,8 @@ public class DeviceController {
                                 int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName,
-                                  @RequestParam("isMap") boolean isMap) {
+                                  @RequestParam("isMap") boolean isMap,
+                             @RequestParam("project") String project) {
         User user = userService.getUserByUserName(username);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
@@ -118,7 +119,7 @@ public class DeviceController {
                 deviceList = deviceMapper.getDeviceByCustomProjectAndTrap(user.getParent());
 
             }else {
-                deviceList = deviceMapper.getDeviceByCustomProject(user.getParent());
+                deviceList = deviceMapper.getDeviceByCustomProject(user.getParent(),project);
                 System.out.println("执行这句了");
                 System.out.println(deviceList.size());
 
@@ -136,7 +137,7 @@ public class DeviceController {
             User user2 = userService.getUserByUserName(user1.getParent());
             System.out.println(user2.getUsername());
 
-            deviceList = deviceMapper.getDeviceByCustomProject(user2.getUsername());
+            deviceList = deviceMapper.getDeviceByCustomProject(user2.getUsername(),project);
         }
 
 
