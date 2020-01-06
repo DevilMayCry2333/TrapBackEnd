@@ -124,6 +124,15 @@ public class Enemy {
 
         deviceNaturalEnemiesMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
+        
+        deviceNaturalEnemiesMaintanceEntity.setArea(user.getArea());
+        deviceNaturalEnemiesMaintanceEntity.setCity(user.getCity());
+        deviceNaturalEnemiesMaintanceEntity.setProvince(user.getProvince());
+        deviceNaturalEnemiesMaintanceEntity.setAdcode(user.getAdcode());
+        deviceNaturalEnemiesMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
+        deviceNaturalEnemiesMaintanceEntity.setCustomSerial(realDeviceId.getCustomSerial());
+
+
 
 
         //修改了一些

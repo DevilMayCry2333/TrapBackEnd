@@ -74,6 +74,12 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String precision;
 
+    private String adcode;
+
+    private String customSerial;
+
+    private String customProject;
+
 
     public String getNatualMannerTotal() {
         return natualMannerTotal;
@@ -388,5 +394,29 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     public void setDeviceNum(Integer deviceNum) {
         this.deviceNum = deviceNum;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
+    }
+
+    public String getCustomSerial() {
+        return customSerial;
+    }
+
+    public void setCustomSerial(String customSerial) {
+        this.customSerial = customSerial;
+    }
+
+    public String getCustomProject() {
+        return customProject;
+    }
+
+    public void setCustomProject(String customProject) {
+        this.customProject = customProject;
     }
 }

@@ -139,8 +139,8 @@
     </trim>
   </insert>
     <insert id="addMaintance">
-        insert into Device_NaturalEnemies_maintance (reported,Pic,serial,submit_date,region,batch,username,Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks,town,scanId,customTown)
-        values (#{reported},#{pic},#{serial},#{submitDate},#{region},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks},#{town},#{scanId},#{customTown})
+        insert into Device_NaturalEnemies_maintance (reported,Pic,serial,submit_date,region,batch,username,Worker,device_Id,longitude,latitude,altitude,`precision`,PredatorsType,Release_Num,Remarks,town,scanId,customTown,area,city,province,adcode,customSerial,customProject)
+        values (#{reported},#{pic},#{serial},#{submitDate},#{region},#{batch},#{username},#{worker},#{deviceId},#{longitude},#{latitude},#{altitude},#{precision},#{predatorstype},#{releaseNum},#{remarks},#{town},#{scanId},#{customTown},#{area},#{city},#{province},#{adcode},#{customSerial},#{customProject})
     </insert>
     <update id="reportData">
         update Device_NaturalEnemies_maintance
@@ -756,8 +756,8 @@
 
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
 
-     SELECT * FROM  Device_NaturalEnemies_maintance t1 LEFT JOIN device t2 ON t1.device_Id = t2.id
-     WHERE t2.CustomProject = #{customProject}
+     SELECT * FROM  Device_NaturalEnemies_maintance t1
+     WHERE t1.CustomProject = #{customProject}
 
      <if test="startDate!=null and startDate !=''">
         and t1.`submit_date` >= #{startDate}
@@ -828,8 +828,8 @@
   </select>
     <select id="selectDevicesByDateAndColSearch"
             resultType="java.lang.Integer">
-      SELECT count(distinct device_Id) FROM  Device_NaturalEnemies_maintance t1 LEFT JOIN device t2 ON t1.device_Id = t2.id
-      WHERE t2.CustomProject = #{customProject}
+      SELECT count(distinct device_Id) FROM  Device_NaturalEnemies_maintance t1
+      WHERE t1.CustomProject = #{customProject}
 
       <if test="startDate!=null and startDate !=''">
         and t1.`submit_date` >= #{startDate}
@@ -844,8 +844,8 @@
     </select>
   <select id="selectAllByDateAndColSearch"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-    SELECT * FROM  Device_NaturalEnemies_maintance t1 LEFT JOIN device t2 ON t1.device_Id = t2.id
-    WHERE t2.CustomProject = #{customProject}
+    SELECT * FROM  Device_NaturalEnemies_maintance t1
+    WHERE t1.CustomProject = #{customProject}
 
     <if test="startDate!=null and startDate !=''">
       and t1.`submit_date` >= #{startDate}
@@ -860,8 +860,8 @@
   <select id="selectNaturalByCustomReigonCustomProject"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select t1.*,COUNT(t1.device_Id) releasePlace
-    from device_naturalenemies_maintance t1 left join device t2 on t1.device_Id = t2.id
-    where t2.CustomProject = #{customProject}
+    from device_naturalenemies_maintance t1
+    where t1.CustomProject = #{customProject}
     <if test="startDate != null and startDate != ''">
       and t1.submit_date &gt;= #{startDate}
     </if>
@@ -885,52 +885,46 @@
   <select id="queryNatualMannerOne" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select count(PredatorsType) natualMannerOne
     from device_naturalenemies_maintance
-    left join device on device_naturalenemies_maintance.device_Id = device.id
     where device_naturalenemies_maintance.customTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '花绒寄甲'
   </select>
   <select id="queryNatualMannerTwo" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select count(PredatorsType) natualMannerTwo
     from device_naturalenemies_maintance
-    left join device on device_naturalenemies_maintance.device_Id = device.id
     where device_naturalenemies_maintance.customTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '肿腿蜂'
   </select>
   <select id="queryNatualMannerThree"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
     select count(PredatorsType) natualMannerThree
     from device_naturalenemies_maintance
-    left join device on device_naturalenemies_maintance.device_Id = device.id
     where device_naturalenemies_maintance.customTown = #{customTown} and device_naturalenemies_maintance.PredatorsType = '卵卡'
   </select>
   <select id="queryNatualMannerOneBytownOne" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(PredatorsType) NaturalMannerOneByTown
     from device_naturalenemies_maintance
-    left join device on device_naturalenemies_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲' and device_naturalenemies_maintance.town=#{town}
   </select>
   <select id="queryNatualMannerOneBytownTwo" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
         select count(PredatorsType) NaturalMannerTwoByTown
     from device_naturalenemies_maintance
-    left join device on device_naturalenemies_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂' and device_naturalenemies_maintance.town=#{town}
   </select>
   <select id="queryNatualMannerOneBytownThree" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(PredatorsType) NaturalMannerThreeByTown
     from device_naturalenemies_maintance
-    left join device on device_naturalenemies_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.town=#{town}
   </select>
   <select id="queryNatualMannerOneByCustomProject" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-     select count(PredatorsType) naturalMannerOneByCustomProject from device_naturalenemies_maintance left join device on device.id = device_naturalenemies_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲' and device.CustomProject=#{CustomProject}
+     select count(PredatorsType) naturalMannerOneByCustomProject from device_naturalenemies_maintance
+    where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲' and device_naturalenemies_maintance.CustomProject=#{CustomProject}
   </select>
   <select id="queryNatualMannerTwoByCustomProject" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-    select count(PredatorsType) naturalMannerTwoByCustomProject from device_naturalenemies_maintance left join device on device.id = device_naturalenemies_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂' and device.CustomProject=#{CustomProject}
+    select count(PredatorsType) naturalMannerTwoByCustomProject from device_naturalenemies_maintance
+    where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂' and device_naturalenemies_maintance.CustomProject=#{CustomProject}
   </select>
   <select id="queryNatualMannerThreeByCustomProject"
           resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-    select count(PredatorsType) naturalMannerThreeByCustomProject from device_naturalenemies_maintance left join device on device.id = device_naturalenemies_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device.CustomProject=#{CustomProject}
+    select count(PredatorsType) naturalMannerThreeByCustomProject from device_naturalenemies_maintance
+    where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.CustomProject=#{CustomProject}
   </select>
 
 </mapper>
