@@ -213,17 +213,16 @@
     SELECT * FROM  Device_NaturalEnemies_maintance left join device on device.id = Device_NaturalEnemies_maintance.device_Id WHERE username = #{username} LIMIT #{num1},#{num2};
   </select>
     <select id="countAllByArea" resultType="java.lang.Integer">
-      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance left join device on device.id = device_Id where adcode = #{adcode};
+      SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance where adcode = #{adcode};
     </select>
   <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-        SELECT * FROM Device_NaturalEnemies_maintance left join device on device.id = device_Id where adcode = #{adcode} LIMIT #{num1},#{num2};
+        SELECT * FROM Device_NaturalEnemies_maintance where Device_NaturalEnemies_maintance.adcode = #{adcode} LIMIT #{num1},#{num2};
   </select>
 
   <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-    select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.town `name`, device.adcode code
+    select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.town `name`, Device_NaturalEnemies_maintance.adcode code
     from Device_NaturalEnemies_maintance
-    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
-    where adcode like concat(#{adcode}, '%')
+    where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
     and Device_NaturalEnemies_maintance.town is not null
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
@@ -358,11 +357,10 @@
   </select>
 
     <select id="queryDeviceSummaryByManager" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-      select count(distinct device_Id) deviceCount, sum(Device_NaturalEnemies_maintance.Release_Num) releaseNum, device.manager `name`, device.adcode code
+      select count(distinct device_Id) deviceCount, sum(Device_NaturalEnemies_maintance.Release_Num) releaseNum, Device_NaturalEnemies_maintance.username `name`, Device_NaturalEnemies_maintance.adcode code
       from Device_NaturalEnemies_maintance
-      left join device on Device_NaturalEnemies_maintance.device_Id = device.id
-      where device.adcode like concat(#{adcode}, '%')
-      and device.manager is not null
+      where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
+      and Device_NaturalEnemies_maintance.username is not null
       <if test="startDate != null and startDate !=''">
         and submit_date &gt;= #{startDate}
       </if>
@@ -370,7 +368,7 @@
       <if test="endDate != null and endDate !=''">
         and submit_date &lt;= #{endDate}
       </if>
-      group by device.manager
+      group by Device_NaturalEnemies_maintance.username
 
     </select>
 
@@ -378,8 +376,7 @@
     select count(distinct device_Id) `count`, sum(Release_Num) `sum`
     from Device_NaturalEnemies_maintance
 
-    left join device on device.id = Device_NaturalEnemies_maintance.device_Id
-    where adcode like concat(#{adcode}, '%')
+    where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
 
     <if test="startDate != null and startDate !=''">
 
@@ -421,23 +418,22 @@
     Device_NaturalEnemies_maintance.Pic,
     Device_NaturalEnemies_maintance.Remarks,
     Device_NaturalEnemies_maintance.reported,
-    device.province,
-    device.city,
-    device.area,
+    Device_NaturalEnemies_maintance.province,
+    Device_NaturalEnemies_maintance.city,
+    Device_NaturalEnemies_maintance.area,
     Device_NaturalEnemies_maintance.town,
     Device_NaturalEnemies_maintance.scanId,
     Device_NaturalEnemies_maintance.username,
     Device_NaturalEnemies_maintance.PredatorsType,
     Device_NaturalEnemies_maintance.region
     from Device_NaturalEnemies_maintance
-    left join device on device.id = Device_NaturalEnemies_maintance.device_Id
     left join user on Device_NaturalEnemies_maintance.Worker = user.username
     where device_Id in
-    (select id from device where
+    (select device_Id from Device_NaturalEnemies_maintance where
     1 = 1
     <if test="adcode != null and adcode != ''">
       and
-      adcode like concat(#{adcode}, '%')
+      Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
     </if>
 
     <if test="town != null and town != ''">
@@ -448,13 +444,13 @@
     <if test="condition != null and condition != '' and condition !='null'">
       and (
       user.username = #{condition} or
-      device.province = #{condition} or
-      device.city = #{condition} or
-      device.area =  #{condition} or
+      Device_NaturalEnemies_maintance.province = #{condition} or
+      Device_NaturalEnemies_maintance.city = #{condition} or
+      Device_NaturalEnemies_maintance.area =  #{condition} or
       Device_NaturalEnemies_maintance.town = #{condition} or
       Device_NaturalEnemies_maintance.device_Id = #{condition} or
-      device.manager=#{condition} or
-      device.CustomProject = #{condition}
+      Device_NaturalEnemies_maintance.username=#{condition} or
+      Device_NaturalEnemies_maintance.CustomProject = #{condition}
       )
     </if>
     <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -911,7 +907,7 @@
   <select id="queryNatualMannerOneBytownThree" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(PredatorsType) NaturalMannerThreeByTown
     from device_naturalenemies_maintance
-    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.town=#{town}
+    where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.town=#{town}
   </select>
   <select id="queryNatualMannerOneByCustomProject" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
      select count(PredatorsType) naturalMannerOneByCustomProject from device_naturalenemies_maintance
