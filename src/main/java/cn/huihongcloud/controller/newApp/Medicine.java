@@ -161,6 +161,14 @@ public class Medicine {
 //setTown
         deviceMedicineMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
+        deviceMedicineMaintanceEntity.setArea(user.getArea());
+        deviceMedicineMaintanceEntity.setCity(user.getCity());
+        deviceMedicineMaintanceEntity.setProvince(user.getProvince());
+        deviceMedicineMaintanceEntity.setCustomProject(realDeviceId.getCustomProject());
+        deviceMedicineMaintanceEntity.setCustomSerial(realDeviceId.getCustomSerial());
+        deviceMedicineMaintanceEntity.setAdcode(user.getAdcode());
+
+
 
 
 

@@ -58,6 +58,15 @@ public class Device_Medicine_MaintanceEntity {
     private Double areaFzSum;
     private String startDate;
 
+    private String area;
+    private String city;
+    private String province;
+    private String customSerial;
+    private String customProject;
+    private String adcode;
+
+
+
     public String getStartDate() {
         return startDate;
     }
@@ -311,4 +320,51 @@ public class Device_Medicine_MaintanceEntity {
         this.altitude = altitude;
     }
 
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCustomSerial() {
+        return customSerial;
+    }
+
+    public void setCustomSerial(String customSerial) {
+        this.customSerial = customSerial;
+    }
+
+    public String getCustomProject() {
+        return customProject;
+    }
+
+    public void setCustomProject(String customProject) {
+        this.customProject = customProject;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
+    }
 }
