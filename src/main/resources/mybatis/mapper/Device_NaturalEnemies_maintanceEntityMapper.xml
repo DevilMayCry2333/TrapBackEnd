@@ -683,12 +683,11 @@
     order by submit_date desc
   </select>
     <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-      select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, device.area `name`, device.adcode code
+      select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.area `name`, Device_NaturalEnemies_maintance.adcode code
       from Device_NaturalEnemies_maintance
-      left join device on Device_NaturalEnemies_maintance.device_Id = device.id
-      where adcode like concat(#{adcode}, '%')
+      where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
 
-      and  device.area is not null
+      and  Device_NaturalEnemies_maintance.area is not null
       <if test="startDate != null and startDate !=''">
         and submit_date &gt;= #{startDate}
       </if>
@@ -696,14 +695,13 @@
       <if test="endDate != null and endDate !=''">
         and submit_date &lt;= #{endDate}
       </if>
-      group by device.area
+      group by Device_NaturalEnemies_maintance.area
 
     </select>
   <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Worker `name`, Worker code
     from Device_NaturalEnemies_maintance
-    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
-    where adcode like concat(#{adcode}, '%')
+    where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
 
     and Worker is not null
     <if test="startDate != null and startDate !=''">
@@ -718,7 +716,6 @@
   <select id="queryWorkerSummaryByManager" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.Worker `name`, Device_NaturalEnemies_maintance.Worker code
     from Device_NaturalEnemies_maintance
-    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
     left join user on Device_NaturalEnemies_maintance.username = user.username
     where parent = #{manager}
 
@@ -733,12 +730,10 @@
   </select>
 
   <select id="queryDeviceSummaryByProvince" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-    select count(distinct device_Id ) deviceCount, sum(Release_Num) releaseNum, device.city `name`, device.adcode code
+    select count(distinct device_Id ) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.city `name`, Device_NaturalEnemies_maintance.adcode code
     from Device_NaturalEnemies_maintance
-    left join device on Device_NaturalEnemies_maintance.device_Id = device.id
-    where adcode like concat(#{adcode}, '%')
-
-    and device.city is not null
+    where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
+    and Device_NaturalEnemies_maintance.city is not null
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
     </if>
@@ -746,8 +741,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-
-    group by device.city
+    group by Device_NaturalEnemies_maintance.city
   </select>
 
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
