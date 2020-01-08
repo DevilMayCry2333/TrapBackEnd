@@ -38,14 +38,14 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectByConditions" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select * from device_medicine_maintance left join device on device_medicine_maintance.device_id = device.id where CustomProject = #{customProject}
+    select * from device_medicine_maintance where CustomProject = #{customProject}
     <if test="searchText != null and searchText != ''">
       <choose>
         <when test="optionIndex == 1">
-          and device.CustomSerial = #{searchText}
+          and device_medicine_maintance.CustomSerial = #{searchText}
         </when>
         <when test="optionIndex == 2">
-          and device.CustomTown = #{searchText}
+          and device_medicine_maintance.CustomTown = #{searchText}
         </when>
         <when test="optionIndex == 3">
           and batch = #{searchText}
@@ -66,15 +66,15 @@
     </if>
   </select>
   <select id="selectByConditionsAdcode" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select * from device_medicine_maintance left join device on device_id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    select * from device_medicine_maintance where device_medicine_maintance.adcode like concat('%' ,#{adcode}, '%')
     and isManagerAssign = 1
     <if test="searchText != null and searchText != ''">
       <choose>
         <when test="optionIndex == 1">
-          and device.CustomSerial = #{searchText}
+          and device_medicine_maintance.CustomSerial = #{searchText}
         </when>
         <when test="optionIndex == 2">
-          and device.CustomTown = #{searchText}
+          and device_medicine_maintance.CustomTown = #{searchText}
         </when>
         <when test="optionIndex == 3">
           and batch = #{searchText}
@@ -110,10 +110,10 @@
     </if>
   </select>
   <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select device.CustomTown,device_medicine_maintance.*,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,
+    select device_medicine_maintance.CustomTown,device_medicine_maintance.*,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,
     sum(device_medicine_maintance.area_fz) areaFzSum
-    from device left join device_medicine_maintance on device.id = device_medicine_maintance.device_id
-    WHERE device.adcode
+    from device_medicine_maintance
+    WHERE device_medicine_maintance.adcode
     LIKE concat(#{adcode}, '%')
     <if test="startDate != null and startDate != ''">
       and submit_date &gt;= #{startDate}
@@ -121,20 +121,20 @@
     <if test="endDate != null and endDate != ''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.CustomTown
+    group by device_medicine_maintance.CustomTown
   </select>
   <select id="selectByCustomReigonCustomProject" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
     select t1.*,sum(t1.medicine_qua) medicineQuaSum,
     sum(t1.area_fz) areaFzSum
-    from device_medicine_maintance t1 left join device t2 on t1.device_id = t2.id
-    where t2.CustomProject = #{customProject}
+    from device_medicine_maintance t1
+    where t1.CustomProject = #{customProject}
     <if test="startDate != null and startDate != ''">
       and t1.submit_date &gt;= #{startDate}
     </if>
     <if test="endDate != null and endDate != ''">
       and t1.submit_date &lt;= #{endDate}
     </if>
-    group by t2.CustomTown
+    group by t1.CustomTown
   </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
         select * from device where project = '5'
