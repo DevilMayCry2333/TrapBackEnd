@@ -67,7 +67,6 @@
   </select>
   <select id="selectByConditionsAdcode" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
     select * from device_medicine_maintance where device_medicine_maintance.adcode like concat('%' ,#{adcode}, '%')
-    and isManagerAssign = 1
     <if test="searchText != null and searchText != ''">
       <choose>
         <when test="optionIndex == 1">
@@ -423,7 +422,7 @@
       device_medicine_maintance.area =  #{condition} or
       device_medicine_maintance.town = #{condition} or
       device_medicine_maintance.device_id = #{condition} or
-      device_medicine_maintance.manager=#{condition} or
+      device_medicine_maintance.username=#{condition} or
       device_medicine_maintance.CustomProject = #{condition}
       )
     </if>
