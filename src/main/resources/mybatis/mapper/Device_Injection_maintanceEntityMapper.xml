@@ -319,9 +319,8 @@
   </select>
 
     <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
-      select count(distinct device_id) deviceCount, sum(injection_num) injectNum, Device_Injection_maintance.town `name`, device.adcode code
+      select count(distinct device_id) deviceCount, sum(injection_num) injectNum, Device_Injection_maintance.town `name`, Device_Injection_maintance.adcode code
       from Device_Injection_maintance
-      left join device on Device_Injection_maintance.device_Id = device.id
       where adcode like concat(#{adcode}, '%')
       and Device_Injection_maintance.town is not null
       <if test="startDate != null and startDate !=''">
@@ -330,7 +329,7 @@
       <if test="endDate != null and endDate !=''">
         and submit_Date &lt;= #{endDate}
       </if>
-      group by Device_Injection_maintance.town
+      group by Device_Injection_maintance.town,Device_Injection_maintance.adcode
     </select>
 
   <select id="getMaintenanceDataByAdcodeAndTownArea" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
@@ -481,7 +480,7 @@
     where device.adcode like concat(#{adcode}, '%')
 
     and device.manager is not null
-    and device.project = '注干剂监测'
+    and device.project = 2
 
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
@@ -490,7 +489,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.manager
+    group by device.manager,device.adcode
   </select>
 
     <select id="getMaintenanceDataByAdcodeAndTown1"
@@ -724,7 +723,7 @@
       and submit_date &lt;= #{endDate}
     </if>
 
-    group by Device_Injection_maintance.city
+    group by Device_Injection_maintance.city,Device_Injection_maintance.adcode
   </select>
   <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
     select * from device where project = '2'

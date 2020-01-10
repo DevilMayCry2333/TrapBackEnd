@@ -32,7 +32,8 @@ public class MedicineSummary {
     public Object byCustomReigon(@RequestAttribute("username") String username,
                                  @RequestParam int page,
                                  @RequestParam int limit,
-                                 @RequestParam Integer optionIndex,
+                                 @RequestParam String adcode,
+                                 @RequestParam(required = false) Integer optionIndex,
                                  @RequestParam(required = false) String searchText,
                                  @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         User user = userService.getUserByUserName(username);
@@ -46,7 +47,7 @@ public class MedicineSummary {
             endDate = endDate + " 23:59:59";
         }
 
-        List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities = deviceMedicineMaintanceService.getDryInjectionSummaryByCustomReigon(user, optionIndex, searchText, startDate, endDate);
+        List<Device_Medicine_MaintanceEntity> device_medicine_maintanceEntities = deviceMedicineMaintanceService.getDryInjectionSummaryByCustomReigon(adcode,user, optionIndex, searchText, startDate, endDate);
 
         double totalMedicineQuaSum = 0;
         double totalAreaFzNum = 0;

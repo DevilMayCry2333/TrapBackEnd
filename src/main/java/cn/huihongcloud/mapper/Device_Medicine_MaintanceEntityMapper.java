@@ -33,9 +33,12 @@ public interface Device_Medicine_MaintanceEntityMapper {
 
     List<Device_Medicine_MaintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,String adcode);
 
-    List<Device_Medicine_MaintanceEntity> selectByCustomReigon(@Param("username") String username, @Param("optionIndex") Integer optionIndex,
+    List<Device_Medicine_MaintanceEntity> selectByCustomReigon(@Param("adcode") String adcode, @Param("optionIndex") Integer optionIndex,
                                                                 @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
+
+    List<Device_Medicine_MaintanceEntity> selectByCity(@Param("adcode") String adcode, @Param("optionIndex") Integer optionIndex,
+                                                               @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
     List<Device_Medicine_MaintanceEntity> selectByCustomReigonCustomProject(@Param("customProject") String customProject, @Param("optionIndex") Integer optionIndex,
                                                                              @Param("searchText") String searchText, @Param("startDate") String startDate, @Param("endDate") String endDate);
 

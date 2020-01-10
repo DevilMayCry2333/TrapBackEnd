@@ -109,8 +109,8 @@
     </if>
   </select>
   <select id="selectByCustomReigon" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select device_medicine_maintance.CustomTown,device_medicine_maintance.*,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,
-    sum(device_medicine_maintance.area_fz) areaFzSum
+    select (device_medicine_maintance.area) name,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,
+    sum(device_medicine_maintance.area_fz) areaFzSum,count(distinct device_id) deviceCount
     from device_medicine_maintance
     WHERE device_medicine_maintance.adcode
     LIKE concat(#{adcode}, '%')
@@ -120,10 +120,10 @@
     <if test="endDate != null and endDate != ''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device_medicine_maintance.CustomTown
+    group by device_medicine_maintance.area
   </select>
   <select id="selectByCustomReigonCustomProject" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select t1.*,sum(t1.medicine_qua) medicineQuaSum,
+    select t1.customTown,sum(t1.medicine_qua) medicineQuaSum,
     sum(t1.area_fz) areaFzSum
     from device_medicine_maintance t1
     where t1.CustomProject = #{customProject}
@@ -133,7 +133,7 @@
     <if test="endDate != null and endDate != ''">
       and t1.submit_date &lt;= #{endDate}
     </if>
-    group by t1.CustomTown
+    group by t1.customTown
   </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
         select * from device where project = '5'
@@ -361,7 +361,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.manager
+    group by device.manager,device.adcode
   </select>
   <select id="queryDeviceSummaryByArea111" resultType="cn.huihongcloud.entity.summary.MedicineSummary">
     select count(distinct device_id) deviceCount, sum(medicine_qua) medicineQuaSum, sum(area_fz) areaFzSum,device_medicine_maintance.town `name`, device_medicine_maintance.adcode code
@@ -374,12 +374,13 @@
     <if test="endDate != null and endDate !=''">
       and submit_Date &lt;= #{endDate}
     </if>
-    group by device_medicine_maintance.town
+    group by device_medicine_maintance.town,device_medicine_maintance.adcode
   </select>
   <select id="getMaintenanceDataByAdcodeAndTownArea111"
           resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
     select device_medicine_maintance.id,
     device_medicine_maintance.device_id,
+    device_medicine_maintance.scanId,
     device_medicine_maintance.batch,
     sum(device_medicine_maintance.medicine_qua) medicineQua,
     device_medicine_maintance.worker,
@@ -433,7 +434,7 @@
     <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device_id,device_medicine_maintance.worker
+    group by device_medicine_maintance.id,device_medicine_maintance.worker
 
     order by submit_date desc
 
@@ -529,6 +530,20 @@
       and ${optionIndex} = #{searchText}
     </if>
 
+  </select>
+  <select id="selectByCity" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
+    select (device_medicine_maintance.city) name,sum(device_medicine_maintance.medicine_qua) medicineQuaSum,
+    sum(device_medicine_maintance.area_fz) areaFzSum,count(distinct device_id) deviceCount
+    from device_medicine_maintance
+    WHERE device_medicine_maintance.adcode
+    LIKE concat(#{adcode}, '%')
+    <if test="startDate != null and startDate != ''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by device_medicine_maintance.city
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

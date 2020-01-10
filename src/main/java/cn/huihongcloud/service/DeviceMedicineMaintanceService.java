@@ -18,11 +18,15 @@ public class DeviceMedicineMaintanceService {
     public List<Device_Medicine_MaintanceEntity> getMedicineDetail(String customProject, Integer optionIndex, String searchText, String startDate, String endDate) {
         return device_medicine_maintanceEntityMapper.selectByConditions(customProject, optionIndex, searchText, startDate, endDate);
     }
-    public List<Device_Medicine_MaintanceEntity> getDryInjectionSummaryByCustomReigon(User user, Integer optionIndex, String searchText, String startDate, String endDate) {
+    public List<Device_Medicine_MaintanceEntity> getDryInjectionSummaryByCustomReigon(String adcode,User user, Integer optionIndex, String searchText, String startDate, String endDate) {
         int role = user.getRole();
-
-        if (role <= 3) {
-            return device_medicine_maintanceEntityMapper.selectByCustomReigon(user.getUsername(), optionIndex, searchText, startDate, endDate);
+        if(role == 1){
+            //省级
+            return device_medicine_maintanceEntityMapper.selectByCity(adcode,optionIndex,searchText,startDate,endDate);
+        }
+        else if (role <= 3) {
+            //市级用户
+            return device_medicine_maintanceEntityMapper.selectByCustomReigon(adcode,optionIndex, searchText, startDate, endDate);
         } else if (role == 4) {
             return device_medicine_maintanceEntityMapper.selectByCustomReigonCustomProject(user.getParent(), optionIndex, searchText, startDate, endDate);
 
