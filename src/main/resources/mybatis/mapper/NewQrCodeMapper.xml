@@ -53,9 +53,9 @@
         select * from device where province=#{province} and isManagerAssign = 0 order by scanId;
     </select>
     <select id="selectByConditions1" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device
+        select * from device where manager = #{manager}
         <if test="searchText!=null and searchText!=''">
-            where ${colName}=#{searchText}
+            and ${colName}=#{searchText}
         </if>
     </select>
     <select id="countByCond1" resultType="java.lang.Integer">

@@ -56,7 +56,7 @@ public class DeviceController {
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName,
                                   @RequestParam("isMap") boolean isMap,
-                             @RequestParam("project") String project) {
+                             @RequestParam(value = "project",required = false) String project) {
         User user = userService.getUserByUserName(username);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);

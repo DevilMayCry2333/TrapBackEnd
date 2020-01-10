@@ -823,9 +823,9 @@
   </select>
   <select id="selectByCustomReigonCustomProject"
           resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-    select device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
+    select distinct device_injection_maintance.device_Id,device_injection_maintance.*,sum(device_injection_maintance.injection_num) injectNumSum,
     sum(if(device_injection_maintance.wood_status_front='枯死',1,0)) WoodStatusSum,
-    count(device_injection_maintance.id) woodNum
+    count(distinct device_injection_maintance.device_Id) woodNum
     from device_injection_maintance
     where device_injection_maintance.CustomProject = #{customProject}
     <if test="startDate != null and startDate != ''">
