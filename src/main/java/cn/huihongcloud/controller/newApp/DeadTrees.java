@@ -73,11 +73,13 @@ public class DeadTrees {
                                    @RequestParam(required = false) String remarks,
                                    @RequestParam(required = false) Integer current){
         JSONObject jsonObject = new JSONObject();
+        Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
+
         try {
             User user = userMapper.getUserByUserName(username);
             User user1 = userMapper.getUserByUserName(user.getParent());
 
-            Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
+//            Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
 
             Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
             Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
@@ -160,6 +162,18 @@ public class DeadTrees {
             return jsonObject;
         }
 
+        Device device1 = deviceService.getDeviceById(realDevice.getId());
+        if(device1 == null || device1.getReceiveDate() == null) {
+
+            Device device = new Device();
+            device.setId(realDevice.getId());
+            device.setLongitude(Double.valueOf(longitude));
+            device.setLatitude(Double.valueOf(latitude));
+            device.setAltitude(Double.valueOf(altitude));
+            device.setReceiveDate(new Date());
+            deviceService.updateDevice(device);
+        }
+
         return jsonObject;
 
     }
@@ -189,39 +203,39 @@ public class DeadTrees {
     }
 
 
-    @RequestMapping("/AddDeadtreePhoto2")
-    public Object addDeadtreePhoto(@RequestAttribute("username") String username,
-                                   @RequestParam(required = false) MultipartFile image,
-                                   String deviceId,
-                                   int current){
-        User user = userMapper.getUserByUserName(username);
-        Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
-        int maxBatch = 1;
-        try {
-            List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDevice.getId());
-            maxBatch = Integer.parseInt(deviceDeadTreesMaintanceEntities.get(0).getBatch());
-        }catch (Exception e){
-            maxBatch = 1;
-        }
-
-
-        if (image!=null) {
-            String imgId = deviceService.saveImg(image, realDevice.getId(), username);
-            if(current==1) {
-                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic",imgId,user.getParent(),maxBatch);
-            }else if(current==2){
-                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic2",imgId,user.getParent(),maxBatch);
-
-            }else if(current==3){
-                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic3",imgId,user.getParent(),maxBatch);
-
-            }
-        }
-
-
-        return "OK";
-
-    }
+//    @RequestMapping("/AddDeadtreePhoto2")
+//    public Object addDeadtreePhoto(@RequestAttribute("username") String username,
+//                                   @RequestParam(required = false) MultipartFile image,
+//                                   String deviceId,
+//                                   int current){
+//        User user = userMapper.getUserByUserName(username);
+//        Device realDevice = deviceMapper.getDeviceByScanId(deviceId);
+//        int maxBatch = 1;
+//        try {
+//            List<Device_DeadTrees_maintanceEntity> deviceDeadTreesMaintanceEntities = deviceDeadTreesMaintanceEntityMapper.getMaxBatch(realDevice.getId());
+//            maxBatch = Integer.parseInt(deviceDeadTreesMaintanceEntities.get(0).getBatch());
+//        }catch (Exception e){
+//            maxBatch = 1;
+//        }
+//
+//
+//        if (image!=null) {
+//            String imgId = deviceService.saveImg(image, realDevice.getId(), username);
+//            if(current==1) {
+//                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic",imgId,user.getParent(),maxBatch);
+//            }else if(current==2){
+//                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic2",imgId,user.getParent(),maxBatch);
+//
+//            }else if(current==3){
+//                deviceDeadTreesMaintanceEntityMapper.updatePic(realDevice.getId(),"Pic3",imgId,user.getParent(),maxBatch);
+//
+//            }
+//        }
+//
+//
+//        return "OK";
+//
+//    }
 
 
     @ApiOperation("图像base64上传维护信息")
