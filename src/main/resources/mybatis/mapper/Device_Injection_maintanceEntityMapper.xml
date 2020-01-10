@@ -794,14 +794,14 @@
     select * from inject_woodstatus where inject_woodstatus.`name`='枯死'
   </select>
   <select id="selectByConditionsAdcode" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
-    select * from device_injection_maintance left join device on device_Id = device.id where adcode like concat('%' ,#{adcode}, '%')
+    select * from device_injection_maintance where adcode like concat('%' ,#{adcode}, '%')
     <if test="searchText != null and searchText != ''">
       <choose>
         <when test="optionIndex == 1">
-          and device.CustomSerial = #{searchText}
+          and device_injection_maintance.CustomSerial = #{searchText}
         </when>
         <when test="optionIndex == 2">
-          and device.CustomTown = #{searchText}
+          and device_injection_maintance.CustomTown = #{searchText}
         </when>
         <when test="optionIndex == 3">
           and batch = #{searchText}
