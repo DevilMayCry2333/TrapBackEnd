@@ -12,6 +12,43 @@ public class NaturalSummary {
     private String NaturalMannerOneByTown;
     private String NaturalMannerTwoByTown;
 
+    private String totalNaturalMannerByArea;
+    private String NaturalMannerOneByArea;
+    private String NaturalMannerTwoByArea;
+    private String NaturalMannerThreeByArea;
+
+    public String getTotalNaturalMannerByArea() {
+        return totalNaturalMannerByArea;
+    }
+
+    public void setTotalNaturalMannerByArea(String totalNaturalMannerByArea) {
+        this.totalNaturalMannerByArea = totalNaturalMannerByArea;
+    }
+
+    public String getNaturalMannerOneByArea() {
+        return NaturalMannerOneByArea;
+    }
+
+    public void setNaturalMannerOneByArea(String naturalMannerOneByArea) {
+        NaturalMannerOneByArea = naturalMannerOneByArea;
+    }
+
+    public String getNaturalMannerTwoByArea() {
+        return NaturalMannerTwoByArea;
+    }
+
+    public void setNaturalMannerTwoByArea(String naturalMannerTwoByArea) {
+        NaturalMannerTwoByArea = naturalMannerTwoByArea;
+    }
+
+    public String getNaturalMannerThreeByArea() {
+        return NaturalMannerThreeByArea;
+    }
+
+    public void setNaturalMannerThreeByArea(String naturalMannerThreeByArea) {
+        NaturalMannerThreeByArea = naturalMannerThreeByArea;
+    }
+
     public String getTotalNaturalMannerByCustomProject() {
         return totalNaturalMannerByCustomProject;
     }

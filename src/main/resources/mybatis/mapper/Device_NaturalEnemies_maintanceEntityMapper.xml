@@ -231,7 +231,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by Device_NaturalEnemies_maintance.town
+    group by Device_NaturalEnemies_maintance.town,Device_NaturalEnemies_maintance.adcode
   </select>
 
   <select id="getMaintenanceDataByAdcodeAndTown2" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
@@ -368,8 +368,7 @@
       <if test="endDate != null and endDate !=''">
         and submit_date &lt;= #{endDate}
       </if>
-      group by Device_NaturalEnemies_maintance.username
-
+      group by Device_NaturalEnemies_maintance.username, Device_NaturalEnemies_maintance.adcode
     </select>
 
   <select id="queryDeviceSum" resultType="java.util.Map">
@@ -683,20 +682,17 @@
     order by submit_date desc
   </select>
     <select id="queryDeviceSummaryByCity" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
-      select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.area `name`, Device_NaturalEnemies_maintance.adcode code
+      select Device_NaturalEnemies_maintance.area `name` , count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Device_NaturalEnemies_maintance.adcode code
       from Device_NaturalEnemies_maintance
-      where Device_NaturalEnemies_maintance.adcode like concat(#{adcode}, '%')
-
+      where adcode like concat(#{adcode}, '%')
       and  Device_NaturalEnemies_maintance.area is not null
       <if test="startDate != null and startDate !=''">
         and submit_date &gt;= #{startDate}
       </if>
-
       <if test="endDate != null and endDate !=''">
         and submit_date &lt;= #{endDate}
       </if>
-      group by Device_NaturalEnemies_maintance.area
-
+      group by Device_NaturalEnemies_maintance.area,Device_NaturalEnemies_maintance.adcode
     </select>
   <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(distinct device_Id) deviceCount, sum(Release_Num) releaseNum, Worker `name`, Worker code
@@ -741,7 +737,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by Device_NaturalEnemies_maintance.city
+    group by Device_NaturalEnemies_maintance.city,Device_NaturalEnemies_maintance.adcode
   </select>
 
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
@@ -849,7 +845,7 @@
   </select>
   <select id="selectNaturalByCustomReigonCustomProject"
           resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-    select t1.*,COUNT(t1.device_Id) releasePlace
+    select t1.customTown,COUNT(t1.device_Id) releasePlace
     from device_naturalenemies_maintance t1
     where t1.CustomProject = #{customProject}
     <if test="startDate != null and startDate != ''">
@@ -891,17 +887,26 @@
   <select id="queryNatualMannerOneBytownOne" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(PredatorsType) NaturalMannerOneByTown
     from device_naturalenemies_maintance
-    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲' and device_naturalenemies_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '花绒寄甲'
+    <if test="town != null and town != ''">
+      and device_naturalenemies_maintance.town=#{town}
+    </if>
   </select>
   <select id="queryNatualMannerOneBytownTwo" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
         select count(PredatorsType) NaturalMannerTwoByTown
     from device_naturalenemies_maintance
-    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂' and device_naturalenemies_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '肿腿蜂'
+    <if test="town != null and town != ''">
+      and device_naturalenemies_maintance.town=#{town}
+    </if>
   </select>
   <select id="queryNatualMannerOneBytownThree" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
     select count(PredatorsType) NaturalMannerThreeByTown
     from device_naturalenemies_maintance
-    where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.town=#{town}
+    where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡'
+    <if test="town != null and town != ''">
+      and device_naturalenemies_maintance.town=#{town}
+    </if>
   </select>
   <select id="queryNatualMannerOneByCustomProject" resultType="cn.huihongcloud.entity.summary.NaturalSummary">
      select count(PredatorsType) naturalMannerOneByCustomProject from device_naturalenemies_maintance
@@ -916,5 +921,6 @@
     select count(PredatorsType) naturalMannerThreeByCustomProject from device_naturalenemies_maintance
     where device_naturalenemies_maintance.adcode like concat(#{adcode}, '%') and device_naturalenemies_maintance.PredatorsType = '卵卡' and device_naturalenemies_maintance.CustomProject=#{CustomProject}
   </select>
+
 
 </mapper>

@@ -77,6 +77,7 @@ public class NaturalSummary {
             summaryEntities.get(i).setTotalNaturalMannerByCustomProject("花绒寄甲:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerOneByCustomProject() + "  " + "肿腿蜂:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerTwoByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerTwoByCustomProject() +"  "+
                     "卵卡:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerThreeByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerThreeByCustomProject());
         }
+
         for (cn.huihongcloud.entity.summary.NaturalSummary ns:summaryEntities) {
             User user = userService.getUserByUserName(ns.getName());
             ns.setName(user.getParent());
@@ -122,6 +123,13 @@ public class NaturalSummary {
             endDate = endDate + " 23:59:59";
         }
         List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByCity(adcode,startDate,endDate);
+        //根据县查
+        for(int i = 0 ; i<summaryEntities.size();i++){
+            summaryEntities.get(i).setTotalNaturalMannerByTown("花绒寄甲: " +""+deviceNaturalEnemiesMaintanceEntityMapper
+                    .queryNatualMannerOneBytownOne(summaryEntities.get(i).getCode(),null).get(0).getNaturalMannerOneByTown()
+                    + "肿腿蜂：" +""+ deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneBytownTwo(summaryEntities.get(i).getCode(),null).get(0).getNaturalMannerTwoByTown()
+                    + "卵卡: " + "" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneBytownThree(summaryEntities.get(i).getCode(),null).get(0).getNaturalMannerThreeByTown());
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
@@ -172,6 +180,13 @@ public class NaturalSummary {
         }
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         List<cn.huihongcloud.entity.summary.NaturalSummary> summaryEntities = deviceNaturalEnemiesMaintanceEntityMapper.queryDeviceSummaryByProvince(adcode,startDate,endDate);
+        //根据市
+        for(int i = 0 ; i<summaryEntities.size();i++){
+            summaryEntities.get(i).setTotalNaturalMannerByTown("花绒寄甲: " +""+deviceNaturalEnemiesMaintanceEntityMapper
+                    .queryNatualMannerOneBytownOne(summaryEntities.get(i).getCode(),null).get(0).getNaturalMannerOneByTown()
+                    + "肿腿蜂：" +""+ deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneBytownTwo(summaryEntities.get(i).getCode(),null).get(0).getNaturalMannerTwoByTown()
+                    + "卵卡: " + "" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneBytownThree(summaryEntities.get(i).getCode(),null).get(0).getNaturalMannerThreeByTown());
+        }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
@@ -214,7 +229,7 @@ public class NaturalSummary {
         for (Device_NaturalEnemies_maintanceEntity lim: device_natural_maintanceEntities) {
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
-            totalReleasePlace += lim.getReleaseNum();
+            totalReleasePlace += lim.getReleasePlace();
             System.out.println(lim.getCustomTown());
             System.out.println(lim.getId());
         }
