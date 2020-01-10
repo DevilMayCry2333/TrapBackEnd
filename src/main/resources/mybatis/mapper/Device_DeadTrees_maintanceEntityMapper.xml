@@ -392,9 +392,8 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
     </if>
   </select>
   <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-    select count(distinct device_Id) woodNum, sum(woodVolume) woodVolume, Device_DeadTrees_maintance.town `name`, device.adcode code
+    select count(distinct device_Id) woodNum, sum(woodVolume) woodVolume, Device_DeadTrees_maintance.town `name`, Device_DeadTrees_maintance.adcode code
     from Device_DeadTrees_maintance
-    left join device on Device_DeadTrees_maintance.device_Id = device.id
     where adcode like concat(#{adcode}, '%')
 
     and Device_DeadTrees_maintance.town is not null
@@ -404,14 +403,13 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by Device_DeadTrees_maintance.town
+    group by Device_DeadTrees_maintance.town,Device_DeadTrees_maintance.adcode
   </select>
   <select id="queryDeviceSummaryByManager" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-    select count(distinct device_Id) woodNum, sum(Device_DeadTrees_maintance.woodVolume) woodVolume, device.CustomProject `name`, device.adcode code
+    select count(distinct device_Id) woodNum, sum(Device_DeadTrees_maintance.woodVolume) woodVolume, Device_DeadTrees_maintance.customProject `name`, Device_DeadTrees_maintance.adcode code
     from Device_DeadTrees_maintance
-    left join device on Device_DeadTrees_maintance.device_Id = device.id
-    where device.adcode like concat(#{adcode}, '%')
-    and device.manager is not null
+    where adcode like concat(#{adcode}, '%')
+    and username is not null
     <if test="startDate != null and startDate !=''">
       and submit_date &gt;= #{startDate}
     </if>
@@ -419,7 +417,7 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device.CustomProject
+    group by Device_DeadTrees_maintance.customProject,Device_DeadTrees_maintance.adcode
   </select>
   <select id="queryDeviceSum" resultType="java.util.Map">
     select count(distinct device_Id) `count`, sum(woodVolume) `sum`

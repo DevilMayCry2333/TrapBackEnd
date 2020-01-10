@@ -64,8 +64,24 @@ public class Device_Medicine_MaintanceEntity {
     private String customSerial;
     private String customProject;
     private String adcode;
+    private String name;
+    private String deviceCount;
 
+    public String getDeviceCount() {
+        return deviceCount;
+    }
 
+    public void setDeviceCount(String deviceCount) {
+        this.deviceCount = deviceCount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getStartDate() {
         return startDate;
