@@ -183,28 +183,27 @@
     </update>
 
     <update id="reportTrap">
-        update device_maintenance left join device
-        on device.id = device_maintenance.device_id set reported = 1
-        where device.CustomProject = #{customProject}
+        update device_maintenance
+        set reported = 1
+        where CustomProject = #{customProject}
     </update>
     <update id="reportInject">
-        update device_injection_maintance left join device
-        on device.id = device_injection_maintance.device_Id set reported = 1
-        where device.CustomProject = #{customProject}
+        update device_injection_maintance
+        set reported = 1
+        where CustomProject = #{customProject}
 
     </update>
 
     <update id="reportEnemy">
-        update device_naturalenemies_maintance left join device
-        on device.id = device_naturalenemies_maintance.device_Id set reported = 1
-        where device.CustomProject = #{customProject}
+        update device_naturalenemies_maintance
+        set reported = 1
+        where CustomProject = #{customProject}
 
     </update>
     <update id="reportDead">
-        update device_deadtrees_maintance left join device
-        on device.id = device_deadtrees_maintance.device_Id set reported = 1
+        update device_deadtrees_maintance
+        set reported = 1
         where device.CustomProject = #{customProject}
-
     </update>
     <update id="reportTrack">
         update device_track_maintance set reported = 1 where username = #{projectAdmin};

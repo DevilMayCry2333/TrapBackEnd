@@ -336,6 +336,7 @@
   <select id="getMaintenanceDataByAdcodeAndTownArea" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
     select Device_Injection_maintance.id,
     Device_Injection_maintance.device_Id,
+    Device_Injection_maintance.scanId,
     Device_Injection_maintance.batch,
     sum(Device_Injection_maintance.injection_num) injection_num,
     Device_Injection_maintance.Worker,
@@ -388,7 +389,7 @@
     <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device_Id,Device_Injection_maintance.Worker
+    group by device_Id,Device_Injection_maintance.Worker,Device_Injection_maintance.id
 
     order by submit_date desc
 
@@ -397,6 +398,7 @@
   <select id="getMaintenanceDataByManagerArea" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
     select Device_Injection_maintance.id,
     Device_Injection_maintance.device_Id,
+    Device_Injection_maintance.scanId,
     Device_Injection_maintance.batch,
     sum(Device_Injection_maintance.injection_num) injection_num,
     Device_Injection_maintance.Worker,
@@ -644,7 +646,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by Device_Injection_maintance.area
+    group by Device_Injection_maintance.area,Device_Injection_maintance.adcode
   </select>
 
   <select id="queryDeviceSum" resultType="java.util.Map">
@@ -678,7 +680,7 @@
 
   </select>
   <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.InjectionSummary">
-    select count(distinct device_Id) deviceCount, sum(injection_num) injectNum, Worker `name`, Worker code
+    select count(distinct device_Id) deviceCount, sum(injection_num) injectNum, Worker `name`, adcode code
     from Device_Injection_maintance
     where adcode like concat(#{adcode}, '%')
 
@@ -689,7 +691,7 @@
     <if test="endDate != null and endDate !=''">
       and submit_date &lt;= #{endDate}
     </if>
-    group by username
+    group by username,Worker,adcode
   </select>
 
   <select id="queryWorkerSummaryByManager" resultType="cn.huihongcloud.entity.summary.InjectionSummary">

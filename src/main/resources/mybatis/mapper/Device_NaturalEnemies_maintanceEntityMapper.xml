@@ -459,7 +459,7 @@
     <if test="endDate != null and endDate != '' and endDate !='null' and endDate!= 'null 23:59:59'">
       and submit_date &lt;= #{endDate}
     </if>
-    group by device_Id,Device_NaturalEnemies_maintance.Worker
+    group by device_Id,Device_NaturalEnemies_maintance.Worker,Device_NaturalEnemies_maintance.id
 
     order by submit_date desc
   </select>

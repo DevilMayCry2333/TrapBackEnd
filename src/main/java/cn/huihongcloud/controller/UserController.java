@@ -576,7 +576,7 @@ public class UserController {
     }
 
     @RequestMapping("system/getCustomProject")
-    public Object getCustomProject(@RequestAttribute("username") String username, String adcode){
+    public Object getCustomProject(@RequestAttribute("username") String username, @RequestParam String adcode){
         List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
         return Result.ok(userList);
     }
@@ -594,7 +594,6 @@ public class UserController {
         }else if(project.equals("轨迹追踪")){
             User user = userMapper.getUserByUserName(customProject);
             System.out.println(user.getParent());
-
             userMapper.reportTrack(user.getParent());
 
 
