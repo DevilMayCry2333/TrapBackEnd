@@ -48,7 +48,7 @@
         <if test="endDate != null and endDate !=''">
             and `date` &lt;= #{endDate}
         </if>
-        group by device_maintenance.town
+        group by device_maintenance.town,device_maintenance.adcode
     </select>
     <select id="queryDeviceSummaryByManager" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
         select count(distinct device_id) deviceCount, sum(num) beetleCount, device_maintenance.manager `name`, device_maintenance.adcode code
@@ -64,7 +64,7 @@
         <if test="endDate != null and endDate !=''">
             and `date` &lt;= #{endDate}
         </if>
-        group by device_maintenance.manager
+        group by device_maintenance.manager,device_maintenance.adcode
     </select>
     <select id="queryWorkerSummaryByAdcode" resultType="cn.huihongcloud.entity.summary.SummaryEntity">
         select count(distinct device_id) deviceCount, sum(num) beetleCount, username `name`, username code

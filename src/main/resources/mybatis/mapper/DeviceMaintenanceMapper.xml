@@ -246,7 +246,7 @@
         </if>
         
         and isactive = '0'
-        group by device_id,device_maintenance.username
+        group by device_id,device_maintenance.username,device_maintenance.id
 
         order by `date` desc
     </select>

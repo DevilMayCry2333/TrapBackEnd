@@ -3,9 +3,9 @@
 <mapper namespace="cn.huihongcloud.mapper.NewStaticMapper">
 
     <select id="getInputEntityForWorker" resultType="cn.huihongcloud.entity.statistics.InputEntity">
-        select username name, sum(num1) `sum`,CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`
+        select username name, sum(num1) `sum`,CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct scanId) `count`
         from (
-        select device_maintenance.username username,sum(num) num1,device_maintenance.CustomTown,device_id
+        select device_maintenance.username username,sum(num) num1,device_maintenance.CustomTown,device_maintenance.scanId
         from device_maintenance
         where device_maintenance.CustomProject = '${customProject}'
 
@@ -16,7 +16,7 @@
         <if test="endDate != null and endDate !='' and endDate!= 'null 23:59:59'">
             and `date` &lt;= '${endDate}'
         </if>
-        group by device_maintenance.scanId)as a
-        group by CustomTown
+        group by device_maintenance.scanId,device_maintenance.username,device_maintenance.CustomTown)as a
+        group by CustomTown,username
     </select>
 </mapper>
