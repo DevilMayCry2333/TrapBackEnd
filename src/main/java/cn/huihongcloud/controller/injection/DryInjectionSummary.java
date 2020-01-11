@@ -175,6 +175,9 @@ public class DryInjectionSummary {
         int totalDeadNum = 0;
         int totalWoodNum = 0;
         for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {
+            System.out.println("树木数量");
+            System.out.println(lim.getWoodNum());
+
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
             totalDeadNum += lim.getWoodStatusSum();
