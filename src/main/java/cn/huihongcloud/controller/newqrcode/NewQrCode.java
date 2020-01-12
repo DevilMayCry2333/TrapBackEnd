@@ -3,6 +3,7 @@ package cn.huihongcloud.controller.newqrcode;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.LockerMapper;
 import cn.huihongcloud.mapper.NewQrCodeMapper;
 import cn.huihongcloud.mapper.UserMapper;
 import cn.huihongcloud.util.DistUtil;
@@ -27,6 +28,10 @@ public class NewQrCode {
 
     @Autowired
     NewQrCodeMapper newQrCodeMapper;
+
+    @Autowired
+    LockerMapper lockerMapper;
+
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -141,45 +146,68 @@ public class NewQrCode {
                                           @RequestParam String username) throws InterruptedException {
         System.out.println(username);
         User user = userMapper.getUserByUserName(username);
-        System.out.println(user.getAdcode());
+        int locks = lockerMapper.getLocks(user.getProvince(),"device");
 
-        String mydist[] = distUtil.getNames(user.getAdcode(),null);
-        System.out.println(mydist[0]);
-        System.out.println(mydist[1]);
-        System.out.println(mydist[2]);
+        if(locks>=1){
+            res.put("lockStatus",true);
+        }else{
+            lockerMapper.insertLocks(user.getProvince(),"device",username);
 
-        try {
-            String devicePrefix = user.getAdcode() + "19" + applicationValue;
+            System.out.println(user.getAdcode());
 
-            for (long i = Long.parseLong(startScanID),j=0; i <= Long.parseLong(endScanID); i++,j++) {
-                List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
-                System.out.println("=====1=");
-                System.out.println(device.get(0).getId());
-                System.out.println("=====1=");
-                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
+            String mydist[] = distUtil.getNames(user.getAdcode(),null);
+            System.out.println(mydist[0]);
+            System.out.println(mydist[1]);
+            System.out.println(mydist[2]);
+
+            try {
+                String devicePrefix = user.getAdcode() + "19" + applicationValue;
+
+                for (long i = Long.parseLong(startScanID),j=0; i <= Long.parseLong(endScanID); i++,j++) {
+                    List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
+                    System.out.println("=====1=");
+                    System.out.println(device.get(0).getId());
+                    System.out.println("=====1=");
+                    newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
 //                Thread.sleep(5 * 100);
-            }
-            res.put("Res",true);
+                }
+                res.put("Res",true);
 
-        }catch (Exception e){
-            String deviceId = user.getAdcode() +"19" + applicationValue +  "000001";
+            }catch (Exception e){
+                String deviceId = user.getAdcode() +"19" + applicationValue +  "000001";
 
-            String devicePrefix = user.getAdcode() + "19" + applicationValue;
+                String devicePrefix = user.getAdcode() + "19" + applicationValue;
 
 
-            newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
-            for (long i = Long.parseLong(startScanID) + 1,j=1; i <= Long.parseLong(endScanID); i++,j++) {
-                List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
-                System.out.println("======");
-                System.out.println(device.get(0).getId());
-                System.out.println("======");
-                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
+                newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
+                for (long i = Long.parseLong(startScanID) + 1,j=1; i <= Long.parseLong(endScanID); i++,j++) {
+                    List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
+                    System.out.println("======");
+                    System.out.println(device.get(0).getId());
+                    System.out.println("======");
+                    newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
 //                Thread.sleep(5 * 100);
+                }
+                res.put("Res",true);
             }
-            res.put("Res",true);
+            lockerMapper.deleteLocks(user.getProvince(),"device");
         }
 
         return res;
+    }
+
+    @RequestMapping("/getLockStatus")
+    public int getLockStatus(@RequestParam String username){
+        User user = userMapper.getUserByUserName(username);
+
+        int locks = lockerMapper.getLocks(user.getProvince(),"device");
+
+        if(locks>=1) {
+            return 1;
+        }else {
+            return 0;
+        }
+
     }
 
 
