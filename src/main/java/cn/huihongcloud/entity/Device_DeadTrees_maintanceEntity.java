@@ -82,6 +82,8 @@ public class Device_DeadTrees_maintanceEntity {
     private String deadTreesMannerOne;
     private String deadTreesMannerTwo;
 
+    private String adcode;
+
     public String getDeadTreesMannerTotal() {
         return deadTreesMannerTotal;
     }
@@ -471,5 +473,13 @@ public class Device_DeadTrees_maintanceEntity {
 
     public void setWorker(String worker) {
         this.worker = worker;
+    }
+
+    public String getAdcode() {
+        return adcode;
+    }
+
+    public void setAdcode(String adcode) {
+        this.adcode = adcode;
     }
 }

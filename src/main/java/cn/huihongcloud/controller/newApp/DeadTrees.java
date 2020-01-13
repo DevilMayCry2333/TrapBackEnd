@@ -110,6 +110,7 @@ public class DeadTrees {
             deviceDeadTreesMaintanceEntity.setPic(pic1);
             deviceDeadTreesMaintanceEntity.setPic2(pic2);
             deviceDeadTreesMaintanceEntity.setPic3(pic3);
+            deviceDeadTreesMaintanceEntity.setAdcode(user.getAdcode());
 
             BDInfo bdInfo = mBDComponent.parseLocation(latitude,longitude);
 

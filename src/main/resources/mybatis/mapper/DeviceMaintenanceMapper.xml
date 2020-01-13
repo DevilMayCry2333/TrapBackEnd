@@ -244,7 +244,7 @@
         <if test="reported != null and reported != ''">
             and reported = #{reported}
         </if>
-        
+
         and isactive = '0'
         group by device_id,device_maintenance.username,device_maintenance.id
 
