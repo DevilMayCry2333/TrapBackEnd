@@ -4,6 +4,7 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.UserMapper;
+import cn.huihongcloud.service.OtherBeetleService;
 import cn.huihongcloud.service.UserService;
 import cn.huihongcloud.util.DistUtil;
 import com.github.pagehelper.Page;
@@ -11,6 +12,7 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,13 @@ public class UserController {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    OtherBeetleService otherBeetleService;
+
+    @Value("${com.youkaiyu.defaultOtherBeetleId}")
+    private Integer defaultOtherId;
+
 
     @RequestMapping(path = "auth_api/user", method = RequestMethod.PUT)
     @ApiOperation("更新用户信息")
@@ -382,6 +391,9 @@ public class UserController {
         if (user.getRole() == 5) {
             user.setParent(username);
         } else if (user.getRole() == 4) { //如果是项目管理员，通过parent与项目工程对应
+
+            otherBeetleService.addOtherBeetleForTown(user.getAdcode(),defaultOtherId);
+
             User project = userService.getUserByUserName(user.getParent());
             project.setParent(user.getUsername());
             if (!userService.updateUser(project)) {
