@@ -248,14 +248,14 @@ public class NaturalEnemy {
 //        jsonObject.put("current",1);
 //        System.out.println(jsonObject);
 
-        deviceNaturalEnemiesMaintanceEntities.get(0).setLuanKaNumSum(String.valueOf(luanKaNum));
-        deviceNaturalEnemiesMaintanceEntities.get(0).setReleaseNumSum(String.valueOf(releasNum));
+//        deviceNaturalEnemiesMaintanceEntities.get(0).setLuanKaNumSum(String.valueOf(luanKaNum));
+//        deviceNaturalEnemiesMaintanceEntities.get(0).setReleaseNumSum(String.valueOf(releasNum));
 
-        deviceNaturalEnemiesMaintanceEntities.get(0).setDeviceNum(
-                deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(
-                        user.getParent(),startDate,endDate,colName,searchText,1,100000,adcode
-                )
-        );
+//        deviceNaturalEnemiesMaintanceEntities.get(0).setDeviceNum(
+//                deviceNaturalEnemiesMaintanceEntityMapper.selectDevicesByDateAndColSearch(
+//                        user.getParent(),startDate,endDate,colName,searchText,1,100000,adcode
+//                )
+//        );
 
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
