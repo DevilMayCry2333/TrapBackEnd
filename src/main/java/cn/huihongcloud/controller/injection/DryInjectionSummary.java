@@ -33,23 +33,27 @@ public class DryInjectionSummary {
     public Object getDeviceSummaryByManager(String adcode, int page, int limit,
                                             @RequestParam(required = false) String startDate,
                                             @RequestParam(required = false) String endDate) {
-        Page<Object> pageObject = PageHelper.startPage(page, limit);
-        if(startDate!="" && startDate!=null) {
-            startDate = startDate + " 00:00:00";
-        }
-        if(endDate!="" && endDate!=null) {
-            endDate = endDate + " 23:59:59";
-        }
-        List<InjectionSummary> summaryEntities = deviceInjectionMaintanceEntityMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
-        for (InjectionSummary is: summaryEntities) {
-            User user = userService.getUserByUserName(is.getName());
-            is.setName(user.getParent());
-        }
         PageWrapper pageWrapper = new PageWrapper();
-        pageWrapper.setTotalPage(pageObject.getPages());
-        pageWrapper.setCurrentPage(page);
-        pageWrapper.setTotalNum(pageObject.getTotal());
-        pageWrapper.setData(summaryEntities);
+        try {
+            Page<Object> pageObject = PageHelper.startPage(page, limit);
+            if(startDate!="" && startDate!=null) {
+                startDate = startDate + " 00:00:00";
+            }
+            if(endDate!="" && endDate!=null) {
+                endDate = endDate + " 23:59:59";
+            }
+            List<InjectionSummary> summaryEntities = deviceInjectionMaintanceEntityMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
+            for (InjectionSummary is: summaryEntities) {
+                User user = userService.getUserByUserName(is.getName());
+                is.setName(user.getParent());
+            }
+            pageWrapper.setTotalPage(pageObject.getPages());
+            pageWrapper.setCurrentPage(page);
+            pageWrapper.setTotalNum(pageObject.getTotal());
+            pageWrapper.setData(summaryEntities);
+        }catch (Exception e){
+
+        }
         return Result.ok(pageWrapper);
     }
 

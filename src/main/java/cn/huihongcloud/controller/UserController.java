@@ -375,51 +375,55 @@ public class UserController {
             return Result.failed();
         }
         */
+        try {
+            System.out.println("===田鸡用户==");
 
-        System.out.println("===田鸡用户==");
-
-        System.out.println(user.getAdcode());
-        System.out.println(user.getUsername());
-        String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
-        user.setProvince(Dist[0]);
-        user.setCity(Dist[1]);
-        user.setArea(Dist[2]);
+            System.out.println(user.getAdcode());
+            System.out.println(user.getUsername());
+            String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
+            user.setProvince(Dist[0]);
+            user.setCity(Dist[1]);
+            user.setArea(Dist[2]);
 
         /*
             如果是工人，要写入parent信息
          */
-        if (user.getRole() == 5) {
-            user.setParent(username);
-        } else if (user.getRole() == 4) { //如果是项目管理员，通过parent与项目工程对应
+            if (user.getRole() == 5) {
+                user.setParent(username);
+            } else if (user.getRole() == 4) { //如果是项目管理员，通过parent与项目工程对应
 
-            otherBeetleService.addOtherBeetleForTown(user.getAdcode(),defaultOtherId);
+                otherBeetleService.addOtherBeetleForTown(user.getAdcode(),defaultOtherId);
 
-            User project = userService.getUserByUserName(user.getParent());
-            project.setParent(user.getUsername());
-            if (!userService.updateUser(project)) {
-                return Result.failed();
-            }
-        }
-
-        System.out.println(user);
-        if (userService.getUserByUserName(user.getUsername()) != null) {
-            return Result.failed("用户名已存在");
-        }
-
-        userService.registerUser(user);
-        if (user.getRole() < 5) {
-            List<User> users = userService.listUserByArea(user.getProvince(), user.getCity(), user.getArea());
-            //禁用县级用户@Param("adcode") String adcode,@Param("area") String area
-            // adcode = #{adcode} and and town = #{town}
-            //userToForbid.getAdcode(),userToForbid.getArea()
-            for (User myuser : users) {
-                Integer roleType = myuser.getRole();
-                Boolean active = myuser.getActive();
-                if (user.getRole() == 5) {
-                    userService.ActiveDevice(user.getUsername());
+                User project = userService.getUserByUserName(user.getParent());
+                project.setParent(user.getUsername());
+                if (!userService.updateUser(project)) {
+                    return Result.failed();
                 }
             }
+
+            System.out.println(user);
+            if (userService.getUserByUserName(user.getUsername()) != null) {
+                return Result.failed("用户名已存在");
+            }
+
+            userService.registerUser(user);
+            if (user.getRole() < 5) {
+                List<User> users = userService.listUserByArea(user.getProvince(), user.getCity(), user.getArea());
+                //禁用县级用户@Param("adcode") String adcode,@Param("area") String area
+                // adcode = #{adcode} and and town = #{town}
+                //userToForbid.getAdcode(),userToForbid.getArea()
+                for (User myuser : users) {
+                    Integer roleType = myuser.getRole();
+                    Boolean active = myuser.getActive();
+                    if (user.getRole() == 5) {
+                        userService.ActiveDevice(user.getUsername());
+                    }
+                }
+            }
+        }catch (Exception e){
+
         }
+
 
         return Result.ok();
     }

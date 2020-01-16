@@ -33,7 +33,7 @@ public class UserService {
             user = userMapper.getUserByUserName(username);
             user.setPassword(null);
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return user;
     }
