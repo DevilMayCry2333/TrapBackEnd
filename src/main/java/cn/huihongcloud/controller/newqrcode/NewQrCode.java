@@ -213,7 +213,7 @@ public class NewQrCode {
 
 
     @RequestMapping("/rootSearch")
-    public Object serach(@RequestParam String username,@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,Integer page,Integer limit){
+    public Object serach(@RequestParam(required = false) String username,@RequestParam(required = false) String colName,@RequestParam(required = false) String searchText,Integer page,Integer limit){
 
         User user = userMapper.getUserByUserName(username);
 

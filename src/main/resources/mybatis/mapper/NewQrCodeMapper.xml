@@ -53,7 +53,10 @@
         select * from device where province=#{province} and isManagerAssign = 0 order by scanId;
     </select>
     <select id="selectByConditions1" resultType="cn.huihongcloud.entity.device.Device">
-        select * from device where manager = #{manager}
+        select * from device where 1 = 1
+        <if test="manager!=null and manager!=''">
+            and manager = #{manager}
+        </if>
         <if test="searchText!=null and searchText!=''">
             and ${colName}=#{searchText}
         </if>
