@@ -188,6 +188,7 @@
     <select id="getMaintenanceDataByAdcodeAndTown2" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         select device_maintenance.id,
         device_maintenance.device_id,
+        device_maintenance.scanId,
         device_maintenance.batch,
         sum(num) num,
         device_maintenance.other_type,

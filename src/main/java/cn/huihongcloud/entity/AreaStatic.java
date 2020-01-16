@@ -1,11 +1,22 @@
 package cn.huihongcloud.entity;
 
+import io.swagger.models.auth.In;
+
 public class AreaStatic {
     private Integer beetlesNum;
     private Integer otherNum;
     private Integer avager;
+    private Integer avager1;
     private String CustomTown;
     private Integer avagerother;
+
+    public Integer getAvager1() {
+        return avager1;
+    }
+
+    public void setAvager1(Integer avager1) {
+        this.avager1 = avager1;
+    }
 
     public Integer getAvagerother() {
         return avagerother;

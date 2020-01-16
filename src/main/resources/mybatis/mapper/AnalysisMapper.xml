@@ -70,7 +70,7 @@
         group by MONTH(`date`)
     </select>
     <select id="getBatchStatic" resultType="cn.huihongcloud.entity.AreaStatic">
-        select sum(num) beetlesNum,sum(other_num) otherNum,((sum(num) + sum(other_num))/count(t1.device_id)) avager,batch customTown
+        select sum(num) beetlesNum,sum(other_num) otherNum,sum(num)/count(t1.device_id) avager,sum(other_num)/count(t1.device_id) avager1,batch customTown
         from device_maintenance t1 where CustomProject = #{customProject}
         <if test="startDate != null and startDate != ''">
             and DATE(`date`) &gt;= #{startDate}
