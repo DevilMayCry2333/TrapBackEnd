@@ -746,50 +746,80 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
         </if>
     </select>
   <select id="queryMannerSum1" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-    select count(KillMethod) mannerSum1 from device_deadtrees_maintance left join device on device.id = device_deadtrees_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '切片粉碎' and device.CustomProject=#{CustomProject}
+    select count(KillMethod) mannerSum1 from device_deadtrees_maintance
+    where device_deadtrees_maintance.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '切片粉碎' and device_deadtrees_maintance.customProject=#{CustomProject}
   </select>
   <select id="queryMannerSum2" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-    select count(KillMethod) mannerSum2 from device_deadtrees_maintance left join device on device.id = device_deadtrees_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '套袋熏蒸' and device.CustomProject=#{CustomProject}
+    select count(KillMethod) mannerSum2 from device_deadtrees_maintance
+    where device_deadtrees_maintance.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '套袋熏蒸' and device_deadtrees_maintance.customProject=#{CustomProject}
   </select>
   <select id="queryMannerSum4" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-    select count(KillMethod) mannerSum4 from device_deadtrees_maintance left join device on device.id = device_deadtrees_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '铁丝罩网' and device.CustomProject=#{CustomProject}
+    select count(KillMethod) mannerSum4 from device_deadtrees_maintance
+    where device_deadtrees_maintance.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '铁丝罩网' and device_deadtrees_maintance.customProject=#{CustomProject}
   </select>
   <select id="queryMannerSum3" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-     select count(KillMethod) mannerSum3 from device_deadtrees_maintance left join device on device.id = device_deadtrees_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '焚烧处理' and device.CustomProject=#{CustomProject}
+     select count(KillMethod) mannerSum3 from device_deadtrees_maintance
+    where device_deadtrees_maintance.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '焚烧处理' and device_deadtrees_maintance.customProject=#{CustomProject}
   </select>
   <select id="queryMannerSum5" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
-    select count(KillMethod) mannerSum5 from device_deadtrees_maintance left join device on device.id = device_deadtrees_maintance.device_Id
-    where device.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '其他' and device.CustomProject=#{CustomProject}
+    select count(KillMethod) mannerSum5 from device_deadtrees_maintance
+    where device_deadtrees_maintance.adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '其他' and device_deadtrees_maintance.customProject=#{CustomProject}
   </select>
   <select id="queryMannerSum11" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
     select count(KillMethod) mannerSum11
     from device_deadtrees_maintance
-    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '切片粉碎' and device_deadtrees_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '切片粉碎'
+    <if test="town!=null and town !=''">
+      and device_deadtrees_maintance.town=#{town}
+    </if>
+    <if test="area!=null and area !=''">
+      and device_deadtrees_maintance.area=#{area}
+    </if>
   </select>
   <select id="queryMannerSum22" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
     select count(KillMethod) mannerSumBagging
     from device_deadtrees_maintance
-    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '套袋熏蒸' and device_deadtrees_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '套袋熏蒸'
+    <if test="town!=null and town !=''">
+      and device_deadtrees_maintance.town=#{town}
+    </if>
+    <if test="area!=null and area !=''">
+      and device_deadtrees_maintance.area=#{area}
+    </if>
   </select>
   <select id="queryMannerSum33" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
     select  count(KillMethod) mannerSumBurn
     from device_deadtrees_maintance
-    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '焚烧处理' and device_deadtrees_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '焚烧处理'
+    <if test="town!=null and town !=''">
+      and device_deadtrees_maintance.town=#{town}
+    </if>
+    <if test="area!=null and area !=''">
+      and device_deadtrees_maintance.area=#{area}
+    </if>
   </select>
   <select id="queryMannerSum44" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
     select  count(KillMethod) mannerSum44
     from device_deadtrees_maintance
-    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '铁丝罩网' and device_deadtrees_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '铁丝罩网'
+    <if test="town!=null and town !=''">
+      and device_deadtrees_maintance.town=#{town}
+    </if>
+    <if test="area!=null and area !=''">
+      and device_deadtrees_maintance.area=#{area}
+    </if>
   </select>
   <select id="queryMannerSum55" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
     select count(KillMethod) mannerSum55
     from device_deadtrees_maintance
-    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '其他' and device_deadtrees_maintance.town=#{town}
+    where adcode like concat(#{adcode}, '%') and device_deadtrees_maintance.KillMethod = '其他'
     and device_deadtrees_maintance.town is not null
+    <if test="town!=null and town !=''">
+      and device_deadtrees_maintance.town=#{town}
+    </if>
+    <if test="area!=null and area !=''">
+      and device_deadtrees_maintance.area=#{area}
+    </if>
   </select>
     <select id="selectDeadTreesByCustomReigonCustomProject"
             resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
@@ -828,6 +858,23 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
      select count(KillMethod) deadTreesMannerFive
     from device_deadtrees_maintance
     where customTown = #{customTown} and device_deadtrees_maintance.KillMethod = '其他'
+  </select>
+  <select id="queryMannerSumByareaOne" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
+
+  </select>
+  <select id="queryDeviceSummaryBycity" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
+    select count(distinct device_Id) woodNum, sum(woodVolume) woodVolume, Device_DeadTrees_maintance.area `name`, Device_DeadTrees_maintance.adcode code
+    from Device_DeadTrees_maintance
+    where adcode like concat(#{adcode}, '%')
+
+    and Device_DeadTrees_maintance.town is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by Device_DeadTrees_maintance.area,Device_DeadTrees_maintance.adcode
   </select>
 
 

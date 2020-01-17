@@ -12,7 +12,24 @@ public class DeadTreesSummary {
     private String mannerSum1;
     private String mannerSum2;
     private String mannerSum3;
+    private String mannerSum22;
+    private String mannerSum33;
 
+    public String getMannerSum22() {
+        return mannerSum22;
+    }
+
+    public void setMannerSum22(String mannerSum22) {
+        this.mannerSum22 = mannerSum22;
+    }
+
+    public String getMannerSum33() {
+        return mannerSum33;
+    }
+
+    public void setMannerSum33(String mannerSum33) {
+        this.mannerSum33 = mannerSum33;
+    }
 
     private String mannerSum0;
 
