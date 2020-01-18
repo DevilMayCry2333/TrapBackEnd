@@ -31,7 +31,7 @@
         select * from device_maintenance
         left join device on device.id = device_id
         where device_id = #{deviceId}
-        
+
         <if test="myusername != null and myusername !=''">
             and device.manager = #{myusername}
         </if>
@@ -108,7 +108,7 @@
             and reported = #{reported}
         </if>
               and isactive = '0'
-        
+
         group by device_id
         order by `date` desc
     </select>
@@ -182,7 +182,7 @@
         and reported = #{reported}
     </if>
             and isactive = '0'
-        
+
         order by `date` desc
     </select>
     <select id="getMaintenanceDataByAdcodeAndTown2" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
@@ -231,7 +231,8 @@
             device_maintenance.area =  #{condition} or
             device_maintenance.town = #{condition} or
             device_maintenance.device_id = #{condition} or
-            device_maintenance.manager=#{condition}
+            device_maintenance.manager=#{condition} or
+            device_maintenance.CustomProject=#{condition}
             )
         </if>
         <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
@@ -316,7 +317,7 @@
             and reported = #{reported}
         </if>
         and isactive = '0'
-        
+
         order by `date` desc
     </select>
     <select id="getMaintenanceDataByUsername" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
@@ -367,7 +368,7 @@
         <if test="endDate != null and endDate != '' and endDate != 'null' and endDate!= 'null 23:59:59'">
             and `date` &lt;= #{endDate}
         </if>
-        
+
         order by `date` desc
     </select>
 
@@ -494,7 +495,7 @@
         </set>
         where scanId = #{scanId} and batch = #{batch}
         and isactive = '0'
-        
+
     </update>
     <select id="getMaxBatchByDeviceid" resultType="java.lang.Integer">
         select max(batch) from device_maintenance where  device_id = #{deviceID}
@@ -516,7 +517,7 @@
         left join device on device_id=device.id
         where adcode = #{adcode} and town = #{town}
               and isactive = '0'
-       
+
         group by DATE_FORMAT(`date`, '%Y-%m-%d')
         order by `date` asc
     </select>
@@ -526,7 +527,7 @@
         from device_maintenance
         where adcode like concat(#{adcode}, '%')
         and isactive = '0'
-        
+
         and `date` IS NOT NULL
         <if test="startYear != null and startYear !=''">
             and `date` &gt;= #{startYear}
@@ -548,7 +549,7 @@
         from device_maintenance
         where adcode like concat(#{adcode}, '%')
         and isactive = '0'
-        
+
         and `date` IS NOT NULL
         <if test="startYear != null and startYear !=''">
             and `date` &gt;= #{startYear}
@@ -570,7 +571,7 @@
         from device_maintenance
         where adcode = #{adcode}
         and isactive = '0'
-        
+
         and `date` IS NOT NULL
         <if test="startYear != null and startYear !=''">
             and `date` &gt;= #{startYear}
@@ -594,7 +595,7 @@
         left join user on user.username = device_maintenance.username
         where user.parent = #{adcode}
         and isactive = '0'
-        
+
         and `date` IS NOT NULL
         <if test="startYear != null and startYear !=''">
             and `date` &gt;= #{startYear}
@@ -618,7 +619,7 @@
         left join device on device_id=device.id
         where adcode = #{adcode}
         and isactive = '0'
-        
+
         group by DATE_FORMAT(`date`, '%Y-%m-%d')
         order by `date` asc
     </select>
@@ -629,7 +630,7 @@
         left join device on device_id=device.id
         where adcode like concat(#{adcode}, '%')
         and isactive = '0'
-        
+
         group by DATE_FORMAT(`date`, '%Y-%m-%d')
         order by `date` asc
     </select>
@@ -637,7 +638,7 @@
     <select id="getChangeTimesByDeviceId" resultType="int">
         select count(*) from device_maintenance
         where device_id = #{id}
-        
+
         and isactive = '0'
 
     </select>
@@ -668,7 +669,7 @@
 
         where device_maintenance.id = #{id}
         and isactive = '0'
-        
+
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
         </if>
@@ -683,7 +684,7 @@
         select * from device_maintenance
         where device_id = #{id}
               and isactive = '0'
-        
+
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
         </if>
@@ -699,7 +700,7 @@
         select * from device_maintenance
         where device_id = #{id}
         and isactive = '0'
-        
+
 
     </select>
     <select id="getMaintenanceDataById1" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
@@ -721,7 +722,7 @@
         from device_maintenance
         where adcode = #{adcode}
               and isactive = '0'
-        
+
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
         </if>
@@ -739,7 +740,7 @@
             from device_maintenance
             where adcode like concat(#{code}, '%')
                   and isactive = '0'
-        
+
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
         </if>
@@ -756,7 +757,7 @@
          from device_maintenance
         where adcode like concat(#{code}, '%')
               and isactive = '0'
-        
+
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
         </if>
@@ -775,7 +776,7 @@
         left join device on  device.id= device_maintenance.device_id
         where device.manager = #{manager}
               and isactive = '0'
-        
+
         <if test="startDate != null and startDate !='' and startDate != 'null 00:00:00'">
             and `date` &gt;= #{startDate}
         </if>
@@ -847,7 +848,7 @@
             and manager = #{manager}
         </if>
         and isactive = '0'
-        
+
         group by device_id
         order by `date` desc
     </select>
@@ -980,7 +981,7 @@
             and reported = #{reported}
         </if>
         and isactive = '0'
- 
+
         order by `date` desc
     </select>
     <select id="getMaintenanceDataByManager1" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
