@@ -175,28 +175,33 @@ public class UserController {
         int flag = 0;
         List<User> users = null;
         // 这里就暂时用拼接sql处理了
-        switch (currentUser.getRole()) {
-            case 3:
-                condition = " role = 4 or role = 6 and parent like '%" +  username +  "%'" ;
-                System.out.println(condition);
-                break;
-            case 4:
-                condition = " role = 5 and parent = '" + username + "'";
-                break;
-            case 6:
-                users = userMapper.getProjectAdminByAdcode(currentUser.getAdcode());
-                System.out.println("6666");
-                flag = 1;
-                break;
-            case 7:
-                System.out.println("roleType=7");
-                users = userMapper.getProjectUsersByAdcode(currentUser.getAdcode());
-                flag = 1;
-                break;
+        if(roleType==null){
+            switch (currentUser.getRole()) {
+                case 3:
+                    condition = " role = 4 or role = 6 and adcode like '%" +  currentUser.getAdcode() +  "%'" ;
+                    System.out.println(condition);
+                    break;
+                case 4:
+                    condition = " role = 5 and parent = '" + username + "'";
+                    break;
+                case 6:
+                    users = userMapper.getProjectAdminByAdcode(currentUser.getAdcode());
+                    System.out.println("6666");
+                    flag = 1;
+                    break;
+                case 7:
+                    System.out.println("roleType=7");
+                    users = userMapper.getProjectUsersByAdcode(currentUser.getAdcode());
+                    flag = 1;
+                    break;
 
+            }
         }
 
+
         if (flag == 0) {
+            System.out.println("roleType");
+            System.out.println(roleType);
             users = userService.getUserByAdcodeAndTownAndStringAndUserRole(currentUser.getAdcode(), currentUser.getTown(),
                     searchText.trim(), currentUser.getRole(), roleType, active, condition);
         }
