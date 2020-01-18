@@ -62,7 +62,7 @@
         </if>
     </select>
     <select id="countByCond1" resultType="java.lang.Integer">
-        select count(id) from device
+        select count(*) from device
         <if test="searchText!=null and searchText!=''">
             where ${colName}=#{searchText}
         </if>

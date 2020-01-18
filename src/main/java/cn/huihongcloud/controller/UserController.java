@@ -3,6 +3,7 @@ package cn.huihongcloud.controller;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.OtherBeetleMapper;
 import cn.huihongcloud.mapper.UserMapper;
 import cn.huihongcloud.service.OtherBeetleService;
 import cn.huihongcloud.service.UserService;
@@ -38,6 +39,9 @@ public class UserController {
 
     @Autowired
     OtherBeetleService otherBeetleService;
+
+    @Autowired
+    OtherBeetleMapper otherBeetleMapper;
 
     @Value("${com.youkaiyu.defaultOtherBeetleId}")
     private Integer defaultOtherId;
@@ -392,7 +396,10 @@ public class UserController {
                 user.setParent(username);
             } else if (user.getRole() == 4) { //如果是项目管理员，通过parent与项目工程对应
 
-                otherBeetleService.addOtherBeetleForTown(user.getAdcode(),defaultOtherId);
+                if(otherBeetleMapper.countBeetleInfoMap(String.valueOf(defaultOtherId))<=0){
+                    otherBeetleService.addOtherBeetleForTown(user.getAdcode(),defaultOtherId);
+                }
+
 
                 User project = userService.getUserByUserName(user.getParent());
                 project.setParent(user.getUsername());
@@ -421,7 +428,7 @@ public class UserController {
                 }
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
 

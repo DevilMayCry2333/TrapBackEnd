@@ -142,4 +142,6 @@ public interface OtherBeetleMapper {
 
     int deleteDeadKillForTOwn(int id,String adcode);
 
+    int countBeetleInfoMap(String id);
+
 }
