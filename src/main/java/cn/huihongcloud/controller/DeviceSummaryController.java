@@ -101,6 +101,7 @@ public class DeviceSummaryController {
             endDate = endDate + " 23:59:59";
         }
         List<SummaryEntity> summaryEntities = deviceSummaryMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
+        summaryEntities.forEach(se-> se.setName(userService.getUserByUserName(se.getName()).getParent()));
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setTotalPage(pageObject.getPages());
         pageWrapper.setCurrentPage(page);
