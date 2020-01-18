@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("数据分析")
 public class AnalysisController {
 
+    
     @Autowired
     private AnalysisService analysisService;
 
