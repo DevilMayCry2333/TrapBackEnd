@@ -211,7 +211,7 @@
         from device_maintenance
         left join user on device_maintenance.username = user.username
         where device_id in
-        (select id from device where
+        (select device_id from device_maintenance where
         1 = 1
         <if test="adcode != null and adcode != ''">
             and
@@ -231,7 +231,7 @@
             device_maintenance.area =  #{condition} or
             device_maintenance.town = #{condition} or
             device_maintenance.device_id = #{condition} or
-            device_maintenance.manager=#{condition} or
+            device_maintenance.manager= #{condition} or
             device_maintenance.CustomProject=#{condition}
             )
         </if>
