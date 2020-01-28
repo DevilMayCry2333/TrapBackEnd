@@ -142,8 +142,6 @@ public class DeviceController {
 
 
 
-        //这个分页插件有bug.....
-
         PageWrapper pageWrapper = new PageWrapper();
 
         pageWrapper.setData(deviceList);
