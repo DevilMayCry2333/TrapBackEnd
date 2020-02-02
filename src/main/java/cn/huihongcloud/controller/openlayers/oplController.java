@@ -113,7 +113,11 @@ public class oplController {
     @ApiOperation("获得模块图层信息")
     @RequestMapping("/getLayerInfo")
     public Object getLayerInfo(@RequestParam("userid") String userid,@RequestParam("module") String module){
-        return userMapper.getLayerInfo(userid,module);
+        if(userMapper.countIfLayerExists(userid,module)>0){
+            return userMapper.getLayerInfo(userid,module);
+        }else {
+            return "NO";
+        }
     }
 
     @RequestMapping("/downloadFileAction")
