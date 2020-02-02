@@ -1,5 +1,6 @@
 package cn.huihongcloud.mapper;
 
+import cn.huihongcloud.entity.GeoMappingEntity;
 import cn.huihongcloud.entity.user.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -58,6 +59,14 @@ public interface UserMapper {
 
     //修改工人name和phone
     int updateUserNameAndPhone(String username, @Param("name") String name,@Param("phone") String phone,@Param("active") Boolean active);
+
+    int countIfLayerExists(@Param("userid") String userid,@Param("module") String module);
+
+    int insertLayerInfo(@Param("userid") String userid,@Param("module") String module,@Param("workname") String workname,@Param("layername") String layername);
+
+    int updateLayerInfo(@Param("userid") String userid,@Param("module") String module,@Param("workname") String workname,@Param("layername") String layername);
+
+    GeoMappingEntity getLayerInfo(@Param("userid") String userid,@Param("module") String module);
 
 
 

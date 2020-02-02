@@ -56,6 +56,9 @@
           (#{user.username}, #{user.name}, #{user.password}, #{user.adcode}, #{user.towncode}, #{user.province}, #{user.city},
           #{user.area}, #{user.town}, #{user.role}, #{user.email}, #{user.phone}, #{user.active}, #{user.parent},'0',#{user.project})
     </insert>
+    <insert id="insertLayerInfo">
+        insert into geo_mapping (userid,workname,layername,`module`) values (#{userid},#{workname},#{layername},#{module})
+    </insert>
     <select id="searchUserByString" resultType="cn.huihongcloud.entity.user.User">
         select * from user
                 where username like concat('%', #{searchText}, '%') or
@@ -225,10 +228,20 @@
         </set>
         where username = #{username}
     </update>
+    <update id="updateLayerInfo">
+        update geo_mapping set workname = #{workname},layername = #{layername}
+         where userid = #{userid} and module = #{module}
+    </update>
     <delete id="deleteUserByUsername">
         delete from user where username = #{username}
     </delete>
     <select id="getProvinceByCode" resultType="cn.huihongcloud.entity.user.User">
         select * from `user` where adcode =#{code} and 1=role
+    </select>
+    <select id="countIfLayerExists" resultType="java.lang.Integer">
+        select count(*) from geo_mapping where userid = #{userid} and `module` = #{module};
+    </select>
+    <select id="getLayerInfo" resultType="cn.huihongcloud.entity.GeoMappingEntity">
+        select * from geo_mapping where userid = #{userid} and `module` = #{module};
     </select>
 </mapper>
