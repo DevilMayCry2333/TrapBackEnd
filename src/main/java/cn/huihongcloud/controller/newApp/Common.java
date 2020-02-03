@@ -5,6 +5,7 @@ import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class Common {
     UserMapper userMapper;
 
     @RequestMapping("/bindId")
-    public Object BindId(@RequestParam String scanId,@RequestParam String serial,@RequestParam String username){
+    public Object BindId(@RequestParam String scanId,@RequestParam String serial,@RequestAttribute String username){
         System.out.println(scanId);
         System.out.println(serial);
         User user = userMapper.getUserByUserName(username);
