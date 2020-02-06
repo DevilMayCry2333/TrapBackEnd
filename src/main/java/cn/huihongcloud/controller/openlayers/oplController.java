@@ -59,7 +59,7 @@ public class oplController {
         final long l = System.currentTimeMillis();
         final int i = (int)( l % 10000 );
 
-        String layerName = user.getAdcode() + i;
+        String layerName = "A" + user.getAdcode() + i;
         System.out.println(layerName);
         System.out.println(user.getUsername());
         System.out.println(shapeFile);
@@ -101,8 +101,9 @@ public class oplController {
         }else {
             userMapper.insertLayerInfo(geoMappingEntity.getUserid(),geoMappingEntity.getModule(),geoMappingEntity.getWorkname(),geoMappingEntity.getLayername());
         }
+        //坐标系需要指定
         boolean created = publisher.createWorkspace(layerName);
-        boolean published = publisher.publishShp(layerName, layerName, base, file, "EPSG:4326", "default_point");
+        boolean published = publisher.publishShp(layerName, layerName, base, file, "EPSG:2364", "default_point");
         System.out.println("转换之后的文件："+file);
 //        System.out.println(published);
         return "OK";
