@@ -4,7 +4,9 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
+import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
@@ -14,6 +16,7 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Injection_maintanceEntityMapper;
 import cn.huihongcloud.service.DryInjectionService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.DistUtil;
 import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -49,6 +52,12 @@ public class DryInjectionWatch {
 
     @Autowired
     DeviceMapper deviceMapper;
+
+    @Autowired
+    DistUtil distUtil;
+
+    @Autowired
+    private BDComponent mBDComponent;
 
     @Value("${com.youkaiyu.batchImg}")
     private String batchImgUrl;
@@ -458,6 +467,13 @@ public class DryInjectionWatch {
         for (Device_Injection_maintanceEntity d:
                 deviceMaintenanceList) {
 
+            BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
+            d.setTown(bdInfo.getResult().getAddressComponent().getTown());
+            String info[] = distUtil.getNames(d.getAdcode(),null);
+            d.setArea(info[2]);
+            d.setCity(info[1]);
+            d.setProvince(info[0]);
+            d.setCustomSerial(d.getSerial());
 
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
             d.setWoodstatus(deviceMapper.getInjectWoodStatus(null,d.getWoodStatusFront(),2).getId());
@@ -465,7 +481,7 @@ public class DryInjectionWatch {
             d.setWorkContent(String.valueOf(deviceMapper.getInjectWorkContent(null,d.getWorkContentFront(),2).getId()));
             d.setInjectName(String.valueOf(deviceMapper.getInjectName(null,d.getInjectNameFront(),2).getId()));
 
-            Device_Injection_maintanceEntity tmp =  deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getScanId()));
+            Device_Injection_maintanceEntity tmp =  deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getScanId()),d.getBatch());
             if(tmp!=null){
                 deviceInjectionMaintanceEntityMapper.updateRecordById(d);
             }else {

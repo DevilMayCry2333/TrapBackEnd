@@ -26,12 +26,14 @@
       region, submit_date, batch, 
       longitude, latitude, PredatorsType, 
       Release_Num, Pic, Worker, 
-      Remarks, scanId,username,altitude,town)
+      Remarks, scanId,username,altitude,town,
+      customTown,customProject,customSerial,adcode,area,city,province)
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
       #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{predatorstype,jdbcType=VARCHAR}, 
       #{releaseNum,jdbcType=INTEGER}, #{pic,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR}, #{scanid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},#{altitude,jdbcType=VARCHAR},#{town})
+      #{remarks,jdbcType=VARCHAR}, #{scanId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},#{altitude,jdbcType=VARCHAR},
+      #{town},#{customTown},#{customProject},#{customSerial},#{adcode},#{area},#{city},#{province})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity" >
     insert into Device_NaturalEnemies_maintance
@@ -148,10 +150,13 @@
         where id = #{id}
   </update>
   <update id="updateRecordById">
-    update device_naturalenemies_maintance set device_Id = #{deviceId},serial = #{serial},region = #{region},submit_date = #{submitDate},
-    batch = #{batch}, longitude = #{longitude}, latitude = #{latitude}, PredatorsType = #{predatorstype},
-    Release_Num = #{releaseNum}, pic = #{pic}, worker = #{worker}, remarks = #{remarks}, scanid = #{scanid},
-    username = #{username},reported = #{reported}, altitude = #{altitude},town=#{town} where id = #{id}
+    update device_naturalenemies_maintance set serial=#{serial},region=#{region},submit_date=#{submitDate}
+    ,longitude=#{longitude},latitude=#{latitude},PredatorsType=#{predatorstype},
+    Release_Num = #{releaseNum},pic=#{pic},worker=#{worker},remarks=#{remarks},scanId=#{scanId},
+    username=#{username},reported=#{reported},altitude=#{altitude},
+    town=#{town},customTown=#{customTown},
+    customProject=#{customProject},adcode=#{adcode},
+    customSerial=#{customSerial} where device_Id=#{deviceId} and batch=#{batch}
   </update>
 
     <update id="updateRecordByFront">
@@ -786,7 +791,7 @@
         AND project = '3'
   </select>
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-      select * from device_naturalenemies_maintance where scanId = #{scanId};
+      select * from device_naturalenemies_maintance where scanId = #{scanId} and batch = #{batch};
     </select>
 
     <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">

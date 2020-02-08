@@ -796,15 +796,12 @@ public class DeviceMaintenanceController {
 //            Device device = deviceMapper.getDeviceByScanId(dm.getScanId());
 
             BDInfo bdInfo = mBDComponent.parseLocation(dm.getLatitude(), dm.getLongitude());
-
-//            System.out.println(distUtil.getNames(dm.getAdcode(),null)[0]);
-//            System.out.println(distUtil.getNames(dm.getAdcode(),null)[1]);
-//            System.out.println(distUtil.getNames(dm.getAdcode(),null)[2]);
             dm.setTown(bdInfo.getResult().getAddressComponent().getTown());
             String info[] = distUtil.getNames(dm.getAdcode(),null);
             dm.setArea(info[2]);
             dm.setCity(info[1]);
             dm.setProvince(info[0]);
+
             dm.setDeviceId(deviceMapper.querySingalDeviceId(dm.getScanId()).getId());
             dm.setOtherType(deviceMapper.getTrapBeetleInfo(String.valueOf(dm.getOtherBeetleFront())).getId());
             dm.setDrug(deviceMapper.getTrapInjectName(dm.getDrugFront()).getId().toString());

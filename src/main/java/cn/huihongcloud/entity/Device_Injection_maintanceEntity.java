@@ -29,7 +29,7 @@ public class Device_Injection_maintanceEntity {
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "提交日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy-MM-dd日")
+    @Excel(name = "提交日期",exportFormat = "yyyy年MM月dd日",importFormat = "yyyy年MM月dd日")
     private Date submitDate;
 
     @Excel(name = "批次")
@@ -116,8 +116,10 @@ public class Device_Injection_maintanceEntity {
 
     private String customSerial;
 
+    @Excel(name = "邮政编码")
     private String adcode;
 
+    @Excel(name = "项目工程")
     private String customProject;
 
 

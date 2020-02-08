@@ -11,7 +11,7 @@ import java.util.Date;
 public class Device_NaturalEnemies_maintanceEntity {
 
     private Long id;
-    @Excel(name = "设备ID")
+
     private Long deviceId;
     @Excel(name = "编号")
     private String serial;
@@ -74,10 +74,12 @@ public class Device_NaturalEnemies_maintanceEntity {
 
     private String precision;
 
+    @Excel(name = "邮政编码")
     private String adcode;
 
     private String customSerial;
 
+    @Excel(name = "项目工程")
     private String customProject;
 
 
@@ -140,7 +142,7 @@ public class Device_NaturalEnemies_maintanceEntity {
         this.releasePlace = releasePlace;
     }
 
-    //    @Excel(name = "二维码ID")
+    @Excel(name = "设备ID")
     private Long scanId;
 
     public String getStartDate() {
