@@ -14,6 +14,7 @@ import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
 import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.service.*;
+import cn.huihongcloud.util.DistUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiOperation;
@@ -61,6 +62,9 @@ public class DeviceMaintenanceController {
 
     @Autowired
     DeviceMapper deviceMapper;
+
+    @Autowired
+    DistUtil distUtil;
 
 //    private final static Set<String> OVERLAP_CACHE = Collections.synchronizedSet(new HashSet<>());
 
@@ -789,13 +793,17 @@ public class DeviceMaintenanceController {
                 .importExcel(multipartFile.getInputStream(), DeviceMaintenance.class, importParams);
 
         for (DeviceMaintenance dm : deviceMaintenanceList) {
-            Device device = deviceMapper.getDeviceByScanId(dm.getScanId());
+//            Device device = deviceMapper.getDeviceByScanId(dm.getScanId());
 
             BDInfo bdInfo = mBDComponent.parseLocation(dm.getLatitude(), dm.getLongitude());
+
+//            System.out.println(distUtil.getNames(dm.getAdcode(),null)[0]);
+//            System.out.println(distUtil.getNames(dm.getAdcode(),null)[1]);
+//            System.out.println(distUtil.getNames(dm.getAdcode(),null)[2]);
             dm.setTown(bdInfo.getResult().getAddressComponent().getTown());
-            dm.setArea(device.getArea());
-            dm.setCity(device.getCity());
-            dm.setProvince(device.getProvince());
+            dm.setArea(distUtil.getNames(dm.getAdcode(),null)[2]);
+            dm.setCity(distUtil.getNames(dm.getAdcode(),null)[1]);
+            dm.setProvince(distUtil.getNames(dm.getAdcode(),null)[0]);
             
             dm.setDeviceId(deviceMapper.querySingalDeviceId(dm.getScanId()).getId());
             dm.setOtherType(deviceMapper.getTrapBeetleInfo(String.valueOf(dm.getOtherBeetleFront())).getId());
