@@ -801,10 +801,10 @@ public class DeviceMaintenanceController {
 //            System.out.println(distUtil.getNames(dm.getAdcode(),null)[1]);
 //            System.out.println(distUtil.getNames(dm.getAdcode(),null)[2]);
             dm.setTown(bdInfo.getResult().getAddressComponent().getTown());
-            dm.setArea(distUtil.getNames(dm.getAdcode(),null)[2]);
-            dm.setCity(distUtil.getNames(dm.getAdcode(),null)[1]);
-            dm.setProvince(distUtil.getNames(dm.getAdcode(),null)[0]);
-            
+            String info[] = distUtil.getNames(dm.getAdcode(),null);
+            dm.setArea(info[2]);
+            dm.setCity(info[1]);
+            dm.setProvince(info[0]);
             dm.setDeviceId(deviceMapper.querySingalDeviceId(dm.getScanId()).getId());
             dm.setOtherType(deviceMapper.getTrapBeetleInfo(String.valueOf(dm.getOtherBeetleFront())).getId());
             dm.setDrug(deviceMapper.getTrapInjectName(dm.getDrugFront()).getId().toString());
