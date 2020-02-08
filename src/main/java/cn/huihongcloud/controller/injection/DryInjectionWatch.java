@@ -64,9 +64,9 @@ public class DryInjectionWatch {
 
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println("收到用户名:");
 
-        System.out.println(username);
+
+
 
 
         if (!Objects.equals(startDate, "")) {
@@ -83,12 +83,12 @@ public class DryInjectionWatch {
             deviceInjectionMaintanceEntities = deviceInjectionMaintanceEntityMapper.selectByConditionsAdcode(user.getAdcode(), optionIndex, searchText, startDate, endDate);
         }
 
-        System.out.println("+++");
+
         for (Device_Injection_maintanceEntity d:
              deviceInjectionMaintanceEntities) {
-            System.out.println("---");
 
-            System.out.println(d.getDeviceId());
+
+
 
         }
 
@@ -124,7 +124,7 @@ public class DryInjectionWatch {
     public Object getMaintenanceData2(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -169,7 +169,7 @@ public class DryInjectionWatch {
         }
         User user = userService.getUserByUserName(username);
         Object maintenanceData = dryInjectionService.getMaintenanceDataByDeviceId(user, myusername, deviceId, startDate, endDate);
-        System.out.println(maintenanceData);
+
 
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
@@ -183,7 +183,7 @@ public class DryInjectionWatch {
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String batch, @RequestParam(required = false) String town,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        //System.out.println(startDate+"cc");
+        //
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -192,7 +192,7 @@ public class DryInjectionWatch {
 //        }
         if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
-            System.out.println(startDate + "dd");
+
         }
         if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
@@ -211,7 +211,7 @@ public class DryInjectionWatch {
 
     @PostMapping("/maintenance/report")
     public Object reportMaintenanceData(@RequestBody Map<String, Object> data) {
-        System.out.println(data.size());
+
         List<Integer> list = (List<Integer>) data.get("list");
         dryInjectionService.report(list);
         return Result.ok();
@@ -223,7 +223,7 @@ public class DryInjectionWatch {
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName) {
-        System.out.println(workerName);
+
         User user = userService.getUserByUserName(username);
         List<Device> list = null;
         Page<Object> pages = null;
@@ -283,7 +283,7 @@ public class DryInjectionWatch {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
-        System.out.println(user.getUsername());
+
         int optVal = 0;
 
         if(optionIndex!=null && optionIndex!=""){
@@ -292,7 +292,7 @@ public class DryInjectionWatch {
         }
 
 //        String dateString = "";
-        System.out.println(endDate);
+
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }
@@ -307,11 +307,11 @@ public class DryInjectionWatch {
 //
 //            currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
 //
-//            System.out.println(currentTime_2.getDate());
+//
 //
 //            dateString = formatter.format(currentTime_2);
 //
-//            System.out.println(dateString);
+//
 //        }
 
 
@@ -320,8 +320,8 @@ public class DryInjectionWatch {
 
         List<Device_Injection_maintanceEntity> list = null;
 
-        System.out.println(optVal);
-        System.out.println(searchText);
+
+
 
         if(user.getRole()==4){
             list = deviceInjectionMaintanceEntityMapper.selectByConditions(user.getParent(),optVal,searchText,startDate,endDate);
@@ -361,10 +361,10 @@ public class DryInjectionWatch {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -381,7 +381,7 @@ public class DryInjectionWatch {
         List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
-//            System.out.println(d.getArea());
+//
 //
 //        }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("注干剂管理情况明细表", "注干剂管理情况明细表"), Device_Injection_maintanceEntity.class, deviceNaturalEnemiesMaintanceEntities);
@@ -403,10 +403,10 @@ public class DryInjectionWatch {
 
         User user = userService.getUserByUserName(username);
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
 
         ImageDownUtil imageDownUtil = new ImageDownUtil();
 
@@ -457,8 +457,8 @@ public class DryInjectionWatch {
                 .importExcel(multipartFile.getInputStream(), Device_Injection_maintanceEntity.class, importParams);
         for (Device_Injection_maintanceEntity d:
                 deviceMaintenanceList) {
-            System.out.println("natural");
-            System.out.println(d.getScanId());
+
+
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
             d.setWoodstatus(deviceMapper.getInjectWoodStatus(null,d.getWoodStatusFront(),2).getId());
 
@@ -477,8 +477,8 @@ public class DryInjectionWatch {
 
     @PostMapping("/updateRec")
     public Object updateRec(@RequestBody Device_Injection_maintanceEntity d){
-        System.out.println("===========");
-        System.out.println(d);
+
+
         deviceInjectionMaintanceEntityMapper.updateRecordByFront(d);
         return "OK";
 

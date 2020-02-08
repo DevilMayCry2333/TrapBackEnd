@@ -71,7 +71,7 @@ public class NaturalSummary {
         List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
         for (User user : userList){
             System.out.printf("=================================");
-            System.out.println(user.getUsername());
+
         }
         for(int i=0;i<summaryEntities.size();i++){
             summaryEntities.get(i).setTotalNaturalMannerByCustomProject("花绒寄甲:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerOneByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerOneByCustomProject() + "  " + "肿腿蜂:" + deviceNaturalEnemiesMaintanceEntityMapper.queryNatualMannerTwoByCustomProject(adcode,userList.get(i).getUsername()).getNaturalMannerTwoByCustomProject() +"  "+
@@ -206,7 +206,7 @@ public class NaturalSummary {
                                  @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println(username);
+
         System.out.printf("==================");
 
 
@@ -230,8 +230,8 @@ public class NaturalSummary {
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
             totalReleasePlace += lim.getReleasePlace();
-            System.out.println(lim.getCustomTown());
-            System.out.println(lim.getId());
+
+
         }
 
 

@@ -4,8 +4,10 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.component.BDComponent;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.Device_Medicine_MaintanceEntity;
+import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
@@ -50,6 +52,10 @@ public class MedicineDataDetail {
     @Value("${com.youkaiyu.batchImg}")
     private String batchImgUrl;
 
+    @Autowired
+    private BDComponent mBDComponent;
+
+
 
     //JSONObject jsonObject = new JSONObject();
 
@@ -65,7 +71,7 @@ public class MedicineDataDetail {
         User user = userService.getUserByUserName(username);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println(username);
+
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
         }
@@ -98,7 +104,7 @@ public class MedicineDataDetail {
 
     @RequestMapping("/updateData")
     public Object  updateRecord(@RequestBody Device_Medicine_MaintanceEntity device_medicine_maintanceEntity){
-        System.out.println(device_medicine_maintanceEntity.getId());
+
         device_medicine_maintanceEntityMapper.updateByPrimaryKeySelective(device_medicine_maintanceEntity);
         return "ok";
     }
@@ -123,10 +129,10 @@ public class MedicineDataDetail {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -157,10 +163,10 @@ public class MedicineDataDetail {
                             @RequestParam String adcode
     ) throws IOException {
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
 
         User user = userService.getUserByUserName(username);
 
@@ -210,10 +216,17 @@ public class MedicineDataDetail {
                 .importExcel(multipartFile.getInputStream(), Device_Medicine_MaintanceEntity.class, importParams);
         for (Device_Medicine_MaintanceEntity d:
                 deviceMaintenanceList) {
-            System.out.println("natural");
 
+            Device device = deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId()));
+
+            BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
+            d.setTown(bdInfo.getResult().getAddressComponent().getTown());
+            d.setArea(device.getArea());
+            d.setCity(device.getCity());
+            d.setCustomSerial(d.getSerial());
+            d.setProvince(device.getProvince());
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
-            Device_Medicine_MaintanceEntity tmp =  device_medicine_maintanceEntityMapper.selectById1(BigInteger.valueOf(d.getScanId()));
+            Device_Medicine_MaintanceEntity tmp =  device_medicine_maintanceEntityMapper.selectById1(BigInteger.valueOf(d.getScanId()),d.getBatch());
             if(tmp!=null){
                 device_medicine_maintanceEntityMapper.updateRecordById1(d);
             }else {
@@ -229,7 +242,7 @@ public class MedicineDataDetail {
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName) {
-        System.out.println(workerName);
+
         User user = userService.getUserByUserName(username);
         List<Device> list = null;
         Page<Object> pages = null;
@@ -283,7 +296,7 @@ public class MedicineDataDetail {
 
     @PostMapping("/maintenance/medicinereport")
     public Object reportMaintenanceData(@RequestBody Map<String, Object> data) {
-        System.out.println(data.size());
+
         List<Integer> list = (List<Integer>) data.get("list");
         deviceMedicineMaintanceService.report11(list);
         return Result.ok();
@@ -294,7 +307,7 @@ public class MedicineDataDetail {
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String batch, @RequestParam(required = false) String town,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        //System.out.println(startDate+"cc");
+        //
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -303,7 +316,7 @@ public class MedicineDataDetail {
 //        }
         if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
-            System.out.println(startDate + "dd");
+
         }
         if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
@@ -325,7 +338,7 @@ public class MedicineDataDetail {
     public Object getMaintenanceData2(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -370,7 +383,7 @@ public class MedicineDataDetail {
         }
         User user = userService.getUserByUserName(username);
         Object maintenanceData = deviceMedicineMaintanceService.getMaintenanceDataByDeviceId111(user, myusername, deviceId, startDate, endDate);
-        System.out.println(maintenanceData);
+
 
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);

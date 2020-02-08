@@ -89,8 +89,8 @@ public class Track {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
-        System.out.println("=====用户名====");
-        System.out.println(username);
+
+
         String dateString = null;
 
         if(endDate!=null) {
@@ -99,11 +99,11 @@ public class Track {
 
                 currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
 
-                System.out.println(currentTime_2.getDate());
+
 
                 dateString = formatter.format(currentTime_2);
 
-                System.out.println(dateString);
+
             }catch (Exception e){
                 dateString = null;
             }
@@ -112,10 +112,10 @@ public class Track {
 
 
         jsonObject.put("Res",true);
-        System.out.println(page);
-        System.out.println(limit);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         List<Device_Track_MaintanceEntity> list = null;
         if(user.getRole()==4){
             list = trackService.selectByDateAndColSearch(username,startDate,dateString,colName,searchText,page*limit-limit,page*limit,adcode);
@@ -155,7 +155,7 @@ public class Track {
                                   @RequestParam(value = "workerName", required = false) String workerName,
                                   @RequestParam(value = "lineName",required = false) String lineName) {
 
-        System.out.println(workerName);
+
         User user = userService.getUserByUserName(username);
 
         List<Device> list = null;
@@ -218,7 +218,7 @@ public class Track {
 
         deviceTrackMaps.stream().collect(Collectors.groupingBy(DeviceTrackMap::getLinename)).forEach((track,MyList) -> {
             JSONObject dataByGroup = new JSONObject();
-            System.out.println(track);
+
             dataByGroup.put("trackGroup",MyList);
             dataByGroup.put("area",user.getArea());
             dataByGroup.put("city",user.getCity());
@@ -248,10 +248,10 @@ public class Track {
 
         User user = userService.getUserByUserName(username);
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         List<Device_Track_MaintanceEntity> deviceTrackMaintanceEntities = null;
 
         if(user.getRole()==4){
@@ -262,7 +262,7 @@ public class Track {
 
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
-//            System.out.println(d.getArea());
+//
 //
 //        }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("轨迹跟踪明细表", "轨迹跟踪明细表"), Device_Track_MaintanceEntity.class, deviceTrackMaintanceEntities);
@@ -289,10 +289,10 @@ public class Track {
         int code = imageDownUtil.deleteFile(file);
 
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -343,8 +343,8 @@ public class Track {
                 .importExcel(multipartFile.getInputStream(), Device_Track_MaintanceEntity.class, importParams);
         for (Device_Track_MaintanceEntity d:
                 deviceTrackMaintanceEntityList) {
-            System.out.println("natural");
-            System.out.println(d.getId());
+
+
 
             Device_Track_MaintanceEntity tmp = deviceTrackMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
             if(tmp!=null){

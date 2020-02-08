@@ -110,7 +110,7 @@ public class DeviceMaintenanceController {
 //        logger.info(String.valueOf(otherType));
 //        logger.info(String.valueOf(workingContent));
 
-//        System.out.println("image" + image);
+//
 
             Boolean relation = deviceService.judgeDeviceRelation(username, realDeviceId.getId());
             //if被我注释了 2019.10.1
@@ -164,7 +164,7 @@ public class DeviceMaintenanceController {
                 String imgId = deviceService.saveImg(image, realDeviceId.getId(), username);
 
                 deviceMaintenance.setImageId(imgId);
-//            System.out.println("执行了这部");
+//
 
             }
             if (targetUsername != null) {
@@ -185,7 +185,7 @@ public class DeviceMaintenanceController {
                     deviceMaintenance.setArea(user.getArea());
                     deviceMaintenance.setCity(user.getCity());
                     deviceMaintenance.setProvince(user.getProvince());
-                    System.out.println(user.getArea());
+
                 }
 
                 if (device != null && device.getReceiveDate() != null) {
@@ -430,7 +430,7 @@ public class DeviceMaintenanceController {
     public Object getMaintenanceData(@RequestAttribute("username") String username, int page, int limit,
                                      @RequestParam(required = false) String condition,
                                      @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-//        System.out.println(condition);
+//
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -458,7 +458,7 @@ public class DeviceMaintenanceController {
     public Object getMaintenanceData2(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-//        System.out.println(condition);
+//
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -487,7 +487,7 @@ public class DeviceMaintenanceController {
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String batch, @RequestParam(required = false) String town,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        //System.out.println(startDate+"cc");
+        //
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -496,7 +496,7 @@ public class DeviceMaintenanceController {
 //        }
         if (startDate != "" && startDate != null) {
             startDate = startDate + " 00:00:00";
-            System.out.println(startDate + "dd");
+
         }
         if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
@@ -508,8 +508,8 @@ public class DeviceMaintenanceController {
         List<DeviceMaintenance> maintenanceData = deviceMaintenanceService.getMaintenanceData1(user, condition, startDate, endDate, batch, town);
         for (DeviceMaintenance d :
                 maintenanceData) {
-            System.out.println(d.getImgId());
-            System.out.println(d.getDeviceId());
+
+
             if (d.getImgId() != null) {
                 d.setImageId(d.getImgId());
             }
@@ -517,11 +517,11 @@ public class DeviceMaintenanceController {
         }
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
-//        System.out.println("====page=====");
-//        System.out.println(page);
-//        System.out.println(pageObject.getTotal());
-//        System.out.println(pageObject.getPages());
-//        System.out.println("*********");
+//
+//
+//
+//
+//
 
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());
@@ -533,7 +533,7 @@ public class DeviceMaintenanceController {
     public Object getMaintenanceData4(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -561,7 +561,7 @@ public class DeviceMaintenanceController {
     public Object getMaintenanceAbnormalData(@RequestAttribute("username") String username, int page, int limit,
                                              @RequestParam(required = false) String condition,
                                              @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -616,11 +616,11 @@ public class DeviceMaintenanceController {
     @PutMapping("/auth_api/maintenance")
     public Object updateMaintenanceData(@RequestAttribute("username") String username,
                                         @RequestBody DeviceMaintenance deviceMaintenance) {
-        System.out.println("===========================");
-        System.out.println(deviceMaintenance);
+
+
         deviceMaintenanceService.updateMaintenanceData(deviceMaintenance);
         String deviceId = deviceMaintenance.getDeviceId();
-        System.out.println(deviceMaintenance.getBatch());
+
         if (deviceMaintenance.getBatch() == 1 && deviceMaintenance.getLongitude() != null && deviceMaintenance.getLatitude() != null) {
             Device device = deviceService.queryDeviceByDeviceid(deviceId);
             device.setAltitude(deviceMaintenance.getAltitude());
@@ -654,7 +654,7 @@ public class DeviceMaintenanceController {
 
     @DeleteMapping("/auth_api/maintenance/deleteSmoe")
     public Object deleteSomeMaintenanceData(@RequestAttribute("username") String username, @RequestBody Map<String, Object> data) {
-        System.out.println(data.size());
+
         List<Integer> list = (List<Integer>) data.get("list");
         //deviceMaintenanceService.report(list);
         for (Integer id : list) {
@@ -722,7 +722,7 @@ public class DeviceMaintenanceController {
                        @RequestParam(required = false) String condition,
                        @RequestParam(required = false) String batch, @RequestParam(required = false) String town,
                        @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) throws IOException {
-        // System.out.println(startDate+"aa");
+        //
 
         if (startDate.equals("null")) {
             startDate = null;
@@ -732,7 +732,7 @@ public class DeviceMaintenanceController {
         }
         if (startDate != null && startDate != "") {
             startDate = startDate + " 00:00:00";
-            //  System.out.println(startDate+"bb");
+            //
         }
         if (endDate != "" && endDate != null) {
             endDate = endDate + " 23:59:59";
@@ -750,7 +750,7 @@ public class DeviceMaintenanceController {
     @GetMapping("/maintenance/exportSome")
     public void someExport(HttpServletResponse response, String token,
                            @RequestParam(required = false) List<Integer> data) throws IOException {
-        System.out.println(data.size());
+
 
 
         response.setContentType("application/excel");
@@ -769,7 +769,7 @@ public class DeviceMaintenanceController {
         }
 
         //List<DeviceMaintenance> list = (List<DeviceMaintenance>) data.get("list");
-        System.out.println(list);
+
         Workbook workbook = deviceMaintenanceService.someExportExcel(list);
         workbook.write(response.getOutputStream());
     }
@@ -789,20 +789,25 @@ public class DeviceMaintenanceController {
                 .importExcel(multipartFile.getInputStream(), DeviceMaintenance.class, importParams);
 
         for (DeviceMaintenance dm : deviceMaintenanceList) {
-            dm.setDeviceId(deviceMapper.querySingalDeviceId(dm.getScanId()).getId());
-            System.out.println(dm.getOtherBeetleFront());
-            System.out.println(dm.getDrugFront());
-            System.out.println(dm.getWorkContentFront());
+            Device device = deviceMapper.getDeviceByScanId(dm.getScanId());
 
+            BDInfo bdInfo = mBDComponent.parseLocation(dm.getLatitude(), dm.getLongitude());
+            dm.setTown(bdInfo.getResult().getAddressComponent().getTown());
+            dm.setArea(device.getArea());
+            dm.setCity(device.getCity());
+            dm.setProvince(device.getProvince());
+            
+            dm.setDeviceId(deviceMapper.querySingalDeviceId(dm.getScanId()).getId());
             dm.setOtherType(deviceMapper.getTrapBeetleInfo(String.valueOf(dm.getOtherBeetleFront())).getId());
             dm.setDrug(deviceMapper.getTrapInjectName(dm.getDrugFront()).getId().toString());
             dm.setWorkingContent(deviceMapper.getTrapWorkContent(dm.getWorkContentFront()).getFvalue());
+
 
         }
         //获取其他天 牛类型编号
         //ObjectMapper objectMapper = new ObjectMapper();
         //String s = objectMapper.writeValueAsString(deviceMaintenanceList);
-        //System.out.println(s);
+        //
         //deviceMaintenanceService.addList(deviceMaintenanceList);
         deviceMaintenanceService.importExcel(user, deviceMaintenanceList);
         return "{\n" +
@@ -911,7 +916,7 @@ public class DeviceMaintenanceController {
     @ApiOperation("上报维护信息")
     @PostMapping("/auth_api/maintenance/report")
     public Object reportMaintenanceData(@RequestBody Map<String, Object> data) {
-        System.out.println(data.size());
+
         List<Integer> list = (List<Integer>) data.get("list");
         deviceMaintenanceService.report(list);
         return Result.ok();
@@ -920,7 +925,7 @@ public class DeviceMaintenanceController {
     @PostMapping("/auth_api/maintenance/abnormal/report")
     public Result reportMaintenanceAbnormalData(@RequestAttribute("username") String username,
                                                 @RequestBody Map<String, Object> data) throws Exception {
-        System.out.println(data.size());
+
         List<Integer> list = (List<Integer>) data.get("list");
         Boolean ab = true;
         if (list.size() <= 0) {

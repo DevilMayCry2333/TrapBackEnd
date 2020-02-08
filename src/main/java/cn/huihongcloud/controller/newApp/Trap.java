@@ -46,8 +46,8 @@ public class Trap {
     public Object getBeetle(@RequestParam String username){
         User user = userMapper.getUserByUserName(username);
         String adcode = user.getAdcode();
-        System.out.println(adcode);
-        System.out.println(user.getUsername());
+
+
         return deviceBeetleMapper.getBeetleInfoByArea(adcode);
     }
 
@@ -104,11 +104,11 @@ public class Trap {
 
                 currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
 
-                System.out.println(currentTime_2.getDate());
+
 
                 dateString = formatter.format(currentTime_2);
 
-                System.out.println(dateString);
+
             }catch (Exception e){
                 dateString = null;
             }
@@ -119,9 +119,9 @@ public class Trap {
 
 
         User user = userMapper.getUserByUserName(username);
-        System.out.println(username);
+
         List<DeviceMaintenance> deviceMaintenanceList = null;
-        System.out.println(startDate);
+
         PageWrapper pageWrapper = new PageWrapper();
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         if(user.getRole()==4){
@@ -164,10 +164,10 @@ public class Trap {
         if(colName.equals("4")){
             colName = "Worker";
         }
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         List<DeviceMaintenance> deviceNaturalEnemiesMaintanceEntities  = deviceBeetleMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
         for (DeviceMaintenance d:
              deviceNaturalEnemiesMaintanceEntities) {
@@ -194,10 +194,10 @@ public class Trap {
                             @RequestParam String adcode
     ) throws IOException {
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
 
         User user = userMapper.getUserByUserName(username);
 

@@ -283,10 +283,10 @@ public class DeadTrees {
             return response;
         }
 
-        System.out.println("image" + image);
+
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
 
         Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
@@ -399,10 +399,10 @@ public class DeadTrees {
             return response;
         }
 
-        System.out.println("image" + image);
+
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
 
         Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
@@ -456,7 +456,7 @@ public class DeadTrees {
 //        if (image != null) {
 //            String imgId = deviceService.saveImg(image, deviceId, username);
 //            deviceDeadTreesMaintanceEntity.setPic(imgId);
-//            System.out.println("执行了这部");
+//
 //
 //        }
 
@@ -519,10 +519,10 @@ public class DeadTrees {
             return response;
         }
 
-        System.out.println("image" + image);
+
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
 
         Device_DeadTrees_maintanceEntity deviceDeadTreesMaintanceEntity = new Device_DeadTrees_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
@@ -576,7 +576,7 @@ public class DeadTrees {
 //        if (image != null) {
 //            String imgId = deviceService.saveImg(image, deviceId, username);
 //            deviceDeadTreesMaintanceEntity.setPic(imgId);
-//            System.out.println("执行了这部");
+//
 //
 //        }
 

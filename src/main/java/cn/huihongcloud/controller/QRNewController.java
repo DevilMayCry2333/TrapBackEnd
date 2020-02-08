@@ -57,7 +57,7 @@ public class QRNewController {
         User currentUser = userService.getUserByUserName(currentUsername);
         String adcode = currentUser.getAdcode();
         long count = deviceService.countDeviceInArea(currentUser.getAdcode());
-        System.out.println("数量:" + count);
+
 
         long index = count;
 
@@ -81,14 +81,14 @@ public class QRNewController {
 //            device.setTowncode(towncode);
             device.setId(adcode + String.format("%06d", index));
             device.setQrcode("Test1");
-            System.out.println(device);
+
             deviceService.addDevice(device);
         }
         */
         for (Map item: data) {
             String username = (String) item.get("username");
             Integer num = (Integer) item.get("num");
-            System.out.println(username + " " + num);
+
             for (int i = 0; i < num; ++i, ++index) {
                 Device device = new Device();
                 device.setAdcode(adcode);
@@ -99,7 +99,7 @@ public class QRNewController {
                 device.setManager(username);
                 device.setId(Long.toString(maxId + i + 1));
                 device.setQrcode("Test1");
-                System.out.println(device);
+
                 deviceService.addDevice(device);
             }
             maxIdString = deviceService.getMaxDeviceIdInArea(adcode);
@@ -147,7 +147,7 @@ public class QRNewController {
         response.setContentType("application/pdf");
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "output.pdf");
-        System.out.println(token);
+
         if (StringUtils.isEmpty(token)) {
             return;
         }
@@ -176,9 +176,9 @@ public class QRNewController {
         for (Device item: list) {
             String deviceId = item.getScanId();
 
-            System.out.println(item.getScanId());
 
-            System.out.println("deviceId");
+
+
             
             BitMatrix bitMatrix = new MultiFormatWriter().encode(deviceId, BarcodeFormat.QR_CODE, 300, 300);
             BufferedImage buffImg = MatrixToImageWriter.toBufferedImage(bitMatrix);

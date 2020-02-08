@@ -27,14 +27,14 @@
       submit_date, batch, longitude, 
       latitude, woodDiameter, woodHeight, 
       woodVolume, KillMethod, Worker, 
-      Remarks, scanId,username,customTown,town,reported,customProject,province,city,area
+      Remarks, scanId,username,customTown,town,reported,customProject,province,city,area,adcode
       )
     values (#{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR},
       #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{latitude,jdbcType=VARCHAR}, #{wooddiameter,jdbcType=VARCHAR}, #{woodheight,jdbcType=VARCHAR}, 
       #{woodvolume,jdbcType=VARCHAR}, #{killmethod,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}, 
       #{remarks,jdbcType=VARCHAR}, #{scanId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR},#{customTown},#{town},0
-      ,#{customProject},#{province},#{city},#{area})
+      ,#{customProject},#{province},#{city},#{area},#{adcode})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity" >
     insert into Device_DeadTrees_maintance
@@ -175,7 +175,7 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
     woodvolume = #{woodvolume},killmethod = #{killmethod},
     Worker = #{worker},remarks=#{remarks},scanId=#{scanId},username=#{username},customTown=#{customTown},
     altitude=#{altitude},accuracy=#{accuracy},town=#{town},
-    reported=0,province=#{province},customProject=#{customProject},city=#{city},area=#{area} where scanId = #{scanId} and batch = #{batch}
+    reported=0,province=#{province},customProject=#{customProject},city=#{city},area=#{area},adcode=#{adcode} where scanId = #{scanId} and batch = #{batch}
   </update>
     <update id="updateRecordByFront">
       update device_deadtrees_maintance t1 left join device t2 on t2.id = t1.device_Id
@@ -297,8 +297,8 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
   </select>
 
     <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
-      SELECT * FROM  Device_DeadTrees_maintance t1
-      WHERE Device_DeadTrees_maintance.customProject = #{customProject}
+      SELECT * FROM Device_DeadTrees_maintance t1
+      WHERE t1.customProject = #{customProject}
       <if test="startDate!=null and startDate !=''">
         and t1.submit_date >= #{startDate}
       </if>
@@ -343,7 +343,7 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
         AND project = '4'
   </select>
     <select id="selectById" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
-      select * from device_deadtrees_maintance where scanId = #{scanId};
+      select * from device_deadtrees_maintance where scanId = #{scanId} and batch = #{batch};
     </select>
     <select id="getMaxBatch" resultType="cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity">
       select * from device_deadtrees_maintance where device_Id = #{deviceId} order by batch desc;

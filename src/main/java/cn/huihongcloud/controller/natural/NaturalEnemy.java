@@ -58,8 +58,8 @@ public class NaturalEnemy {
     @RequestMapping("/detail")
     public Object NaturalDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
         jsonObject.put("Res",true);
-        System.out.println(page);
-        System.out.println(limit);
+
+
         jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,limit));
         jsonObject.put("total",naturalEnemyService.countAll(username,null,null,null,null, null));
         jsonObject.put("current",page);
@@ -81,7 +81,7 @@ public class NaturalEnemy {
     public Object getMaintenanceData2(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -110,7 +110,7 @@ public class NaturalEnemy {
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String batch,@RequestParam(required = false) String town,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        //System.out.println(startDate+"cc");
+        //
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -119,7 +119,7 @@ public class NaturalEnemy {
 //        }
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
-            System.out.println(startDate+"dd");
+
         }
         if(endDate!="" && endDate!=null) {
             endDate = endDate + " 23:59:59";
@@ -141,7 +141,7 @@ public class NaturalEnemy {
     public Object getAreaMaintanceDetail(@RequestAttribute("username") String username, int page, int limit,
                                       @RequestParam(required = false) String condition,
                                       @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
-        System.out.println(condition);
+
 //        if(startDate.equals("null")){
 //            startDate=null;
 //        }
@@ -186,7 +186,7 @@ public class NaturalEnemy {
         }
         User user=userService.getUserByUserName(username);
         Object maintenanceData = naturalEnemyService.getMaintenanceDataByDeviceId(user,myusername,deviceId, startDate, endDate);
-        System.out.println(maintenanceData);
+
 
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(maintenanceData);
@@ -196,7 +196,7 @@ public class NaturalEnemy {
 
     @PostMapping("/maintenance/report")
     public Object reportMaintenanceData(@RequestBody Map<String, Object> data) {
-        System.out.println(data.size());
+
         List<Integer> list = (List<Integer>) data.get("list");
         naturalEnemyService.report(list);
         return Result.ok();
@@ -216,8 +216,8 @@ public class NaturalEnemy {
         }
 
         jsonObject.put("Res",true);
-        System.out.println(page);
-        System.out.println(limit);
+
+
         int luanKaNum = 0;
         int releasNum = 0;
         Page<Object> pageObject = PageHelper.startPage(page, limit);
@@ -246,7 +246,7 @@ public class NaturalEnemy {
 
 //            jsonObject.put("total",naturalEnemyService.countAll(username,startDate,endDate,colName,searchText,adcode));
 //        jsonObject.put("current",1);
-//        System.out.println(jsonObject);
+//
 
 //        deviceNaturalEnemiesMaintanceEntities.get(0).setLuanKaNumSum(String.valueOf(luanKaNum));
 //        deviceNaturalEnemiesMaintanceEntities.get(0).setReleaseNumSum(String.valueOf(releasNum));
@@ -270,8 +270,8 @@ public class NaturalEnemy {
 //    @RequestMapping("/allDetail")
 //    public Object allDetail(@RequestParam int page,@RequestParam int limit,@RequestParam String adcode){
 //        jsonObject.put("Res",true);
-//        System.out.println(page);
-//        System.out.println(limit);
+//
+//
 //        jsonObject.put("Data",naturalEnemyService.selectAll(username,page*limit-limit,limit));
 //        jsonObject.put("total",naturalEnemyService.countAll(username));
 //        jsonObject.put("current",page);
@@ -284,7 +284,7 @@ public class NaturalEnemy {
                                   @RequestParam("limit") int limit,
                                   @RequestParam(value = "searchText", required = false) String searchText,
                                   @RequestParam(value = "workerName", required = false) String workerName) {
-        System.out.println(workerName);
+
         User user = userService.getUserByUserName(username);
         List<Device> list = null;
 //        Page<Object> pages = null;
@@ -353,10 +353,10 @@ public class NaturalEnemy {
         User user = userService.getUserByUserName(username);
 
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
         if(user.getRole()==4){
@@ -367,7 +367,7 @@ public class NaturalEnemy {
 
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
-//            System.out.println(d.getArea());
+//
 //
 //        }
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("天敌防治", "天敌防治"), Device_NaturalEnemies_maintanceEntity.class, deviceNaturalEnemiesMaintanceEntities);
@@ -398,10 +398,10 @@ public class NaturalEnemy {
 
         int code = imageDownUtil.deleteFile(file);
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
         if(user.getRole()==4){
@@ -435,8 +435,8 @@ public class NaturalEnemy {
                 .importExcel(multipartFile.getInputStream(), Device_NaturalEnemies_maintanceEntity.class, importParams);
         for (Device_NaturalEnemies_maintanceEntity d:
              deviceMaintenanceList) {
-            System.out.println("natural");
-            System.out.println(d.getScanId());
+
+
             Device_NaturalEnemies_maintanceEntity tmp = deviceNaturalEnemiesMaintanceEntityMapper.selectById(String.valueOf(d.getScanId()));
             if(tmp!=null){
                 deviceNaturalEnemiesMaintanceEntityMapper.updateRecordById(d);

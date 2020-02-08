@@ -492,6 +492,11 @@
                 drug_front = #{drugFront},
             </if>
 
+            <if test="adcode != null">
+                adcode = #{adcode},
+            </if>
+
+
         </set>
         where scanId = #{scanId} and batch = #{batch}
         and isactive = '0'

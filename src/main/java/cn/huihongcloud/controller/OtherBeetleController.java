@@ -36,7 +36,7 @@ public class OtherBeetleController {
     @GetMapping("/deadTrees_Kill/town")
     public Object inject10(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getDeadKillForTown(user.getAdcode());
 
     }
@@ -63,7 +63,7 @@ public class OtherBeetleController {
     @GetMapping("/inject_workContent/town")
     public Object inject7(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getInjectWorkContentForTown(user.getAdcode());
 
     }
@@ -90,7 +90,7 @@ public class OtherBeetleController {
     @GetMapping("/inject_woodstatus/town")
     public Object inject4(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getInjectWoodForTown(user.getAdcode());
 
     }
@@ -116,7 +116,7 @@ public class OtherBeetleController {
     @GetMapping("/inject/town")
     public Object inject(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getInjectForTown(user.getAdcode());
 
     }
@@ -142,7 +142,7 @@ public class OtherBeetleController {
     @GetMapping("/medicine/town")
     public Object medicine1(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getInjectForTown(user.getAdcode());
 
     }
@@ -167,7 +167,7 @@ public class OtherBeetleController {
     @GetMapping("/medicine_workContent/town")
     public Object getworkContentForTown(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getWorkContentForTown1(user.getAdcode());
 
     }
@@ -193,7 +193,7 @@ public class OtherBeetleController {
     @GetMapping("/enemy_Type/town")
     public Object getEnemyTypeForTown(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getEnemy_TypeForTown(user.getAdcode());
 
     }
@@ -223,7 +223,7 @@ public class OtherBeetleController {
     @GetMapping("/medicine_type/town")
     public Object getMedicineTypeForTown(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getMedicine_TypeForTown(user.getAdcode());
     }
 
@@ -360,7 +360,7 @@ public class OtherBeetleController {
     @GetMapping("/injectName_type/town")
     public Object getinjectNameTypeForTown(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getinjectName_TypeForTown(user.getAdcode());
     }
 
@@ -542,7 +542,7 @@ public class OtherBeetleController {
     @GetMapping("/other_beetle/town")
     public Object getOtherBeetleListForTown(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return Result.ok(otherBeetleService.getOtherBeetleInfoListForTown(user.getAdcode()));
     }
 
@@ -566,7 +566,7 @@ public class OtherBeetleController {
     @GetMapping("/workContent/town")
     public Object getworkContentForTown2(@RequestAttribute("username") String username) {
         User user = userService.getUserByUserName(username);
-        System.out.println("fortown");
+
         return otherBeetleMapper.getWorkContentForTown(user.getAdcode());
 
     }

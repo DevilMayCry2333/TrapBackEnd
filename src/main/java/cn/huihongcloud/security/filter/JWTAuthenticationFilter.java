@@ -40,9 +40,9 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         jwtComponent = SpringContextUtil.getContext().getBean(JWTComponent.class);
 //        super.doFilterInternal(request, response, chain);
-//        System.out.println(request.get);
-        System.out.println(request.getMethod());
-        System.out.println("doing token filter");
+//
+
+
         String token = request.getHeader("token");
 
         if (request.getRequestURI().contains("swagger-ui.html")) {
@@ -53,7 +53,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
 
         if (token != null) {
-//        System.out.println(token);
+//
             String token2 = token;
             String username = jwtComponent.verify(token);
 //        String username = "root";
@@ -62,7 +62,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             if (username == null) {
                 response.setStatus(401);
             } else {
-                System.out.println("very good");
+
                 request.setAttribute("username", username);
                 SecurityContextHolder.getContext().setAuthentication(getAuthentication(username));
                 chain.doFilter(request, response);

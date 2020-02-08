@@ -95,8 +95,8 @@ public class DeadTreeCutService {
 
         } else if (role == 3) {
 //            User user1 = userService.getUserByUserName(user.getParent());
-            System.out.println("=====");
-            System.out.println(user.getUsername());
+
+
 
 
             return deviceDeadTreesMaintanceEntityMapper.getMaintenanceDataByAdcodeAndTownArea(user.getAdcode(), user.getTown(), condition, date, endDate, null);

@@ -78,10 +78,10 @@ public class Enemy {
         logger.info(String.valueOf(releaseNum));
         logger.info(remarks);
 
-        System.out.println("image" + image);
+
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
 
 
 
@@ -93,7 +93,7 @@ public class Enemy {
 
         int maxBatchNum = 0;
         try {
-            System.out.println(maxBatch.get(0).getBatch());
+
             maxBatchNum = maxBatch.get(0).getBatch();
 
         }catch (Exception e){
@@ -143,7 +143,7 @@ public class Enemy {
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
             deviceNaturalEnemiesMaintanceEntity.setPic(imgId);
-            System.out.println("执行了这部");
+
 
         }
         deviceNaturalEnemiesMaintanceEntityMapper.addMaintance(deviceNaturalEnemiesMaintanceEntity);

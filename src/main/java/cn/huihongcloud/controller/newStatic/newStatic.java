@@ -80,16 +80,16 @@ public class newStatic {
 
 
         for (int i = 0; i < workerStaticList.size(); i++) {
-            System.out.println("数据出来");
+
             WorkerStatic ws = workerStaticList.get(i);
-            System.out.println(ws.getNum());
-            System.out.println(ws.getCurrentDate());
-            System.out.println(ws.getWorkerName());
-            System.out.println("数据结束");
+
+
+
+
         }
         workerStaticList.forEach(ws -> {
-            System.out.println(ws.getWorkerName() + " " + ws.getNum() + " " + ws.getCurrentDate());
-            System.out.println(ws.getWorkerName() + " " + ws.getNum1() + " " + ws.getCurrentDate());
+
+
         });
 
         WorkerStatic lastWs = null;
@@ -131,12 +131,12 @@ public class newStatic {
     public Object getDes(@RequestAttribute("username") String user, @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate,
                          String manager) {
         User user1 = userService.getUserByUserName(manager);
-        System.out.println(manager);
-        User user2 = userService.getUserByUserName(user1.getParent());
-        System.out.println(user2.getUsername());
 
-        System.out.println(startDate);
-        System.out.println(endDate);
+        User user2 = userService.getUserByUserName(user1.getParent());
+
+
+
+
 
         String dateString = null;
 
@@ -147,21 +147,21 @@ public class newStatic {
 
             currentTime_2.setTime(currentTime_2.getTime() + 24 * 3600 * 1000);
 
-            System.out.println(currentTime_2.getDate());
+
 
             dateString = formatter.format(currentTime_2);
 
-            System.out.println(dateString);
+
 
         }
 
 
         List<InputEntity> inputEntityForWorker = newStaticMapper.getInputEntityForWorker(user2.getUsername(), startDate, dateString);
 
-        System.out.println(inputEntityForWorker.size());
+
         for (InputEntity e :
                 inputEntityForWorker) {
-            System.out.println(e.getCustomtown());
+
 
         }
         if (inputEntityForWorker.isEmpty() || inputEntityForWorker.size() < 2) {

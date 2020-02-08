@@ -75,7 +75,7 @@ public class WeatherService {
         // 获取当前天气的json
         String he_weather_json = response.body().string();
 
-        System.out.println(he_weather_json);
+
         JsonNode he_weather = objectMapper.readTree(he_weather_json).get("HeWeather6").get(0).get("daily_forecast").get(0);
         weather.setTempMax(Integer.parseInt(he_weather.get("tmp_max").textValue()));
         weather.setTempMin(Integer.parseInt(he_weather.get("tmp_min").textValue()));
@@ -139,16 +139,16 @@ public class WeatherService {
         for (int i = 0; i < subDays; ++i) {
             Weather weather = new Weather();
             weather.setDate(new Date(lo.getTime() + i * 24 * 3600 * 1000L));
-            System.out.println(outputDateFormat.format(weather.getDate()));
+
             ret.add(weather);
         }
-        System.out.println(ret.size());
+
         int index = 0;
         for (int i = 0; i < weatherData.size(); ++i) {
             Weather weather = weatherData.get(i);
             String dateA = inputDateFormat.format(weather.getDate());
             for (int j = index; j < subDays; ++j) {
-                System.out.println(j);
+
                 String dateB = inputDateFormat.format(ret.get(j).getDate());
                 if (dateA.equals(dateB)) {
                     ret.set(j, weather);

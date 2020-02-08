@@ -61,6 +61,7 @@ public class Device_DeadTrees_maintanceEntity {
 
     private String province;
 
+    @Excel(name = "项目工程")
     private String customProject;
 
     private String city;
@@ -81,7 +82,7 @@ public class Device_DeadTrees_maintanceEntity {
     private String deadTreesMannerTotal;
     private String deadTreesMannerOne;
     private String deadTreesMannerTwo;
-
+    @Excel(name = "邮政编码")
     private String adcode;
 
     public String getDeadTreesMannerTotal() {

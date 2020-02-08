@@ -149,7 +149,6 @@ public class DeviceMaintenanceService {
             double subDaysDouble = ((deviceMaintenanceB.getDate().getTime()
                     - deviceMaintenanceA.getDate().getTime()) / 1000 / 3600 / 24.0);
             long subDays = Math.round(subDaysDouble);
-            System.out.println(subDays);
             int avg = (int)(deviceMaintenanceB.getNum() / subDays);
             for (int j = 0; j < subDays; ++j) {
                 DeviceMaintenanceForChart item = new DeviceMaintenanceForChart();
@@ -377,7 +376,6 @@ public class DeviceMaintenanceService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(s);
         for (DeviceMaintenance deviceMaintenance: list) {
             Boolean can=false;
             String deviceId=deviceMaintenance.getDeviceId();
@@ -397,7 +395,6 @@ public class DeviceMaintenanceService {
             }
             if(can){
                 Integer updatenum=deviceMaintenanceMapper.updateMaintenanceDataByDeviceIdAndBatch(deviceMaintenance);
-                System.out.println(updatenum);
 
                 if(updatenum==0){
                     int nums=deviceMaintenanceMapper.addMaintenanceData(deviceMaintenance);

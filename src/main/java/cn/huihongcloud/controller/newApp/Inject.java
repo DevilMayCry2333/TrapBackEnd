@@ -72,7 +72,7 @@ public class Inject {
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
-        System.out.println(user2.getUsername());
+
         return deviceBeetleMapper.getInjectName(user2.getAdcode());
     }
 
@@ -112,23 +112,23 @@ public class Inject {
 
 
 
-        System.out.println("image" + image);
+
 
         Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
         Device realDeviceId = deviceMapper.getDeviceByScanId(deviceId);
 
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
         int maxBatchNum = 0;
 
 
         try {
             List<Device_Injection_maintanceEntity> maxBatch = deviceInjectionMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
-            System.out.println("批次");
-            System.out.println(maxBatch.get(0).getDeviceId());
 
-            System.out.println(maxBatch.get(0).getBatch());
+
+
+
             maxBatchNum = maxBatch.get(0).getBatch();
 
         }catch (Exception e){
@@ -137,15 +137,15 @@ public class Inject {
 
 
 
-        System.out.println(user1.getUsername());
+
         //改了一下
         inject_WoodStatus injectWoodStatus = deviceMapper.getInjectWoodStatus(String.valueOf(WoodStatus),null,1);
         inject_WorkContent workContent = deviceMapper.getInjectWorkContent(String.valueOf(workingContent),null,1);
         InjectName injectName1 = deviceMapper.getInjectName(injectName,null,1);
 
-        System.out.println(injectName1.getName());
-        System.out.println(workContent.getName());
-        System.out.println(injectWoodStatus.getName());
+
+
+
 
         deviceInjectionMaintanceEntity.setWorker(username);
         deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
@@ -182,9 +182,9 @@ public class Inject {
         deviceInjectionMaintanceEntity.setTown(bdInfo.getResult().getAddressComponent().getTown());
 
 
-        System.out.println("CustomeSerial");
+
         
-        System.out.println(realDeviceId.getCustomSerial());
+
 
         Date date= new Date(System.currentTimeMillis());
 //        Date date = new Date();
@@ -205,7 +205,7 @@ public class Inject {
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
             deviceInjectionMaintanceEntity.setPic(imgId);
-            System.out.println("执行了这部");
+
 
         }
         deviceInjectionMaintanceEntityMapper.addMaintanceData(deviceInjectionMaintanceEntity);
@@ -219,7 +219,7 @@ public class Inject {
             device.setAltitude(Double.valueOf(altitude));
             device.setReceiveDate(new Date());
 
-            System.out.println(device.getReceiveDate());
+
 
             deviceService.updateDevice(device);
         }

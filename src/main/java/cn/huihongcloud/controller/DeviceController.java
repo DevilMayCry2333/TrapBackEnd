@@ -61,21 +61,7 @@ public class DeviceController {
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
 
-        System.out.println("=====地图传入====");
-
-        System.out.println(isMap);
-
-
         List<Device> deviceList = null;
-
-
-
-
-
-
-
-
-
         /*
         if (user.getRole() > 1 && user.getRole() != 3) {
             // 工人查询所管理的设备
@@ -113,15 +99,15 @@ public class DeviceController {
         }
         if (user.getRole() == 4) {
 
-            System.out.println(project);
+
 //            list = deviceService.getDeviceByManager(username);
             if(isMap==true){
                 deviceList = deviceMapper.getDeviceByCustomProjectAndTrap(user.getParent());
 
             }else {
                 deviceList = deviceMapper.getDeviceByCustomProject(user.getParent(),project);
-                System.out.println("执行这句了");
-                System.out.println(deviceList.size());
+
+
 
             }
 
@@ -131,11 +117,11 @@ public class DeviceController {
         if (user.getRole() == 5) {
 //            list = deviceService.getDeviceByWorker(username);
             //改成工程账号查询
-            System.out.println("Device");
+
 
             User user1 = userService.getUserByUserName(user.getParent());
             User user2 = userService.getUserByUserName(user1.getParent());
-            System.out.println(user2.getUsername());
+
 
             deviceList = deviceMapper.getDeviceByCustomProject(user2.getUsername(),project);
         }
@@ -146,9 +132,9 @@ public class DeviceController {
 
         pageWrapper.setData(deviceList);
 
-        System.out.println(pageObject.getPages());
-        System.out.println(page);
-        System.out.println(pageObject.getTotal());
+
+
+
 
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());
@@ -250,7 +236,7 @@ public class DeviceController {
     @RequestMapping(value = "auth_api/device", method = RequestMethod.POST)
     @ApiOperation("扫描到设备")
     public void DeviceScannedByWorker(@RequestAttribute("username") String username, @RequestBody Device device) {
-        System.out.println("scanned");
+
         Device obj = deviceService.packDevice(device.getLatitude(), device.getLongitude(), device.getId());
         obj.setAltitude(device.getAltitude());
         obj.setReceiveDate(new Date());
@@ -271,7 +257,7 @@ public class DeviceController {
 
     /*
     public void DeviceScannedByWorker(@RequestAttribute("username") String username, @RequestBody Device device) {
-        System.out.println("scanned");
+
         Device obj = deviceService.packDevice(device.getLatitude(), device.getLongitude(), device.getId());
         obj.setAltitude(device.getAltitude());
         obj.setReceiveDate(new Date());

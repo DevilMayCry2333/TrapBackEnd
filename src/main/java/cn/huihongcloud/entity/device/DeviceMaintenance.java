@@ -82,6 +82,7 @@ public class DeviceMaintenance {
 
     private String name;
 
+    @Excel(name = "邮政编码")
     private String adcode;
 
     //    @Excel(name = "其他天牛种类")
@@ -109,6 +110,7 @@ public class DeviceMaintenance {
     private String imgId;
 
     private String province;
+
     private String city;
     private String area;
     private String town;
@@ -127,9 +129,10 @@ public class DeviceMaintenance {
 
 
 
-
+    @Excel(name = "项目工程")
     private String customProject;
 
+    @Excel(name = "项目管理员")
     private String manager;
 
 

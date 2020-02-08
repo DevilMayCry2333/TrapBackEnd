@@ -176,7 +176,7 @@ public class StatisticsController {
         if (inputEntityForWorker.isEmpty() || inputEntityForWorker.size()<2){
             return Result.failed();
         }
-        System.out.println(inputEntityForWorker);
+
         return Result.ok(StatisticsUtil.getResult(inputEntityForWorker));
     }
     @GetMapping("auth_api/monthSummary/worker")

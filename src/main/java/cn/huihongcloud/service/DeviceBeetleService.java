@@ -118,7 +118,7 @@ public class DeviceBeetleService {
             int subs = Math.abs(deviceBeetleB.getBeetleNum() - deviceBeetleA.getBeetleNum());
             double subDaysDouble = ((deviceBeetleB.getChangeDate().getTime() - deviceBeetleA.getChangeDate().getTime()) / 1000 / 3600 / 24.0);
             long subDays = Math.round(subDaysDouble);
-            System.out.println(subDays);
+
             int avg = (int)(subs / subDays);
             for (int j = 0; j < subDays; ++j) {
                 DeviceBeetle item = new DeviceBeetle();

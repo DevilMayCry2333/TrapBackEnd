@@ -49,10 +49,10 @@ public class MyTrack {
                            int current
                            ){
 
-        System.out.println(username);
-        System.out.println(image);
-        System.out.println(lineName);
-        System.out.println(current);
+
+
+
+
         User user = userMapper.getUserByUserName(username);
 
 
@@ -99,10 +99,10 @@ public class MyTrack {
             logger.info(lineName);
             logger.info(recordTime);
 
-            System.out.println(username);
-            System.out.println(image);
-            System.out.println(lineName);
-            System.out.println(current);
+
+
+
+
             String []longData = {"1"};
             String []latData = {"2"};
             String []altData = {"3"};
@@ -141,8 +141,8 @@ public class MyTrack {
             String startTime = String.valueOf(jsonObject2.get("startTime"));
             String endTime = String.valueOf(jsonObject2.get("endTime"));
 
-            System.out.println(startTime);
-            System.out.println(endTime);
+
+
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             ParsePosition pos = new ParsePosition(0);
@@ -154,11 +154,11 @@ public class MyTrack {
 
             Date end = formatter2.parse(endTime, pos2);
 
-            System.out.println(start.getTime());
 
-            System.out.println(end.getTime());
 
-            System.out.println(end.getTime() - start.getTime());
+
+
+
 
             device_track_maintanceEntity.setTimeconsume(String.valueOf( ( end.getTime() - start.getTime() ) / 1000 ) );
 
@@ -238,19 +238,19 @@ public class MyTrack {
         logger.info(recordTime);
         org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
 
-        System.out.println("image" + image);
+
         Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
 
         String []longData = longtitudeData.split(",");
         String []latData = latitudeData.split(",");
         String []altData = altitudeData.split(",");
 
-        System.out.println(longData);
-        System.out.println(latData);
-        System.out.println(altData);
+
+
+
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
 
 
         deviceTrackMaintanceEntity.setLongtitudeCollect(longtitudeData);
@@ -269,8 +269,8 @@ public class MyTrack {
         String startTime = String.valueOf(jsonObject.get("startTime"));
         String endTime = String.valueOf(jsonObject.get("endTime"));
 
-        System.out.println(startTime);
-        System.out.println(endTime);
+
+
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ParsePosition pos = new ParsePosition(0);
@@ -282,11 +282,11 @@ public class MyTrack {
 
         Date end = formatter2.parse(endTime, pos2);
 
-        System.out.println(start.getTime());
 
-        System.out.println(end.getTime());
 
-        System.out.println(end.getTime() - start.getTime());
+
+
+
 
         deviceTrackMaintanceEntity.setTimeconsume(String.valueOf( ( end.getTime() - start.getTime() ) / 1000 ) );
 
@@ -329,19 +329,19 @@ public class MyTrack {
         logger.info(recordTime);
         org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject) new JSONParser().parse(recordTime);
 
-        System.out.println("image" + image);
+
         Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
 
         String []longData = longtitudeData.split(",");
         String []latData = latitudeData.split(",");
         String []altData = altitudeData.split(",");
 
-        System.out.println(longData);
-        System.out.println(latData);
-        System.out.println(altData);
+
+
+
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
 
 
         deviceTrackMaintanceEntity.setLongtitudeCollect(longtitudeData);
@@ -360,8 +360,8 @@ public class MyTrack {
         String startTime = String.valueOf(jsonObject.get("startTime"));
         String endTime = String.valueOf(jsonObject.get("endTime"));
 
-        System.out.println(startTime);
-        System.out.println(endTime);
+
+
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ParsePosition pos = new ParsePosition(0);
@@ -373,11 +373,11 @@ public class MyTrack {
 
         Date end = formatter2.parse(endTime, pos2);
 
-        System.out.println(start.getTime());
 
-        System.out.println(end.getTime());
 
-        System.out.println(end.getTime() - start.getTime());
+
+
+
 
         deviceTrackMaintanceEntity.setTimeconsume(String.valueOf( ( end.getTime() - start.getTime() ) / 1000 ) );
 
@@ -400,7 +400,7 @@ public class MyTrack {
     @RequestMapping("/TestReadBase64")
     public Object TestReadBase64(@RequestParam String[] base64){
         for (int i = 0; i < base64.length; i++) {
-            System.out.println(base64[i]);
+
         }
         return "OK";
     }
@@ -409,8 +409,8 @@ public class MyTrack {
     public Object addLineName(@RequestAttribute("username") String username,@RequestParam String linename){
 
 
-        System.out.println(username);
-        System.out.println(linename);
+
+
         User user = userMapper.getUserByUserName(username);
         Device_Track_MaintanceEntity deviceTrackMaintanceEntity = new Device_Track_MaintanceEntity();
         deviceTrackMaintanceEntity.setLinename(linename);

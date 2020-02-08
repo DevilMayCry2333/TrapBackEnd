@@ -163,7 +163,7 @@ public class UserController {
         User currentUser = userService.getUserByUserName(username);
         Page<Object> pageObjects = PageHelper.startPage(page, limit);
 
-        System.out.println(currentUser.getRole());
+
 
         /*
          1. 超级管理员可以看到所有的用户
@@ -179,18 +179,18 @@ public class UserController {
             switch (currentUser.getRole()) {
                 case 3:
                     condition = " role = 4 or role = 6 and adcode like '%" +  currentUser.getAdcode() +  "%'" ;
-                    System.out.println(condition);
+
                     break;
                 case 4:
                     condition = " role = 5 and parent = '" + username + "'";
                     break;
                 case 6:
                     users = userMapper.getProjectAdminByAdcode(currentUser.getAdcode());
-                    System.out.println("6666");
+
                     flag = 1;
                     break;
                 case 7:
-                    System.out.println("roleType=7");
+
                     users = userMapper.getProjectUsersByAdcode(currentUser.getAdcode());
                     flag = 1;
                     break;
@@ -200,8 +200,8 @@ public class UserController {
 
 
         if (flag == 0) {
-            System.out.println("roleType");
-            System.out.println(roleType);
+
+
             users = userService.getUserByAdcodeAndTownAndStringAndUserRole(currentUser.getAdcode(), currentUser.getTown(),
                     searchText.trim(), currentUser.getRole(), roleType, active, condition);
         }
@@ -385,10 +385,10 @@ public class UserController {
         }
         */
         try {
-            System.out.println("===田鸡用户==");
 
-            System.out.println(user.getAdcode());
-            System.out.println(user.getUsername());
+
+
+
             String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
             user.setProvince(Dist[0]);
             user.setCity(Dist[1]);
@@ -413,7 +413,7 @@ public class UserController {
                 }
             }
 
-            System.out.println(user);
+
             if (userService.getUserByUserName(user.getUsername()) != null) {
                 return Result.failed("用户名已存在");
             }
@@ -470,9 +470,9 @@ public class UserController {
 //        }
 //        */
 //
-//        System.out.println("===修改用户==");
-//        System.out.println(user.getAdcode());
-//        System.out.println(user.getUsername());
+//
+//
+//
 //        String[] Dist = distUtil.getNames(user.getAdcode(), user.getTowncode());
 //        user.setProvince(Dist[0]);
 //        user.setCity(Dist[1]);
@@ -491,7 +491,7 @@ public class UserController {
 //            }
 //        }
 //
-//        System.out.println(user);
+//
 //        if (userService.getUserByUserName(user.getUsername()) != null) {
 //            return Result.failed("用户名已存在");
 //        }
@@ -621,7 +621,7 @@ public class UserController {
             userMapper.reportDead(customProject);
         }else if(project.equals("轨迹追踪")){
             User user = userMapper.getUserByUserName(customProject);
-            System.out.println(user.getParent());
+
             userMapper.reportTrack(user.getParent());
 
 

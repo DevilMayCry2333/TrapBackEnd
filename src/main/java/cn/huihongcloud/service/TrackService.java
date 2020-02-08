@@ -83,8 +83,8 @@ public class TrackService {
                 String longspilt[] = d.getLongtitudeCollect().split(",");
 
                 for (int i = 0; i < latspilt.length; i++) {
-                    System.out.println(longspilt[i]);
-                    System.out.println(latspilt[i]);
+
+
                     try {
                         DeviceTrackMap deviceTrackMap = new DeviceTrackMap();
                         deviceTrackMap.setLongitude(Double.valueOf(longspilt[i]));

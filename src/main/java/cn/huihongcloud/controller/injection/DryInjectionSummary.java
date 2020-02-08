@@ -157,7 +157,7 @@ public class DryInjectionSummary {
                                 @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println(username);
+
 
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
@@ -179,14 +179,14 @@ public class DryInjectionSummary {
         int totalDeadNum = 0;
         int totalWoodNum = 0;
         for (Device_Injection_maintanceEntity lim: deviceInjectionMaintanceEntities) {
-            System.out.println("树木数量");
-            System.out.println(lim.getWoodNum());
+
+
 
             lim.setStartDate(startDate);
             lim.setEndDate(endDate);
             totalDeadNum += lim.getWoodStatusSum();
-            System.out.println(lim.getWoodStatusSum());
-            System.out.println(lim.getInjectNumSum());
+
+
             totalInjectNum += lim.getInjectNumSum();
             totalWoodNum += Integer.parseInt(lim.getWoodNum());
             lim.setDeadRate(lim.getWoodStatusSum()/Double.parseDouble(lim.getWoodNum()));

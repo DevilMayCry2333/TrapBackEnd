@@ -43,11 +43,11 @@ public class NewTrapDataSummary {
 
             currentTime_2.setTime(currentTime_2.getTime() + 24*3600*1000);
 
-            System.out.println(currentTime_2.getDate());
+
 
             dateString = formatter.format(currentTime_2);
 
-            System.out.println(dateString);
+
 
         }
 
@@ -56,8 +56,8 @@ public class NewTrapDataSummary {
 
         for (int i = 0 ;i  < newTrapDataSummaries.size(); i++){
 
-            System.out.println("=======总数=====");
-            System.out.println(newTrapDataSummaries.get(i).getTotalNum());
+
+
 
 
             newTrapDataSummaries.get(i).setRecordByCol(searchText);
@@ -69,8 +69,8 @@ public class NewTrapDataSummary {
         Page<Object> pageObject = PageHelper.startPage(page,limit);
 
         PageWrapper pageWrapper = new PageWrapper();
-        System.out.println(newTrapDataSummaries.get(0).getTotalNum());
-        System.out.println(limit);
+
+
 
         pageWrapper.setTotalPage((int) Math.ceil(newTrapDataSummaries.get(0).getTotalNum()/limit + 0.5));
         pageWrapper.setCurrentPage(page);
@@ -113,10 +113,10 @@ public class NewTrapDataSummary {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(colName);
-        System.out.println(searchText);
+
+
+
+
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("数据汇总", "数据汇总"), cn.huihongcloud.entity.NewTrapDataSummary.class, newTrapDataSummaries);
         workbook.write(response.getOutputStream());
 

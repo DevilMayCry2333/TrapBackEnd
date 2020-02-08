@@ -52,8 +52,9 @@ public class Device_Medicine_MaintanceEntity {
     private String username;
 
     private Double medicineQuaSum;
-    @Excel(name = "乡镇")
+//    @Excel(name = "乡镇")
     private String town;
+
     private String dataPrecision;
     private Double areaFzSum;
     private String startDate;
@@ -62,7 +63,11 @@ public class Device_Medicine_MaintanceEntity {
     private String city;
     private String province;
     private String customSerial;
+
+    @Excel(name = "项目工程")
     private String customProject;
+
+    @Excel(name = "邮政编码")
     private String adcode;
     private String name;
     private String deviceCount;

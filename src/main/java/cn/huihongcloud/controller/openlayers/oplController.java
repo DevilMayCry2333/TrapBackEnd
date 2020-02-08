@@ -52,7 +52,8 @@ public class oplController {
     @RequestMapping("/upload")
     public Object addMaintenanceData(@RequestParam("username") String username,
                                      @RequestPart("file") MultipartFile shapeFile,
-                                     @RequestParam("module") String module
+                                     @RequestParam("module") String module,
+                                     @RequestParam("eps") String eps
                                     ) throws Exception {
 
         User user = userService.getUserByUserName(username);
@@ -60,9 +61,9 @@ public class oplController {
         final int i = (int)( l % 10000 );
 
         String layerName = "A" + user.getAdcode() + i;
-        System.out.println(layerName);
-        System.out.println(user.getUsername());
-        System.out.println(shapeFile);
+
+
+
 //        String RESTURL  = "http://localhost:8080/geoserver";
 //        String RESTUSER = "admin";
 //        String RESTPW   = "geoserver";
@@ -85,9 +86,9 @@ public class oplController {
         while ((ze = zin.getNextEntry()) != null) {
             if (ze.isDirectory()) {
             } else {
-                System.out.println(ze.getName());
+
                 base = FilenameUtils.getBaseName(ze.getName());
-                System.out.println(base);
+
             }
         }
         zin.closeEntry();
@@ -103,9 +104,9 @@ public class oplController {
         }
         //坐标系需要指定
         boolean created = publisher.createWorkspace(layerName);
-        boolean published = publisher.publishShp(layerName, layerName, base, file, "EPSG:2364", "default_point");
-        System.out.println("转换之后的文件："+file);
-//        System.out.println(published);
+        boolean published = publisher.publishShp(layerName, layerName, base, file, eps, "default_point");
+
+//
         return "OK";
 //        return Result.ok();
         //return null;
@@ -134,7 +135,7 @@ public class oplController {
             getFile(data.getBytes(),file.getName());
             responseTo(file,response);
 //            file.delete();
-            System.out.println("success");
+
         }finally {
             if (fis != null) {
                 try {
@@ -174,7 +175,7 @@ public class oplController {
                 }
             }
         }
-        System.out.println("success");
+
     }
     public static void getFile(byte[] bfile, String fileName) {    //创建文件
         File file=new File(fileName);

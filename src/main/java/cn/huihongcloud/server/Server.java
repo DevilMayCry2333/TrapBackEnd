@@ -44,9 +44,9 @@ public class Server {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture f = null;
             try {
-                System.out.println("port:" + port);
+
                 f = b.bind(port).sync();
-                System.out.println("started");
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -58,7 +58,7 @@ public class Server {
         } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
-            System.out.println("server closed");
+
         }
     }
 

@@ -63,7 +63,7 @@ public class WeatherController {
 //        if(hi.equals("null")){
 //            hi="";
 //        }
-        System.out.println(lo);
+
         if(lo!="" && lo!=null) {
             lo = lo + " 00:00:00";
         }

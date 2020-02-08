@@ -38,7 +38,7 @@ public class MedicineSummary {
                                  @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println(username);
+
 
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
@@ -56,8 +56,8 @@ public class MedicineSummary {
             lim.setEndDate(endDate);
             totalMedicineQuaSum += lim.getMedicineQuaSum();
             totalAreaFzNum += lim.getAreaFzSum();
-            System.out.println(lim.getCustomTown());
-            System.out.println(lim.getId());
+
+
         }
 
 

@@ -26,7 +26,7 @@ public class AnalysisService {
 
     public Object getAnalysisData(String adcode, String town, int year) {
         List<Map<String, Object>> monthlyData = analysisMapper.getMonthlyDataByAdcodeTownAndYear(adcode, town, year);
-        System.out.println(monthlyData);
+
         if (monthlyData.size() == 0)
             return null;
         double mean = 0;

@@ -162,7 +162,7 @@
         AND project = '5'
     </select>
   <select id="selectById1" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select * from device_medicine_maintance where scanId = #{scanId}
+    select * from device_medicine_maintance where scanId = #{scanId} and batch=#{batch}
   </select>
   <select id="getMaintenanceDataByAdcodeAndTown222"
           resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
@@ -556,7 +556,8 @@
       region, submit_date, batch, 
       longitude, latitude, medicine_qua, 
       medicine_name, area_fz, work_content, 
-      worker, remarks, pic, reported, username,altitude,scanId,customTown,town
+      worker, remarks, pic, reported, username,altitude,scanId,customTown,town,
+      customSerial,customProject,adcode,area,city,province
       )
     values (#{id,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{serial,jdbcType=VARCHAR}, 
       #{region,jdbcType=VARCHAR}, #{submitDate,jdbcType=TIMESTAMP}, #{batch,jdbcType=INTEGER}, 
@@ -570,7 +571,9 @@
       #{altitude,jdbcType=VARCHAR},
       #{scanId},
       #{customTown},
-      #{town}
+      #{town},
+      #{customSerial},#{customProject},#{adcode},
+      #{area},#{city},#{province}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity" >
@@ -778,6 +781,7 @@
     update device_medicine_maintance set device_Id=#{deviceId},serial=#{serial},region=#{region},
     submit_date=#{submitDate},batch=#{batch},longitude=#{longitude},latitude=#{latitude},work_content=#{workContent},
     medicine_qua=#{medicineQua},medicine_name = #{medicineName},
+    adcode=#{adcode},
     worker=#{worker},remarks=#{remarks},area_fz=#{areaFz},altitude=#{altitude},customTown=#{customTown},town=#{town} where scanId=#{scanId} and batch = #{batch};
   </update>
   <update id="reportData1">

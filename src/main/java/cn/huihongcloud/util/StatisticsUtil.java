@@ -45,7 +45,7 @@ public class StatisticsUtil {
     public static double sse(List<InputEntity> list) {
         double ret = 0;
         for (InputEntity item: list) {
-            System.out.println(item);
+
 
                 ret += Math.pow(item.getStd(), 2) * (item.getCount() - 1);
         }
@@ -121,7 +121,7 @@ public class StatisticsUtil {
         double mse = sse / dfe;
         double f = msa / mse;
         double fcrit = finv(0.05, dfa, dfe);
-        System.out.println("“”“”“”“”“”“”“dfa:" + dfa + " dfe:" + dfe);
+
         double r = Math.sqrt(ssa / sst);
 
         outputEntity.setSSA(ssa);

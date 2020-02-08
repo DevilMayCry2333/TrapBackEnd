@@ -52,7 +52,7 @@ public class DeadTreeSummary {
 
         List<DeadTreesSummary> summaryEntities = deviceDeadTreesMaintanceEntityMapper.queryDeviceSummaryByArea(adcode,startDate,endDate);
 //        for (int i = 0; i <summaryEntities.size() ; i++) {
-//            System.out.println(summaryEntities.get(i).getName());
+//
 //        }
         for (int i = 0; i < summaryEntities.size(); i++) {
             String SliceCrushing = "0";
@@ -64,28 +64,28 @@ public class DeadTreeSummary {
             Double d = Double.parseDouble(summaryEntities.get(i).getWoodVolume());
             summaryEntities.get(i).setWoodVolume(df.format(d));
 
-            System.out.println("用户名:");
-            System.out.println(summaryEntities.get(i).getName());
+
+
             try {
                 SliceCrushing = deviceDeadTreesMaintanceEntityMapper.queryMannerSum11(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSum11();
             }catch (Exception e){
 
             }try {
                 BaggingFumigation = deviceDeadTreesMaintanceEntityMapper.queryMannerSum22(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSumBagging();
-                System.out.println("***套袋***");
-                System.out.println(BaggingFumigation);
+
+
             }catch (Exception e){
-                System.out.println("***套袋***异常***");
-                System.out.println(BaggingFumigation);
+
+
             }try {
                 IncinerationTreatment = deviceDeadTreesMaintanceEntityMapper.queryMannerSum33(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSumBurn();
-                System.out.println("***焚烧***");
-                System.out.println(IncinerationTreatment);
+
+
 
             }catch (Exception e){
                 e.printStackTrace();
-                System.out.println("***焚烧***异常***");
-                System.out.println(IncinerationTreatment);
+
+
             }try {
                 WireMesh =  deviceDeadTreesMaintanceEntityMapper.queryMannerSum44(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSum44();
             }catch (Exception e){
@@ -100,8 +100,8 @@ public class DeadTreeSummary {
                             "焚烧处理:" + IncinerationTreatment + "  "+ "铁丝罩网:" + WireMesh+" "+
                             "其他:" + Other);
 
-            System.out.println(IncinerationTreatment);
-            System.out.println(summaryEntities.get(i).getMannerSum0());
+
+
 
         }
 
@@ -127,10 +127,10 @@ public class DeadTreeSummary {
         }
         List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
         for (User user : userList){
-            System.out.println(user.getUsername());
+
         }
         List<DeadTreesSummary> summaryEntities = deviceDeadTreesMaintanceEntityMapper.queryDeviceSummaryByManager(adcode,startDate,endDate);
-        System.out.println("测试"+summaryEntities);
+
 
         for (int i = 0; i < summaryEntities.size(); i++) {
             summaryEntities.get(i).setMannerSum(
@@ -140,7 +140,7 @@ public class DeadTreeSummary {
         }
 //        for (User user : userList){
 //            for (DeadTreesSummary ns:summaryEntities) {
-//                    System.out.println(user.getUsername());
+//
 //                    ns.setMannerSum(
 //                            "切片粉碎:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum1(adcode,user.getUsername()).getMannerSum1() + "  " + "套袋熏蒸:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum2(adcode,user.getUsername()).getMannerSum2() +"  "+
 //                            "焚烧处理:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum3(adcode,user.getUsername()).getMannerSum3() +"  "+ "铁丝罩网:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum4(adcode,user.getUsername()).getMannerSum4()+" "+
@@ -170,8 +170,8 @@ public class DeadTreeSummary {
         User user = userService.getUserByUserName(username);
         if(user.getRole()<4) {
             Map<String, Double> sum = deviceDeadTreesMaintanceEntityMapper.queryDeviceSum(adcode, startDate, endDate);
-            System.out.println("====Map====");
-            System.out.println(sum.get("sum"));
+
+
             DecimalFormat df = new DecimalFormat("0.000000");
             Double d = Double.parseDouble(String.valueOf(sum.get("sum")));
             sum.put("sum",Double.parseDouble(df.format(d)));
@@ -179,8 +179,8 @@ public class DeadTreeSummary {
         }
         if(user.getRole()==4){
             Map<String, Double> sum = deviceDeadTreesMaintanceEntityMapper.queryDeviceSum4(adcode, startDate, endDate);
-            System.out.println("====Map====");
-            System.out.println(sum.get("sum"));
+
+
             DecimalFormat df = new DecimalFormat("0.000000");
             Double d = Double.parseDouble(String.valueOf(sum.get("sum")));
             sum.put("sum",Double.parseDouble(df.format(d)));
@@ -199,7 +199,7 @@ public class DeadTreeSummary {
                        @RequestParam int limit){
         //
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println("asdf" + adcode);
+
         if(startDate!="" && startDate!=null) {
             startDate = startDate + " 00:00:00";
         }
@@ -208,11 +208,11 @@ public class DeadTreeSummary {
         }
         List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
         for (User user : userList){
-            System.out.println(user.getUsername());
+
         }
         List<DeadTreesSummary> deadTreesSummaries = deviceDeadTreesMaintanceEntityMapper.queryDeviceSummaryBycity(adcode, startDate, endDate);
 
-        System.out.println("测试"+deadTreesSummaries);
+
 
         for (int i = 0; i < deadTreesSummaries.size(); i++) {
             deadTreesSummaries.get(i).setMannerSum0(
@@ -222,7 +222,7 @@ public class DeadTreeSummary {
         }
 //        for (User user : userList){
 //            for (DeadTreesSummary ns:summaryEntities) {
-//                    System.out.println(user.getUsername());
+//
 //                    ns.setMannerSum(
 //                            "切片粉碎:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum1(adcode,user.getUsername()).getMannerSum1() + "  " + "套袋熏蒸:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum2(adcode,user.getUsername()).getMannerSum2() +"  "+
 //                            "焚烧处理:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum3(adcode,user.getUsername()).getMannerSum3() +"  "+ "铁丝罩网:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum4(adcode,user.getUsername()).getMannerSum4()+" "+
@@ -253,7 +253,7 @@ public class DeadTreeSummary {
                                  @RequestParam(required = false) String startDate, @RequestParam(required = false) String endDate) {
         User user = userService.getUserByUserName(username);
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        System.out.println(username);
+
 
         if (!Objects.equals(startDate, "")) {
             startDate = startDate + " 00:00:00";
@@ -278,8 +278,8 @@ public class DeadTreeSummary {
             lim.setEndDate(endDate);
             totalWoodVolumeSum += Double.parseDouble(lim.getTotalWoodVolume());
             totalDeadIdSum += lim.getTotalDeadId();
-            System.out.println(lim.getCustomTown());
-            System.out.println(lim.getId());
+
+
         }
 
 

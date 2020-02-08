@@ -39,7 +39,7 @@ public class StatisticsService {
         if (inputs == null || inputs.size()<2 || inputs.isEmpty())
             return null;
         StatisticsResult result = StatisticsUtil.getResult(inputs);
-        System.out.println(result);
+
         TemplateExportParams templateExportParams = new TemplateExportParams("statisticsExcel.xlsx", 0, 1, 2, 3);
         AnalysisEntity analysisEntity = result.getAnalysisEntity();
         map.put("dfa", analysisEntity.getDFA());

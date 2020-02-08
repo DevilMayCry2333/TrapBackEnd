@@ -89,7 +89,7 @@ public class NewQrCode {
 
     @RequestMapping("/getMaxAvableCode")
     public Object getgetMaxAvableCode(@RequestParam String provinceCode){
-        System.out.println(provinceCode);
+
         List<User> proxyUser = newQrCodeMapper.getProxyByCode(provinceCode);
 
         List<Device> device = newQrCodeMapper.getMaxAvaDevice(proxyUser.get(0).getProvince());
@@ -119,9 +119,9 @@ public class NewQrCode {
 //        List<User> areaUser = newQrCodeMapper.getArea(areaCode);
         List<User> proxyUser = newQrCodeMapper.getProxyByCode(proxyCode);
 //        String mydist[] = distUtil.getNames(areaCode,null);
-//        System.out.println(mydist[0]);
-//        System.out.println(mydist[1]);
-//        System.out.println(mydist[2]);
+//
+//
+//
 //
 //        String []project = {"诱捕器管理","注干剂监测","天敌防治","枯死树采伐","药剂防治管理"};
 //        int switchProject = Integer.parseInt(projectCode);
@@ -144,7 +144,7 @@ public class NewQrCode {
                                           @RequestParam String serialStart,@RequestParam String serialEnd,
                                           @RequestParam int serialNum,
                                           @RequestParam String username) throws InterruptedException {
-        System.out.println(username);
+
         User user = userMapper.getUserByUserName(username);
         int locks = lockerMapper.getLocks(user.getProvince(),"device");
 
@@ -153,21 +153,21 @@ public class NewQrCode {
         }else{
             lockerMapper.insertLocks(user.getProvince(),"device",username);
 
-            System.out.println(user.getAdcode());
+
 
             String mydist[] = distUtil.getNames(user.getAdcode(),null);
-            System.out.println(mydist[0]);
-            System.out.println(mydist[1]);
-            System.out.println(mydist[2]);
+
+
+
 
             try {
                 String devicePrefix = user.getAdcode() + "19" + applicationValue;
 
                 for (long i = Long.parseLong(startScanID),j=0; i <= Long.parseLong(endScanID); i++,j++) {
                     List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
-                    System.out.println("=====1=");
-                    System.out.println(device.get(0).getId());
-                    System.out.println("=====1=");
+
+
+
                     newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
 //                Thread.sleep(5 * 100);
                 }
@@ -182,9 +182,9 @@ public class NewQrCode {
                 newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(deviceId),Long.parseLong(startScanID),customRegion,prefix,Long.parseLong(serialStart)+0,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
                 for (long i = Long.parseLong(startScanID) + 1,j=1; i <= Long.parseLong(endScanID); i++,j++) {
                     List<Device> device = newQrCodeMapper.getMaxDeviceId(devicePrefix, String.valueOf(applicationValue));
-                    System.out.println("======");
-                    System.out.println(device.get(0).getId());
-                    System.out.println("======");
+
+
+
                     newQrCodeMapper.assginDeviceByManager(String.valueOf(applicationValue),Long.parseLong(device.get(0).getId()) + 1,i,customRegion,prefix,Long.parseLong(serialStart)+j,user.getParent(),username,mydist[1],mydist[2],user.getAdcode());
 //                Thread.sleep(5 * 100);
                 }
@@ -224,12 +224,12 @@ public class NewQrCode {
         Page<Object> pageObject = PageHelper.startPage(page, limit);
         List<Device> deviceList = newQrCodeMapper.selectByConditions1(colName, searchText,username);
 
-        System.out.println(deviceList.size());
+
         PageWrapper pageWrapper = new PageWrapper();
         pageWrapper.setData(deviceList);
-//        System.out.println(pageObject.getPages());
-//        System.out.println(pageObject.getTotal());
-//        System.out.println(allNum);
+//
+//
+//
         pageWrapper.setTotalNum(allNum);
         pageWrapper.setTotalPage(allNum/limit);
         pageWrapper.setCurrentPage(page);
@@ -246,7 +246,7 @@ public class NewQrCode {
     public Object serach(@RequestAttribute("username") String username,@RequestParam(required = false) String colName, @RequestParam(required = false) String searchText, int page, int limit){
 
         //User user = userMapper.getUserByUserName(username);
-        System.out.println(username);
+
 
 
 //        int allNum = newQrCodeMapper.countByCond(username,colName, searchText);
@@ -257,8 +257,8 @@ public class NewQrCode {
         PageWrapper pageWrapper = new PageWrapper();
 
         pageWrapper.setData(deviceList);
-        System.out.println(pageObject.getPages());
-        System.out.println(pageObject.getTotal());
+
+
 
         pageWrapper.setCurrentPage(page);
         pageWrapper.setTotalNum(pageObject.getTotal());
@@ -268,11 +268,11 @@ public class NewQrCode {
 
     @RequestMapping("/getavailableNum")
     public Object serach(@RequestParam String province ){
-        System.out.println(province);
+
         List<User> users = userMapper.getProvinceByCode(province);    //获取省级用户名字
         String ProvinceName = users.get(0).getProvince();
         int availabID = newQrCodeMapper.countByNOassign("0",ProvinceName);
-        System.out.println(availabID);
+
         return availabID;
     }
 

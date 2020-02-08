@@ -47,7 +47,7 @@ public class Medicine {
         User user = userMapper.getUserByUserName(worker);
         User user1 = userMapper.getUserByUserName(user.getParent());
         User user2 = userMapper.getUserByUserName(user1.getParent());
-        System.out.println(user2.getUsername());
+
         return deviceBeetleMapper.getMedicineName(user2.getAdcode());
     }
 
@@ -96,7 +96,7 @@ public class Medicine {
 
 
 
-        System.out.println("image" + image);
+
 
 //        Device_Injection_maintanceEntity deviceInjectionMaintanceEntity = new Device_Injection_maintanceEntity();
         Device_Medicine_MaintanceEntity deviceMedicineMaintanceEntity = new Device_Medicine_MaintanceEntity();
@@ -105,16 +105,16 @@ public class Medicine {
 
         User user = userMapper.getUserByUserName(username);
         User user1 = userMapper.getUserByUserName(user.getParent());
-        System.out.println("USername");
+
         int maxBatchNum = 0;
 
 
         try {
             List<Device_Medicine_MaintanceEntity> maxBatch = deviceMedicineMaintanceEntityMapper.getMaxBatch(realDeviceId.getId());
-            System.out.println("批次");
-            System.out.println(maxBatch.get(0).getDeviceId());
 
-            System.out.println(maxBatch.get(0).getBatch());
+
+
+
             maxBatchNum = maxBatch.get(0).getBatch();
 
         }catch (Exception e){
@@ -123,7 +123,7 @@ public class Medicine {
 
 
 
-        System.out.println(user1.getUsername());
+
 
 //        deviceInjectionMaintanceEntity.setWorker(username);
 //        deviceInjectionMaintanceEntity.setDeviceId(Long.valueOf(realDeviceId.getId()));
@@ -172,9 +172,9 @@ public class Medicine {
 
 
 
-        System.out.println("CustomeSerial");
 
-        System.out.println(realDeviceId.getCustomSerial());
+
+
 
         Date date= new Date(System.currentTimeMillis());
         String pattern="yyyy-MM-dd HH:mm:ss";
@@ -192,7 +192,7 @@ public class Medicine {
         if (image != null) {
             String imgId = deviceService.saveImg(image, deviceId, username);
             deviceMedicineMaintanceEntity.setPic(imgId);
-            System.out.println("执行了这部");
+
 
         }
         deviceMedicineMaintanceEntityMapper.addMaintanceData(deviceMedicineMaintanceEntity);
@@ -206,7 +206,7 @@ public class Medicine {
             device.setAltitude(Double.valueOf(altitude));
             device.setReceiveDate(new Date());
 
-            System.out.println(device.getReceiveDate());
+
 
             deviceService.updateDevice(device);
         }
