@@ -16,6 +16,7 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Medicine_MaintanceEntityMapper;
 import cn.huihongcloud.service.DeviceMedicineMaintanceService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.DistUtil;
 import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -55,7 +56,8 @@ public class MedicineDataDetail {
     @Autowired
     private BDComponent mBDComponent;
 
-
+    @Autowired
+    DistUtil distUtil;
 
     //JSONObject jsonObject = new JSONObject();
 
@@ -217,14 +219,12 @@ public class MedicineDataDetail {
         for (Device_Medicine_MaintanceEntity d:
                 deviceMaintenanceList) {
 
-            Device device = deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId()));
-
             BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
             d.setTown(bdInfo.getResult().getAddressComponent().getTown());
-            d.setArea(device.getArea());
-            d.setCity(device.getCity());
+            d.setArea(distUtil.getNames(d.getAdcode(),null)[2]);
+            d.setCity(distUtil.getNames(d.getAdcode(),null)[1]);
             d.setCustomSerial(d.getSerial());
-            d.setProvince(device.getProvince());
+            d.setProvince(distUtil.getNames(d.getAdcode(),null)[0]);
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
             Device_Medicine_MaintanceEntity tmp =  device_medicine_maintanceEntityMapper.selectById1(BigInteger.valueOf(d.getScanId()),d.getBatch());
             if(tmp!=null){

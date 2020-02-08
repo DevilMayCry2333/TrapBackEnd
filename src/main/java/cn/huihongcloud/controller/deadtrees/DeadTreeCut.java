@@ -15,6 +15,7 @@ import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_DeadTrees_maintanceEntityMapper;
 import cn.huihongcloud.service.DeadTreeCutService;
 import cn.huihongcloud.service.UserService;
+import cn.huihongcloud.util.DistUtil;
 import cn.huihongcloud.util.ImageDownUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -50,7 +51,8 @@ public class DeadTreeCut {
     DeviceMapper deviceMapper;
     @Autowired
     BDComponent mBDComponent;
-
+    @Autowired
+    DistUtil distUtil;
 
     @Value("${com.youkaiyu.batchImg}")
     private String batchImgUrl;
@@ -346,14 +348,13 @@ public class DeadTreeCut {
 
         for (Device_DeadTrees_maintanceEntity d:
                 deviceDeadTreesMaintanceEntities) {
-            Device device2 = deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId()));
 
             BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
             d.setTown(bdInfo.getResult().getAddressComponent().getTown());
-            d.setArea(device2.getArea());
-            d.setCity(device2.getCity());
+            d.setArea(distUtil.getNames(d.getAdcode(),null)[2]);
+            d.setCity(distUtil.getNames(d.getAdcode(),null)[1]);
 //            d.setCustomSerial(d.getSerial());
-            d.setProvince(device2.getProvince());
+            d.setProvince(distUtil.getNames(d.getAdcode(),null)[0]);
 
 
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
