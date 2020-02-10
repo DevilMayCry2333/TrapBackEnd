@@ -26,17 +26,19 @@
   </resultMap>
   <insert id="insert" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
     insert into Device_Track_Maintance (id, LineName, TimeConsume, 
-      StartTime, EndTIme, PointCollect, 
-      StartPoint, EndPoint, Pic1, 
-      Pic2, Pic3, Pic4, Pic5, 
+      StartTime, EndTIme, latitudeCollect,
+      longtitudeCollect,
+      StartPoint, EndPoint, Pic1,
+      Pic2, Pic3, Pic4, Pic5,
       Worker, Working_Content, Remarks, 
       ScanId, deviceId,username)
     values (#{id,jdbcType=BIGINT}, #{linename,jdbcType=VARCHAR}, #{timeconsume,jdbcType=VARCHAR}, 
-      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{pointcollect,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{latitudeCollect,jdbcType=VARCHAR},
+      #{longtitudeCollect,jdbcType=VARCHAR},
       #{startpoint,jdbcType=VARCHAR}, #{endpoint,jdbcType=VARCHAR}, #{pic1,jdbcType=VARCHAR}, 
       #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{pic4,jdbcType=VARCHAR}, #{pic5,jdbcType=VARCHAR}, 
       #{worker,jdbcType=VARCHAR}, #{workingContent,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{scanid,jdbcType=BIGINT}, #{deviceid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR})
+      #{scanid,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.huihongcloud.entity.Device_Track_MaintanceEntity" >
     insert into Device_Track_Maintance

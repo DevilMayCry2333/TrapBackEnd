@@ -245,7 +245,6 @@ public class DeadTreeSummary {
 
     @RequestMapping("/byCustomReigon")
     public Object byCustomReigon(@RequestAttribute(value = "username",required = false) String username,
-                                 @RequestParam String adcode,
                                  @RequestParam int page,
                                  @RequestParam int limit,
                                  @RequestParam Integer optionIndex,
