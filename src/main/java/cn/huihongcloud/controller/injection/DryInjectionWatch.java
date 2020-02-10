@@ -370,8 +370,7 @@ public class DryInjectionWatch {
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
-
-
+        User user = userService.getUserByUserName(username);
 
 
         if(colName.equals("1")){
@@ -386,8 +385,14 @@ public class DryInjectionWatch {
         if(colName.equals("4")){
             colName = "Worker";
         }
+        List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
-        List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+        if(user.getRole()==4){
+            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+        }
+        else{
+            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(null,startDate,endDate,colName,searchText,adcode);
+        }
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
 //
