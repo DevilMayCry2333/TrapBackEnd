@@ -779,8 +779,11 @@
 
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_Injection_maintanceEntity">
     SELECT * FROM  device_injection_maintance t1
-    WHERE t1.username=#{username} and t1.adcode
+    WHERE t1.adcode
     LIKE concat(#{adcode}, '%')
+    <if test="username!=null and username!=''">
+      and t1.username=#{username}
+    </if>
     <if test="startDate!=null and startDate !=''">
       and t1.submit_date >= #{startDate}
     </if>
