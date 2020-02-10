@@ -317,11 +317,11 @@ public class Track {
             try {
                 for(int i = 0;i<5;i++){
 //                    String tmp = d.getPic();
-                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img"  + "/" + "照片1," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "照片2," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img"  + "/" + "照片3," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img"  + "/" + "照片4," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img"  + "/" + "照片5," + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img"  + "/" + "照片1," + d.getPic1() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "照片2," + d.getPic2() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img"  + "/" + "照片3," + d.getPic3() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img"  + "/" + "照片4," + d.getPic4() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img"  + "/" + "照片5," + d.getPic5() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
                 }
             }catch (Exception e){
 
