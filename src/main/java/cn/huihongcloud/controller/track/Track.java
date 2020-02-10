@@ -289,10 +289,6 @@ public class Track {
         int code = imageDownUtil.deleteFile(file);
 
 
-
-
-
-
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -306,10 +302,13 @@ public class Track {
             colName = "Worker";
         }
 
+        Page<Object> page = null;
         List<Device_Track_MaintanceEntity> deviceTrackMaintanceEntities = null;
         if(user.getRole()==4){
+            page = PageHelper.startPage(1,100000000);
             deviceTrackMaintanceEntities  = trackService.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
         }else {
+            page = PageHelper.startPage(1,100000000);
             deviceTrackMaintanceEntities  = deviceTrackMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
         }
 

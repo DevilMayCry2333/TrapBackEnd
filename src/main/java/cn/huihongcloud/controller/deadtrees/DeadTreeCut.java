@@ -316,7 +316,8 @@ public class DeadTreeCut {
         if(colName.equals("4")){
             colName = "Worker";
         }
-
+        Page<Object> page = null;
+        page = PageHelper.startPage(1,100000000);
         List<Device_DeadTrees_maintanceEntity> device_deadTrees_maintanceEntities  = deadTreeCutService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
 
         for (Device_DeadTrees_maintanceEntity d:device_deadTrees_maintanceEntities) {
