@@ -31,8 +31,7 @@ public class ImageDownUtil {
                 String[] childFilePath = file.list();//获取文件夹下所有文件相对路径
                 for (String path:childFilePath){
                     File childFile= new File(file.getAbsoluteFile()+"/"+path);
-
-
+                    childFile.delete();
                 }
 
         } catch (Exception e) {
