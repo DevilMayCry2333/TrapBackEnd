@@ -138,7 +138,7 @@
 
     <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.device.DeviceMaintenance">
         SELECT * FROM device_maintenance t1
-        WHERE t1.username=#{username} and t1.adcode
+        WHERE t1.manager=#{username} and t1.adcode
         LIKE concat(#{adcode}, '%')
         <if test="startDate!=null and startDate !=''">
             and t1.`date` >= #{startDate}

@@ -235,12 +235,12 @@ public class NaturalEnemy {
 
         int luanKaNum = 0;
         int releasNum = 0;
-        Page<Object> pageObject = PageHelper.startPage(page, limit);
         List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
-
+        Page<Object> pageObject = null;
 
         if(user.getRole()==4){
-            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,limit,adcode);
+            pageObject = PageHelper.startPage(page, limit);
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode);
             List<Device_NaturalEnemies_maintanceEntity> allEntity = deviceNaturalEnemiesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,limit,adcode);
 
             for (Device_NaturalEnemies_maintanceEntity dataEntity: allEntity) {
@@ -255,7 +255,8 @@ public class NaturalEnemy {
 //            jsonObject.put("LuanKaNum",luanKaNum);
 //            jsonObject.put("releaseNum",releasNum);
         }else if(user.getRole()<=3){
-            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,page*limit-limit,limit,user.getAdcode());
+            pageObject = PageHelper.startPage(page, limit);
+            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,user.getAdcode());
 //            jsonObject.put("Data",deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,page*limit-limit,limit,user.getAdcode()));
         }
 
@@ -375,9 +376,9 @@ public class NaturalEnemy {
         List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
         if(user.getRole()==4){
-            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode);
         }else {
-            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,user.getAdcode());
         }
 
 //        for (Device_NaturalEnemies_maintanceEntity d:
@@ -412,25 +413,25 @@ public class NaturalEnemy {
         File file=new File("/var/www/html/img");//路径
 
         int code = imageDownUtil.deleteFile(file);
-
-
-
-
+        Page<Object> page = null;
 
         List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
         if(user.getRole()==4){
-            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,1*10-10,1*10,adcode);
+            page = PageHelper.startPage(1,100000000);
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode);
         }else {
-            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,1*10-10,1*10,user.getAdcode());
+            page = PageHelper.startPage(1,100000000);
+            deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,user.getAdcode());
         }
 
 
         for (Device_NaturalEnemies_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {
                 String pic = d.getPic();
-                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + "/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1");
+                imageDownUtil.moveFile("/root/img/" + d.getPic(), "/var/www/html/img" + "/" + d.getScanId() + d.getSerial() + d.getCustomTown() + "Ser1" + "Batch" + d.getBatch());
             }catch (Exception e){
+
             }
 
         }
