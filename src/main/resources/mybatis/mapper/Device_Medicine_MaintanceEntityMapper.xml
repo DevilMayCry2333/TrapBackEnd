@@ -95,8 +95,8 @@
 
   </select>
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_Medicine_MaintanceEntity">
-    select * from device_medicine_maintance left join device on device_medicine_maintance.device_id = device.id
-    WHERE device.adcode
+    select * from device_medicine_maintance
+    WHERE device_medicine_maintance.adcode
     LIKE concat(#{adcode}, '%')
     <if test="startDate!=null and startDate !=''">
       and device_medicine_maintance.submit_date >= #{startDate}
