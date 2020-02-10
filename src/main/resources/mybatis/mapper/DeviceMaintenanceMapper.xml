@@ -736,7 +736,7 @@
             and `date` &lt;= #{endDate}
         </if>
         group by device_id)as a
-        group by CustomTown
+        group by town
     </select>
     <select id="getInputEntityForArea" resultType="cn.huihongcloud.entity.statistics.InputEntity">
         select area name, sum(num1) `sum` ,CustomTown,avg(num1) mean, stddev_samp(num1) `std`, max(num1) `max`, min(num1) `min`, count(distinct device_id) `count`

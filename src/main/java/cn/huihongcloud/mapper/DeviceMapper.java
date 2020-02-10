@@ -77,6 +77,7 @@ public interface DeviceMapper {
 
     int updateScanId(String id,String scanId,String username);
 
+    int updateByScanId(Long scanId,Double longId,Double laId);
     List<Device> adminDevice();
 
     int countDevice();

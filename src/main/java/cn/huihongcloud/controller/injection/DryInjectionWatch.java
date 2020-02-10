@@ -9,6 +9,7 @@ import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
 import cn.huihongcloud.entity.bd.BDInfo;
 import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
+import cn.huihongcloud.entity.device.DeviceMaintenance;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.summary.InjectionSummary;
 import cn.huihongcloud.entity.user.User;
@@ -466,7 +467,6 @@ public class DryInjectionWatch {
                 .importExcel(multipartFile.getInputStream(), Device_Injection_maintanceEntity.class, importParams);
         for (Device_Injection_maintanceEntity d:
                 deviceMaintenanceList) {
-
             BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
             d.setTown(bdInfo.getResult().getAddressComponent().getTown());
             String info[] = distUtil.getNames(d.getAdcode(),null);
@@ -484,10 +484,12 @@ public class DryInjectionWatch {
             Device_Injection_maintanceEntity tmp =  deviceInjectionMaintanceEntityMapper.selectById2(BigInteger.valueOf(d.getScanId()),d.getBatch());
             if(tmp!=null){
                 deviceInjectionMaintanceEntityMapper.updateRecordById(d);
+                deviceMapper.updateByScanId(d.getScanId(),d.getLongitude(),d.getLatitude());
             }else {
                 deviceInjectionMaintanceEntityMapper.insert(d);
-            }
+                deviceMapper.updateByScanId(d.getScanId(),d.getLongitude(),d.getLatitude());            }
         }
+
         return "OK";
     }
 

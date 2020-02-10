@@ -73,6 +73,9 @@
         update device set scanId = #{scanId} where id = #{id} and manager = #{username};
 
     </update>
+    <update id="updateByScanId">
+        update device set latitude=#{laId},longitude=#{longId} where scanId=#{scanId}
+    </update>
     <insert id="addDevice">
         insert into device (id, latitude, longitude, altitude, adcode, province, city, area, town, receive_date, towncode, qrcode, manager) values
         (#{device.id}, #{device.latitude}, #{device.longitude}, #{device.altitude}, #{device.adcode}, #{device.province}, #{device.city},
