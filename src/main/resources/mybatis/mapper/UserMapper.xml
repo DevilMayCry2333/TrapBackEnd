@@ -206,7 +206,7 @@
     <update id="reportDead">
         update device_deadtrees_maintance
         set reported = 1
-        where device.CustomProject = #{customProject}
+        where CustomProject = #{customProject}
     </update>
     <update id="reportTrack">
         update device_track_maintance set reported = 1 where username = #{projectAdmin};

@@ -361,9 +361,6 @@ public class DeadTreeCut {
             d.setDeviceId(Long.valueOf(deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId())).getId()));
             Device_DeadTrees_maintanceEntity tmp = deviceDeadTreesMaintanceEntityMapper.selectById(String.valueOf(d.getScanId()),d.getBatch());
             d.setCustomProject(device.getCustomProject());
-            d.setProvince(device.getProvince());
-            d.setCity(device.getCity());
-            d.setArea(device.getArea());
 
             if(tmp!=null){
                 deviceDeadTreesMaintanceEntityMapper.updateRecordById(d);
