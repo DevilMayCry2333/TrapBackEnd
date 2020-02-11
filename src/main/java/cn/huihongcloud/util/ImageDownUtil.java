@@ -9,7 +9,10 @@ public class ImageDownUtil {
             String cmd = "sudo cp " + oldFileName + " " + newFileName+".jpg";
 
             Process proc = Runtime.getRuntime().exec(cmd);
-            proc.waitFor();
+            int retCode = proc.waitFor();
+            System.out.println("程序流程" + retCode);
+            System.out.println(oldFileName);
+            System.out.println(newFileName);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
