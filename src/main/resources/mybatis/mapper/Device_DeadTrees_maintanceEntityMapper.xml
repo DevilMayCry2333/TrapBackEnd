@@ -420,8 +420,8 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
     group by Device_DeadTrees_maintance.customProject,Device_DeadTrees_maintance.adcode
   </select>
   <select id="queryDeviceSum" resultType="java.util.Map">
-    select count(distinct device_Id) `count`, sum(woodVolume) `sum`
-    from Device_DeadTrees_maintance
+    select count(distinct scanId) `count`, sum(woodVolume) `sum`
+    from device_deadtrees_maintance
 
     where adcode like concat(#{adcode}, '%')
 
@@ -875,6 +875,20 @@ insert into Device_DeadTrees_maintance (Pic,Pic2,serial,submit_date,batch,userna
       and submit_date &lt;= #{endDate}
     </if>
     group by Device_DeadTrees_maintance.area,Device_DeadTrees_maintance.adcode
+  </select>
+  <select id="queryDeviceSummaryByProvince" resultType="cn.huihongcloud.entity.summary.DeadTreesSummary">
+    select count(distinct device_Id) woodNum, sum(woodVolume) woodVolume, Device_DeadTrees_maintance.city `name`, Device_DeadTrees_maintance.adcode code
+    from Device_DeadTrees_maintance
+    where adcode like concat(#{adcode}, '%')
+
+    and Device_DeadTrees_maintance.town is not null
+    <if test="startDate != null and startDate !=''">
+      and submit_date &gt;= #{startDate}
+    </if>
+    <if test="endDate != null and endDate !=''">
+      and submit_date &lt;= #{endDate}
+    </if>
+    group by Device_DeadTrees_maintance.city,Device_DeadTrees_maintance.adcode
   </select>
 
 
