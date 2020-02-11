@@ -472,6 +472,7 @@ public class DryInjectionWatch {
                 .importExcel(multipartFile.getInputStream(), Device_Injection_maintanceEntity.class, importParams);
         for (Device_Injection_maintanceEntity d:
                 deviceMaintenanceList) {
+            Device device = deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId()));
             BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
             d.setTown(bdInfo.getResult().getAddressComponent().getTown());
             String info[] = distUtil.getNames(d.getAdcode(),null);
@@ -493,6 +494,15 @@ public class DryInjectionWatch {
             }else {
                 deviceInjectionMaintanceEntityMapper.insert(d);
                 deviceMapper.updateByScanId(d.getScanId(),d.getLongitude(),d.getLatitude());            }
+
+            if (device.getReceiveDate() == null || device.getLongitude() == null ||
+                    device.getLatitude() == null || device.getAltitude() == null) {
+                device.setLongitude(d.getLongitude());
+                device.setLatitude(d.getLatitude());
+                device.setAltitude(Double.valueOf(d.getAltitude()));
+                device.setReceiveDate(d.getSubmitDate());
+                deviceMapper.updateDevice(device);
+            }
         }
 
         return "OK";

@@ -451,6 +451,7 @@ public class NaturalEnemy {
                 .importExcel(multipartFile.getInputStream(), Device_NaturalEnemies_maintanceEntity.class, importParams);
         for (Device_NaturalEnemies_maintanceEntity d:
              deviceMaintenanceList) {
+            Device device = deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId()));
             BDInfo bdInfo = mBDComponent.parseLocation(Double.valueOf(d.getLatitude()), Double.valueOf(d.getLongitude()));
             d.setTown(bdInfo.getResult().getAddressComponent().getTown());
             String info[] = distUtil.getNames(d.getAdcode(),null);
@@ -468,6 +469,15 @@ public class NaturalEnemy {
                 deviceNaturalEnemiesMaintanceEntityMapper.updateRecordById(d);
             }else {
                 deviceNaturalEnemiesMaintanceEntityMapper.insert(d);
+            }
+
+            if (device.getReceiveDate() == null || device.getLongitude() == null ||
+                    device.getLatitude() == null || device.getAltitude() == null) {
+                device.setLongitude(Double.valueOf(d.getLongitude()));
+                device.setLatitude(Double.valueOf(d.getLatitude()));
+                device.setAltitude(Double.valueOf(d.getAltitude()));
+                device.setReceiveDate(d.getSubmitDate());
+                deviceMapper.updateDevice(device);
             }
         }
         return "OK";
