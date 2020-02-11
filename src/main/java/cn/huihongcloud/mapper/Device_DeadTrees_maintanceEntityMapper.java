@@ -29,11 +29,11 @@ public interface Device_DeadTrees_maintanceEntityMapper {
     DeadTreesSummary queryMannerSum5(String adcode,String CustomProject);
 
 
-    List<DeadTreesSummary> queryMannerSum11(String adcode,String town,String area);
-    List<DeadTreesSummary> queryMannerSum22(String adcode,String town,String area);
-    List<DeadTreesSummary> queryMannerSum33(String adcode,String town,String area);
-    List<DeadTreesSummary> queryMannerSum44(String adcode,String town,String area);
-    List<DeadTreesSummary> queryMannerSum55(String adcode,String town,String area);
+    List<DeadTreesSummary> queryMannerSum11(String adcode,String town,String area,String city);
+    List<DeadTreesSummary> queryMannerSum22(String adcode,String town,String area,String city);
+    List<DeadTreesSummary> queryMannerSum33(String adcode,String town,String area,String city);
+    List<DeadTreesSummary> queryMannerSum44(String adcode,String town,String area,String city);
+    List<DeadTreesSummary> queryMannerSum55(String adcode,String town,String area,String city);
 
 
 
@@ -125,4 +125,7 @@ public interface Device_DeadTrees_maintanceEntityMapper {
 
 
     List<DeadTreesSummary> queryDeviceSummaryBycity(String adcode, String startDate, String endDate);
+
+    List<DeadTreesSummary> queryDeviceSummaryByProvince(String adcode, String startDate, String endDate);
+
 }

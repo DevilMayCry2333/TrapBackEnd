@@ -67,18 +67,18 @@ public class DeadTreeSummary {
 
 
             try {
-                SliceCrushing = deviceDeadTreesMaintanceEntityMapper.queryMannerSum11(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSum11();
+                SliceCrushing = deviceDeadTreesMaintanceEntityMapper.queryMannerSum11(adcode,summaryEntities.get(i).getName(),null,null).get(0).getMannerSum11();
             }catch (Exception e){
 
             }try {
-                BaggingFumigation = deviceDeadTreesMaintanceEntityMapper.queryMannerSum22(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSumBagging();
+                BaggingFumigation = deviceDeadTreesMaintanceEntityMapper.queryMannerSum22(adcode,summaryEntities.get(i).getName(),null,null).get(0).getMannerSumBagging();
 
 
             }catch (Exception e){
 
 
             }try {
-                IncinerationTreatment = deviceDeadTreesMaintanceEntityMapper.queryMannerSum33(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSumBurn();
+                IncinerationTreatment = deviceDeadTreesMaintanceEntityMapper.queryMannerSum33(adcode,summaryEntities.get(i).getName(),null,null).get(0).getMannerSumBurn();
 
 
 
@@ -87,11 +87,11 @@ public class DeadTreeSummary {
 
 
             }try {
-                WireMesh =  deviceDeadTreesMaintanceEntityMapper.queryMannerSum44(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSum44();
+                WireMesh =  deviceDeadTreesMaintanceEntityMapper.queryMannerSum44(adcode,summaryEntities.get(i).getName(),null,null).get(0).getMannerSum44();
             }catch (Exception e){
 
             }try {
-                Other = deviceDeadTreesMaintanceEntityMapper.queryMannerSum55(adcode,summaryEntities.get(i).getName(),null).get(0).getMannerSum55();
+                Other = deviceDeadTreesMaintanceEntityMapper.queryMannerSum55(adcode,summaryEntities.get(i).getName(),null,null).get(0).getMannerSum55();
             }catch (Exception e){
 
             }
@@ -171,7 +171,7 @@ public class DeadTreeSummary {
         if(user.getRole()<4) {
             Map<String, Double> sum = deviceDeadTreesMaintanceEntityMapper.queryDeviceSum(adcode, startDate, endDate);
 
-
+            System.out.println(sum.get("count"));
             DecimalFormat df = new DecimalFormat("0.000000");
             Double d = Double.parseDouble(String.valueOf(sum.get("sum")));
             sum.put("sum",Double.parseDouble(df.format(d)));
@@ -216,9 +216,59 @@ public class DeadTreeSummary {
 
         for (int i = 0; i < deadTreesSummaries.size(); i++) {
             deadTreesSummaries.get(i).setMannerSum0(
-                    "切片粉碎:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum11(adcode,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSum11() + "  " + "套袋熏蒸:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum22(adcode,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSumBagging() +"  "+
-                            "焚烧处理:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum33(adcode,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSumBurn() +"  "+ "铁丝罩网:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum44(adcode,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSum44()+" "+
-                            "其他:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum55(adcode,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSum55());
+                    "切片粉碎:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum11(adcode,null,deadTreesSummaries.get(i).getName(),null).get(0).getMannerSum11() + "  " + "套袋熏蒸:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum22(adcode,null,deadTreesSummaries.get(i).getName(),null).get(0).getMannerSumBagging() +"  "+
+                            "焚烧处理:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum33(adcode,null,deadTreesSummaries.get(i).getName(),null).get(0).getMannerSumBurn() +"  "+ "铁丝罩网:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum44(adcode,null,deadTreesSummaries.get(i).getName(),null).get(0).getMannerSum44()+" "+
+                            "其他:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum55(adcode,null,deadTreesSummaries.get(i).getName(),null).get(0).getMannerSum55());
+        }
+//        for (User user : userList){
+//            for (DeadTreesSummary ns:summaryEntities) {
+//
+//                    ns.setMannerSum(
+//                            "切片粉碎:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum1(adcode,user.getUsername()).getMannerSum1() + "  " + "套袋熏蒸:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum2(adcode,user.getUsername()).getMannerSum2() +"  "+
+//                            "焚烧处理:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum3(adcode,user.getUsername()).getMannerSum3() +"  "+ "铁丝罩网:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum4(adcode,user.getUsername()).getMannerSum4()+" "+
+//                            "其他:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum5(adcode,user.getUsername()).getMannerSum5()
+//                    );
+//            }
+//        }
+//         jsonObject.put("methodSum1",deviceDeadTreesMaintanceEntityMapper.queryMannerSum1(adcode));
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setTotalPage(pageObject.getPages());
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setData(deadTreesSummaries);
+        return Result.ok(pageWrapper);
+
+    }
+
+    //省级
+    @RequestMapping("/province")
+    public Object province(@RequestParam String adcode,
+                       @RequestParam String startDate,
+                       @RequestParam String endDate,
+                       @RequestParam int page,
+                       @RequestParam int limit){
+        //
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+
+        if(startDate!="" && startDate!=null) {
+            startDate = startDate + " 00:00:00";
+        }
+        if(endDate!="" && endDate!=null) {
+            endDate = endDate + " 23:59:59";
+        }
+        List<User> userList = userMapper.getProjectAdminByAdcode(adcode);
+        for (User user : userList){
+
+        }
+        List<DeadTreesSummary> deadTreesSummaries = deviceDeadTreesMaintanceEntityMapper.queryDeviceSummaryByProvince(adcode, startDate, endDate);
+
+
+
+        for (int i = 0; i < deadTreesSummaries.size(); i++) {
+            deadTreesSummaries.get(i).setMannerSum0(
+                    "切片粉碎:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum11(adcode,null,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSum11() + "  " + "套袋熏蒸:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum22(adcode,null,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSumBagging() +"  "+
+                            "焚烧处理:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum33(adcode,null,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSumBurn() +"  "+ "铁丝罩网:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum44(adcode,null,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSum44()+" "+
+                            "其他:" + deviceDeadTreesMaintanceEntityMapper.queryMannerSum55(adcode,null,null,deadTreesSummaries.get(i).getName()).get(0).getMannerSum55());
         }
 //        for (User user : userList){
 //            for (DeadTreesSummary ns:summaryEntities) {

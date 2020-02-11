@@ -218,7 +218,7 @@ public class MedicineDataDetail {
                 .importExcel(multipartFile.getInputStream(), Device_Medicine_MaintanceEntity.class, importParams);
         for (Device_Medicine_MaintanceEntity d:
                 deviceMaintenanceList) {
-
+            Device device = deviceMapper.getDeviceByScanId(String.valueOf(d.getScanId()));
             BDInfo bdInfo = mBDComponent.parseLocation(d.getLatitude(), d.getLongitude());
             d.setTown(bdInfo.getResult().getAddressComponent().getTown());
             d.setArea(distUtil.getNames(d.getAdcode(),null)[2]);
@@ -231,6 +231,15 @@ public class MedicineDataDetail {
                 device_medicine_maintanceEntityMapper.updateRecordById1(d);
             }else {
                 device_medicine_maintanceEntityMapper.insert(d);
+            }
+
+            if (device.getReceiveDate() == null || device.getLongitude() == null ||
+                    device.getLatitude() == null || device.getAltitude() == null) {
+                device.setLongitude(d.getLongitude());
+                device.setLatitude(d.getLatitude());
+                device.setAltitude(Double.valueOf(d.getAltitude()));
+                device.setReceiveDate(d.getSubmitDate());
+                deviceMapper.updateDevice(device);
             }
         }
         return "OK";

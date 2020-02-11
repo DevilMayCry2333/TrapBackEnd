@@ -13,6 +13,7 @@ import cn.huihongcloud.entity.common.Result;
 import cn.huihongcloud.entity.device.Device;
 import cn.huihongcloud.entity.page.PageWrapper;
 import cn.huihongcloud.entity.user.User;
+import cn.huihongcloud.mapper.DeviceMapper;
 import cn.huihongcloud.mapper.Device_Track_MaintanceEntityMapper;
 import cn.huihongcloud.service.TrackService;
 import cn.huihongcloud.service.UserService;
@@ -52,6 +53,8 @@ public class Track {
     @Autowired
     Device_Track_MaintanceEntityMapper deviceTrackMaintanceEntityMapper;
 
+    @Autowired
+    DeviceMapper deviceMapper;
 
     @Value("${com.youkaiyu.batchImg}")
     private String batchImgUrl;
@@ -353,8 +356,6 @@ public class Track {
         for (Device_Track_MaintanceEntity d:
                 deviceTrackMaintanceEntityList) {
 
-
-
             Device_Track_MaintanceEntity tmp = deviceTrackMaintanceEntityMapper.selectById(String.valueOf(d.getId()));
             if(tmp!=null){
                 deviceTrackMaintanceEntityMapper.updateRecordById(d);
@@ -375,6 +376,6 @@ public class Track {
 
 
 
-    
+
 
 }
