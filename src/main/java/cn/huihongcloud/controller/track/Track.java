@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.huihongcloud.controller.newApp.Enemy;
 import cn.huihongcloud.entity.DeviceTrackMap;
 import cn.huihongcloud.entity.Device_DeadTrees_maintanceEntity;
 import cn.huihongcloud.entity.Device_Injection_maintanceEntity;
@@ -22,6 +23,8 @@ import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +44,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/track")
 public class Track {
+    private static final Logger logger = LoggerFactory.getLogger(Track.class);
     @Autowired
     TrackService trackService;
     @Autowired
@@ -313,17 +317,23 @@ public class Track {
         }
 
         for (Device_Track_MaintanceEntity d:deviceTrackMaintanceEntities) {
-            try {
-                for(int i = 0;i<5;i++){
-//                    String tmp = d.getPic();
-                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img"  + "/" + "照片1," + d.getPic1() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "照片2," + d.getPic2() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img"  + "/" + "照片3," + d.getPic3() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img"  + "/" + "照片4," + d.getPic4() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img"  + "/" + "照片5," + d.getPic5() + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
-                }
-            }catch (Exception e){
-
+            logger.debug(d.getLinename());
+            logger.debug(d.getPic1());
+            logger.debug(d.getPic2());
+            logger.debug(d.getPic3());
+            logger.debug(d.getPic4());
+            logger.debug(d.getPic5());
+            for(int i = 0; i < 5; i++){
+                if(i==0 && d.getPic1()!=null)
+                    imageDownUtil.moveFile("/root/img/" + d.getPic1(), "/var/www/html/img"  + "/" + "照片," + i + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                else if(i==1 && d.getPic2()!=null)
+                    imageDownUtil.moveFile("/root/img/" + d.getPic2(), "/var/www/html/img"  + "/" + "照片," + i + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                else if(i==2 && d.getPic3()!=null)
+                    imageDownUtil.moveFile("/root/img/" + d.getPic3(), "/var/www/html/img"  + "/" + "照片," + i + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                else if(i==3 && d.getPic4()!=null)
+                    imageDownUtil.moveFile("/root/img/" + d.getPic4(), "/var/www/html/img"  + "/" + "照片," + i + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
+                else if(i==4 && d.getPic5()!=null)
+                    imageDownUtil.moveFile("/root/img/" + d.getPic5(), "/var/www/html/img"  + "/" + "照片," + i + "线路名称："+d.getLinename() + "," + "耗时：" + d.getTimeconsume() + "," +"工作内容："+ d.getWorkingContent());
             }
 
         }
