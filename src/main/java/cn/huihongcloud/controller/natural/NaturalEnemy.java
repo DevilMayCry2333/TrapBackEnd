@@ -85,11 +85,19 @@ public class NaturalEnemy {
     public Object DetailByArea(@RequestParam int page,@RequestParam int limit,@RequestParam String username){
         User user = userService.getUserByUserName(username);
 
-        jsonObject.put("Data",naturalEnemyService.selectAllByArea(user.getAdcode(),page*limit-limit,limit));
-        jsonObject.put("total",naturalEnemyService.countAllByArea(user.getAdcode()));
-        jsonObject.put("current",page);
-        jsonObject.put("Res",true);
-        return jsonObject;
+        Page<Object> pageObject = PageHelper.startPage(page, limit);
+        List<Device_NaturalEnemies_maintanceEntity> maintenanceData = naturalEnemyService.selectAllByArea(user.getAdcode());
+        PageWrapper pageWrapper = new PageWrapper();
+        pageWrapper.setData(maintenanceData);
+        pageWrapper.setCurrentPage(page);
+        pageWrapper.setTotalNum(pageObject.getTotal());
+        pageWrapper.setTotalPage(pageObject.getPages());
+        return pageWrapper;
+//        jsonObject.put("Data",naturalEnemyService.selectAllByArea(user.getAdcode(),page*limit-limit,limit));
+//        jsonObject.put("total",naturalEnemyService.countAllByArea(user.getAdcode()));
+//        jsonObject.put("current",page);
+//        jsonObject.put("Res",true);
+//        return jsonObject;
     }
 
     @GetMapping("/maintenance2")

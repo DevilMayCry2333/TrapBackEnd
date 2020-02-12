@@ -221,7 +221,7 @@
       SELECT COUNT(Device_NaturalEnemies_maintance.id) FROM Device_NaturalEnemies_maintance where adcode = #{adcode};
     </select>
   <select id="selectAllByArea" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
-        SELECT * FROM Device_NaturalEnemies_maintance where Device_NaturalEnemies_maintance.adcode = #{adcode} LIMIT #{num1},#{num2};
+        SELECT * FROM Device_NaturalEnemies_maintance where Device_NaturalEnemies_maintance.adcode = #{adcode}
   </select>
 
   <select id="queryDeviceSummaryByArea" resultType="cn.huihongcloud.entity.summary.NaturalSummary">

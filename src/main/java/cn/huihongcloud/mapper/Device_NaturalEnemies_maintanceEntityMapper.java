@@ -36,7 +36,7 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
 
     int countAllByArea(String adcode);
 
-    List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String adcode, int num1, int num2);
+    List<Device_NaturalEnemies_maintanceEntity> selectAllByArea(String adcode);
 
     List<NaturalSummary> queryDeviceSummaryByArea(String adcode, String startDate, String endDate);
 
