@@ -20,7 +20,7 @@ public interface Device_NaturalEnemies_maintanceEntityMapper {
     List<Device_NaturalEnemies_maintanceEntity> selectAllByDateAndColSearch(String customProject,String startDate,String endDate,String colName,String searchText,Integer num1,Integer num2,String adcode);
 
 
-    List<Device_NaturalEnemies_maintanceEntity> selectByDateAndColSearch(String customProject,@Param("startDate") String startDate,@Param("endDate") String endDate,String colName,String searchText,String adcode);
+    List<Device_NaturalEnemies_maintanceEntity> selectByDateAndColSearch(String customProject,@Param("startDate") String startDate,@Param("endDate") String endDate,String colName,String searchText,String adcode,String town);
 
     List<Device_NaturalEnemies_maintanceEntity> selectByDateAndColSearchAdcode(String startDate,String endDate,String colName,String searchText,String adcode);
 

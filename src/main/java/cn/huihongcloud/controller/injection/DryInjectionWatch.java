@@ -365,15 +365,18 @@ public class DryInjectionWatch {
                             @RequestParam(required = false) String colName,
                             @RequestParam(required = false) String searchText,
                             @RequestParam String username,
-                            @RequestParam String adcode
+                            @RequestParam String adcode,
+                            @RequestParam(required = false) String customProject,
+                            @RequestParam(required = false) String town
     ) throws IOException {
         response.setContentType("application/excel");
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
         User user = userService.getUserByUserName(username);
-
-
+        System.out.println(customProject);
+        System.out.println(town);
+        System.out.println(adcode);
         if(colName.equals("1")){
             colName = "serial";
         }
@@ -389,10 +392,12 @@ public class DryInjectionWatch {
         List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
         if(user.getRole()==4){
-            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode,null,null);
+        }else if(user.getRole()==3){
+            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(null,startDate,endDate,colName,searchText,adcode,customProject,town);
         }
         else{
-            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(null,startDate,endDate,colName,searchText,adcode);
+            deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(null,startDate,endDate,colName,searchText,adcode,null,null);
         }
 //        for (Device_NaturalEnemies_maintanceEntity d:
 //             deviceNaturalEnemiesMaintanceEntities) {
@@ -443,7 +448,7 @@ public class DryInjectionWatch {
             colName = "Worker";
         }
 
-        List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode);
+        List<Device_Injection_maintanceEntity> deviceNaturalEnemiesMaintanceEntities  = deviceInjectionMaintanceEntityMapper.selectByDateAndColSearch(username,startDate,endDate,colName,searchText,adcode,null,null);
 
         for (Device_Injection_maintanceEntity d:deviceNaturalEnemiesMaintanceEntities) {
             try {

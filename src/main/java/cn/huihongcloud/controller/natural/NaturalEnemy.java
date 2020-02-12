@@ -240,7 +240,7 @@ public class NaturalEnemy {
 
         if(user.getRole()==4){
             pageObject = PageHelper.startPage(page, limit);
-            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode);
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode,null);
             List<Device_NaturalEnemies_maintanceEntity> allEntity = deviceNaturalEnemiesMaintanceEntityMapper.selectAllByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,page*limit-limit,limit,adcode);
 
             for (Device_NaturalEnemies_maintanceEntity dataEntity: allEntity) {
@@ -360,15 +360,18 @@ public class NaturalEnemy {
                             @RequestParam(required = false) String colName,
                             @RequestParam(required = false) String searchText,
                             @RequestParam String username,
-                            @RequestParam String adcode
+                            @RequestParam String adcode,
+                            @RequestParam(required = false) String customProject,
+                            @RequestParam(required = false) String town
                             ) throws IOException {
         response.setContentType("application/excel");
         response.setHeader("Content-disposition",
                 "attachment; filename=" +  "export.xls");
 
         User user = userService.getUserByUserName(username);
-
-
+        System.out.println(adcode);
+        System.out.println(customProject);
+        System.out.println(town);
 
 
 
@@ -376,8 +379,10 @@ public class NaturalEnemy {
         List<Device_NaturalEnemies_maintanceEntity> deviceNaturalEnemiesMaintanceEntities = null;
 
         if(user.getRole()==4){
-            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode);
-        }else {
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode,null);
+        }else if(user.getRole()==3){
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(customProject,startDate,endDate,colName,searchText,adcode,town);
+        }else{
             deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,user.getAdcode());
         }
 
@@ -419,7 +424,7 @@ public class NaturalEnemy {
 
         if(user.getRole()==4){
             page = PageHelper.startPage(1,100000000);
-            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode);
+            deviceNaturalEnemiesMaintanceEntities = naturalEnemyService.selectByDateAndColSearch(user.getParent(),startDate,endDate,colName,searchText,adcode,null);
         }else {
             page = PageHelper.startPage(1,100000000);
             deviceNaturalEnemiesMaintanceEntities = deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearchAdcode(startDate,endDate,colName,searchText,user.getAdcode());

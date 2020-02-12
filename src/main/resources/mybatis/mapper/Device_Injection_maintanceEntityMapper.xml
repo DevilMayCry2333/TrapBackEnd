@@ -793,6 +793,12 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
+    <if test="customProject!=null and customProject!='null'">
+      and t1.customProject= #{customProject}
+    </if>
+    <if test="town!=null and town!='null'">
+      and t1.town= #{town}
+    </if>
   </select>
 
   <select id="getDeadStatus" resultType="cn.huihongcloud.entity.inject_WoodStatus">

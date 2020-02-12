@@ -19,8 +19,8 @@ public class NaturalEnemyService {
         return deviceNaturalEnemiesMaintanceEntityMapper.selectAll(username,num1,num2);
     }
 
-    public List<Device_NaturalEnemies_maintanceEntity> selectByDateAndColSearch(String customProject,String startDate,String endDate,String colName,String searchText,String adcode){
-        return deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearch(customProject, startDate, endDate, colName, searchText,adcode);
+    public List<Device_NaturalEnemies_maintanceEntity> selectByDateAndColSearch(String customProject,String startDate,String endDate,String colName,String searchText,String adcode,String town){
+        return deviceNaturalEnemiesMaintanceEntityMapper.selectByDateAndColSearch(customProject, startDate, endDate, colName, searchText,adcode,town);
     }
 
     public int countAll(String username,String startDate,String endDate,String colName,String searchText,String adcode){

@@ -748,8 +748,11 @@
   <select id="selectByDateAndColSearch" resultType="cn.huihongcloud.entity.Device_NaturalEnemies_maintanceEntity">
 
      SELECT * FROM  Device_NaturalEnemies_maintance t1
-     WHERE t1.CustomProject = #{customProject}
-
+     WHERE
+    t1.adcode like concat('%' , #{adcode}, '%')
+    <if test="customProject!=null and customProject !='null'">
+      and t1.CustomProject = #{customProject}
+    </if>
      <if test="startDate!=null and startDate !=''">
         and t1.`submit_date` >= #{startDate}
      </if>
@@ -759,7 +762,9 @@
     <if test="colName!=null and colName !='' and searchText!=null and searchText!=''">
       and ${colName} = #{searchText}
     </if>
-
+    <if test="town != null and town !='null'">
+      and t1.`town` &lt;= #{town}
+    </if>
   </select>
     <select id="getDeviceByLocation" resultType="cn.huihongcloud.entity.device.Device">
       select * from device where 1 = 1 and project = '3'

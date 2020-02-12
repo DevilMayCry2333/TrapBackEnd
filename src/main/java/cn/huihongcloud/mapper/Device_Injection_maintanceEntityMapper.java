@@ -16,7 +16,7 @@ import java.util.Map;
 @Repository
 public interface Device_Injection_maintanceEntityMapper {
 
-    List<Device_Injection_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,String adcode);
+    List<Device_Injection_maintanceEntity> selectByDateAndColSearch(String username,String startDate,String endDate,String colName,String searchText,String adcode,String customProject,String town);
 
 
 

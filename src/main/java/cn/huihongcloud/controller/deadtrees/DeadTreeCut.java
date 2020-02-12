@@ -363,7 +363,7 @@ public class DeadTreeCut {
                     device.getLatitude() == null || device.getAltitude() == null) {
                 device.setLongitude(d.getLongitude());
                 device.setLatitude(d.getLatitude());
-                device.setAltitude(Double.valueOf(d.getAltitude()));
+//                device.setAltitude(Double.valueOf(d.getAltitude()));
                 device.setReceiveDate(d.getSubmitDate());
                 deviceMapper.updateDevice(device);
             }
