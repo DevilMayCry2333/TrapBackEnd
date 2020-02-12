@@ -298,7 +298,8 @@
             device.area =  #{condition} or
             device.town = #{condition} or
             device_maintenance.device_id = #{condition} or
-            device.manager=#{condition}
+            device.manager=#{condition} or
+            device.CustomProject=#{condition}
             )
         </if>
         <if test="date != null and date != '' and date !='null' and date != 'null 00:00:00'">
