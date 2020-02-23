@@ -243,16 +243,22 @@ public class NewQrCode {
 
 
     @RequestMapping("/usertosearch")
-    public Object serach(@RequestAttribute("username") String username,@RequestParam(required = false) String colName, @RequestParam(required = false) String searchText, int page, int limit){
+    public Object serach(@RequestAttribute String username,@RequestParam(required = false) String colName, @RequestParam(required = false) String searchText, int page, int limit){
 
         //User user = userMapper.getUserByUserName(username);
 
 
-
+        User userByUserName = userMapper.getUserByUserName(username);
+        Integer role = userByUserName.getRole();
 //        int allNum = newQrCodeMapper.countByCond(username,colName, searchText);
 
         Page<Object> pageObject = PageHelper.startPage(page, limit);
-        List<Device> deviceList = newQrCodeMapper.selectByConditions(username,colName, searchText,page*limit-limit,limit);
+        List<Device> deviceList = null;
+        if (role == 0){
+            deviceList = newQrCodeMapper.selectByConditionsRoot(colName,searchText);
+        }else {
+            deviceList = newQrCodeMapper.selectByConditions(username, colName, searchText, page * limit - limit, limit);
+        }
 
         PageWrapper pageWrapper = new PageWrapper();
 

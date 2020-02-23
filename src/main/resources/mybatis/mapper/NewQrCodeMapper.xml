@@ -70,4 +70,11 @@
     <select id="countByNOassign" resultType="java.lang.Integer">
         select count(scanId) from device where isManagerAssign = 0 and province=#{province};
     </select>
+    <select id="selectByConditionsRoot" resultType="cn.huihongcloud.entity.device.Device">
+        select * from device
+        where
+        <if test="searchText!=null and searchText!=''">
+            ${colName}=#{searchText}
+        </if>
+    </select>
 </mapper>

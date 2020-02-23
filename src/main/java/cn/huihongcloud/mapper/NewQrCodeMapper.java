@@ -29,6 +29,8 @@ public interface NewQrCodeMapper {
 
     List<Device> selectByConditions(String username,String colName,String searchText,int num1,int num2);
 
+    List<Device> selectByConditionsRoot(String colName,String searchText);
+
     List<Device> selectByConditions1(String colName,String searchText,String manager);
 
     int countByCond(String username,String colName,String searchText);
