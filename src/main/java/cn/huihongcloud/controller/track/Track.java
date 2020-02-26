@@ -217,7 +217,7 @@ public class Track {
 
         if (user.getRole() == 5) {
 //            list = trackService.getDeviceByWorker(username);
-            deviceTrackMaps = trackService.getDeviceByManager(username,false,null,"map",null);
+            deviceTrackMaps = trackService.getDeviceByManager(user.getParent(),false,null,"map",null);
         }
 
 
