@@ -122,7 +122,7 @@
         delete from workContent_map where id = #{id} and adcode = #{adcode};
     </delete>
     <delete id="deleteInjectForTown">
-        delete from injectInfo_map where id = #{id} and adcode = #{adcode};
+        delete from inject_name_map where id = #{id} and adcode = #{adcode};
     </delete>
     <delete id="deleteInjectWood">
         delete from inject_WoodStatus_map where id = #{id} and adcode = #{adcode};

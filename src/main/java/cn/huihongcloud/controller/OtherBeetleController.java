@@ -376,7 +376,7 @@ public class OtherBeetleController {
     @DeleteMapping("/injectName_type/town")
     public Object deleteinjectNameTypeForTown(@RequestAttribute("username") String username, Integer beetleInfoId) {
         User user = userService.getUserByUserName(username);
-        otherBeetleMapper.deleteMedicine_TypeForTown(beetleInfoId,user.getAdcode());
+        otherBeetleMapper.deleteInjectForTown(beetleInfoId,user.getAdcode());
         return Result.ok();
     }
     @GetMapping("/medicine_workContent")
